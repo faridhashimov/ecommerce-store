@@ -44,14 +44,48 @@ export const catItems = [
     {
         id: 1,
         title: 'final reduction',
-        cat: 'sandals &amp; flip flops',
+        cat: 'sandals & flip flops',
         disc: 'up to 60% off',
         img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-1.jpg',
     },
     {
         id: 2,
         title: 'limited time only',
-        cat: 'trainers &amp; sportwear',
+        cat: 'trainers & sportwear',
+        disc: '50 - 70% off',
+        img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-2.jpg',
+    },
+    {
+        id: 3,
+        title: 'this week we love...',
+        cat: "women's accessories",
+        disc: 'from $6.99',
+        img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-3.jpg',
+    },
+   
+];
+
+export const products = [
+    {
+        id: 1,
+        title: 'Printed Sweatshirt',
+        status: [
+            {
+                order: 1,
+                bg: '#A6C76C',
+            }
+        ],
+        cats: 'Women, Clothing',
+        price: {
+
+        },
+        disc: 'up to 60% off',
+        img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-1.jpg',
+    },
+    {
+        id: 2,
+        title: 'limited time only',
+        cat: 'trainers & sportwear',
         disc: '50 - 70% off',
         img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-2.jpg',
     },

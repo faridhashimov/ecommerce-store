@@ -7,10 +7,12 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    /* padding: 0px 10px; */
+    margin-top: 20px;
 `;
 
 const BranItemContainer= styled.div`
-    width: 165px;
+    flex: 1;
     height: 100px;
     display: flex;
     justify-content: center;

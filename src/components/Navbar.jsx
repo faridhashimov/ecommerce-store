@@ -11,7 +11,7 @@ const Container = styled.div`
     height: 60px;
 `;
 const Wrapper = styled.div`
-    width: 90vw;
+    width: 93vw;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -34,14 +34,7 @@ const Menu = styled.ul`
     justify-content: center;
     align-items: center;
 `;
-const MenuItem = styled.li`
-    padding: 10px 15px;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    /* padding: 10px 0px 5px; */
-    /* transition: all 0.3s ease; */
+const MenuItemContainer = styled.li`
     &:after {
         content: '';
         display: block;
@@ -54,6 +47,15 @@ const MenuItem = styled.li`
         width: 100%;
         /* transition: width .3s; */
     }
+`;
+const MenuItem = styled.a`
+    padding: 10px 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    /* padding: 10px 0px 5px; */
+    /* transition: all 0.3s ease; */
 `;
 const Right = styled.div`
     display: flex;
@@ -81,6 +83,7 @@ const SearchButton = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
+    fill: '#EEA287';
 `;
 const RightMenuIcon = styled.div`
     margin-left: 30px;
@@ -108,12 +111,24 @@ const Navbar = () => {
                 </Left>
                 <Center>
                     <Menu>
-                        <MenuItem>Home</MenuItem>
-                        <MenuItem>About</MenuItem>
-                        <MenuItem>Contact</MenuItem>
-                        <MenuItem>FAQ</MenuItem>
-                        <MenuItem>Blog</MenuItem>
-                        <MenuItem>Login</MenuItem>
+                        <MenuItemContainer>
+                            <MenuItem>Home</MenuItem>
+                        </MenuItemContainer>
+                        <MenuItemContainer>
+                            <MenuItem>About</MenuItem>
+                        </MenuItemContainer>
+                        <MenuItemContainer>
+                            <MenuItem>Contact</MenuItem>
+                        </MenuItemContainer>
+                        <MenuItemContainer>
+                            <MenuItem>FAQ</MenuItem>
+                        </MenuItemContainer>
+                        <MenuItemContainer>
+                            <MenuItem>Blog</MenuItem>
+                        </MenuItemContainer>
+                        <MenuItemContainer>
+                            <MenuItem>Login</MenuItem>
+                        </MenuItemContainer>
                     </Menu>
                 </Center>
                 <Right>
@@ -122,8 +137,8 @@ const Navbar = () => {
                         <SearchButton>
                             <Search
                                 style={{
-                                    color: '#EEA287',
                                     fontSize: 28,
+                                    fontWeight: 300,
                                     marginRight: 15,
                                     cursor: 'pointer',
                                 }}
