@@ -7,6 +7,8 @@ const Category = styled.div`
     position: relative;
     height: 480px;
     cursor: pointer;
+    transition: all .2s ease;
+
     &:after {
         content: '';
         width: 100%;
@@ -15,17 +17,19 @@ const Category = styled.div`
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.2);
-        display: none;
-        transition: all 2s ease;
+        opacity: 0;
+        transition: all .2s ease;
     }
     &:hover::after {
-        display: block;
+        opacity: 1;
+        transition: all .2s ease;
+
     }
 `;
 const CategoryImage = styled.img`
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 `;
 const CategoryInfo = styled.div`
     display: flex;
@@ -69,7 +73,6 @@ const CategoryButton = styled.h2`
     min-width: 120px;
     text-transform: uppercase;
     padding: 6px 10px;
-    /* letter-spacing: 1px; */
     margin-top: 30px;
     cursor: pointer;
     transition: all 0.2s ease;
