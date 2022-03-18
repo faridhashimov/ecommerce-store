@@ -25,8 +25,8 @@ const Brands = () => {
     return (
         <Container>
             {brandItems.map((item) => (
-                <BranItemContainer>
-                    <BrandItem src={item.img} key={item.id} />
+                <BranItemContainer key={item.id}>
+                    <BrandItem src={item.img}  />
                 </BranItemContainer>
             ))}
         </Container>

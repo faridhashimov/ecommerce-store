@@ -1,10 +1,15 @@
-import Announcement from './components/Announcement';
-import Categories from './components/Categories';
-import Feautured from './components/Feautured';
-import Navbar from './components/Navbar';
-import NewArrivals from './components/NewArrivals';
-import Slider from './components/Slider';
-import Trending from './components/Trending';
+import {
+    Announcement,
+    Navbar,
+    Categories,
+    Slider,
+    Feautured,
+    NewArrivals,
+    RecentArrivals,
+    Trending,
+    Support,
+    Follow,
+} from './components';
 
 function App() {
     return (
@@ -14,8 +19,11 @@ function App() {
             <Slider />
             <Categories />
             <Feautured />
-            <Trending/>
-            <NewArrivals/>
+            <Trending />
+            <NewArrivals />
+            <RecentArrivals />
+            <Support />
+            <Follow />
         </div>
     );
 }

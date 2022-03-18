@@ -1,0 +1,4 @@
+<ShoppingCartContainer>
+    <AddShoppingCart style={{ fontSize: 15 }} />
+</ShoppingCartContainer>
+<CartTitle>Add To Cart</CartTitle>
