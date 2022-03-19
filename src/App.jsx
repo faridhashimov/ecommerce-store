@@ -1,20 +1,22 @@
-import {
-    Announcement,
-    Navbar,
-    Categories,
-    Slider,
-    Feautured,
-    NewArrivals,
-    RecentArrivals,
-    Trending,
-    Support,
-    Follow,
-} from './components';
+// import {
+//     Announcement,
+//     Navbar,
+//     Categories,
+//     Slider,
+//     Feautured,
+//     NewArrivals,
+//     RecentArrivals,
+//     Trending,
+//     Support,
+//     Follow,
+//     Footer
+// } from './components';
+import Contact from './pages/Contact';
 
 function App() {
     return (
         <div>
-            <Announcement />
+            {/* <Announcement />
             <Navbar />
             <Slider />
             <Categories />
@@ -24,6 +26,8 @@ function App() {
             <RecentArrivals />
             <Support />
             <Follow />
+            <Footer/> */}
+            <Contact/>
         </div>
     );
 }

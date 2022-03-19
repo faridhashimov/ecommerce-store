@@ -8,3 +8,4 @@ export { default as RecentArrivals } from './RecentArrivals.jsx';
 export { default as Trending } from './Trending.jsx';
 export { default as Support } from './Support.jsx';
 export { default as Follow } from './Follow.jsx';
+export { default as Footer } from './Footer.jsx';

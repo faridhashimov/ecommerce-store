@@ -1,3 +1,4 @@
+import { FavoriteBorder, ForumOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -9,28 +10,93 @@ const Container = styled.div`
 `;
 const TitleContainer = styled.div`
     width: 93vw;
+    text-align: center;
+    margin-bottom: 30px;
 `;
-const Title = styled.h1``;
-const Info = styled.p``;
+const Title = styled.h1`
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 26px;
+    margin-bottom: 10px;
+    color: #333;
+`;
+const Info = styled.p`
+    font-size: 13px;
+    font-weight: 300;
+    color: #777;
+`;
 const SocialPosts = styled.div`
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
     justify-content: center;
     align-items: center;
 `;
+const LikesNComments = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.3s ease;
+`;
 const PostContainer = styled.div`
-    width: 252px;
-    height: 252px;
+    width: 252.656px;
+    height: 252.656px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &:hover ${LikesNComments} {
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
+    &:after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: all 0.2s ease;
+    }
+    &:hover::after {
+        opacity: 1;
+        transition: all 0.2s ease;
+    }
 `;
 const PostImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
 `;
-const LikesNComments = styled.div``;
-const Likes = styled.div``;
-const Comments = styled.div``;
+
+const Likes = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        color: #eea287;
+        transition: all 0.2s ease-in-out;
+    }
+`;
+const Comments = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        color: #eea287;
+        transition: all 0.2s ease-in-out;
+    }
+`;
 
 const Follow = () => {
     return (
@@ -43,36 +109,86 @@ const Follow = () => {
                 <PostContainer>
                     <PostImage src="https://d-themes.com/react/molla/demo-8/images/home/instagram/1.jpg" />
                     <LikesNComments>
-                        <Likes></Likes>
-                        <Comments></Comments>
+                        <Likes>
+                            <FavoriteBorder
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            456
+                        </Likes>
+                        <Comments>
+                            <ForumOutlined
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            65
+                        </Comments>
                     </LikesNComments>
                 </PostContainer>
                 <PostContainer>
                     <PostImage src="https://d-themes.com/react/molla/demo-8/images/home/instagram/2.jpg" />
                     <LikesNComments>
-                        <Likes></Likes>
-                        <Comments></Comments>
+                        <Likes>
+                            <FavoriteBorder
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            691
+                        </Likes>
+                        <Comments>
+                            <ForumOutlined
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            87
+                        </Comments>
                     </LikesNComments>
                 </PostContainer>
                 <PostContainer>
                     <PostImage src="https://d-themes.com/react/molla/demo-8/images/home/instagram/3.jpg" />
                     <LikesNComments>
-                        <Likes></Likes>
-                        <Comments></Comments>
+                        <Likes>
+                            <FavoriteBorder
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            508
+                        </Likes>
+                        <Comments>
+                            <ForumOutlined
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            127
+                        </Comments>
                     </LikesNComments>
                 </PostContainer>
                 <PostContainer>
                     <PostImage src="https://d-themes.com/react/molla/demo-8/images/home/instagram/4.jpg" />
                     <LikesNComments>
-                        <Likes></Likes>
-                        <Comments></Comments>
+                        <Likes>
+                            <FavoriteBorder
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            433
+                        </Likes>
+                        <Comments>
+                            <ForumOutlined
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            27
+                        </Comments>
                     </LikesNComments>
                 </PostContainer>
                 <PostContainer>
                     <PostImage src="https://d-themes.com/react/molla/demo-8/images/home/instagram/5.jpg" />
                     <LikesNComments>
-                        <Likes></Likes>
-                        <Comments></Comments>
+                        <Likes>
+                            <FavoriteBorder
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            122
+                        </Likes>
+                        <Comments>
+                            <ForumOutlined
+                                style={{ fontSize: 16, marginRight: 5 }}
+                            />{' '}
+                            55
+                        </Comments>
                     </LikesNComments>
                 </PostContainer>
             </SocialPosts>

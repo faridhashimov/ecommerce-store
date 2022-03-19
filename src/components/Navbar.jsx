@@ -23,6 +23,7 @@ const Logo = styled.h1`
     font-weight: bold;
     font-size: 28px;
     color: #232323;
+    margin-left: 10px;
 `;
 const Reverse = styled.span`
     color: #eea287;
@@ -61,6 +62,7 @@ const Right = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px;
 `;
 const SearchContainer = styled.div`
     display: flex;

@@ -1,0 +1,377 @@
+import {
+    LocationOnOutlined,
+    PhoneOutlined,
+    EmailOutlined,
+    AccessTimeOutlined,
+    CalendarMonthOutlined,
+    ArrowRightAltOutlined,
+} from '@mui/icons-material';
+import styled from 'styled-components';
+import { Announcement, Navbar, Footer } from '../components';
+
+const Container = styled.div``;
+
+const Wrapper = styled.div`
+    width: 93vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+const Main = styled.div`
+    margin: 40px 0px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const MainImage = styled.img``;
+const MainTitle = styled.div`
+    position: absolute;
+    text-align: center;
+    color: #fff;
+`;
+const TitleInfo = styled.h1`
+    font-size: 40px;
+    font-weight: 400;
+`;
+const SecTitle = styled.span`
+    font-size: 16px;
+    font-weight: 400;
+`;
+
+const Contacts = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 40px;
+`;
+const ContactInfo = styled.div`
+    flex: 1;
+    padding: 0px 10px;
+`;
+const Title = styled.h2`
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 28px;
+    margin-bottom: 10px;
+    width: 100%;
+`;
+const Info = styled.p`
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 20px;
+    line-height: 26px;
+    color: #777;
+`;
+const AdressContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+`;
+const Adress = styled.div`
+    width: 340px;
+    margin-right: 10px;
+`;
+const AressTitle = styled.h3`
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 15px;
+`;
+const AddressInfo = styled.ul`
+    list-style: none;
+`;
+const AddressItem = styled.li`
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 26px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 15px;
+`;
+const OfficeHours = styled.div`
+    width: 205px;
+    margin: 0px 10px;
+`;
+const QuestionForm = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0px 10px;
+`;
+const Form = styled.form`
+    margin-bottom: 30px;
+`;
+const Input = styled.input`
+    width: 235px;
+    margin-right: ${(props) => props.right}px;
+    margin-bottom: 20px;
+    padding: 8.5px 20px;
+    background-color: #fafafa;
+    outline: none;
+    border: 1px solid #ebebeb;
+    &:focus {
+        outline: none;
+        border: 1px solid #eea287;
+    }
+`;
+const Message = styled.textarea`
+    width: 533px;
+    height: 130px;
+    resize: vertical;
+    padding: 8.5px 20px;
+    border: 1px solid #ebebeb;
+    background-color: #fafafa;
+    &:focus {
+        outline: none;
+        border: 1px solid #eea287;
+    }
+`;
+const Submit = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #eea287;
+    border: 1px solid #eea287;
+    min-width: 120px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    &:hover {
+        background-color: #eea287;
+        color: #fff;
+    }
+`;
+
+const Stores = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+`;
+const Store = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+    flex: 1;
+`;
+const StoreContainer = styled.div`
+    height: 275px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const StoreTitle = styled(Title)`
+    text-align: center;
+    margin-bottom: 30px;
+`;
+
+const ImageContainer = styled.div`
+    width: 277px;
+    height: 277px;
+    margin-right: 10px;
+`;
+const InfoContainer = styled.div`
+    margin-left: 10px;
+`;
+const Top = styled.div``;
+const ViewButton = styled.button`
+    background: transparent;
+    border: none;
+    color: #eea287;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    transition: all .2s ease;
+    &:hover {
+        border-bottom: 1px solid #eea287;
+        transition: all .2s ease;
+    }
+`;
+const TopTitle = styled.h3`
+    font-weight: 400;
+    font-size: 16px;
+`;
+const BottomTitle = styled.h3`
+    font-weight: 400;
+    font-size: 14px;
+`;
+const Phone = styled.span``;
+const Image = styled.img`
+    object-fit: cover;
+`;
+
+const Br = styled.br``;
+
+const Contact = () => {
+    return (
+        <Container>
+            <Announcement />
+            <Navbar />
+            <Wrapper>
+                <Main>
+                    <MainImage src="https://d-themes.com/react/molla/demo-8/images/contact-header-bg.jpg" />
+                    <MainTitle>
+                        <TitleInfo>Contact us</TitleInfo>
+                        <SecTitle>keep in touch with us</SecTitle>
+                    </MainTitle>
+                </Main>
+                <Contacts>
+                    <ContactInfo>
+                        <Title>Contact Information</Title>
+                        <Info>
+                            Vestibulum volutpat, lacus a ultrices sagittis, mi
+                            neque euismod dui, eu pulvinar nunc sapien ornare
+                            nisl. Phasellus pede arcu, dapibus eu, fermentum et,
+                            dapibus sed, urna.
+                        </Info>
+                        <AdressContainer>
+                            <Adress>
+                                <AressTitle>The Office</AressTitle>
+                                <AddressInfo>
+                                    <AddressItem>
+                                        <LocationOnOutlined
+                                            style={{ fontSize: 20 }}
+                                        />
+                                        70 Washington Square South New <Br />{' '}
+                                        York, NY 10012, United States
+                                    </AddressItem>
+                                    <AddressItem>
+                                        <PhoneOutlined
+                                            style={{ fontSize: 20 }}
+                                        />
+                                        +92 423 567
+                                    </AddressItem>
+                                    <AddressItem>
+                                        <EmailOutlined
+                                            style={{ fontSize: 20 }}
+                                        />
+                                        info@Molla.com
+                                    </AddressItem>
+                                </AddressInfo>
+                            </Adress>
+                            <OfficeHours>
+                                <AressTitle>The Office</AressTitle>
+                                <AddressInfo>
+                                    <AddressItem>
+                                        <AccessTimeOutlined
+                                            style={{ fontSize: 20 }}
+                                        />
+                                        Monday-Saturday <Br /> 11am-7pm ET
+                                    </AddressItem>
+                                    <AddressItem>
+                                        <CalendarMonthOutlined
+                                            style={{ fontSize: 20 }}
+                                        />
+                                        Sunday 11am-6pm ET
+                                    </AddressItem>
+                                </AddressInfo>
+                            </OfficeHours>
+                        </AdressContainer>
+                    </ContactInfo>
+                    <QuestionForm>
+                        <Title>Got Any Questions?</Title>
+                        <Info>
+                            Use the form below to get in touch with the sales
+                            team
+                        </Info>
+                        <Form>
+                            <Input
+                                type="text"
+                                placeholder="Name *"
+                                right="17"
+                            ></Input>
+                            <Input type="email" placeholder="Email *"></Input>
+                            <Input
+                                type="text"
+                                placeholder="Phone"
+                                right="17"
+                            ></Input>
+                            <Input type="text" placeholder="Subject"></Input>
+                            <Message placeholder="Message *"></Message>
+                            <Submit type="submit">
+                                Submit
+                                <ArrowRightAltOutlined
+                                    style={{
+                                        marginLeft: 12,
+                                        fontSize: 15,
+                                        fontWeight: 300,
+                                    }}
+                                />
+                            </Submit>
+                        </Form>
+                    </QuestionForm>
+                </Contacts>
+                <Stores>
+                    <StoreTitle>Our Stores</StoreTitle>
+                    <StoreContainer>
+                        <Store>
+                            <ImageContainer>
+                                <Image src="https://d-themes.com/react/molla/demo-8/images/stores/img-1.jpg" />
+                            </ImageContainer>
+                            <InfoContainer>
+                                <Top>
+                                    <TopTitle>Wall Street Plaza</TopTitle>
+                                    <Info>
+                                        88 Pine St, New York, NY 10005, USA{' '}
+                                        <Br />
+                                        <Phone>+1 987-876-6543</Phone>
+                                    </Info>
+                                </Top>
+                                <Top>
+                                    <BottomTitle>Store Hours:</BottomTitle>
+                                    <Info>
+                                        Monday - Saturday 11am to 7pm Sunday
+                                        11am to 6pm
+                                    </Info>
+                                </Top>
+                                <ViewButton>View Map</ViewButton>
+                            </InfoContainer>
+                        </Store>
+                        <Store>
+                            <ImageContainer>
+                                <Image src="https://d-themes.com/react/molla/demo-8/images/stores/img-2.jpg" />
+                            </ImageContainer>
+                            <InfoContainer>
+                                <Top>
+                                    <TopTitle>One New York Plaza</TopTitle>
+                                    <Info>
+                                        88 Pine St, New York, NY 10005, USA
+                                        <Phone>+1 987-876-6543</Phone>
+                                    </Info>
+                                </Top>
+                                <Top>
+                                    <BottomTitle>Store Hours:</BottomTitle>
+                                    <Info>
+                                        Monday - Friday 9am to 8pm <Br />
+                                        Saturday - 9am to 2pm <Br /> Sunday -
+                                        Closed
+                                    </Info>
+                                </Top>
+                                <ViewButton>View Map</ViewButton>
+                            </InfoContainer>
+                        </Store>
+                    </StoreContainer>
+                </Stores>
+            </Wrapper>
+            <Footer />
+        </Container>
+    );
+};
+
+export default Contact;
