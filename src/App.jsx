@@ -12,6 +12,9 @@
 //     Footer
 // } from './components';
 import Contact from './pages/Contact';
+import About from './pages/About';
+import Faq from './pages/Faq';
+import Login from './pages/Login';
 
 function App() {
     return (
@@ -27,7 +30,9 @@ function App() {
             <Support />
             <Follow />
             <Footer/> */}
-            <Contact/>
+            {/* <About/> */}
+            {/* <Faq/> */}
+            <Login/>
         </div>
     );
 }

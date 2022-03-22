@@ -212,7 +212,7 @@ export const recentArrivals = [
     {
         id: 6,
         img: 'https://d-themes.com/react_asset_api/molla/uploads/product_8_1_300x408_d451a2ae2b.jpg',
-        status: [ ],
+        status: [],
         categories: ['Women', 'Clothing'],
         title: 'Linen-blend paper bag trousers',
         price: '15.99',
@@ -252,5 +252,60 @@ export const recentArrivals = [
         categories: ['Women', 'Clothing'],
         title: 'Short wrap dress',
         price: '24.99',
+    },
+];
+
+export const shippingInfo = [
+    {
+        question: 'How will my parcel be delivered?',
+        answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, facilis.',
+    },
+    {
+        question: 'Do I pay for delivery?',
+        answer: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa, mollitia! Illo deleniti ipsa soluta quibusdam assumenda temporibus suscipit! Aut inventore eum quod minus! Corrupti vitae, fugiat facilis quos quibusdam deserunt!',
+    },
+    {
+        question: "Will I be charged customs fees?",
+        answer: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo repudiandae modi natus nam consequatur non magni eius numquam officia placeat.',
+    },
+    {
+        question: 'My item has become faulty',
+        answer: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, ex.',
+    },
+];
+export const ordersInfo = [
+    {
+        question: 'Tracking my order',
+        answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, facilis.',
+    },
+    {
+        question: 'I haven’t received my order',
+        answer: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa, mollitia! Illo deleniti ipsa soluta quibusdam assumenda temporibus suscipit! Aut inventore eum quod minus! Corrupti vitae, fugiat facilis quos quibusdam deserunt!',
+    },
+    {
+        question: "How can I return an item?",
+        answer: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo repudiandae modi natus nam consequatur non magni eius numquam officia placeat.',
+    },
+    {
+        question: 'Has my payment gone through?',
+        answer: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, ex.',
+    },
+];
+export const payments = [
+    {
+        question: 'What payment types can I use?',
+        answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, facilis.',
+    },
+    {
+        question: 'Can I pay by Gift Card?',
+        answer: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa, mollitia! Illo deleniti ipsa soluta quibusdam assumenda temporibus suscipit! Aut inventore eum quod minus! Corrupti vitae, fugiat facilis quos quibusdam deserunt!',
+    },
+    {
+        question: "I can't make a payment",
+        answer: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo repudiandae modi natus nam consequatur non magni eius numquam officia placeat.',
+    },
+    {
+        question: 'Has my payment gone through?',
+        answer: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, ex.',
     },
 ];

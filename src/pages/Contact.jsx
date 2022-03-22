@@ -8,6 +8,9 @@ import {
 } from '@mui/icons-material';
 import styled from 'styled-components';
 import { Announcement, Navbar, Footer } from '../components';
+import ReactMapGL, { FullscreenControl, Marker, NavigationControl } from 'react-map-gl';
+import { useState } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Container = styled.div``;
 
@@ -94,6 +97,16 @@ const AddressItem = styled.li`
     justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 15px;
+    color: #666;
+    /* padding-top: 4px; */
+`;
+const IconContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    margin-top: 5px;
+    color: #eea287;
 `;
 const OfficeHours = styled.div`
     width: 205px;
@@ -197,10 +210,10 @@ const ViewButton = styled.button`
     padding-bottom: 5px;
     border-bottom: 1px solid transparent;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
     &:hover {
         border-bottom: 1px solid #eea287;
-        transition: all .2s ease;
+        transition: all 0.2s ease;
     }
 `;
 const TopTitle = styled.h3`
@@ -215,10 +228,30 @@ const Phone = styled.span``;
 const Image = styled.img`
     object-fit: cover;
 `;
-
 const Br = styled.br``;
 
+const MapContainer = styled.div`
+    background-color: #666;
+    height: 500px;
+    width: 98%;
+    margin-bottom: 30px;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0, 0.5);
+`;
+
 const Contact = () => {
+    const [view, setView] = useState({
+        latitude: 40.705646,
+        longitude: -74.006647,
+        zoom: 10,
+    });
+
+    const adress = {
+        first: { latitude: 40.7057, longitude: -74.0061, zoom: 18 },
+        sec: { latitude: 40.7021, longitude: -74.0122, zoom: 18 },
+    };
+    const TOKEN =
+        'pk.eyJ1IjoiZmFyZ21vdiIsImEiOiJjbDB5MWl5djcwY2x0M2JveXR3ajgyZGk0In0.oFZCf90L7hQ5_Qts98B3qA';
     return (
         <Container>
             <Announcement />
@@ -245,22 +278,28 @@ const Contact = () => {
                                 <AressTitle>The Office</AressTitle>
                                 <AddressInfo>
                                     <AddressItem>
-                                        <LocationOnOutlined
-                                            style={{ fontSize: 20 }}
-                                        />
-                                        70 Washington Square South New <Br />{' '}
+                                        <IconContainer>
+                                            <LocationOnOutlined
+                                                style={{ fontSize: 20 }}
+                                            />
+                                        </IconContainer>
+                                        70 Washington Square South New <Br />
                                         York, NY 10012, United States
                                     </AddressItem>
                                     <AddressItem>
-                                        <PhoneOutlined
-                                            style={{ fontSize: 20 }}
-                                        />
+                                        <IconContainer>
+                                            <PhoneOutlined
+                                                style={{ fontSize: 20 }}
+                                            />
+                                        </IconContainer>
                                         +92 423 567
                                     </AddressItem>
                                     <AddressItem>
-                                        <EmailOutlined
-                                            style={{ fontSize: 20 }}
-                                        />
+                                        <IconContainer>
+                                            <EmailOutlined
+                                                style={{ fontSize: 20 }}
+                                            />
+                                        </IconContainer>
                                         info@Molla.com
                                     </AddressItem>
                                 </AddressInfo>
@@ -269,15 +308,19 @@ const Contact = () => {
                                 <AressTitle>The Office</AressTitle>
                                 <AddressInfo>
                                     <AddressItem>
-                                        <AccessTimeOutlined
-                                            style={{ fontSize: 20 }}
-                                        />
+                                        <IconContainer>
+                                            <AccessTimeOutlined
+                                                style={{ fontSize: 20 }}
+                                            />
+                                        </IconContainer>
                                         Monday-Saturday <Br /> 11am-7pm ET
                                     </AddressItem>
                                     <AddressItem>
-                                        <CalendarMonthOutlined
-                                            style={{ fontSize: 20 }}
-                                        />
+                                        <IconContainer>
+                                            <CalendarMonthOutlined
+                                                style={{ fontSize: 20 }}
+                                            />
+                                        </IconContainer>
                                         Sunday 11am-6pm ET
                                     </AddressItem>
                                 </AddressInfo>
@@ -340,7 +383,14 @@ const Contact = () => {
                                         11am to 6pm
                                     </Info>
                                 </Top>
-                                <ViewButton>View Map</ViewButton>
+                                <ViewButton
+                                    onClick={() => {
+                                        setView(adress.first);
+                                        window.scrollTo(0, 1400);
+                                    }}
+                                >
+                                    View Map
+                                </ViewButton>
                             </InfoContainer>
                         </Store>
                         <Store>
@@ -363,11 +413,40 @@ const Contact = () => {
                                         Closed
                                     </Info>
                                 </Top>
-                                <ViewButton>View Map</ViewButton>
+                                <ViewButton
+                                    onClick={() => {
+                                        setView(adress.sec);
+                                        window.scrollTo(0, 1400);
+                                    }}
+                                >
+                                    View Map
+                                </ViewButton>
                             </InfoContainer>
                         </Store>
                     </StoreContainer>
                 </Stores>
+                <MapContainer>
+                    <ReactMapGL
+                        {...view}
+                        onMove={(evt) => setView(evt.viewState)}
+                        style={{ width: '100%', height: 500 }}
+                        mapboxAccessToken={TOKEN}
+                        mapStyle="mapbox://styles/mapbox/streets-v9"
+                    >
+                        <Marker
+                            longitude={-74.0061}
+                            latitude={40.7057}
+                            color="#3FB1CE"
+                        />
+                        <Marker
+                            longitude={-74.0122}
+                            latitude={40.7021}
+                            color="#1DC8CA"
+                        />
+                        <FullscreenControl />
+                        <NavigationControl />
+                    </ReactMapGL>
+                </MapContainer>
             </Wrapper>
             <Footer />
         </Container>
