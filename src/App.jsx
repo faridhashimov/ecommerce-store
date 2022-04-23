@@ -1,40 +1,18 @@
-// import {
-//     Announcement,
-//     Navbar,
-//     Categories,
-//     Slider,
-//     Feautured,
-//     NewArrivals,
-//     RecentArrivals,
-//     Trending,
-//     Support,
-//     Follow,
-//     Footer
-// } from './components';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import Faq from './pages/Faq';
-import Login from './pages/Login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Homepage, About, Faq, Login, Contact } from './pages'
 
 function App() {
     return (
-        <div>
-            {/* <Announcement />
-            <Navbar />
-            <Slider />
-            <Categories />
-            <Feautured />
-            <Trending />
-            <NewArrivals />
-            <RecentArrivals />
-            <Support />
-            <Follow />
-            <Footer/> */}
-            {/* <About/> */}
-            {/* <Faq/> */}
-            <Login/>
-        </div>
-    );
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="login" element={<Login />} />
+                <Route path="about" element={<About />} />
+                <Route path="faq" element={<Faq />} />
+                <Route path="contact" element={<Contact />} />
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App

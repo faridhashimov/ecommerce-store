@@ -1,0 +1,7 @@
+export { default as Homepage } from './Homepage.jsx'
+export { default as About } from './About.jsx'
+export { default as Login } from './Login.jsx'
+export { default as Error404 } from './Error404.jsx'
+export { default as Faq } from './Faq.jsx'
+export { default as ShoppingCart } from './ShoppingCart.jsx'
+export { default as Contact } from './Contact.jsx'

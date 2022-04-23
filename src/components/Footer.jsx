@@ -4,8 +4,8 @@ import {
     Pinterest,
     Twitter,
     YouTube,
-} from '@mui/icons-material';
-import styled from 'styled-components';
+} from '@mui/icons-material'
+import styled from 'styled-components'
 
 const Container = styled.div`
     width: 100%;
@@ -14,7 +14,7 @@ const Container = styled.div`
     align-items: center;
     background-color: #222222;
     color: #fff;
-`;
+`
 const Wrapper = styled.div`
     width: 93vw;
     margin-top: 50px;
@@ -22,48 +22,48 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`;
+`
 const FooterTop = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-`;
+`
 const FooterInfo = styled.div`
     flex: 1;
     padding-left: 10px;
-`;
+`
 const Logo = styled.h1`
     line-height: 27px;
     margin-bottom: 20px;
-`;
+`
 const FooterText = styled.p`
     margin: 0 35px 45px 0;
     font-size: 14px;
     line-height: 25px;
     color: #777;
-`;
+`
 const MainInfo = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
-`;
+`
 const Contact = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-`;
+`
 const Title = styled.span`
     font-size: 13px;
     font-weight: 300;
-`;
+`
 const ContactNumber = styled.a`
     font-size: 20px;
     color: #eea287;
     text-decoration: none;
-`;
+`
 const Payment = styled.div`
     height: 100%;
     flex: 2;
@@ -71,21 +71,21 @@ const Payment = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-`;
+`
 const Methods = styled.img`
     margin-top: 5px;
-`;
+`
 const FooterLinks = styled.div`
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-`;
+`
 const InfoLinks = styled.ul`
     flex: 1;
     margin: 0px 10px;
     list-style: none;
-`;
+`
 const LinkItem = styled.li`
     color: #777;
     font-size: 14px;
@@ -103,35 +103,37 @@ const LinkItem = styled.li`
         color: #fff;
         margin-bottom: 20px;
     }
-`;
+`
 const FooterBottom = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0px;
-`;
+    margin-top: 20px;
+    border-top: 1.5px solid #444444;
+`
 const BottomLeft = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin-left: 10px;
-`;
+`
 const CopyrightContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`;
+`
 const Copyright = styled.p`
     font-size: 14px;
     color: #777;
     margin-right: 5px;
-`;
+`
 const Terms = styled.div`
     width: 205px;
     display: flex;
     justify-content: space-between;
-`;
+`
 const Link = styled.a`
     font-size: 14px;
     color: #777;
@@ -152,21 +154,21 @@ const Link = styled.a`
         left: -10px;
         bottom: 3px;
     }
-`;
+`
 
 const BottomRight = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-`;
+`
 
 const SocialIcons = styled.div`
     width: 150px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-`;
+`
 
 const SocialIconContainer = styled.div`
     display: flex;
@@ -179,12 +181,12 @@ const SocialIconContainer = styled.div`
         color: #eea287;
         transition: all 0.2s ease;
     }
-`;
+`
 const Social = styled.p`
     font-size: 14px;
     color: #777;
     margin-right: 20px;
-`;
+`
 
 const Footer = () => {
     return (
@@ -276,7 +278,7 @@ const Footer = () => {
                 </FooterBottom>
             </Wrapper>
         </Container>
-    );
-};
+    )
+}
 
-export default Footer;
+export default Footer

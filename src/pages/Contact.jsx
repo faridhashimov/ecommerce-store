@@ -254,7 +254,7 @@ const Contact = () => {
         'pk.eyJ1IjoiZmFyZ21vdiIsImEiOiJjbDB5MWl5djcwY2x0M2JveXR3ajgyZGk0In0.oFZCf90L7hQ5_Qts98B3qA';
     return (
         <Container>
-            <Announcement />
+            {/* <Announcement /> */}
             <Navbar />
             <Wrapper>
                 <Main>
