@@ -2,3 +2,32 @@
     <AddShoppingCart style={{ fontSize: 15 }} />
 </ShoppingCartContainer>
 <CartTitle>Add To Cart</CartTitle>
+
+
+ return (
+        <Container>
+            <Navbar />
+            <Wrapper>
+                <LoginContainer>
+                    <ButtonContainer>
+                        <SigninButton
+                            button={active}
+                            onClick={(e) => {
+                                toggle('signin')
+                            }}
+                        >
+                            Sing in
+                        </SigninButton>
+                        <SigninButton
+                            button={active}
+                            onClick={(e) => toggle('register')}
+                        >
+                            Register
+                        </SigninButton>
+                    </ButtonContainer>
+                    {active === 'signin' ? <SignIn /> : <SignUp />}
+                </LoginContainer>
+            </Wrapper>
+            <Footer />
+        </Container>
+    )

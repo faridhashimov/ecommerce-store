@@ -4,10 +4,10 @@ import {
     FormatListNumbered,
     Preview,
     StarRate,
-} from '@mui/icons-material';
-import styled from 'styled-components';
-import Tooltip from '@mui/material/Tooltip';
-import Reviews from './Reviews';
+} from '@mui/icons-material'
+import styled from 'styled-components'
+import Tooltip from '@mui/material/Tooltip'
+import Reviews from './Reviews'
 
 const ProductAction = styled.div`
     position: absolute;
@@ -20,14 +20,13 @@ const ProductAction = styled.div`
     opacity: 0;
     transform: translateX(-20px);
     transition: all 0.2s ease-in-out;
-`;
+`
 const CartTitle = styled.span`
     text-transform: uppercase;
     font-size: 13px;
     font-weight: 400;
     transition: all 0.2s ease-in-out;
-`;
-
+`
 const ShoppingCartContainer = styled.div`
     margin-right: 0px;
     opacity: 0;
@@ -36,7 +35,7 @@ const ShoppingCartContainer = styled.div`
     justify-content: center;
     align-items: center;
     transition: all 0.2s ease-in-out;
-`;
+`
 const Cart = styled.div`
     width: 100%;
     background-color: #232323;
@@ -60,7 +59,7 @@ const Cart = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in-out;
     }
-`;
+`
 
 const Container = styled.div`
     display: flex;
@@ -78,18 +77,25 @@ const Container = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in-out;
     }
-`;
+`
 const ImageContainer = styled.div`
     height: 390px;
     position: relative;
     margin-bottom: 10px;
-`;
-const Image = styled.img`
+`
+const Image = styled.div`
     width: 100%;
     height: 100%;
-    object-fit: cover;
-`;
-const ProductStatus = styled.div``;
+    /* object-fit: cover; */
+    background: url(${(props) => props.main}) center center/cover;
+    /* background-position: cover; */
+    transition: all 0.2s ease-in;
+    &:hover {
+        background: url(${(props) => props.sec}) center center/cover;
+        transition: all 0.2s ease-in;
+    }
+`
+const ProductStatus = styled.div``
 const Status = styled.div`
     position: absolute;
     top: ${(props) => props.order * 20}px;
@@ -97,7 +103,7 @@ const Status = styled.div`
     height: 48px;
     width: 48px;
     color: #fff;
-    font-size: ${props => props.fs === 'Out of Stock' ? '11px' : '13px'};
+    font-size: ${(props) => (props.fs === 'Out of Stock' ? '11px' : '13px')};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,7 +111,7 @@ const Status = styled.div`
     border-radius: 50%;
     border: none;
     background-color: ${(props) => props.bg};
-`;
+`
 const ProductActionContainer = styled.div`
     height: 30px;
     width: 30px;
@@ -120,7 +126,7 @@ const ProductActionContainer = styled.div`
         background-color: #eea287;
         transition: background-color 0.2s ease-in-out;
     }
-`;
+`
 
 const Favorite = styled.div`
     display: flex;
@@ -159,15 +165,15 @@ const Favorite = styled.div`
         transition: all 0.2s ease-in-out;
         transform: translatex(-5px);
     }
-`;
+`
 const InfoContainer = styled.div`
     text-align: center;
-`;
+`
 const Categories = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`;
+`
 
 const Category = styled.span`
     margin-right: 5px;
@@ -176,25 +182,34 @@ const Category = styled.span`
     &:hover {
         color: #ef837b;
     }
-`;
+`
 const Title = styled.div`
     transition: all 0.3s ease;
     &:hover {
         color: #ef837b;
         transition: all 0.3s ease;
     }
-`;
+`
 const Prices = styled.div`
     margin-bottom: 10px;
-`;
+`
 
-const Product = ({img, status, categories, title, price, rate, reviews}) => {
+const Product = ({ mainImg, secImg, img, status, categories, title, price }) => {
     return (
         <Container>
             <ImageContainer>
-                <Image src={img} />
+                <Image main={img[0]} sec={img[1]} />
                 <ProductStatus>
-					{status.map(item => <Status fs={item.title} key={item.id} order={item.order} bg={item.bg}>{item.title}</Status>)}
+                    {status.map((item) => (
+                        <Status
+                            fs={item.title}
+                            key={item.id}
+                            order={item.order}
+                            bg={item.bg}
+                        >
+                            {item.title}
+                        </Status>
+                    ))}
                     {/* <Status order="1" bg="#EF837B">
                         Sale
                     </Status> */}
@@ -220,16 +235,18 @@ const Product = ({img, status, categories, title, price, rate, reviews}) => {
             </ImageContainer>
             <InfoContainer>
                 <Categories>
-					{categories.map(item => <Category key={item}>{item}</Category>)}
+                    {categories.map((item) => (
+                        <Category key={item}>{item}</Category>
+                    ))}
                     {/* <Category>Women</Category>
                     <Category>Clothing</Category> */}
                 </Categories>
                 <Title>{title}</Title>
                 <Prices>$ {price}</Prices>
-                <Reviews/>
+                <Reviews />
             </InfoContainer>
         </Container>
-    );
-};
+    )
+}
 
-export default Product;
+export default Product

@@ -27,7 +27,7 @@ export const brandItems = [
         id: 7,
         img: 'https://d-themes.com/react/molla/demo-8/images/brands/7.png',
     },
-];
+]
 
 //===================================================================================================
 
@@ -53,14 +53,17 @@ export const catItems = [
         disc: 'from $6.99',
         img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-3.jpg',
     },
-];
+]
 
 //===================================================================================================
 
 export const products = [
     {
         id: 1,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_1_2_300x408_9e213baa0a.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_1_1_300x408_1f662c0197.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_1_2_300x408_9e213baa0a.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -75,7 +78,10 @@ export const products = [
     },
     {
         id: 2,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x408_edddfecb50.jpg ',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x408_edddfecb50.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -92,11 +98,14 @@ export const products = [
         ],
         categories: ['Women', 'Clothing'],
         title: 'Black Jeans',
-        price: '9.99 - 12.99',
+        price: '9.99',
     },
     {
         id: 3,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_7_3_300x408_2e98eaeb9f.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_7_2_300x408_22bf0655ad.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_7_3_300x408_2e98eaeb9f.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -107,11 +116,14 @@ export const products = [
         ],
         categories: ['Women', 'Clothing'],
         title: 'Denim Jacket',
-        price: '19.99 - 25.99',
+        price: '19.99',
     },
     {
         id: 4,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_12_2_300x408_040de8318b.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x408_f2de20153a.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_12_2_300x408_040de8318b.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -130,14 +142,17 @@ export const products = [
         title: 'Fashion Sandals',
         price: '24.99',
     },
-];
+]
 
 //===================================================================================================
 
 export const recentArrivals = [
     {
         id: 1,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/1_90856a8f53.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/1_90856a8f53.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/2_4d45fbbc96.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -152,7 +167,10 @@ export const recentArrivals = [
     },
     {
         id: 2,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_1_1_300x408_1f662c0197.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_1_1_300x408_1f662c0197.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_1_2_300x408_9e213baa0a.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -167,7 +185,10 @@ export const recentArrivals = [
     },
     {
         id: 3,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x408_edddfecb50.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -184,11 +205,14 @@ export const recentArrivals = [
         ],
         categories: ['Women', 'Men', 'Clothing'],
         title: 'Black Jeans',
-        price: '9.99 - 12.99',
+        price: '9.99',
     },
     {
         id: 4,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_4_1_300x408_5d955e425b.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_4_1_300x408_5d955e425b.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_4_2_300x408_5c1ff41318.jpg',
+        ],
         status: [],
         categories: ['Women', 'Clothing'],
         title: 'Biker Jacket',
@@ -196,7 +220,10 @@ export const recentArrivals = [
     },
     {
         id: 5,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_7_2_300x408_22bf0655ad.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_7_2_300x408_22bf0655ad.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_7_3_300x408_2e98eaeb9f.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -207,11 +234,14 @@ export const recentArrivals = [
         ],
         categories: ['Women', 'Clothing'],
         title: 'Denim Jacket',
-        price: '19.99 - 25.99',
+        price: '19.99',
     },
     {
         id: 6,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_8_1_300x408_d451a2ae2b.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_8_1_300x408_d451a2ae2b.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_8_2_300x408_fd68021adc.jpg',
+        ],
         status: [],
         categories: ['Women', 'Clothing'],
         title: 'Linen-blend paper bag trousers',
@@ -219,7 +249,10 @@ export const recentArrivals = [
     },
     {
         id: 7,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_10_1_300x408_ee78dab46b.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_10_1_300x408_ee78dab46b.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_10_2_300x408_6cffdb4228.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -240,7 +273,10 @@ export const recentArrivals = [
     },
     {
         id: 8,
-        img: 'https://d-themes.com/react_asset_api/molla/uploads/product_11_1_300x408_3315022870.jpg',
+        img: [
+            'https://d-themes.com/react_asset_api/molla/uploads/product_11_1_300x408_3315022870.jpg',
+            'https://d-themes.com/react_asset_api/molla/uploads/product_11_2_300x408_6ffa44abed.jpg',
+        ],
         status: [
             {
                 id: 1,
@@ -253,7 +289,7 @@ export const recentArrivals = [
         title: 'Short wrap dress',
         price: '24.99',
     },
-];
+]
 
 export const shippingInfo = [
     {
@@ -265,14 +301,14 @@ export const shippingInfo = [
         answer: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa, mollitia! Illo deleniti ipsa soluta quibusdam assumenda temporibus suscipit! Aut inventore eum quod minus! Corrupti vitae, fugiat facilis quos quibusdam deserunt!',
     },
     {
-        question: "Will I be charged customs fees?",
+        question: 'Will I be charged customs fees?',
         answer: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo repudiandae modi natus nam consequatur non magni eius numquam officia placeat.',
     },
     {
         question: 'My item has become faulty',
         answer: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, ex.',
     },
-];
+]
 export const ordersInfo = [
     {
         question: 'Tracking my order',
@@ -283,14 +319,14 @@ export const ordersInfo = [
         answer: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa, mollitia! Illo deleniti ipsa soluta quibusdam assumenda temporibus suscipit! Aut inventore eum quod minus! Corrupti vitae, fugiat facilis quos quibusdam deserunt!',
     },
     {
-        question: "How can I return an item?",
+        question: 'How can I return an item?',
         answer: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo repudiandae modi natus nam consequatur non magni eius numquam officia placeat.',
     },
     {
         question: 'Has my payment gone through?',
         answer: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, ex.',
     },
-];
+]
 export const payments = [
     {
         question: 'What payment types can I use?',
@@ -308,4 +344,4 @@ export const payments = [
         question: 'Has my payment gone through?',
         answer: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, ex.',
     },
-];
+]
