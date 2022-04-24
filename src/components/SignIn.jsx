@@ -1,5 +1,5 @@
 import { ArrowForward, Facebook, Google } from '@mui/icons-material'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { loginCall } from '../redux/apiCalls'
@@ -91,8 +91,13 @@ const SignSocialContainer = styled.div`
 
 const SignIn = () => {
     const [inputs, setInputs] = useState(null)
+    const emailRef = useRef()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
+
+    useEffect(() => {
+        emailRef.current.focus()
+    }, [])
 
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -108,6 +113,7 @@ const SignIn = () => {
             <InputContainer>
                 <Label htmlFor="email">Email address *</Label>
                 <Input
+                    ref={emailRef}
                     id="email"
                     name="email"
                     onChange={handleChange}

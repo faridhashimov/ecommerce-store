@@ -1,5 +1,6 @@
 import { ArrowForward, Facebook, Google } from '@mui/icons-material'
 import styled from 'styled-components'
+import { useRef, useEffect } from 'react'
 
 const LoginPageContainer = styled.div`
     width: 80%;
@@ -91,20 +92,40 @@ const SignSocialContainer = styled.div`
         background-color: #f8f9fb;
     }
 `
+
+const PasswordsContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
 const SignUp = () => {
+    const emailRef = useRef()
 
+    useEffect(() => {
+        emailRef.current.focus()
+    }, [])
 
-    
     return (
         <LoginPageContainer>
             <InputContainer>
                 <Label>Your email address *</Label>
-                <Input type="text" />
+                <Input
+                    ref={emailRef}
+                    type="email"
+                    required
+                    autoComplete="off"
+                />
             </InputContainer>
-            <InputContainer>
-                <Label>Password *</Label>
-                <Input type="text" />
-            </InputContainer>
+            <PasswordsContainer>
+                <InputContainer>
+                    <Label>Password *</Label>
+                    <Input type="password" required />
+                </InputContainer>
+                <InputContainer>
+                    <Label>Re-type Password *</Label>
+                    <Input type="password" required />
+                </InputContainer>
+            </PasswordsContainer>
             <LoginButtonContainer>
                 <LoginButton>
                     Sign Up{' '}
