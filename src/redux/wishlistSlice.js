@@ -9,8 +9,7 @@ export const wishlistSlice = createSlice({
     reducers: {
         addToWishlist: (state, action) => {
             state.added = true
-            // state.product((prev) => [...prev, action.payload])
-
+            state.product = [...state.product, action.payload]
         },
         deleteFromWishlist: (state) => {
             state.added = false

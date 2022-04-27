@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Reviews from './Reviews'
 import { css } from 'styled-components'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
 
@@ -63,7 +63,6 @@ const Cart = styled.div`
         transition: all 0.2s ease-in-out;
     }
 `
-
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -146,7 +145,6 @@ const ProductActionContainer = styled.div`
         transition: background-color 0.2s ease-in-out;
     }
 `
-
 const Favorite = styled.div`
     display: flex;
     justify-content: center;
@@ -212,17 +210,27 @@ const Title = styled.div`
 const Prices = styled.div`
     margin-bottom: 10px;
 `
-
 const Product = (item) => {
     const { img, status, category, title, price } = item
+    const productInWishlist = useSelector((state) => state.wishlist.product)
     const dispatch = useDispatch()
+    console.log(productInWishlist)
     const handleClick = () => {
         dispatch(openModal(item))
     }
 
     const handleAdd = () => {
-        dispatch(addToWishlist(item))
+        if (productInWishlist.length === 0) {
+            dispatch(addToWishlist(item))
+        } else if (productInWishlist.some((e) => e._id === item._id)) {
+            return
+        } else {
+            dispatch(addToWishlist(item))
+        }
+
+        // dispatch(addToWishlist(item))
     }
+
     return (
         <Container>
             <ImageContainer>

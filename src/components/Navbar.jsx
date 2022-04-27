@@ -7,9 +7,14 @@ import {
     ShoppingCartOutlined,
 } from '@mui/icons-material'
 import { Link, NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Container = styled.div`
     height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #fff;
 `
 const Wrapper = styled.div`
     width: 93vw;
@@ -110,9 +115,14 @@ const CartTotal = styled.span`
 // const StyledLink = styled(NavLink)``
 
 const Navbar = () => {
+    const product = useSelector(state => state.wishlist.product)
+    console.log(product.length);
+    
     let activeStyle = {
         borderBottom: '2px solid #000',
     }
+
+    
 
     return (
         <Container>
@@ -203,7 +213,7 @@ const Navbar = () => {
                         </SearchButton>
                     </SearchContainer>
                     <RightMenuIcon>
-                        <Badge badgeContent={1} color="primary">
+                        <Badge badgeContent={product.length} color="primary">
                             <FavoriteBorder />
                         </Badge>
                     </RightMenuIcon>

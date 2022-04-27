@@ -16,7 +16,7 @@ const Container = styled.div`
 const Products = (props) => {
     const { products, loading } = props
 
-    console.log('ok')
+    // console.log('ok')
 
     return (
         <Container>
