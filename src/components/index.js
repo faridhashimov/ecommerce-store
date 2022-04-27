@@ -11,3 +11,4 @@ export { default as Follow } from './Follow.jsx';
 export { default as Footer } from './Footer.jsx';
 export { default as SignIn } from './SignIn.jsx';
 export { default as SignUp } from './SignUp.jsx';
+export { default as ProductModal } from './ProductModal.jsx';

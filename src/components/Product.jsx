@@ -1,18 +1,21 @@
 import {
-    AddShoppingCart,
     FavoriteBorder,
     FormatListNumbered,
     Preview,
-    StarRate,
 } from '@mui/icons-material'
 import styled from 'styled-components'
 import Tooltip from '@mui/material/Tooltip'
 import Reviews from './Reviews'
+import { css } from 'styled-components'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { openModal } from '../redux/modalSlice'
+import { addToWishlist } from '../redux/wishlistSlice'
 
 const ProductAction = styled.div`
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 35px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -86,9 +89,7 @@ const ImageContainer = styled.div`
 const Image = styled.div`
     width: 100%;
     height: 100%;
-    /* object-fit: cover; */
     background: url(${(props) => props.main}) center center/cover;
-    /* background-position: cover; */
     transition: all 0.2s ease-in;
     &:hover {
         background: url(${(props) => props.sec}) center center/cover;
@@ -98,7 +99,7 @@ const Image = styled.div`
 const ProductStatus = styled.div``
 const Status = styled.div`
     position: absolute;
-    top: ${(props) => props.order * 20}px;
+    top: ${(props) => props.order * 35}px;
     left: 20px;
     height: 48px;
     width: 48px;
@@ -110,7 +111,25 @@ const Status = styled.div`
     text-align: center;
     border-radius: 50%;
     border: none;
-    background-color: ${(props) => props.bg};
+    ${(props) => {
+        if (props.fs === 'Sale') {
+            return css`
+                background-color: #ef837b;
+            `
+        } else if (props.fs === 'New') {
+            return css`
+                background-color: #a6c76c;
+            `
+        } else if (props.fs === 'Top') {
+            return css`
+                background-color: #7dd2ea;
+            `
+        } else {
+            return css`
+                background-color: #cccccc;
+            `
+        }
+    }};
 `
 const ProductActionContainer = styled.div`
     height: 30px;
@@ -194,33 +213,34 @@ const Prices = styled.div`
     margin-bottom: 10px;
 `
 
-const Product = ({ mainImg, secImg, img, status, categories, title, price }) => {
+const Product = (item) => {
+    const { img, status, category, title, price } = item
+    const dispatch = useDispatch()
+    const handleClick = () => {
+        dispatch(openModal(item))
+    }
+
+    const handleAdd = () => {
+        dispatch(addToWishlist(item))
+    }
     return (
         <Container>
             <ImageContainer>
                 <Image main={img[0]} sec={img[1]} />
                 <ProductStatus>
-                    {status.map((item) => (
-                        <Status
-                            fs={item.title}
-                            key={item.id}
-                            order={item.order}
-                            bg={item.bg}
-                        >
-                            {item.title}
+                    {status?.map((item, i) => (
+                        <Status fs={item} key={i} order={i + 1}>
+                            {item}
                         </Status>
                     ))}
-                    {/* <Status order="1" bg="#EF837B">
-                        Sale
-                    </Status> */}
                 </ProductStatus>
                 <ProductAction>
                     <ProductActionContainer>
-                        <Favorite>
+                        <Favorite onClick={handleAdd}>
                             <FavoriteBorder style={{ fontSize: 16 }} />
                         </Favorite>
                     </ProductActionContainer>
-                    <ProductActionContainer>
+                    <ProductActionContainer onClick={handleClick}>
                         <Tooltip title="Quick View" placement="right-end">
                             <Preview style={{ fontSize: 16 }} />
                         </Tooltip>
@@ -235,11 +255,9 @@ const Product = ({ mainImg, secImg, img, status, categories, title, price }) => 
             </ImageContainer>
             <InfoContainer>
                 <Categories>
-                    {categories.map((item) => (
-                        <Category key={item}>{item}</Category>
+                    {category?.map((item, i) => (
+                        <Category key={i}>{item}</Category>
                     ))}
-                    {/* <Category>Women</Category>
-                    <Category>Clothing</Category> */}
                 </Categories>
                 <Title>{title}</Title>
                 <Prices>$ {price}</Prices>

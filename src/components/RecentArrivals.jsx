@@ -1,7 +1,9 @@
-import { ArrowRightAltOutlined } from '@mui/icons-material';
-import styled from 'styled-components';
-import Products from './Products';
-import { recentArrivals } from '../data';
+import { ArrowRightAltOutlined } from '@mui/icons-material'
+import styled from 'styled-components'
+import Products from './Products'
+import { useEffect, useState } from 'react'
+import { css } from 'styled-components'
+import { useAxios } from '../hooks/useAxios'
 
 const Container = styled.div`
     width: 100%;
@@ -9,11 +11,11 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     margin: 30px 0px;
-`;
+`
 const Wrapper = styled.div`
     width: 93vw;
     padding-bottom: 30px;
-`;
+`
 const Title = styled.div`
     margin-bottom: 15px;
     text-align: center;
@@ -21,14 +23,14 @@ const Title = styled.div`
     line-height: 34px;
     color: #333;
     font-weight: 600;
-`;
+`
 const Filters = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-`;
+`
 const FilterButton = styled.div`
     padding: 5px 10px;
     text-transform: uppercase;
@@ -42,14 +44,29 @@ const FilterButton = styled.div`
         color: #eea287;
         transition: all 0.3s ease-in-out;
     }
-`;
+    ${(props) => {
+        if (props.bg) {
+            return css`
+                color: #eea287;
+                border-bottom: 1px solid #eea287;
+                transition: all 0.3s ease-in-out;
+            `
+        } else {
+            return css`
+                color: #777777;
+                border-bottom: 1px solid transparent;
+                transition: all 0.3s ease-in-out;
+            `
+        }
+    }}
+`
 const ButtonContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 30px;
-`;
+`
 const InfoButton = styled.button`
     display: flex;
     justify-content: center;
@@ -67,20 +84,81 @@ const InfoButton = styled.button`
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
-`;
+`
 
 const RecentArrivals = () => {
+    const { data, error, loading } = useAxios(
+        'http://localhost:5000/api/products'
+    )
+    const [products, setProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState([])
+    const [active, setActive] = useState('All')
+
+    useEffect(() => {
+        setProducts(data)
+        setFilteredProducts(products)
+    }, [data, products])
+
+    const handleClick = (e) => {
+        const productType = e.target.getAttribute('data-id')
+        setActive(productType)
+        if (productType !== 'All') {
+            setFilteredProducts(
+                products.filter(
+                    (product) => product.category.indexOf(productType) > -1
+                )
+            )
+        } else {
+            setFilteredProducts(products)
+        }
+    }
+
     return (
         <Container>
             <Wrapper>
                 <Title>Recent Arrivals</Title>
                 <Filters>
-                    <FilterButton>All</FilterButton>
-                    <FilterButton>Women</FilterButton>
-                    <FilterButton>Men</FilterButton>
-                    <FilterButton>Shoe & Boots</FilterButton>
+                    <FilterButton
+                        bg={active === 'All' ? true : false}
+                        onClick={handleClick}
+                        data-id="All"
+                    >
+                        All
+                    </FilterButton>
+                    <FilterButton
+                        bg={active === 'Women' ? true : false}
+                        onClick={handleClick}
+                        data-id="Women"
+                    >
+                        Women
+                    </FilterButton>
+                    <FilterButton
+                        bg={active === 'Men' ? true : false}
+                        onClick={handleClick}
+                        data-id="Men"
+                    >
+                        Men
+                    </FilterButton>
+                    <FilterButton
+                        bg={active === 'Kids' ? true : false}
+                        onClick={handleClick}
+                        data-id="Kids"
+                    >
+                        Kids
+                    </FilterButton>
+                    <FilterButton
+                        bg={active === 'Shoes' ? true : false}
+                        onClick={handleClick}
+                        data-id="Shoes"
+                    >
+                        Shoes & Boots
+                    </FilterButton>
                 </Filters>
-                <Products products={recentArrivals} />
+                <Products
+                    error={error}
+                    loading={loading}
+                    products={filteredProducts}
+                />
                 <ButtonContainer>
                     <InfoButton>
                         View More
@@ -95,7 +173,7 @@ const RecentArrivals = () => {
                 </ButtonContainer>
             </Wrapper>
         </Container>
-    );
-};
+    )
+}
 
-export default RecentArrivals;
+export default RecentArrivals
