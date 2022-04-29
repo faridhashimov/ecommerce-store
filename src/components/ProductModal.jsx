@@ -1,17 +1,20 @@
 import {
     AddShoppingCart,
     Close,
-    Facebook,
+    FacebookOutlined,
     FavoriteBorder,
     Instagram,
     Pinterest,
     Twitter,
 } from '@mui/icons-material'
+import { Icon } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { css } from 'styled-components'
+import { addToCart } from '../redux/cartSlice'
 import { closeModal } from '../redux/modalSlice'
+import { addToWishlist } from '../redux/wishlistSlice'
 
 const ModalBackground = styled.div`
     width: 100vw;
@@ -29,7 +32,7 @@ const ModalBackground = styled.div`
 `
 const ModalContainer = styled.div`
     position: relative;
-    height: 70%;
+    min-height: 70%;
     width: 65%;
     background-color: #fff;
     display: flex;
@@ -177,6 +180,19 @@ const Color = styled.div`
     cursor: pointer;
     border: 1.5px solid #fff;
     transition: all 0.2s ease-in;
+    ${(props) => {
+        if (props.shadow) {
+            return css`
+                box-shadow: 0px 0px 2px 1px rgba(34, 60, 80, 0.39);
+                transition: all 0.2s ease-in;
+            `
+        } else {
+            return css`
+                box-shadow: none;
+                transition: all 0.3s ease-in-out;
+            `
+        }
+    }}
     &:hover {
         box-shadow: 0px 0px 2px 1px rgba(34, 60, 80, 0.39);
         transition: all 0.2s ease-in;
@@ -279,13 +295,26 @@ const SharContainer = styled(ProductCategory)``
 const SocialContainer = styled(Categories)`
     color: #666;
 `
+const StyledIcon = styled(Icon)`
+    font-size: 16px !important;
+    margin-right: 10px;
+    cursor: pointer;
+    &:hover {
+        color: #eea287;
+    }
+`
 
 const ProductModal = () => {
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
-    const dipatch = useDispatch()
-    const { title, img, color, status, desc, price, size, category } =
+    const [chooseColor, setChooseColor] = useState('')
+    const [chooseSize, setChooseSize] = useState('')
+    const [quantity, setQuantity] = useState(1)
+    const productInWishlist = useSelector((state) => state.wishlist.product)
+    const dispatch = useDispatch()
+    const { _id, title, img, color, status, desc, price, size, category } =
         useSelector((state) => state.modal.product)
-    console.log(size)
+    const productItem = useSelector((state) => state.modal.product)
+    // console.log(chooseColor, chooseSize)
 
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -293,8 +322,6 @@ const ProductModal = () => {
         const y = ((e.pageY - top) / height) * 100
         setBackgroundPosition(`${x}% ${y}%`)
     }
-
-    const [quantity, setQuantity] = useState(1)
 
     const handleClik = (exp) => {
         if (exp === 'dec') {
@@ -304,11 +331,49 @@ const ProductModal = () => {
         }
     }
     const handleClose = () => {
-        dipatch(closeModal())
+        dispatch(closeModal())
+    }
+
+    const handleAdd = () => {
+        if (productInWishlist.length === 0) {
+            dispatch(addToWishlist(productItem))
+        } else if (productInWishlist.some((e) => e._id === productItem._id)) {
+            return
+        } else {
+            dispatch(addToWishlist(productItem))
+        }
+    }
+
+    const onChooseColor = (color) => {
+        setChooseColor(color)
+    }
+
+    const onAddToCart = () => {
+        dispatch(
+            addToCart({
+                id: _id,
+                productColor: chooseColor,
+                productSize: chooseSize,
+                title,
+                img,
+                price,
+                quantity,
+                total: price * quantity,
+            })
+        )
+    }
+
+    const handleModalClose = (e) => {
+        let modalBg = e.target.getAttribute('data-bg')
+        if (modalBg !== 'modal-bg') {
+            return
+        } else {
+            dispatch(closeModal())
+        }
     }
 
     return (
-        <ModalBackground>
+        <ModalBackground data-bg="modal-bg" onClick={handleModalClose}>
             <ModalContainer>
                 <ModalClose onClick={handleClose}>
                     <Close />
@@ -320,10 +385,6 @@ const ProductModal = () => {
                             {img.map((item, i) => (
                                 <Image key={i} src={item} />
                             ))}
-                            {/* <Image src="https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg" />
-                            <Image src="https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x408_edddfecb50.jpg" />
-                            <Image src="https://d-themes.com/react_asset_api/molla/uploads/product_2_3_300x408_a8f9e18e67.jpg" />
-                            <Image src="https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg" /> */}
                         </Images>
                         <MainImageContainer>
                             <ProductStatuses>
@@ -332,8 +393,6 @@ const ProductModal = () => {
                                         {item}
                                     </Status>
                                 ))}
-                                {/* <Status bg="#a6c76c">New</Status>
-                                <Status bg="#ef837b">Sale</Status> */}
                             </ProductStatuses>
                             <MainImageWrapper
                                 onMouseMove={handleMouseMove}
@@ -354,13 +413,22 @@ const ProductModal = () => {
                             <FilterTitle>Color:</FilterTitle>
                             <FilterColor>
                                 {color.map((item) => (
-                                    <Color key={item} bg={`#${item}`} />
+                                    <Color
+                                        onClick={() => onChooseColor(item)}
+                                        key={item}
+                                        bg={`#${item}`}
+                                        shadow={
+                                            chooseColor === item ? true : null
+                                        }
+                                    />
                                 ))}
                             </FilterColor>
                         </FilterContainer>
                         <FilterContainer>
                             <FilterTitle>Size:</FilterTitle>
-                            <FilterSize>
+                            <FilterSize
+                                onChange={(e) => setChooseSize(e.target.value)}
+                            >
                                 <Size>Select a size</Size>
                                 {size.map((item) => (
                                     <Size key={item}>{item}</Size>
@@ -384,7 +452,7 @@ const ProductModal = () => {
                             </AmountContainer>
                         </FilterContainer>
                         <CartButtonContainer>
-                            <AddToCartBtn>
+                            <AddToCartBtn onClick={onAddToCart}>
                                 <AddShoppingCart
                                     sx={{
                                         fontSize: '14px',
@@ -393,7 +461,7 @@ const ProductModal = () => {
                                 />{' '}
                                 Add to card
                             </AddToCartBtn>
-                            <WishlistBtn>
+                            <WishlistBtn onClick={handleAdd}>
                                 {' '}
                                 <FavoriteBorder
                                     sx={{
@@ -412,54 +480,15 @@ const ProductModal = () => {
                                 {category.map((item) => (
                                     <Category key={item}>{item + ','}</Category>
                                 ))}
-                                {/* <Category>Women</Category>
-                                <Category>Men</Category>
-                                <Category>Clothing</Category> */}
                             </Categories>
                         </ProductCategory>
                         <SharContainer>
                             <CategoryTitle>Share:</CategoryTitle>
                             <SocialContainer>
-                                <Facebook
-                                    sx={{
-                                        fontSize: '16px',
-                                        marginRight: '12px',
-                                        cursor: 'pointer',
-                                        '&:hover': {
-                                            color: '#eea287',
-                                        },
-                                    }}
-                                />
-                                <Twitter
-                                    sx={{
-                                        fontSize: '16px',
-                                        marginRight: '12px',
-                                        cursor: 'pointer',
-                                        '&:hover': {
-                                            color: '#eea287',
-                                        },
-                                    }}
-                                />
-                                <Instagram
-                                    sx={{
-                                        fontSize: '16px',
-                                        marginRight: '12px',
-                                        cursor: 'pointer',
-                                        '&:hover': {
-                                            color: '#eea287',
-                                        },
-                                    }}
-                                />
-                                <Pinterest
-                                    sx={{
-                                        fontSize: '16px',
-                                        marginRight: '12px',
-                                        cursor: 'pointer',
-                                        '&:hover': {
-                                            color: '#eea287',
-                                        },
-                                    }}
-                                />
+                                <StyledIcon component={FacebookOutlined} />
+                                <StyledIcon component={Twitter} />
+                                <StyledIcon component={Instagram} />
+                                <StyledIcon component={Pinterest} />
                             </SocialContainer>
                         </SharContainer>
                     </ModalInfo>

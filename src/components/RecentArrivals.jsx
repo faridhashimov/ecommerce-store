@@ -4,6 +4,7 @@ import Products from './Products'
 import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import { useAxios } from '../hooks/useAxios'
+import Spinner from './Spinner'
 
 const Container = styled.div`
     width: 100%;
@@ -86,6 +87,14 @@ const InfoButton = styled.button`
     }
 `
 
+const ProductsContainer = styled.div`
+    min-height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 const RecentArrivals = () => {
     const { data, error, loading } = useAxios(
         'http://localhost:5000/api/products'
@@ -112,6 +121,19 @@ const RecentArrivals = () => {
             setFilteredProducts(products)
         }
     }
+    let spinner = loading ? <Spinner /> : null
+    let content =
+        !loading && data.length !== 0 ? (
+            <Products products={filteredProducts} />
+        ) : null
+    let errorMsg =
+        (!data || error) && !loading ? (
+            <>
+                <p style={{ color: 'red', textAlign: 'center' }}>
+                    Something went wrong: {error}...
+                </p>
+            </>
+        ) : null
 
     return (
         <Container>
@@ -154,23 +176,25 @@ const RecentArrivals = () => {
                         Shoes & Boots
                     </FilterButton>
                 </Filters>
-                <Products
-                    error={error}
-                    loading={loading}
-                    products={filteredProducts}
-                />
-                <ButtonContainer>
-                    <InfoButton>
-                        View More
-                        <ArrowRightAltOutlined
-                            style={{
-                                marginLeft: 12,
-                                fontSize: 15,
-                                fontWeight: 300,
-                            }}
-                        />
-                    </InfoButton>
-                </ButtonContainer>
+                <ProductsContainer>
+                    {spinner}
+                    {content}
+                    {errorMsg}
+                </ProductsContainer>
+                {data.length > 0 ? (
+                    <ButtonContainer>
+                        <InfoButton>
+                            View More
+                            <ArrowRightAltOutlined
+                                style={{
+                                    marginLeft: 12,
+                                    fontSize: 15,
+                                    fontWeight: 300,
+                                }}
+                            />
+                        </InfoButton>
+                    </ButtonContainer>
+                ) : null}
             </Wrapper>
         </Container>
     )

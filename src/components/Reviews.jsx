@@ -1,10 +1,13 @@
 import { StarRate } from '@mui/icons-material';
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const ReviewContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    ${mobile({display: 'none'})}
+
 `;
 const StarContainer = styled.div`
     margin-right: 10px;

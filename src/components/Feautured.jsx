@@ -3,6 +3,8 @@ import Products from './Products'
 import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import { useAxios } from '../hooks/useAxios'
+import Spinner from './Spinner'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -51,6 +53,16 @@ const FilterButton = styled.div`
         color: #333;
         transition: all 0.3s ease-in-out;
     }
+
+    ${mobile({fontSize: '15px', margin: '0px 10px', padding: '4px'})}
+`
+
+const ProductsContainer = styled.div`
+    min-height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const Feautured = () => {
@@ -81,6 +93,20 @@ const Feautured = () => {
         setFilteredProducts(products)
     }, [data, products])
 
+    let spinner = loading ? <Spinner /> : null
+    let content =
+        !loading && data.length !== 0 ? (
+            <Products products={filteredProducts.slice(0, 4)} />
+        ) : null
+    let errorMsg =
+        (!data || error) && !loading ? (
+            <>
+                <p style={{ color: 'red', textAlign: 'center' }}>
+                    Something went wrong: {error}...
+                </p>
+            </>
+        ) : null
+
     return (
         <Container>
             <Wrapper>
@@ -107,11 +133,11 @@ const Feautured = () => {
                         Top Rated
                     </FilterButton>
                 </Filters>
-                <Products
-                    error={error}
-                    loading={loading}
-                    products={filteredProducts.slice(0, 4)}
-                />
+                <ProductsContainer>
+                    {spinner}
+                    {content}
+                    {errorMsg}
+                </ProductsContainer>
             </Wrapper>
         </Container>
     )

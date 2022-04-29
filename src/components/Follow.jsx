@@ -1,5 +1,6 @@
-import { FavoriteBorder, ForumOutlined } from '@mui/icons-material';
-import styled from 'styled-components';
+import { FavoriteBorder, ForumOutlined } from '@mui/icons-material'
+import styled from 'styled-components'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -7,30 +8,35 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`;
+    /* ${mobile({ padding: '0px 10px'})} */
+`
 const TitleContainer = styled.div`
     width: 93vw;
     text-align: center;
     margin-bottom: 30px;
-`;
+    ${mobile({ marginBottom: '10px' })}
+`
 const Title = styled.h1`
     font-size: 22px;
     font-weight: 700;
     line-height: 26px;
     margin-bottom: 10px;
     color: #333;
-`;
+    ${mobile({fontSize: '16px', marginBottom: '5px' })}
+
+`
 const Info = styled.p`
     font-size: 13px;
     font-weight: 300;
     color: #777;
-`;
+`
 const SocialPosts = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-`;
+    /* ${mobile({ display: 'grid', gridTemplateColumns: 'repeat(2 100px)' })} */
+`
 const LikesNComments = styled.div`
     display: flex;
     justify-content: center;
@@ -40,7 +46,7 @@ const LikesNComments = styled.div`
     z-index: 10;
     opacity: 0;
     transition: all 0.3s ease;
-`;
+`
 const PostContainer = styled.div`
     width: 252.656px;
     height: 252.656px;
@@ -67,12 +73,13 @@ const PostContainer = styled.div`
         opacity: 1;
         transition: all 0.2s ease;
     }
-`;
+    ${mobile({ width: '100%', height: '100%' })}
+`
 const PostImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-`;
+`
 
 const Likes = styled.div`
     display: flex;
@@ -85,7 +92,7 @@ const Likes = styled.div`
         color: #eea287;
         transition: all 0.2s ease-in-out;
     }
-`;
+`
 const Comments = styled.div`
     display: flex;
     justify-content: center;
@@ -96,7 +103,7 @@ const Comments = styled.div`
         color: #eea287;
         transition: all 0.2s ease-in-out;
     }
-`;
+`
 
 const Follow = () => {
     return (
@@ -193,7 +200,7 @@ const Follow = () => {
                 </PostContainer>
             </SocialPosts>
         </Container>
-    );
-};
+    )
+}
 
-export default Follow;
+export default Follow

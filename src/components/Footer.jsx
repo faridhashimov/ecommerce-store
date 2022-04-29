@@ -6,6 +6,7 @@ import {
     YouTube,
 } from '@mui/icons-material'
 import styled from 'styled-components'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -22,12 +23,15 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 `
 const FooterTop = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
+    ${mobile({flexDirection: 'column'})}
+
 `
 const FooterInfo = styled.div`
     flex: 1;
@@ -112,6 +116,8 @@ const FooterBottom = styled.div`
     padding: 20px 0px;
     margin-top: 20px;
     border-top: 1.5px solid #444444;
+    ${mobile({flexDirection: 'column'})}
+
 `
 const BottomLeft = styled.div`
     display: flex;

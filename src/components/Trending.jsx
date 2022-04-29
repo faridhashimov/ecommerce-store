@@ -1,5 +1,6 @@
 import { ArrowRightAltOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     height: 470px;
@@ -27,6 +28,7 @@ const InfoContainer = styled.div`
     align-items: center;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 20px;
+    ${mobile({width: '300px'})}
 `;
 const InfoTrending = styled.h4`
     font-size: 14px;

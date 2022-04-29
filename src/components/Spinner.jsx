@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { keyframes } from 'styled-components'
 
 const SpinnerContainer = styled.div`
     position: absolute;

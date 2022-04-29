@@ -8,6 +8,7 @@ import {
 } from '@mui/icons-material'
 import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import {mobile} from '../responsive'
 
 const Container = styled.div`
     height: 60px;
@@ -34,12 +35,15 @@ const Logo = styled.h1`
 const Reverse = styled.span`
     color: #eea287;
 `
-const Center = styled.div``
+const Center = styled.div`
+
+`
 const Menu = styled.ul`
     list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    ${mobile({display: 'none'})}
 `
 const MenuItemContainer = styled.li`
     position: relative;
@@ -80,6 +84,7 @@ const SearchContainer = styled.div`
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 25px;
+    ${mobile({display: 'none'})}
 `
 const Input = styled.input`
     height: 100%;
@@ -104,6 +109,7 @@ const RightMenuIcon = styled.div`
     transition: all 0.2s ease;
     &:hover {
         color: #eea287;
+        transition: all 0.2s ease;
     }
 `
 const CartTotal = styled.span`
@@ -112,24 +118,34 @@ const CartTotal = styled.span`
     font-weight: 600;
 `
 
-// const StyledLink = styled(NavLink)``
+const StyledLink = styled(Link)`
+    color: #666666;
+    transition: all 0.2s ease;
+    &:hover {
+        color: #eea287;
+        transition: all 0.2s ease;
+    }
+`
 
 const Navbar = () => {
-    const product = useSelector(state => state.wishlist.product)
-    console.log(product.length);
-    
+    const product = useSelector((state) => state.wishlist.product)
+    const products = useSelector((state) => state.cart.products)
+    const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
+    // console.log(product.length)
+
     let activeStyle = {
         borderBottom: '2px solid #000',
     }
-
-    
 
     return (
         <Container>
             <Wrapper>
                 <Left>
                     <Logo>
-                        <Link style={{color: 'inherit', textDecoration: 'none'}} to="/">
+                        <Link
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+                            to="/"
+                        >
                             F<Reverse>R</Reverse>ED
                         </Link>
                     </Logo>
@@ -213,13 +229,17 @@ const Navbar = () => {
                         </SearchButton>
                     </SearchContainer>
                     <RightMenuIcon>
-                        <Badge badgeContent={product.length} color="primary">
-                            <FavoriteBorder />
+                        <Badge badgeContent={product?.length} color="primary">
+                            <StyledLink to="/wishlist">
+                                <FavoriteBorder />
+                            </StyledLink>
                         </Badge>
                     </RightMenuIcon>
                     <RightMenuIcon>
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlined />
+                        <Badge badgeContent={quantity} color="primary">
+                            <StyledLink to="/cart">
+                                <ShoppingCartOutlined />
+                            </StyledLink>
                         </Badge>
                         <CartTotal>$ 59,98</CartTotal>
                     </RightMenuIcon>

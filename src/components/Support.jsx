@@ -1,5 +1,6 @@
 import { RocketLaunch, RotateLeft, SupportSharp } from '@mui/icons-material';
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     width: 100%;
@@ -14,6 +15,7 @@ const SupportContainer = styled.div`
     align-items: center;
     width: 93vw;
     padding: 0px 0px 40px;
+    ${mobile({flexDirection: 'column',padding: '10px 0px'})}
 `;
 const InfoTitle = styled.h1`
     font-weight: 600;
@@ -59,6 +61,7 @@ const InfoContainer = styled.div`
     &:hover ${InfoIcon} {
         color: #fff;
     }
+    ${mobile({padding: '10px', margin: '5px 0px', width: '80%'})}
 `;
 
 const Support = () => {

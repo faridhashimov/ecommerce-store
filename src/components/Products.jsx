@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { mobile } from '../responsive'
 
 import Product from './Product'
 import ProductModal from './ProductModal'
@@ -11,20 +12,15 @@ const Container = styled.div`
     grid-template-columns: repeat(4, 1fr);
     justify-content: space-between;
     align-items: center;
+    ${mobile({gridTemplateColumns: 'repeat(2, 1fr)'})}
 `
 
-const Products = (props) => {
-    const { products, loading } = props
-
-    // console.log('ok')
-
+const Products = ({ products, loading }) => {
     return (
         <Container>
-            {loading ? (
-                <Spinner />
-            ) : (
-                products.map((item) => <Product key={item._id} {...item} />)
-            )}
+            {products.map((item) => (
+                <Product key={item._id} {...item} />
+            ))}
         </Container>
     )
 }

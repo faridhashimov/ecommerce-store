@@ -1,5 +1,14 @@
 import { Navbar, Footer } from '../components'
 import styled from 'styled-components'
+import {
+    Close,
+    FormatListNumbered,
+    FavoriteBorderOutlined,
+} from '@mui/icons-material'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteFromWishlist } from '../redux/wishlistSlice'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 const Container = styled.div`
     width: 100%;
@@ -40,11 +49,145 @@ const Wrapper = styled.div`
 const ProductsList = styled.div`
     flex: 5;
 `
-const CartTotal = styled.div`
-    flex: 2;
+
+const ProductsListHeader = styled.div`
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+    display: flex;
+    align-items: center;
+`
+const Element = styled.div`
+    flex: ${(props) => props.fl};
+    background-color: ${(props) => props.bg};
+    font-size: 15px;
+    color: #999;
+    padding: 20px 0px;
+`
+const ProductsListBody = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 5;
+`
+const ProductsListBodyElement = styled(ProductsListHeader)``
+const ImageTitleContainer = styled.div`
+    flex: 14;
+    display: flex;
+    align-items: center;
+    padding: 30px 0px;
+`
+const PriceContainer = styled.div`
+    flex: 4;
+`
+const StockStatusContainer = styled.div`
+    flex: 4;
+`
+const TotalContainer = styled.div`
+    flex: 4;
+    color: #eea287;
+
+`
+const DeleteContainer = styled.div`
+    flex: 1;
+`
+const Image = styled.img`
+    height: 65px;
+    margin-right: 30px;
+`
+const Title = styled.h3`
+    font-size: 16px;
+    font-weight: 400;
+    color: #232323;
+`
+const Price = styled.span`
+    font-size: 16px;
+    font-weight: 400;
+`
+const StockStatus = styled.span`
+    font-size: 16px;
+    font-weight: 400;
+    color: #eea287;
 `
 
+const Delete = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #777;
+    cursor: pointer;
+    &:hover {
+        color: black;
+    }
+`
+
+const NoProductContainer = styled.div`
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    span {
+        font-size: 15px;
+        color: #777;
+    }
+`
+const GoShopBtn = styled(Link)`
+    padding: 7px 45px;
+    background-color: #eea287;
+    border: 1px solid #c9866e;
+    cursor: pointer;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    text-decoration: none;
+    &:hover {
+        background-color: #c9866e;
+    }
+`
+
+const OrderInfo = styled.div`
+    width: 100%;
+    display: flex;
+`
+const CheckoutContainer = styled.div`
+    flex: 2;
+`
+const AmountContainer = styled.div`
+    /* margin-left: 43px; */
+    border: 1px solid #d7d7d7;
+    padding: 7px 5px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #777;
+    width: 95px;
+    display: flex;
+    justify-content: space-between;
+`
+const AmountChangeBtn = styled.button`
+    background: transparent;
+    border: transparent;
+    color: #777;
+    cursor: pointer;
+    &:hover {
+        color: #eea287;
+    }
+`
+const Amount = styled.span``
+
 const Cart = () => {
+    const product = useSelector((store) => store.cart.products)
+    const [quantity, setQuantity] = useState(1)
+
+    const handleClik = (exp) => {
+        if (exp === 'dec') {
+            quantity > 1 && setQuantity(quantity - 1)
+        } else {
+            setQuantity(quantity + 1)
+        }
+    }
     return (
         <Container>
             <Navbar />
@@ -55,8 +198,79 @@ const Cart = () => {
             </CarteHeader>
             <CartBody>
                 <Wrapper>
-                    <ProductsList></ProductsList>
-                    <CartTotal></CartTotal>
+                    <ProductsList>
+                        <OrderInfo>
+                            <ProductsListBody>
+                                <ProductsListHeader>
+                                    <Element fl="14">
+                                        <span>Product</span>
+                                    </Element>
+                                    <Element fl="4">
+                                        <span>Price</span>
+                                    </Element>
+                                    <Element fl="4">
+                                        <span>Quantity</span>
+                                    </Element>
+                                    <Element fl="4">
+                                        <span>Total</span>
+                                    </Element>
+                                    <Element fl="1">
+                                        {/* <span>Total</span> */}
+                                    </Element>
+                                </ProductsListHeader>
+                                {product.map((item) => (
+                                    <ProductsListBodyElement key={item.id}>
+                                        <ImageTitleContainer fl="14">
+                                            <Image
+                                                src={item.img[0]}
+                                                alt={item.title}
+                                            />
+                                            <Title>{item.title}</Title>
+                                        </ImageTitleContainer>
+                                        <PriceContainer fl="4">
+                                            <Price>$ {item.price}</Price>
+                                        </PriceContainer>
+                                        <StockStatusContainer fl="4">
+                                            <StockStatus>
+                                                <AmountContainer>
+                                                    <AmountChangeBtn
+                                                        onClick={() =>
+                                                            handleClik('dec')
+                                                        }
+                                                    >
+                                                        -
+                                                    </AmountChangeBtn>
+                                                    <Amount>{quantity}</Amount>
+                                                    <AmountChangeBtn
+                                                        onClick={() =>
+                                                            handleClik('inc')
+                                                        }
+                                                    >
+                                                        +
+                                                    </AmountChangeBtn>
+                                                </AmountContainer>
+                                            </StockStatus>
+                                        </StockStatusContainer>
+                                        <TotalContainer fl="4">
+                                            $ 55.70
+                                        </TotalContainer>
+                                        <DeleteContainer fl="1">
+                                            <Delete
+                                            // onClick={() =>
+                                            //     handleDelete(item._id)
+                                            // }
+                                            >
+                                                <Close
+                                                    sx={{ fontSize: '15px' }}
+                                                />
+                                            </Delete>
+                                        </DeleteContainer>
+                                    </ProductsListBodyElement>
+                                ))}
+                            </ProductsListBody>
+                            <CheckoutContainer></CheckoutContainer>
+                        </OrderInfo>
+                    </ProductsList>
                 </Wrapper>
             </CartBody>
             <Footer />

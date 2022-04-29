@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
+import { mobile } from '../responsive'
 
 const ProductAction = styled.div`
     position: absolute;
@@ -79,11 +80,14 @@ const Container = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in-out;
     }
+    ${mobile({height: '350px'})}
+
 `
 const ImageContainer = styled.div`
     height: 390px;
     position: relative;
     margin-bottom: 10px;
+    ${mobile({height: '250px'})}
 `
 const Image = styled.div`
     width: 100%;
@@ -199,6 +203,8 @@ const Category = styled.span`
     &:hover {
         color: #ef837b;
     }
+    ${mobile({display: 'none'})}
+
 `
 const Title = styled.div`
     transition: all 0.3s ease;
@@ -206,9 +212,12 @@ const Title = styled.div`
         color: #ef837b;
         transition: all 0.3s ease;
     }
+    ${mobile({fontSize: '15px'})}
+
 `
 const Prices = styled.div`
     margin-bottom: 10px;
+    ${mobile({fontSize: '14px', color: '#ef837b'})}
 `
 const Product = (item) => {
     const { img, status, category, title, price } = item
@@ -227,8 +236,6 @@ const Product = (item) => {
         } else {
             dispatch(addToWishlist(item))
         }
-
-        // dispatch(addToWishlist(item))
     }
 
     return (
