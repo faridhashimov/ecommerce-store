@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFromWishlist } from '../redux/wishlistSlice'
 import { Link } from 'react-router-dom'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -71,6 +72,7 @@ const ImageTitleContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 30px 0px;
+    ${mobile({padding: '10px 0px'})}
 `
 const PriceContainer = styled.div`
     flex: 4;
@@ -87,21 +89,25 @@ const DeleteContainer = styled.div`
 const Image = styled.img`
     height: 65px;
     margin-right: 30px;
+    ${mobile({marginRight: '10px'})}
 `
 const Title = styled.h3`
     font-size: 16px;
     font-weight: 400;
     color: #232323;
+    ${mobile({fontSize: '12px'})}
 `
 const Price = styled.span`
     font-size: 16px;
     font-weight: 400;
     color: #eea287;
+    ${mobile({fontSize: '12px'})}
 `
 const StockStatus = styled.span`
     font-size: 16px;
     font-weight: 400;
     color: #eea287;
+    ${mobile({fontSize: '12px'})}
 `
 const Select = styled.button`
     display: flex;
@@ -121,6 +127,7 @@ const Select = styled.button`
         color: #fff;
         transition: all 0.2s ease-in;
     }
+    ${mobile({display: 'none'})}
 `
 const Delete = styled.div`
     display: flex;
@@ -131,8 +138,8 @@ const Delete = styled.div`
     &:hover {
         color: black;
     }
+    ${mobile({marginLeft: '5px'})}
 `
-
 const NoProductContainer = styled.div`
     width: 100%;
     height: 250px;
@@ -191,11 +198,11 @@ const WishList = () => {
                             <Element fl="4">
                                 <span>Price</span>
                             </Element>
-                            <Element fl="4">
+                            <Element fl="9">
                                 <span>Stock Status</span>
                             </Element>
-                            <Element fl="4"></Element>
-                            <Element fl="1"></Element>
+                            {/* <Element fl="4"></Element>
+                            <Element fl="1"></Element> */}
                         </ProductsListHeader>
                         <ProductsListBody>
                             {product.map((item) => (

@@ -6,6 +6,7 @@ import {
     Instagram,
     Twitter,
 } from '@mui/icons-material';
+import { mobile } from '../responsive';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -25,7 +26,11 @@ const Main = styled.div`
     justify-content: center;
     align-items: center;
 `;
-const MainImage = styled.img``;
+const MainImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+`;
 const MainTitle = styled.div`
     position: absolute;
     text-align: center;
@@ -71,6 +76,7 @@ const AboutContainer = styled.div`
     background-color: #f9f9f9;
     padding-bottom: 50px;
     margin-bottom: 60px;
+    ${mobile({ height: '280px', paddingBottom: '0px'})}
 `;
 const MainInfo = styled.p`
     font-size: 16px;
@@ -78,6 +84,7 @@ const MainInfo = styled.p`
     line-height: 30px;
     color: #eea287;
     margin-bottom: 40px;
+    ${mobile({ marginBottom: '10px'})}
 `;
 
 const AboutWrapper = styled.div`
@@ -88,6 +95,7 @@ const AboutWrapper = styled.div`
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    ${mobile({flexDirection: 'column', paddingTop: '0px'})}
 `;
 const AboutLeft = styled.div`
     flex: 1;
@@ -101,10 +109,13 @@ const AboutLeft = styled.div`
 const AboutInfoContainer = styled.div`
     width: 85%;
     height: 100%;
+    ${mobile({ width: '100%'})}
+
 `;
 const AboutRight = styled.div`
     flex: 1;
     padding: 0px 10px;
+    ${mobile({display:'none'})}
 `;
 const ImageContainer = styled.div`
     position: relative;
@@ -143,6 +154,7 @@ const CategoryButton = styled.h2`
         background-color: #eea287;
         color: #fff;
     }
+    ${mobile({ marginTop: '10px'})}
 `;
 
 const Team = styled.div`
@@ -159,6 +171,7 @@ const MembersContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-top: 30px;
+    ${mobile({marginTop: '10px'})}
 `;
 const MemberHoverInfo = styled.div`
     position: absolute;
@@ -168,6 +181,7 @@ const MemberHoverInfo = styled.div`
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.3s ease-in-out;
+    ${mobile({display: 'none'})}
 `;
 const MemberPhotoContainer = styled.div`
     background-color: red;
@@ -186,6 +200,7 @@ const MemberPhotoContainer = styled.div`
         opacity: 0;
         transition: all 0.3s ease-in;
     }
+    ${mobile({height: '200px'})}
 `;
 const MemberName = styled.div`
     font-weight: 400;
@@ -225,6 +240,7 @@ const Member = styled.div`
         opacity: 1;
         transition: all 0.3s ease-in;
     }
+    ${mobile({paddingBottom: '0px', border: '1px solid #666', '&:nth-child(2)': {margin: '0px 5px'}})};
 `;
 
 const Photo = styled.img`
@@ -301,7 +317,7 @@ const About = () => {
                                 libero eu augue.
                             </Info>
                             <CategoryButton>
-                                View Our NEws
+                                View Our News
                                 <ArrowRightAltOutlined
                                     style={{
                                         marginLeft: 12,

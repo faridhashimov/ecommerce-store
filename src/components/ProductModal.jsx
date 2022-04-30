@@ -251,6 +251,12 @@ const AddToCartBtn = styled.button`
     cursor: pointer;
     color: #eea287;
     border: 1px solid #eea287;
+    transition: all 0.2s ease-in;
+    &:hover {
+        background-color: #eea287;
+        color: #fff;
+        transition: all 0.2s ease-in;
+    }
 `
 const WishlistBtn = styled.button`
     display: flex;
@@ -358,7 +364,6 @@ const ProductModal = () => {
                 img,
                 price,
                 quantity,
-                total: price * quantity,
             })
         )
     }

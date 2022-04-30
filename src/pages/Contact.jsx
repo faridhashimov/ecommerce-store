@@ -5,14 +5,19 @@ import {
     AccessTimeOutlined,
     CalendarMonthOutlined,
     ArrowRightAltOutlined,
-} from '@mui/icons-material';
-import styled from 'styled-components';
-import { Announcement, Navbar, Footer } from '../components';
-import ReactMapGL, { FullscreenControl, Marker, NavigationControl } from 'react-map-gl';
-import { useState } from 'react';
-import 'mapbox-gl/dist/mapbox-gl.css';
+} from '@mui/icons-material'
+import styled from 'styled-components'
+import { Announcement, Navbar, Footer } from '../components'
+import ReactMapGL, {
+    FullscreenControl,
+    Marker,
+    NavigationControl,
+} from 'react-map-gl'
+import { useState } from 'react'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import { mobile } from '../responsive'
 
-const Container = styled.div``;
+const Container = styled.div``
 
 const Wrapper = styled.div`
     width: 93vw;
@@ -21,7 +26,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`;
+`
 const Main = styled.div`
     margin: 40px 0px;
     border-radius: 5px;
@@ -30,65 +35,71 @@ const Main = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`;
+`
 
-const MainImage = styled.img``;
+const MainImage = styled.img`
+    width: 100%;
+`
 const MainTitle = styled.div`
     position: absolute;
     text-align: center;
     color: #fff;
-`;
+`
 const TitleInfo = styled.h1`
     font-size: 40px;
     font-weight: 400;
-`;
+`
 const SecTitle = styled.span`
     font-size: 16px;
     font-weight: 400;
-`;
+`
 
 const Contacts = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
     margin-bottom: 40px;
-`;
+    /* ${mobile({ flexDirection: 'column' })} */
+`
 const ContactInfo = styled.div`
     flex: 1;
     padding: 0px 10px;
-`;
+`
 const Title = styled.h2`
     font-size: 24px;
     font-weight: 500;
     line-height: 28px;
     margin-bottom: 10px;
     width: 100%;
-`;
+`
 const Info = styled.p`
     font-size: 14px;
     font-weight: 300;
     margin-bottom: 20px;
     line-height: 26px;
     color: #777;
-`;
+        ${mobile({ fontSize: '10px', lineHeight: '22px', marginBottom: '7px' })}
+
+`
 const AdressContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-`;
+`
 const Adress = styled.div`
     width: 340px;
     margin-right: 10px;
-`;
+    ${mobile({ width: '200px', marginRight: '0px' })}
+`
 const AressTitle = styled.h3`
     font-size: 18px;
     font-weight: 400;
     line-height: 20px;
     margin-bottom: 15px;
-`;
+`
 const AddressInfo = styled.ul`
     list-style: none;
-`;
+`
 const AddressItem = styled.li`
     font-size: 14px;
     font-weight: 300;
@@ -99,7 +110,8 @@ const AddressItem = styled.li`
     margin-bottom: 15px;
     color: #666;
     /* padding-top: 4px; */
-`;
+    ${mobile({ fontSize: '12px', lineHeight: '22px', marginBottom: '5px' })}
+`
 const IconContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -107,11 +119,13 @@ const IconContainer = styled.div`
     margin-right: 10px;
     margin-top: 5px;
     color: #eea287;
-`;
+    ${mobile({  marginRight: '0px' })}
+`
 const OfficeHours = styled.div`
     width: 205px;
     margin: 0px 10px;
-`;
+    ${mobile({ width: '145px'})}
+`
 const QuestionForm = styled.div`
     flex: 1;
     display: flex;
@@ -119,10 +133,11 @@ const QuestionForm = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     padding: 0px 10px;
-`;
+    ${mobile({ display: 'none' })};
+`
 const Form = styled.form`
     margin-bottom: 30px;
-`;
+`
 const Input = styled.input`
     width: 235px;
     margin-right: ${(props) => props.right}px;
@@ -135,7 +150,7 @@ const Input = styled.input`
         outline: none;
         border: 1px solid #eea287;
     }
-`;
+`
 const Message = styled.textarea`
     width: 533px;
     height: 130px;
@@ -147,7 +162,7 @@ const Message = styled.textarea`
         outline: none;
         border: 1px solid #eea287;
     }
-`;
+`
 const Submit = styled.button`
     display: flex;
     justify-content: center;
@@ -167,7 +182,7 @@ const Submit = styled.button`
         background-color: #eea287;
         color: #fff;
     }
-`;
+`
 
 const Stores = styled.div`
     display: flex;
@@ -175,34 +190,40 @@ const Stores = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-`;
+`
 const Store = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0px 10px;
     flex: 1;
-`;
+    /* ${mobile({ flexDirection: 'column' })}; */
+`
 const StoreContainer = styled.div`
     height: 275px;
     display: flex;
     justify-content: center;
     align-items: center;
-`;
+    ${mobile({ flexDirection: 'column' })};
+`
 const StoreTitle = styled(Title)`
     text-align: center;
     margin-bottom: 30px;
-`;
+    ${mobile({ marginBottom: '0px'})};
+`
 
 const ImageContainer = styled.div`
-    width: 277px;
-    height: 277px;
+    width: 30%;
+    height: 30%;
     margin-right: 10px;
-`;
+    ${mobile({ display: 'none' })};
+`
 const InfoContainer = styled.div`
     margin-left: 10px;
-`;
-const Top = styled.div``;
+    ${mobile({ marginLeft: '0px', width: '100%', display: 'flex' })};
+`
+const Top = styled.div`
+ ${mobile({ marginRight: '10px' })};`
 const ViewButton = styled.button`
     background: transparent;
     border: none;
@@ -215,20 +236,24 @@ const ViewButton = styled.button`
         border-bottom: 1px solid #eea287;
         transition: all 0.2s ease;
     }
-`;
+    ${mobile({ display: 'none' })};
+`
 const TopTitle = styled.h3`
     font-weight: 400;
     font-size: 16px;
-`;
+    ${mobile({ fontSize: '12px' })}
+`
 const BottomTitle = styled.h3`
     font-weight: 400;
     font-size: 14px;
-`;
-const Phone = styled.span``;
+`
+const Phone = styled.span``
 const Image = styled.img`
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-`;
-const Br = styled.br``;
+`
+const Br = styled.br``
 
 const MapContainer = styled.div`
     background-color: #666;
@@ -236,22 +261,23 @@ const MapContainer = styled.div`
     width: 98%;
     margin-bottom: 30px;
     overflow: hidden;
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0, 0.5);
-`;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+    ${mobile({ display: 'none' })}
+`
 
 const Contact = () => {
     const [view, setView] = useState({
         latitude: 40.705646,
         longitude: -74.006647,
         zoom: 10,
-    });
+    })
 
     const adress = {
         first: { latitude: 40.7057, longitude: -74.0061, zoom: 18 },
         sec: { latitude: 40.7021, longitude: -74.0122, zoom: 18 },
-    };
+    }
     const TOKEN =
-        'pk.eyJ1IjoiZmFyZ21vdiIsImEiOiJjbDB5MWl5djcwY2x0M2JveXR3ajgyZGk0In0.oFZCf90L7hQ5_Qts98B3qA';
+        'pk.eyJ1IjoiZmFyZ21vdiIsImEiOiJjbDB5MWl5djcwY2x0M2JveXR3ajgyZGk0In0.oFZCf90L7hQ5_Qts98B3qA'
     return (
         <Container>
             {/* <Announcement /> */}
@@ -379,14 +405,14 @@ const Contact = () => {
                                 <Top>
                                     <BottomTitle>Store Hours:</BottomTitle>
                                     <Info>
-                                        Monday - Saturday 11am to 7pm Sunday
+                                        Monday - Saturday 11am to 7pm <Br/> Sunday
                                         11am to 6pm
                                     </Info>
                                 </Top>
                                 <ViewButton
                                     onClick={() => {
-                                        setView(adress.first);
-                                        window.scrollTo(0, 1400);
+                                        setView(adress.first)
+                                        window.scrollTo(0, 1400)
                                     }}
                                 >
                                     View Map
@@ -415,8 +441,8 @@ const Contact = () => {
                                 </Top>
                                 <ViewButton
                                     onClick={() => {
-                                        setView(adress.sec);
-                                        window.scrollTo(0, 1400);
+                                        setView(adress.sec)
+                                        window.scrollTo(0, 1400)
                                     }}
                                 >
                                     View Map
@@ -425,7 +451,7 @@ const Contact = () => {
                         </Store>
                     </StoreContainer>
                 </Stores>
-                <MapContainer>
+                {/* <MapContainer>
                     <ReactMapGL
                         {...view}
                         onMove={(evt) => setView(evt.viewState)}
@@ -446,11 +472,11 @@ const Contact = () => {
                         <FullscreenControl />
                         <NavigationControl />
                     </ReactMapGL>
-                </MapContainer>
+                </MapContainer> */}
             </Wrapper>
             <Footer />
         </Container>
-    );
-};
+    )
+}
 
-export default Contact;
+export default Contact

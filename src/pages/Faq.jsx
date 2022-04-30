@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Footer, Navbar } from '../components';
 import { ordersInfo, payments, shippingInfo } from '../data';
 import { v4 as uuidv4 } from 'uuid';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     width: 100%;
@@ -54,6 +55,7 @@ const Title = styled.div`
     &:not(:nth-child(1)) {
         margin-top: 30px;
     }
+    ${mobile({marginBottom: '10px', '&:not(:nth-child(1))': { marginTop: '10px' }})}
 `;
 const QuestionContainer = styled.div``;
 const Question = styled.div`
@@ -109,7 +111,7 @@ const Faq = () => {
         }
         setActive(index);
     };
-
+ 
     return (
         <Container>
             <Navbar />

@@ -1,5 +1,6 @@
 import { ArrowRightAltOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     width: 100%;
@@ -16,6 +17,7 @@ const AllNewArrivals = styled.div`
     justify-content: center;
     align-items: center;
     /* margin-top: 20px; */
+    ${mobile({flexDirection: 'column'})}
 `;
 
 const NewArrival = styled.div`
@@ -57,12 +59,14 @@ const CategoryInfo = styled.div`
     text-transform: uppercase;
     width: 150px;
     z-index: 2;
+    ${mobile({   left: '10px'})}
 `;
 const CategoryTitle = styled.span`
     margin-bottom: 20px;
     font-size: 13px;
     font-weight: 300;
     color: #777777;
+    ${mobile({   marginBottom: '10px'})};
 `;
 const CategoryName = styled.h1`
     font-size: 22px;
@@ -89,6 +93,7 @@ const CategoryButton = styled.h2`
         background-color: #eea287;
         color: #fff;
     }
+    ${mobile({   marginTop: '10px'})}
 `;
 
 const NewArrivals = () => {

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import { useAxios } from '../hooks/useAxios'
 import Spinner from './Spinner'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -24,6 +25,7 @@ const Title = styled.div`
     line-height: 34px;
     color: #333;
     font-weight: 600;
+    ${mobile({fontSize: '28px'})}
 `
 const Filters = styled.div`
     width: 100%;
@@ -60,6 +62,7 @@ const FilterButton = styled.div`
             `
         }
     }}
+    ${mobile({fontSize: '12px'})}
 `
 const ButtonContainer = styled.div`
     width: 100%;

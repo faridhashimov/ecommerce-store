@@ -15,11 +15,9 @@ const Container = styled.div`
     width: 100%;
     height: 600px;
     display: flex;
-    /* background-color: #f6f6f6; */
     overflow: hidden;
-    ${mobile({height: '250px'})}
+    ${mobile({ height: '250px' })}
 `
-
 const ChevronContainer = styled.div`
     width: 30px;
     height: 30px;
@@ -44,10 +42,7 @@ const ChevronContainer = styled.div`
         background-color: #eea287;
         color: #f9f9f9;
     }
-    /* ${mobile({display: 'none'})} */
-
 `
-
 const Wrapper = styled.div`
     height: 100%;
     display: flex;
@@ -55,7 +50,6 @@ const Wrapper = styled.div`
     transition: all 1.5s ease;
     transform: translateX(${(props) => props.slideIndex * -100}vw);
 `
-
 const MainSlider = styled.div`
     width: 100vw;
     height: 100%;
@@ -64,7 +58,6 @@ const MainSlider = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 const InfoContainer = styled.div`
     width: 80%;
     height: 100%;
@@ -74,21 +67,18 @@ const InfoContainer = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 const Info = styled.div`
     flex: 1;
 `
-
 const ImageContainer = styled.div`
     flex: 1;
     height: 100%;
     width: 100%;
-    ${mobile({paddingTop: '20px'})}
+    ${mobile({ paddingTop: '20px' })}
 `
 
 const Image = styled.img`
     height: 100%;
-
     width: 100%;
     object-fit: contain;
     position: relative;
@@ -106,9 +96,7 @@ const Image = styled.img`
             rgba(255, 255, 255, 1) 100%
         );
     }
-  
 `
-
 const InfoButton = styled.button`
     display: flex;
     justify-content: center;
@@ -125,7 +113,7 @@ const InfoButton = styled.button`
         background-color: #232323;
         color: #fff;
     }
-    ${mobile({ padding: '7px 17px',marginTop: '15px'})}
+    ${mobile({ padding: '7px 17px', marginTop: '15px' })}
 `
 
 const InfoTitle = styled.div``
@@ -139,7 +127,12 @@ const MainTitle = styled.h1`
     letter-spacing: -5px;
     color: #232323;
     margin: 20px 0px;
-    ${mobile({ fontSize: '40px', margin: '10px 0px', lineHeight: '2.5rem', fontWeight: '500' })}
+    ${mobile({
+        fontSize: '40px',
+        margin: '10px 0px',
+        lineHeight: '2.5rem',
+        fontWeight: '500',
+    })}
 `
 
 const Sale = styled.span`
@@ -148,7 +141,12 @@ const Sale = styled.span`
     margin: 20px 0px;
     line-height: 7rem;
     color: #eea287;
-    ${mobile({ fontSize: '40px', margin: '0', lineHeight: '3.5rem',fontWeight: '500' })}
+    ${mobile({
+        fontSize: '40px',
+        margin: '0',
+        lineHeight: '3.5rem',
+        fontWeight: '500',
+    })}
 `
 
 const SecondaryTitle = styled.h4`
@@ -156,7 +154,7 @@ const SecondaryTitle = styled.h4`
     font-size: 18px;
     color: #666666;
     font-weight: 400;
-    ${mobile({ fontSize: '15px'})}
+    ${mobile({ fontSize: '15px' })}
 `
 
 const Slider = () => {

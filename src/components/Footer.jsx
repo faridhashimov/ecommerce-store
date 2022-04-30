@@ -36,21 +36,25 @@ const FooterTop = styled.div`
 const FooterInfo = styled.div`
     flex: 1;
     padding-left: 10px;
+    ${mobile({paddingLeft: '0px'})}
 `
 const Logo = styled.h1`
     line-height: 27px;
     margin-bottom: 20px;
 `
 const FooterText = styled.p`
-    margin: 0 35px 45px 0;
+    margin: 0px 35px 45px 0px;
     font-size: 14px;
     line-height: 25px;
     color: #777;
+    
+    ${mobile({margin: '0px 0px 20px 0px'})}
 `
 const MainInfo = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    ${mobile({flexDirection: 'column', marginBottom: '10px'})}
 `
 const Contact = styled.div`
     flex: 1;
@@ -58,10 +62,12 @@ const Contact = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    ${mobile({flexDirection: 'row', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center'})}
 `
 const Title = styled.span`
     font-size: 13px;
     font-weight: 300;
+    ${mobile({marginRight: '10px'})}
 `
 const ContactNumber = styled.a`
     font-size: 20px;
@@ -75,9 +81,11 @@ const Payment = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    ${mobile({marginBottom: '10px'})}
 `
 const Methods = styled.img`
     margin-top: 5px;
+    ${mobile({marginTop: '10px'})}
 `
 const FooterLinks = styled.div`
     flex: 1;
@@ -89,6 +97,7 @@ const InfoLinks = styled.ul`
     flex: 1;
     margin: 0px 10px;
     list-style: none;
+    ${mobile({ margin: '0px'})}
 `
 const LinkItem = styled.li`
     color: #777;
@@ -107,6 +116,7 @@ const LinkItem = styled.li`
         color: #fff;
         margin-bottom: 20px;
     }
+    ${mobile({fontSize: '12px', margin: '5px 0px', '&:first-child': {marginBottom: '10px', fontSize: '14px', fontWeight: '400'}})}
 `
 const FooterBottom = styled.div`
     width: 100%;
@@ -116,7 +126,7 @@ const FooterBottom = styled.div`
     padding: 20px 0px;
     margin-top: 20px;
     border-top: 1.5px solid #444444;
-    ${mobile({flexDirection: 'column'})}
+    ${mobile({flexDirection: 'column', marginTop: '10px'})}
 
 `
 const BottomLeft = styled.div`
@@ -124,16 +134,19 @@ const BottomLeft = styled.div`
     justify-content: center;
     align-items: center;
     margin-left: 10px;
+    ${mobile({ marginLeft: '0px', marginBottom: '15px'})}
 `
 const CopyrightContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    ${mobile({ flexDirection: 'column'})}
 `
 const Copyright = styled.p`
     font-size: 14px;
     color: #777;
     margin-right: 5px;
+    ${mobile({ marginBottom: '10px'})}
 `
 const Terms = styled.div`
     width: 205px;

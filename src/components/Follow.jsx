@@ -46,6 +46,7 @@ const LikesNComments = styled.div`
     z-index: 10;
     opacity: 0;
     transition: all 0.3s ease;
+    ${mobile({flexDirection: 'column'})}
 `
 const PostContainer = styled.div`
     width: 252.656px;
@@ -92,6 +93,7 @@ const Likes = styled.div`
         color: #eea287;
         transition: all 0.2s ease-in-out;
     }
+    ${mobile({  marginRight: '0px'})}
 `
 const Comments = styled.div`
     display: flex;
