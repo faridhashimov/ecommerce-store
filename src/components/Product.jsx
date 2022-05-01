@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
 import { mobile } from '../responsive'
+import { Link } from 'react-router-dom'
 
 const ProductAction = styled.div`
     position: absolute;
@@ -81,7 +82,6 @@ const Container = styled.div`
         transition: all 0.2s ease-in-out;
     }
     ${mobile({height: '350px'})}
-
 `
 const ImageContainer = styled.div`
     height: 390px;
@@ -195,7 +195,6 @@ const Categories = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 const Category = styled.span`
     margin-right: 5px;
     font-size: 13px;
@@ -204,7 +203,6 @@ const Category = styled.span`
         color: #ef837b;
     }
     ${mobile({display: 'none'})}
-
 `
 const Title = styled.div`
     transition: all 0.3s ease;
@@ -213,7 +211,6 @@ const Title = styled.div`
         transition: all 0.3s ease;
     }
     ${mobile({fontSize: '15px'})}
-
 `
 const Prices = styled.div`
     margin-bottom: 10px;
@@ -223,7 +220,6 @@ const Product = (item) => {
     const { img, status, category, title, price } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
     const dispatch = useDispatch()
-    console.log(productInWishlist)
     const handleClick = () => {
         dispatch(openModal(item))
     }
@@ -246,7 +242,7 @@ const Product = (item) => {
                     {status?.map((item, i) => (
                         <Status fs={item} key={i} order={i + 1}>
                             {item}
-                        </Status>
+                        </Status> 
                     ))}
                 </ProductStatus>
                 <ProductAction>
@@ -261,12 +257,14 @@ const Product = (item) => {
                         </Tooltip>
                     </ProductActionContainer>
                 </ProductAction>
-                <Cart>
-                    <ShoppingCartContainer>
-                        <FormatListNumbered style={{ fontSize: 15 }} />
-                    </ShoppingCartContainer>
-                    <CartTitle>Select Options</CartTitle>
-                </Cart>
+                <Link to={`/product/${item._id}`}>
+                    <Cart>
+                        <ShoppingCartContainer>
+                            <FormatListNumbered style={{ fontSize: 15 }} />
+                        </ShoppingCartContainer>
+                        <CartTitle>Select Options</CartTitle>
+                    </Cart>
+                </Link>
             </ImageContainer>
             <InfoContainer>
                 <Categories>

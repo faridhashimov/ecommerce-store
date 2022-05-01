@@ -3,9 +3,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { loginCall } from '../redux/apiCalls'
+import { mobile } from '../responsive'
 
 const LoginPageContainer = styled.form`
     width: 80%;
+    ${mobile({width: '90%'})}
 `
 const InputContainer = styled.div`
     display: flex;
@@ -74,7 +76,9 @@ const SocialButtons = styled.div`
     justify-content: space-between;
     align-items: center;
 `
-const SignSocialContainer = styled.div`
+const SignSocialContainer = styled.button`
+    width: 48%;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     padding: 10px 25px;
@@ -87,6 +91,7 @@ const SignSocialContainer = styled.div`
     &:hover {
         background-color: #f8f9fb;
     }
+    ${mobile({padding: ' 10px 25px'})}
 `
 
 const SignIn = () => {
@@ -142,11 +147,11 @@ const SignIn = () => {
             <SocialButtons>
                 <SignSocialContainer>
                     <Google style={{ color: '#CC3333', marginRight: 10 }} />{' '}
-                    Login With Google
+                    Google
                 </SignSocialContainer>
                 <SignSocialContainer>
                     <Facebook style={{ color: '#3366CC', marginRight: 10 }} />{' '}
-                    Login With Facebook
+                    Facebook
                 </SignSocialContainer>
             </SocialButtons>
         </LoginPageContainer>

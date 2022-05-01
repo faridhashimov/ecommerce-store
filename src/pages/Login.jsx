@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Footer, Navbar, SignIn, SignUp } from '../components'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -23,6 +24,7 @@ const LoginContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    ${mobile({width: '80%'})}
 `
 
 const ButtonContainer = styled.div`
@@ -32,6 +34,7 @@ const ButtonContainer = styled.div`
     align-items: center;
     border-bottom: 1px solid #ddd;
     margin-bottom: 20px;
+    ${mobile({width: '90%'})}
 `
 const SigninButton = styled.button`
     font-weight: 400;
@@ -42,6 +45,7 @@ const SigninButton = styled.button`
     background-color: transparent;
     border: none;
     cursor: pointer;
+    ${mobile({fontSize: '16px', padding: '5px 0px'})}
 `
 
 const Login = () => {

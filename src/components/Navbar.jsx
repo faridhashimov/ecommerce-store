@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material'
 import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import {mobile} from '../responsive'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     height: 60px;
@@ -35,15 +35,13 @@ const Logo = styled.h1`
 const Reverse = styled.span`
     color: #eea287;
 `
-const Center = styled.div`
-
-`
+const Center = styled.div``
 const Menu = styled.ul`
     list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    ${mobile({display: 'none'})}
+    ${mobile({ display: 'none' })}
 `
 const MenuItemContainer = styled.li`
     position: relative;
@@ -84,7 +82,7 @@ const SearchContainer = styled.div`
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 25px;
-    ${mobile({display: 'none'})}
+    ${mobile({ display: 'none' })}
 `
 const Input = styled.input`
     height: 100%;
@@ -121,6 +119,7 @@ const CartTotal = styled.span`
 const StyledLink = styled(Link)`
     color: #666666;
     transition: all 0.2s ease;
+    text-decoration: none;
     &:hover {
         color: #eea287;
         transition: all 0.2s ease;
@@ -241,7 +240,9 @@ const Navbar = () => {
                                 <ShoppingCartOutlined />
                             </StyledLink>
                         </Badge>
-                        <CartTotal>$ 59,98</CartTotal>
+                        <StyledLink to="/cart">
+                            <CartTotal>$ 59,98</CartTotal>
+                        </StyledLink>
                     </RightMenuIcon>
                 </Right>
             </Wrapper>

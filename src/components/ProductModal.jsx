@@ -364,6 +364,7 @@ const ProductModal = () => {
                 img,
                 price,
                 quantity,
+                total: price * quantity,
             })
         )
     }

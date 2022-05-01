@@ -1,16 +1,11 @@
 import { Navbar, Footer } from '../components'
 import styled from 'styled-components'
-import {
-    Close,
-    // FormatListNumbered,
-    // FavoriteBorderOutlined,
-    ShoppingCartOutlined,
-} from '@mui/icons-material'
+import { Close, ShoppingCartOutlined } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteFromWishlist } from '../redux/wishlistSlice'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { decreaseQt, deleteFromCart, increaseQt } from '../redux/cartSlice'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -25,7 +20,7 @@ const CarteHeader = styled.div`
     margin-bottom: 30px;
 `
 const HeaderTitle = styled.h2`
-    position: absolute;
+    /* position: absolute; */
     font-weight: 400;
     font-size: 40px;
     line-height: 44px;
@@ -42,21 +37,19 @@ const CartBody = styled.div`
     margin: 0 auto;
     margin-bottom: 30px;
 `
-
 const Wrapper = styled.div`
     display: flex;
     width: 100%;
-    /* height: 400px; */
 `
 const ProductsList = styled.div`
     flex: 5;
 `
-
 const ProductsListHeader = styled.div`
     width: 100%;
     border-bottom: 1px solid #cccccc;
     display: flex;
     align-items: center;
+    ${mobile({ display: 'none', marginBottom: '5px' })}
 `
 const Element = styled.div`
     flex: ${(props) => props.fl};
@@ -70,37 +63,52 @@ const ProductsListBody = styled.div`
     flex-direction: column;
     justify-content: center;
     flex: 5;
+    ${mobile({ border: '1px solid #efefef' })}
 `
-const ProductsListBodyElement = styled(ProductsListHeader)``
+const ProductsListBodyElement = styled(ProductsListHeader)`
+    ${mobile({
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'spase-between',
+        padding: '10px 0px',
+    })}
+`
 const ImageTitleContainer = styled.div`
     flex: 14;
     display: flex;
     align-items: center;
     padding: 20px 0px;
     position: relative;
+    ${mobile({ flexDirection: 'column', padding: '10px 0px' })}
 `
 const PriceContainer = styled.div`
     flex: 4;
+    ${mobile({ marginBottom: '10px' })}
 `
 const StockStatusContainer = styled.div`
     flex: 4;
+    ${mobile({ marginBottom: '10px' })}
 `
 const TotalContainer = styled.div`
     flex: 4;
     color: #eea287;
+    ${mobile({ marginBottom: '10px' })}
 `
 const DeleteContainer = styled.div`
     flex: 1;
+    ${mobile({ position: 'absolute', right: '20px' })}
 `
 const Image = styled.img`
     height: 65px;
     margin-right: 30px;
+    ${mobile({ margin: '0px 0px 10px 0px ' })}
 `
 const Title = styled.h3`
     width: 200px;
     font-size: 14px;
     font-weight: 400;
     color: #666;
+    ${mobile({ textAlign: 'center' })}
 `
 const Price = styled.span`
     font-size: 16px;
@@ -111,7 +119,6 @@ const StockStatus = styled.span`
     font-weight: 400;
     color: #eea287;
 `
-
 const Delete = styled.div`
     display: flex;
     justify-content: center;
@@ -122,7 +129,6 @@ const Delete = styled.div`
         color: black;
     }
 `
-
 const NoProductContainer = styled.div`
     width: 100%;
     height: 250px;
@@ -150,13 +156,13 @@ const GoShopBtn = styled(Link)`
         background-color: #c9866e;
     }
 `
-
 const OrderInfo = styled.div`
     width: 100%;
     display: flex;
+    align-items: flex-start;
+    ${mobile({ flexDirection: 'column', alignItems: 'stretch' })}
 `
 const AmountContainer = styled.div`
-    /* margin-left: 43px; */
     border: 1px solid #d7d7d7;
     padding: 7px 5px;
     font-size: 12px;
@@ -180,6 +186,7 @@ const ProductSize = styled.span`
     margin-left: 10px;
     position: absolute;
     right: 55px;
+    ${mobile({ right: '35px' })}
 `
 const ProductColor = styled.div`
     height: 20px;
@@ -189,10 +196,12 @@ const ProductColor = styled.div`
     margin-left: 10px;
     position: absolute;
     right: 20px;
+    ${mobile({ height: '15px', width: '15px', right: '10px', top: '24px' })}
 `
 const CheckoutContainer = styled.div`
     flex: 2;
     padding-left: 10px;
+    ${mobile({ padding: '0px' })}
 `
 const Checkout = styled.div`
     background-color: #f9f9f9;
@@ -201,9 +210,12 @@ const Checkout = styled.div`
     align-items: center;
     height: 540px;
     border-radius: 5px;
+    border: 1px solid #bbbbbb;
+    padding: 15px 0px;
 `
 const CheckoutBody = styled.div`
     width: 85%;
+    /* height: 95%; */
 `
 const ChekoutItem = styled.div`
     h1 {
@@ -231,6 +243,7 @@ const ShippingAdress = styled(ChekoutItem)`
     display: flex;
     flex-direction: column;
     padding: 25px 0px;
+    border-bottom: 1px solid #ccc;
 `
 const InputContainer = styled.div`
     padding: 5px;
@@ -238,7 +251,9 @@ const InputContainer = styled.div`
     align-items: center;
 `
 const RadioInput = styled.input`
-    color: red;
+    &:checked {
+        color: #eea287;
+    }
 `
 const InputLabel = styled.label`
     font-size: 14px;
@@ -271,11 +286,33 @@ const Total = styled(ChekoutItem)`
     color: #eea287;
     padding: 25px 0px;
 `
+const CheckoutBtn = styled.button`
+    text-transform: uppercase;
+    border: 1px solid #eea287;
+    outline: none;
+    color: #eea287;
+    cursor: pointer;
+    width: 100%;
+    padding: 7px 30px;
+    background-color: transparent;
+    transition: all 0.2s ease-in;
+    &:hover {
+        background-color: #eea287;
+        transition: all 0.2s ease-in;
+        color: #fff;
+    }
+`
 
 const Cart = () => {
+    const [discount, setDiscount] = useState(0)
     const product = useSelector((store) => store.cart.products)
     const dispatch = useDispatch()
 
+    const totalSum = product
+        .reduce((sum, prevValue) => sum + prevValue.total, 0)
+        .toFixed(2)
+    const cartTotal = (totalSum - discount).toFixed(2)
+    console.log(typeof discount, typeof totalSum)
     const handleClik = (exp, id) => {
         if (exp === 'dec') {
             id.quantity > 1 && dispatch(decreaseQt(id))
@@ -283,9 +320,17 @@ const Cart = () => {
             dispatch(increaseQt(id))
         }
     }
+
     const handleDelete = (id) => {
         dispatch(deleteFromCart(id))
     }
+
+    const handleRadioChange = (e) => {
+        console.log(e.target)
+        setDiscount(e.target.value)
+    }
+
+    console.log('rendered')
 
     return (
         <Container>
@@ -368,7 +413,7 @@ const Cart = () => {
                                                 </StockStatus>
                                             </StockStatusContainer>
                                             <TotalContainer fl="4">
-                                                ${' '}
+                                                $
                                                 {(
                                                     item.quantity * item.price
                                                 ).toFixed(2)}
@@ -397,7 +442,7 @@ const Cart = () => {
                                             </ChekoutItem>
                                             <ChekoutItem>
                                                 <h1>Subtotal:</h1>
-                                                <span>$83.91</span>
+                                                <span>${totalSum}</span>
                                             </ChekoutItem>
                                             <ChekoutItem>
                                                 <h1>Shipping:</h1>
@@ -405,10 +450,18 @@ const Cart = () => {
                                             <ChekoutItem>
                                                 <InputContainer>
                                                     <RadioInput
-                                                        
+                                                        checked={
+                                                            +discount === 0
+                                                                ? true
+                                                                : false
+                                                        }
+                                                        onChange={
+                                                            handleRadioChange
+                                                        }
                                                         id="free"
                                                         type="radio"
-                                                    />{' '}
+                                                        value={0}
+                                                    />
                                                     <InputLabel htmlFor="free">
                                                         Free Shipping
                                                     </InputLabel>
@@ -418,9 +471,18 @@ const Cart = () => {
                                             <ChekoutItem>
                                                 <InputContainer>
                                                     <RadioInput
+                                                        checked={
+                                                            +discount === 10
+                                                                ? true
+                                                                : false
+                                                        }
+                                                        onChange={
+                                                            handleRadioChange
+                                                        }
                                                         id="standard"
                                                         type="radio"
-                                                    />{' '}
+                                                        value={10}
+                                                    />
                                                     <InputLabel htmlFor="standard">
                                                         Standard:
                                                     </InputLabel>
@@ -430,9 +492,18 @@ const Cart = () => {
                                             <ChekoutItem>
                                                 <InputContainer>
                                                     <RadioInput
+                                                        checked={
+                                                            +discount === 20
+                                                                ? true
+                                                                : false
+                                                        }
+                                                        onChange={
+                                                            handleRadioChange
+                                                        }
                                                         id="express"
                                                         type="radio"
-                                                    />{' '}
+                                                        value={20}
+                                                    />
                                                     <InputLabel htmlFor="express">
                                                         Express:
                                                     </InputLabel>
@@ -449,8 +520,11 @@ const Cart = () => {
                                             </ShippingAdress>
                                             <Total>
                                                 <h1>Total:</h1>
-                                                <span>$83.91</span>
+                                                <span>${cartTotal}</span>
                                             </Total>
+                                            <CheckoutBtn>
+                                                Proceed To Checkout
+                                            </CheckoutBtn>
                                         </CheckoutBody>
                                     </Checkout>
                                 </CheckoutContainer>

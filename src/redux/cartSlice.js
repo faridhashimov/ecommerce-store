@@ -19,16 +19,22 @@ export const cartSlice = createSlice({
         },
         increaseQt: (state, action) => {
             state.products.forEach((product) =>
-                ( product.id === action.payload.id &&
-                    product.productColor === action.payload.productColor &&
-                    product.productSize === action.payload.productSize) ? (product.quantity += 1) : product
+                product.id === action.payload.id &&
+                product.productColor === action.payload.productColor &&
+                product.productSize === action.payload.productSize
+                    ? ((product.quantity += 1),
+                      (product.total = product.quantity * product.price))
+                    : product
             )
         },
         decreaseQt: (state, action) => {
             state.products.forEach((product) =>
-            ( product.id === action.payload.id &&
+                product.id === action.payload.id &&
                 product.productColor === action.payload.productColor &&
-                product.productSize === action.payload.productSize) ? (product.quantity -= 1) : product
+                product.productSize === action.payload.productSize
+                    ? ((product.quantity -= 1),
+                      (product.total = product.total - product.price))
+                    : product
             )
         },
     },

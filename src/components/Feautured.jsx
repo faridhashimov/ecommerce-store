@@ -46,7 +46,6 @@ const FilterButton = styled.div`
             `
         }
     }}
-    /* background-color: ${(props) => (props.bg === true ? 'red' : null)}; */
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     &:hover {

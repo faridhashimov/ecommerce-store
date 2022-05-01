@@ -1,9 +1,11 @@
 import { ArrowForward, Facebook, Google } from '@mui/icons-material'
 import styled from 'styled-components'
 import { useRef, useEffect } from 'react'
+import { mobile } from '../responsive'
 
 const LoginPageContainer = styled.div`
     width: 80%;
+    ${mobile({width: '90%'})}
 `
 const InputContainer = styled.div`
     display: flex;
@@ -31,6 +33,7 @@ const LoginButtonContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 5px 0px 30px;
+    ${mobile({padding: '5px 0px'})}
 `
 
 const LoginButton = styled.button`
@@ -50,6 +53,7 @@ const LoginButton = styled.button`
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
+    ${mobile({padding: '5px', width: '40%', marginRight: '15px'})}
 `
 const PrivacyPolicy = styled.div`
     display: flex;
@@ -67,18 +71,22 @@ const PrivacyPolicyButtonTitle = styled.label`
     margin-left: 10px;
     color: #666;
     cursor: pointer;
+    ${mobile({fontSize: '12px'})}
 `
 const SignInWith = styled.span`
     display: block;
     text-align: center;
     margin: 25px 0px;
+    ${mobile({margin: '10px 0px'})}
 `
 const SocialButtons = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
 `
-const SignSocialContainer = styled.div`
+const SignSocialContainer = styled.button`
+    width: 48%;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     padding: 10px 25px;
@@ -91,11 +99,13 @@ const SignSocialContainer = styled.div`
     &:hover {
         background-color: #f8f9fb;
     }
+    ${mobile({padding: ' 10px 25px'})}
 `
 
 const PasswordsContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    ${mobile({flexDirection: 'column'})};
 `
 
 const SignUp = () => {
@@ -138,15 +148,15 @@ const SignUp = () => {
                     </PrivacyPolicyButtonTitle>
                 </PrivacyPolicy>
             </LoginButtonContainer>
-            <SignInWith>or sign in with</SignInWith>
+            <SignInWith>or sign up with</SignInWith>
             <SocialButtons>
                 <SignSocialContainer>
                     <Google style={{ color: '#CC3333', marginRight: 10 }} />{' '}
-                    Login With Google
+                    Google
                 </SignSocialContainer>
                 <SignSocialContainer>
                     <Facebook style={{ color: '#3366CC', marginRight: 10 }} />{' '}
-                    Login With Facebook
+                    Facebook
                 </SignSocialContainer>
             </SocialButtons>
         </LoginPageContainer>
