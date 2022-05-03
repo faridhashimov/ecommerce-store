@@ -210,11 +210,11 @@ const AddToCartBtn = styled.button`
     cursor: pointer;
     color: #eea287;
     border: 1px solid #eea287;
-    transition: all .2s ease-in;
-    &:hover{
+    transition: all 0.2s ease-in;
+    &:hover {
         background-color: #eea287;
         color: #fff;
-        transition: all .2s ease-in;
+        transition: all 0.2s ease-in;
     }
 `
 const WishlistBtn = styled.button`
@@ -297,8 +297,8 @@ const Productpage = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
     const { title, img, color, status, desc, price, size, category } = product
-    console.log(id)
-    console.log(product)
+    // console.log(id)
+    // console.log(product)
 
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -329,11 +329,11 @@ const Productpage = () => {
         <>
             <Navbar />
             <Wrapper>
-                <Modal>
-                    {!product ? (
-                        <Spinner />
-                    ) : (
-                        <>
+                {!product ? (
+                    <Spinner />
+                ) : (
+                    <>
+                        <Modal>
                             <ModalView>
                                 <Images>
                                     {img?.map((item, i) => (
@@ -477,24 +477,26 @@ const Productpage = () => {
                                     </SocialContainer>
                                 </SharContainer>
                             </ModalInfo>{' '}
-                        </>
-                    )}
-                </Modal>
+                        </Modal>
 
-                <OtherInfo>
-                    <ButtonContainer>
-                        <OtherInfoBtn>DETAILS</OtherInfoBtn>
-                        <OtherInfoBtn>DELIVERY AND PAYMENT</OtherInfoBtn>
-                        <OtherInfoBtn>PRODUCT BACKGROUND</OtherInfoBtn>
-                        <OtherInfoBtn>REVIEWS (2)</OtherInfoBtn>
-                    </ButtonContainer>
-                    <InfoContainer>
-                        {/* <Details /> */}
-                        {/* <DeliveryAndPayment/>
+                        <OtherInfo>
+                            <ButtonContainer>
+                                <OtherInfoBtn>DETAILS</OtherInfoBtn>
+                                <OtherInfoBtn>
+                                    DELIVERY AND PAYMENT
+                                </OtherInfoBtn>
+                                <OtherInfoBtn>PRODUCT BACKGROUND</OtherInfoBtn>
+                                <OtherInfoBtn>REVIEWS (2)</OtherInfoBtn>
+                            </ButtonContainer>
+                            <InfoContainer>
+                                {/* <Details /> */}
+                                {/* <DeliveryAndPayment/>
                         <ProductBackground/> */}
-                        <ProductReviews />
-                    </InfoContainer>
-                </OtherInfo>
+                                <ProductReviews reviews={product.reviews} />
+                            </InfoContainer>
+                        </OtherInfo>
+                    </>
+                )}
             </Wrapper>
             <Footer />
         </>

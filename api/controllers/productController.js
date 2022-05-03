@@ -1,6 +1,8 @@
+const mongoose = require('mongoose')
 const Product = require('../models/ProductModel')
+const UserModel = require('../models/UserModel')
 
-//CREATE PRODUCT
+//ADD PRODUCT
 const createProduct = async (req, res) => {
     try {
         const newProduct = new Product(req.body)
@@ -10,6 +12,7 @@ const createProduct = async (req, res) => {
         res.status(401).json(err)
     }
 }
+
 //UPDATE PRODUCT
 const updateProduct = async (req, res) => {
     try {
@@ -69,10 +72,55 @@ const getProduct = async (req, res) => {
     }
 }
 
+//=================REVIEWS===================
+
+//ADD REVIEW
+const createReview = async (req, res) => {
+    const productID = req.params.productId
+    const userID = req.params.userId
+    const { title, desc, rating } = req.body
+    try {
+        const user = await UserModel.findById(userID)
+        const product = await Product.findById(productID)
+        if (product) {
+            if (product.reviews.find((x) => x.name === user.username)) {
+                return res
+                    .status(400)
+                    .json('You are already submitted a review')
+            }
+        }
+        const newReview = {
+            name: user.username,
+            title,
+            desc,
+            rating,
+        }
+        product.reviews.push(newReview)
+        const updatedProduct = await product.save()
+        res.status(201).json(updatedProduct)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+//GET ALL REVIEWS
+const getProductReviews = async (req, res) => {
+    try {
+        const produtcReviews = await Product.findOne({
+            product: req.params.productId,
+        })
+        res.status(201).json(produtcReviews)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 module.exports = {
     getAllProducts,
     getProduct,
     createProduct,
     updateProduct,
     deleteProduct,
+    createReview,
+    getProductReviews,
 }

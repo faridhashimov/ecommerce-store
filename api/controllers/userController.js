@@ -2,7 +2,6 @@ const User = require('../models/UserModel')
 
 // GET ALL USERS
 const getAllUsers = async (req, res) => {
-    //Checking if the user is already exists
     try {
         const users = await User.find({})
         res.status(200).json(users)
@@ -10,9 +9,8 @@ const getAllUsers = async (req, res) => {
         res.status(401).json(err)
     }
 }
-// GET ALL USERS
+// DELETE USER
 const deleteUser = async (req, res) => {
-    //Checking if the user is already exists
     try {
         const user = await User.findById(req.params.id)
         await User.findByIdAndDelete(req.params.id)

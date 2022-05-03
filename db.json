@@ -1,0 +1,285 @@
+[
+    {
+        "_id": "6266b50d33d8580440dc80e1",
+        "title": "Slim Fit Linen-blend Shirt",
+        "desc": "Shirt in a woven linen and cotton blend with a concealed button-down collar and classic button placket. Open chest pocket, yoke at back with box pleat, and long sleeves with adjustable buttoning at cuffs. Rounded hem. Slim fit - a modern fit with narrow shoulders and shaped waist for a tailored silhouette.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fd0%2F7c%2Fd07c80db8ad6c37a39718220340ed0087c056c94.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F4e%2F3b%2F4e3badd30820eccaed5b3531fb02d42616fd7815.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fa6%2F37%2Fa637ede9a3ab92dcadf2dde1517d8534490839e0.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVEDETAIL%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fec%2Fbe%2Fecbe863371bd3a2b37759684ff0d83d564f7052b.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+        ],
+        "category": [
+            "Men",
+            "Shirts"
+        ],
+        "size": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "3XL"
+        ],
+        "color": [
+            "CB9A8C",
+            "C7D5E0",
+            "D5D0C6",
+            "A2ADB0",
+            "A38471"
+        ],
+        "price": 29.99,
+        "status": [
+            "New"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T14:49:49.538Z",
+        "updatedAt": "2022-04-25T14:49:49.538Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266b6e78cfccf24728effa7",
+        "title": "Regular Fit Knee-length Cargo Shorts",
+        "desc": "Regular-fit, knee-length cargo shorts in woven cotton fabric. Waistband with covered elastic, drawstring, and zip fly with snap fastener. Side pockets, back pockets with flap and hook-loop fastening, one leg pocket with zipper, and two leg pockets with flap and hook-loop fastening.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fcc%2Fa7%2Fcca71e6598eca6975cad0f42adc0299d500943d3.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_shorts_cargo%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fc5%2F46%2Fc546e8f009fade125334ceb19f34aa2b847d077f.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fe7%2Fd0%2Fe7d0de22141a18dd48da7fae788ba0b1f871f99a.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fcb%2F2d%2Fcb2de60591fb2243d87ea9506d913a96ab006df5.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_shorts_cargo%5D%2Ctype%5BDESCRIPTIVEDETAIL%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+        ],
+        "category": [
+            "Men",
+            "Shorts"
+        ],
+        "size": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "3XL"
+        ],
+        "color": [
+            "B1A698",
+            "A29278",
+            "49454B",
+            "2A292C"
+        ],
+        "price": 29.99,
+        "status": [
+            "Top"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T14:57:43.273Z",
+        "updatedAt": "2022-04-25T14:57:43.273Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266b7f68cfccf24728effa9",
+        "title": "Strappy Sandals",
+        "desc": "Sandals with padded foot and ankle straps in woven fabric. Ankle strap with fastener and foot straps with hook-loop fastening. Molded insoles and fluted soles. Sole thickness approx. 1 1/4 in.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F80%2Fd5%2F80d57bdcdb264c747f001ff9be1b67a766e94877.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fa0%2F1b%2Fa01b0e3012660277b6336511cae734da9bb7e6be.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F4a%2Fec%2F4aecd5ce953a71192b5adb0d36f490136697f620.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Ffd%2F6c%2Ffd6cac3275a8e1c53429828aa8bf0500239331b0.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]"
+        ],
+        "category": [
+            "Men",
+            "Shoes"
+        ],
+        "size": [
+            "7.5",
+            "8.5",
+            "9",
+            "10",
+            "10.5",
+            "11.5",
+            "12"
+        ],
+        "color": [
+            "D8C5A5",
+            "272629"
+        ],
+        "price": 15.99,
+        "status": [
+            "New"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T15:02:14.071Z",
+        "updatedAt": "2022-04-25T15:02:14.071Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266b9148cfccf24728effac",
+        "title": "Backpack",
+        "desc": "Backpack in woven fabric. Handle, padded, adjustable shoulder straps, and zipper at top. Outer compartment with zipper and two inner compartments including a laptop sleeve and a smaller compartment with zipper. Padded backplate. Lined. Depth 5 in. Width 11 3/4 in. Height 17 in.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F89%2Fbd%2F89bdedcc389057fda3bdbdbbcd4971e0b052140e.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fa7%2Fda%2Fa7da66b142a546f8babcde6c64a64bb37bf6fec4.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F8f%2F60%2F8f601ae605c79a8d35105b3e1e947e27b3f80bb6.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F5f%2F11%2F5f11f2cd4841c7d257c2114a44808f032df895fb.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVEDETAIL%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+        ],
+        "category": [
+            "Men",
+            "Accessories",
+            "Bags"
+        ],
+        "size": [],
+        "color": [
+            "3B383F"
+        ],
+        "price": 24.99,
+        "status": [
+            "Top",
+            "Sale"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T15:07:00.798Z",
+        "updatedAt": "2022-04-25T15:07:00.798Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266bb5a8cfccf24728effaf",
+        "title": "Knit Pencil Skirt",
+        "desc": "Calf-length, fitted skirt with a crocheted look. High waist, concealed, elasticized waistband, and concealed zipper at one side. Slit at one side of hem. Unlined.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Faf%2Fe1%2Fafe1449ff2eaa4b2a714ae5db694eda285a7cad9.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F20%2F03%2F2003400c32ab270f7dd5d02039493c52b0506e85.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F6c%2F7c%2F6c7c826fe480bf881acc2face0c9e406e270b828.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+        ],
+        "category": [
+            "Women",
+            "Skirts"
+        ],
+        "size": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "color": [
+            "DCC5AA"
+        ],
+        "price": 49.99,
+        "status": [
+            "New"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T15:16:42.885Z",
+        "updatedAt": "2022-04-25T15:16:42.885Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266bd098cfccf24728effb1",
+        "title": "Straw Hat",
+        "desc": "Hat in braided paper straw with a wide, sloped brim and grosgrain band inside",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fd0%2Fa6%2Fd0a697797e76f44c2735d340ad64747ce172e480.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F4e%2F8d%2F4e8d576628d06a81ca584ff7162affa128abd2b4.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F7b%2Fcb%2F7bcb069610361a1eee5e2cfa9385f2600729f431.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F45%2F67%2F4567d2b1b1d731ec3714133657b155fac80767fc.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]"
+        ],
+        "category": [
+            "Women",
+            "Accessories",
+            "Hats"
+        ],
+        "size": [
+            "S/54",
+            "M/56",
+            "L/58"
+        ],
+        "color": [
+            "DAC5A6",
+            "C99A6A"
+        ],
+        "price": 17.99,
+        "status": [
+            "Sale"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T15:23:53.266Z",
+        "updatedAt": "2022-04-25T15:23:53.266Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266bf1a8cfccf24728effb4",
+        "title": "Cotton Shirt",
+        "desc": "Short-sleeved shirt in woven cotton fabric. Collar with contrasting color inside collar stand. Buttons at front, yoke at back, and gently rounded hem.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F5d%2F77%2F5d77bc639e8e8efa4bffe716d51eae3d9c675fcb.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F22%2F6f%2F226f0f29a37e496ccb8892219d159c6c4eaf40b8.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F3e%2Ff0%2F3ef0bbed281c73527e96626ed0dd96fe77d7fda2.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+        ],
+        "category": [
+            "Kids",
+            "Boys",
+            "Clothing",
+            "Shirts"
+        ],
+        "size": [
+            "1-2Y",
+            "2-3Y",
+            "3-4Y",
+            "4-5Y",
+            "5-6Y",
+            "6-7Y",
+            "7-8Y"
+        ],
+        "color": [
+            "3B5278",
+            "C9D5EA",
+            "C4DAD3",
+            "F3F3F4"
+        ],
+        "price": 9.99,
+        "status": [
+            "Top"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T15:32:42.202Z",
+        "updatedAt": "2022-04-25T15:32:42.202Z",
+        "__v": 0
+    },
+    {
+        "_id": "6266c0548cfccf24728effb6",
+        "title": "2-piece Cotton Set",
+        "desc": "Set with a T-shirt and skirt in soft cotton jersey. T-shirt with a graphic design at front and round neckline with narrow, ribbed trim. Skirt with a printed pattern, elasticized waistband with ruffle trim, and decorative bow at front. Unlined.",
+        "img": [
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F93%2Ff3%2F93f3a13d837a663b55cf9fb84329455d36f72a64.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bkids_girls_clothing_topstshirts_tshirts%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D",
+            "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F0b%2F87%2F0b87236529143ecbdc4034bd0e39ee4fdc80772c.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]",
+            "https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F45%2F2f%2F452f396485ef155c4d3373a38e6e24a04668b0d1.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+        ],
+        "category": [
+            "Kids",
+            "Girls",
+            "Clothing",
+            "T-shirts"
+        ],
+        "size": [
+            "1-2Y",
+            "2-4Y",
+            "4-6Y",
+            "6-8Y",
+            "8-10Y"
+        ],
+        "color": [
+            "DDD9E4",
+            "403E3F",
+            "D7D5C8"
+        ],
+        "price": 12.99,
+        "status": [
+            "Top",
+            "Sale"
+        ],
+        "inStock": true,
+        "createdAt": "2022-04-25T15:37:56.578Z",
+        "updatedAt": "2022-04-25T15:46:30.330Z",
+        "__v": 0
+    }
+]

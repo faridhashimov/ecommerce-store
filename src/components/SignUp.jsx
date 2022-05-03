@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react'
 import { mobile } from '../responsive'
 
 const LoginPageContainer = styled.div`
-    width: 80%;
+    width: 100%;
     ${mobile({width: '90%'})}
 `
 const InputContainer = styled.div`
@@ -21,6 +21,7 @@ const Label = styled.label`
 const Input = styled.input`
     padding: 7px 20px;
     color: #777;
+    background-color: #f4f4f4;
     border: 1px solid #ebebeb;
     transition: all 0.2s ease;
     &:focus {
@@ -32,7 +33,7 @@ const LoginButtonContainer = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 5px 0px 30px;
+    padding: 5px 0px 10px;
     ${mobile({padding: '5px 0px'})}
 `
 
@@ -76,7 +77,7 @@ const PrivacyPolicyButtonTitle = styled.label`
 const SignInWith = styled.span`
     display: block;
     text-align: center;
-    margin: 25px 0px;
+    margin: 15px 0px;
     ${mobile({margin: '10px 0px'})}
 `
 const SocialButtons = styled.div`
@@ -89,7 +90,7 @@ const SignSocialContainer = styled.button`
     background-color: transparent;
     display: flex;
     justify-content: center;
-    padding: 10px 25px;
+    padding: 7px 25px;
     align-items: center;
     color: #333;
     font-weight: 300;
@@ -102,11 +103,11 @@ const SignSocialContainer = styled.button`
     ${mobile({padding: ' 10px 25px'})}
 `
 
-const PasswordsContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    ${mobile({flexDirection: 'column'})};
-`
+// const PasswordsContainer = styled.div`
+//     display: flex;
+//     justify-content: space-between;
+//     ${mobile({flexDirection: 'column'})};
+// `
 
 const SignUp = () => {
     const emailRef = useRef()
@@ -126,7 +127,7 @@ const SignUp = () => {
                     autoComplete="off"
                 />
             </InputContainer>
-            <PasswordsContainer>
+            {/* <PasswordsContainer> */}
                 <InputContainer>
                     <Label>Password *</Label>
                     <Input type="password" required />
@@ -135,7 +136,7 @@ const SignUp = () => {
                     <Label>Re-type Password *</Label>
                     <Input type="password" required />
                 </InputContainer>
-            </PasswordsContainer>
+            {/* </PasswordsContainer> */}
             <LoginButtonContainer>
                 <LoginButton>
                     Sign Up{' '}

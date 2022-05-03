@@ -19,6 +19,7 @@ const userRegister = async (req, res) => {
             return res.status(401).json('User already exists')
         }
         const newUser = new User({
+            username: email.substr(0, email.indexOf('@')),
             email,
             password: hashedPassword,
         })

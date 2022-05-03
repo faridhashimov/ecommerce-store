@@ -6,13 +6,13 @@ import { loginCall } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 
 const LoginPageContainer = styled.form`
-    width: 80%;
+    width: 100%;
     ${mobile({width: '90%'})}
 `
 const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 `
 const Label = styled.label`
     margin-bottom: 10px;
@@ -23,6 +23,7 @@ const Label = styled.label`
 const Input = styled.input`
     padding: 7px 20px;
     color: #777;
+    background-color: #f4f4f4;
     border: 1px solid #ebebeb;
     transition: all 0.2s ease;
     &:focus {
@@ -34,7 +35,8 @@ const LoginButtonContainer = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 5px 0px 30px;
+    padding: 5px 0px 10px;
+    margin: 40.9px 0px;
 `
 
 const LoginButton = styled.button`
@@ -69,7 +71,7 @@ const ForgotPassword = styled.a`
 const SignInWith = styled.span`
     display: block;
     text-align: center;
-    margin: 25px 0px;
+    margin: 15px 0px;
 `
 const SocialButtons = styled.div`
     display: flex;
@@ -81,7 +83,7 @@ const SignSocialContainer = styled.button`
     background-color: transparent;
     display: flex;
     justify-content: center;
-    padding: 10px 25px;
+    padding: 7px 25px;
     align-items: center;
     color: #333;
     font-weight: 300;

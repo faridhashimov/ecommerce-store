@@ -312,7 +312,7 @@ const Cart = () => {
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
     const cartTotal = (totalSum - discount).toFixed(2)
-    console.log(typeof discount, typeof totalSum)
+    // console.log(typeof discount, typeof totalSum)
     const handleClik = (exp, id) => {
         if (exp === 'dec') {
             id.quantity > 1 && dispatch(decreaseQt(id))
@@ -326,11 +326,11 @@ const Cart = () => {
     }
 
     const handleRadioChange = (e) => {
-        console.log(e.target)
+        // console.log(e.target)
         setDiscount(e.target.value)
     }
 
-    console.log('rendered')
+    // console.log('rendered')
 
     return (
         <Container>

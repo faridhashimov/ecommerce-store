@@ -5,7 +5,7 @@ import {
 } from '@mui/icons-material'
 import styled from 'styled-components'
 import Tooltip from '@mui/material/Tooltip'
-import Reviews from './Reviews'
+import ProductRate from './ProductRate'
 import { css } from 'styled-components'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -81,13 +81,13 @@ const Container = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in-out;
     }
-    ${mobile({height: '350px'})}
+    ${mobile({ height: '350px' })}
 `
 const ImageContainer = styled.div`
     height: 390px;
     position: relative;
     margin-bottom: 10px;
-    ${mobile({height: '250px'})}
+    ${mobile({ height: '250px' })}
 `
 const Image = styled.div`
     width: 100%;
@@ -200,25 +200,37 @@ const Category = styled.span`
     font-size: 13px;
     color: #ccc;
     &:hover {
-        color: #ef837b;
+        color: #eea287;
     }
-    ${mobile({display: 'none'})}
+    ${mobile({ display: 'none' })}
 `
 const Title = styled.div`
     transition: all 0.3s ease;
+    font-size: 15px;
     &:hover {
-        color: #ef837b;
+        color: #eea287;
         transition: all 0.3s ease;
     }
-    ${mobile({fontSize: '15px'})}
+    ${mobile({ fontSize: '15px' })}
 `
 const Prices = styled.div`
-    margin-bottom: 10px;
-    ${mobile({fontSize: '14px', color: '#ef837b'})}
+    /* color: #eea287; */
+    color: #777;
+    margin: 5px;
+    ${mobile({ fontSize: '14px', color: '#eea287' })}
 `
+const Rate = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
 const Product = (item) => {
-    const { img, status, category, title, price } = item
+    const { img, status, category, title, price, reviews } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
+    const rate = reviews
+        ? reviews.reduce((a, c) => c.rating + a, 0) / reviews.length
+        : null
+    console.log(rate)
     const dispatch = useDispatch()
     const handleClick = () => {
         dispatch(openModal(item))
@@ -242,7 +254,7 @@ const Product = (item) => {
                     {status?.map((item, i) => (
                         <Status fs={item} key={i} order={i + 1}>
                             {item}
-                        </Status> 
+                        </Status>
                     ))}
                 </ProductStatus>
                 <ProductAction>
@@ -274,7 +286,9 @@ const Product = (item) => {
                 </Categories>
                 <Title>{title}</Title>
                 <Prices>$ {price}</Prices>
-                <Reviews />
+                <Rate>
+                    <ProductRate rate={rate} />
+                </Rate>
             </InfoContainer>
         </Container>
     )
