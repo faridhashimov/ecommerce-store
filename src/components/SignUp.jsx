@@ -5,7 +5,7 @@ import { mobile } from '../responsive'
 
 const LoginPageContainer = styled.div`
     width: 100%;
-    ${mobile({width: '90%'})}
+    ${mobile({ width: '90%' })}
 `
 const InputContainer = styled.div`
     display: flex;
@@ -34,9 +34,8 @@ const LoginButtonContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 5px 0px 10px;
-    ${mobile({padding: '5px 0px'})}
+    ${mobile({ padding: '5px 0px' })}
 `
-
 const LoginButton = styled.button`
     display: flex;
     justify-content: center;
@@ -54,7 +53,7 @@ const LoginButton = styled.button`
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
-    ${mobile({padding: '5px', width: '40%', marginRight: '15px'})}
+    ${mobile({ padding: '5px', width: '40%', marginRight: '15px' })}
 `
 const PrivacyPolicy = styled.div`
     display: flex;
@@ -72,13 +71,13 @@ const PrivacyPolicyButtonTitle = styled.label`
     margin-left: 10px;
     color: #666;
     cursor: pointer;
-    ${mobile({fontSize: '12px'})}
+    ${mobile({ fontSize: '12px' })}
 `
 const SignInWith = styled.span`
     display: block;
     text-align: center;
     margin: 15px 0px;
-    ${mobile({margin: '10px 0px'})}
+    ${mobile({ margin: '10px 0px' })}
 `
 const SocialButtons = styled.div`
     display: flex;
@@ -100,15 +99,8 @@ const SignSocialContainer = styled.button`
     &:hover {
         background-color: #f8f9fb;
     }
-    ${mobile({padding: ' 10px 25px'})}
+    ${mobile({ padding: ' 10px 25px' })}
 `
-
-// const PasswordsContainer = styled.div`
-//     display: flex;
-//     justify-content: space-between;
-//     ${mobile({flexDirection: 'column'})};
-// `
-
 const SignUp = () => {
     const emailRef = useRef()
 
@@ -127,16 +119,16 @@ const SignUp = () => {
                     autoComplete="off"
                 />
             </InputContainer>
-            {/* <PasswordsContainer> */}
-                <InputContainer>
-                    <Label>Password *</Label>
-                    <Input type="password" required />
-                </InputContainer>
-                <InputContainer>
-                    <Label>Re-type Password *</Label>
-                    <Input type="password" required />
-                </InputContainer>
-            {/* </PasswordsContainer> */}
+
+            <InputContainer>
+                <Label>Password *</Label>
+                <Input type="password" required />
+            </InputContainer>
+            <InputContainer>
+                <Label>Re-type Password *</Label>
+                <Input type="password" required />
+            </InputContainer>
+
             <LoginButtonContainer>
                 <LoginButton>
                     Sign Up{' '}

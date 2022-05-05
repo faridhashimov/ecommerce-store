@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 const Product = require('../models/ProductModel')
 const UserModel = require('../models/UserModel')
 
@@ -103,13 +103,30 @@ const createReview = async (req, res) => {
     }
 }
 
-//GET ALL REVIEWS
+//GET PRODUCT REVIEW
 const getProductReviews = async (req, res) => {
     try {
-        const produtcReviews = await Product.findOne({
-            product: req.params.productId,
-        })
+        const produtcReviews = await Product.findById(
+            req.params.productId
+        ).select('reviews')
         res.status(201).json(produtcReviews)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+//UPDATE REVIEW
+const updateReview = async (req, res) => {
+    try {
+        await Product.findOneAndUpdate(
+            { _id: req.params.productId, 'reviews._id': req.params.reviewId },
+            {
+                $set: {
+                    'reviews.$.helpfull': 'reviews.$.helpfull' + 1,
+                },
+            }
+        )
+        res.status(201).json('ok')
     } catch (err) {
         res.status(401).json(err)
     }
@@ -123,4 +140,5 @@ module.exports = {
     deleteProduct,
     createReview,
     getProductReviews,
+    updateReview,
 }

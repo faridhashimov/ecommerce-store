@@ -85,7 +85,7 @@ const ReviewDate = styled.span`
 
 const ProductReviews = ({ reviews }) => {
     // const rating = reviews ? reviews.reduce((a,c) => c.rating + a, 0) / reviews.length : null
-    console.log(reviews)
+    // console.log(reviews)
     // console.log(rating)
     return (
         <Info>

@@ -1,13 +1,14 @@
 import { ArrowForward, Facebook, Google } from '@mui/icons-material'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { loginCall } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 
 const LoginPageContainer = styled.form`
     width: 100%;
-    ${mobile({width: '90%'})}
+    ${mobile({ width: '90%' })}
 `
 const InputContainer = styled.div`
     display: flex;
@@ -37,6 +38,7 @@ const LoginButtonContainer = styled.div`
     align-items: center;
     padding: 5px 0px 10px;
     margin: 40.9px 0px;
+    ${mobile({margin: '33.5px 0px'})}
 `
 
 const LoginButton = styled.button`
@@ -56,6 +58,7 @@ const LoginButton = styled.button`
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
+    ${mobile({padding: '7px 15px'})}
 `
 const ForgotPassword = styled.a`
     font-weight: 300;
@@ -93,22 +96,42 @@ const SignSocialContainer = styled.button`
     &:hover {
         background-color: #f8f9fb;
     }
-    ${mobile({padding: ' 10px 25px'})}
+    ${mobile({ padding: ' 10px 25px' })}
+`
+const ErorMsg = styled.p`
+    color: red;
 `
 
 const SignIn = () => {
     const [inputs, setInputs] = useState(null)
+    const [errMsg, setErrMsg] = useState('')
+    const [focus, setFocus] = useState(false)
     const emailRef = useRef()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
+    console.log(user)
+    let navigate = useNavigate()
 
     useEffect(() => {
         emailRef.current.focus()
+        setErrMsg('')
     }, [])
+
+    useEffect(() => {
+        focus && setErrMsg('')
+    }, [focus])
 
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
+
+    useEffect(() => {
+        setFocus(false)
+        if (user.error) {
+            setErrMsg('Wrong email or password')
+        }
+        user.user && navigate(-1)
+    }, [user.error, user.user, navigate])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -120,6 +143,7 @@ const SignIn = () => {
             <InputContainer>
                 <Label htmlFor="email">Email address *</Label>
                 <Input
+                    onFocus={() => setFocus(true)}
                     ref={emailRef}
                     id="email"
                     name="email"
@@ -131,6 +155,7 @@ const SignIn = () => {
             <InputContainer>
                 <Label>Password *</Label>
                 <Input
+                    onFocus={() => setFocus(true)}
                     name="password"
                     onChange={handleChange}
                     required
@@ -138,6 +163,7 @@ const SignIn = () => {
                     minLength={6}
                 />
             </InputContainer>
+            <ErorMsg>{errMsg}</ErorMsg>
             <LoginButtonContainer>
                 <LoginButton>
                     Log in{' '}

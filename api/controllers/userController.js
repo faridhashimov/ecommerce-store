@@ -9,6 +9,7 @@ const getAllUsers = async (req, res) => {
         res.status(401).json(err)
     }
 }
+
 // DELETE USER
 const deleteUser = async (req, res) => {
     try {

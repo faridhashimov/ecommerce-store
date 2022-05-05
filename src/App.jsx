@@ -1,12 +1,22 @@
 import { useSelector } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ProductModal } from './components'
-import { Homepage, About, Faq, Login, Contact, Error404, Cart } from './pages'
+import {
+    Homepage,
+    About,
+    Faq,
+    Login,
+    Contact,
+    Error404,
+    Cart,
+} from './pages'
 import Productpage from './pages/Productpage'
 import WishList from './pages/WishList'
 
 function App() {
     const active = useSelector((state) => state.modal.active)
+    
+
     return (
         <>
             <BrowserRouter>

@@ -1,14 +1,17 @@
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import Badge from '@mui/material/Badge'
 import {
     FavoriteBorder,
+    // Person,
     Search,
     ShoppingCartOutlined,
 } from '@mui/icons-material'
 import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
+import NavbarPopup from './NavbarPopup'
+// import noAvatar from '../resources/noavatar.png'
 
 const Container = styled.div`
     height: 60px;
@@ -36,6 +39,7 @@ const Reverse = styled.span`
     color: #eea287;
 `
 const Center = styled.div``
+
 const Menu = styled.ul`
     list-style: none;
     display: flex;
@@ -75,6 +79,7 @@ const Right = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+    /* position: relative; */
 `
 const SearchContainer = styled.div`
     display: flex;
@@ -101,7 +106,7 @@ const SearchButton = styled.div`
     fill: '#EEA287';
 `
 const RightMenuIcon = styled.div`
-    margin-left: 30px;
+    margin-left: 20px;
     color: #666666;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -115,7 +120,6 @@ const CartTotal = styled.span`
     margin-left: 12px;
     font-weight: 600;
 `
-
 const StyledLink = styled(Link)`
     color: #666666;
     transition: all 0.2s ease;
@@ -125,12 +129,28 @@ const StyledLink = styled(Link)`
         transition: all 0.2s ease;
     }
 `
-
+// const ProfileContainer = styled.div`
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+//     overflow: hidden;
+//     margin-left: 20px;
+//     border: 1px solid #ccc;
+//     transition: all 0.3s ease-in;
+//     cursor: pointer;
+// `
+// const ProfileImage = styled.img`
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+// `
 const Navbar = () => {
     const product = useSelector((state) => state.wishlist.product)
+    const user = useSelector((state) => state.user.user)
     const products = useSelector((state) => state.cart.products)
     const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
-    // console.log(product.length)
+
+    const [popup, setPopup] = useState(false)
 
     let activeStyle = {
         borderBottom: '2px solid #000',
@@ -191,26 +211,33 @@ const Navbar = () => {
                                 FAQ
                             </NavLink>
                         </MenuItemContainer>
-                        {/* <MenuItemContainer>
-                            <NavLink
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
-                                to="/blog"
+                        {!user ? (
+                            <MenuItemContainer>
+                                <NavLink
+                                    style={({ isActive }) =>
+                                        isActive ? activeStyle : undefined
+                                    }
+                                    to="/login"
+                                >
+                                    Login
+                                </NavLink>
+                            </MenuItemContainer>
+                        ) : (
+                            <MenuItemContainer
+                                onMouseEnter={() => setPopup(true)}
+                                onMouseLeave={() => setPopup(false)}
                             >
-                                Blog
-                            </NavLink>
-                        </MenuItemContainer> */}
-                        <MenuItemContainer>
-                            <NavLink
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
-                                to="/login"
-                            >
-                                Login
-                            </NavLink>
-                        </MenuItemContainer>
+                                <NavLink
+                                    style={({ isActive }) =>
+                                        isActive ? activeStyle : undefined
+                                    }
+                                    to="/profile"
+                                >
+                                    Profile
+                                </NavLink>
+                                <NavbarPopup popup={popup} />
+                            </MenuItemContainer>
+                        )}
                     </Menu>
                 </Center>
                 <Right>
@@ -227,6 +254,13 @@ const Navbar = () => {
                             />
                         </SearchButton>
                     </SearchContainer>
+                    {/* {user && (
+                        <ProfileContainer>
+                            <ProfileImage
+                                src={user.img ? user.img : noAvatar}
+                            />
+                        </ProfileContainer>
+                    )} */}
                     <RightMenuIcon>
                         <Badge badgeContent={product?.length} color="primary">
                             <StyledLink to="/wishlist">

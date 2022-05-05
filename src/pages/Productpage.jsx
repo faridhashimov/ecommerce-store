@@ -5,6 +5,8 @@ import {
     FavoriteBorder,
     Instagram,
     Pinterest,
+    Star,
+    StarBorder,
     Twitter,
 } from '@mui/icons-material'
 import axios from 'axios'
@@ -20,6 +22,7 @@ import Details from '../components/Details'
 import DeliveryAndPayment from '../components/DeliveryAndPayment'
 import ProductBackground from '../components/ProductBackground'
 import ProductReviews from '../components/ProductReviews'
+import { SvgIcon } from '@mui/material'
 
 const Wrapper = styled.div`
     width: 93vw;
@@ -253,7 +256,7 @@ const Category = styled.span`
     font-size: 14px;
     font-weight: 400;
     color: #666;
-    margin-right: 5px;
+    /* margin-right: 5px; */
 `
 const SharContainer = styled(ProductCategory)``
 
@@ -261,8 +264,15 @@ const SocialContainer = styled(Categories)`
     color: #666;
 `
 const OtherInfo = styled.div`
-    padding: 20px 10px;
+    padding: 20px 0px;
+    /* border: 1px solid #ccc;
+    border-radius: 3px; */
 `
+const MainInfo = styled.div`
+    border: 1px solid #ccc;
+    border-radius: 3px;
+`
+
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -285,20 +295,125 @@ const OtherInfoBtn = styled.button`
     }
 `
 const InfoContainer = styled.div`
-    padding: 30px;
+    padding: 30px 30px 10px;
+    /* border: 1px solid #ccc;
+    border-radius: 3px; */
+`
+
+const AddReview = styled.div`
+    padding: 5px 30px;
+    h1 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+    p {
+        font-size: 14px;
+        font-weight: 300;
+        color: #777;
+        line-height: 26px;
+    }
+`
+const RatingContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    span {
+        font-size: 14px;
+        font-weight: 300;
+        color: #333;
+    }
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+    }
+`
+const AddReviewForm = styled.form`
+    width: 100%;
+    div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+`
+const ReviewTextarea = styled.textarea`
+    width: 96%;
+    resize: vertical;
+    padding: 10px 20px;
+    outline: none;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    &:focus {
+        border: 1px solid #eea287;
+    }
+`
+const ReviewInput = styled.input`
+    width: 45%;
+    padding: 10px 20px;
+    outline: none;
+    border-radius: 3px;
+
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    &:focus {
+        border: 1px solid #eea287;
+    }
+`
+const AddReviewButton = styled.button`
+    padding: 10px 60px;
+    background-color: #eea287;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 30px;
+    border: 1px solid #eea287;
+    transition: all 0.2s ease-in;
+    &:hover {
+        background-color: #c9866e;
+        transition: all 0.2s ease-in;
+    }
+`
+
+const StyledSocial = styled(SvgIcon)`
+    font-size: 20px !important;
+    margin-right: 12px;
+    cursor: pointer;
+    &:hover {
+        color: #eea287;
+    }
+`
+const LoginForReview = styled.div`
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+        color: #333;
+    }
 `
 
 const Productpage = () => {
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
     const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState({})
+    const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const { id } = useParams()
     const { title, img, color, status, desc, price, size, category } = product
     // console.log(id)
     // console.log(product)
+
+    const [rating, setRating] = useState(0)
+    const [hover, setHover] = useState(0)
+    const [inputs, setInputs] = useState({})
 
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -324,6 +439,22 @@ const Productpage = () => {
     }
 
     // const spinner = loading && !data ? <Spinner/> : null
+
+    const handleChange = (e) => {
+        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+        console.log(inputs)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        try {
+            const res = axios.post(
+                `http://localhost:5000/api/products/${product._id}/:userId/reviews`
+            )
+        } catch (err) {
+            throw new Error(err)
+        }
+    }
 
     return (
         <>
@@ -424,9 +555,9 @@ const Productpage = () => {
                                 <ProductCategory>
                                     <CategoryTitle>Category:</CategoryTitle>
                                     <Categories>
-                                        {category?.map((item) => (
-                                            <Category key={item}>
-                                                {item + ','}
+                                        {category?.map((item, i) => (
+                                            <Category key={i}>
+                                                {(i ? ', ' : '') + item}
                                             </Category>
                                         ))}
                                     </Categories>
@@ -434,46 +565,10 @@ const Productpage = () => {
                                 <SharContainer>
                                     <CategoryTitle>Share:</CategoryTitle>
                                     <SocialContainer>
-                                        <Facebook
-                                            sx={{
-                                                fontSize: '16px',
-                                                marginRight: '12px',
-                                                cursor: 'pointer',
-                                                '&:hover': {
-                                                    color: '#eea287',
-                                                },
-                                            }}
-                                        />
-                                        <Twitter
-                                            sx={{
-                                                fontSize: '16px',
-                                                marginRight: '12px',
-                                                cursor: 'pointer',
-                                                '&:hover': {
-                                                    color: '#eea287',
-                                                },
-                                            }}
-                                        />
-                                        <Instagram
-                                            sx={{
-                                                fontSize: '16px',
-                                                marginRight: '12px',
-                                                cursor: 'pointer',
-                                                '&:hover': {
-                                                    color: '#eea287',
-                                                },
-                                            }}
-                                        />
-                                        <Pinterest
-                                            sx={{
-                                                fontSize: '16px',
-                                                marginRight: '12px',
-                                                cursor: 'pointer',
-                                                '&:hover': {
-                                                    color: '#eea287',
-                                                },
-                                            }}
-                                        />
+                                        <StyledSocial component={Facebook} />
+                                        <StyledSocial component={Twitter} />
+                                        <StyledSocial component={Instagram} />
+                                        <StyledSocial component={Pinterest} />
                                     </SocialContainer>
                                 </SharContainer>
                             </ModalInfo>{' '}
@@ -486,14 +581,103 @@ const Productpage = () => {
                                     DELIVERY AND PAYMENT
                                 </OtherInfoBtn>
                                 <OtherInfoBtn>PRODUCT BACKGROUND</OtherInfoBtn>
-                                <OtherInfoBtn>REVIEWS (2)</OtherInfoBtn>
+                                <OtherInfoBtn>REVIEWS ({product.reviews?.length})</OtherInfoBtn>
                             </ButtonContainer>
-                            <InfoContainer>
-                                {/* <Details /> */}
-                                {/* <DeliveryAndPayment/>
-                        <ProductBackground/> */}
-                                <ProductReviews reviews={product.reviews} />
-                            </InfoContainer>
+                            <MainInfo>
+                                <InfoContainer>
+                                    {/* <Details /> */}
+                                    {/* <DeliveryAndPayment /> */}
+                                    {/* <ProductBackground /> */}
+                                    <ProductReviews reviews={product.reviews} />
+                                </InfoContainer>
+                                {/* {user ? (
+                                    <AddReview>
+                                        <h1>Add a Review</h1>
+                                        <p>
+                                            Your email address will not be
+                                            published. Required fields are
+                                            marked *
+                                        </p>
+                                        <RatingContainer>
+                                            <span>Your rating *</span>
+                                            <div>
+                                                {[...Array(5)].map(
+                                                    (star, i) => {
+                                                        i += 1
+                                                        return (
+                                                            <SvgIcon
+                                                                key={i}
+                                                                sx={{
+                                                                    color: '#eea287',
+                                                                    fontSize:
+                                                                        '20px',
+                                                                    cursor: 'pointer',
+                                                                    '&:hover': {
+                                                                        color: '#eea287',
+                                                                    },
+                                                                }}
+                                                                component={
+                                                                    i <=
+                                                                    (hover ||
+                                                                        rating)
+                                                                        ? Star
+                                                                        : StarBorder
+                                                                }
+                                                                onClick={() =>
+                                                                    setRating(i)
+                                                                }
+                                                                onMouseEnter={() =>
+                                                                    setHover(i)
+                                                                }
+                                                                onMouseLeave={() =>
+                                                                    setHover(
+                                                                        rating
+                                                                    )
+                                                                }
+                                                            />
+                                                        )
+                                                    }
+                                                )}
+                                            </div>
+                                        </RatingContainer>
+                                        <AddReviewForm onSubmit={handleSubmit}>
+                                            <ReviewInput
+                                                onChange={handleChange}
+                                                name="title"
+                                                type="text"
+                                                placeholder="Title *"
+                                            />
+                                            <ReviewTextarea
+                                                onChange={handleChange}
+                                                name="desc"
+                                                rows="6"
+                                                placeholder="Comment *"
+                                            />
+                                            <div>
+                                                <ReviewInput
+                                                    onChange={handleChange}
+                                                    name="name"
+                                                    type="text"
+                                                    placeholder="Name *"
+                                                />
+                                                <ReviewInput
+                                                    onChange={handleChange}
+                                                    name="email"
+                                                    type="email"
+                                                    placeholder="Email *"
+                                                />
+                                            </div>
+                                            <AddReviewButton>
+                                                Submit
+                                            </AddReviewButton>
+                                        </AddReviewForm>
+                                    </AddReview>
+                                ) : (
+                                    <LoginForReview>
+                                        <p>Log in to add Review</p>
+                                    </LoginForReview>
+                                )} */}
+                            </MainInfo>
                         </OtherInfo>
                     </>
                 )}

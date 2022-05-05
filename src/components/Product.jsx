@@ -196,7 +196,7 @@ const Categories = styled.div`
     align-items: center;
 `
 const Category = styled.span`
-    margin-right: 5px;
+    /* margin-right: 5px; */
     font-size: 13px;
     color: #ccc;
     &:hover {
@@ -281,7 +281,7 @@ const Product = (item) => {
             <InfoContainer>
                 <Categories>
                     {category?.map((item, i) => (
-                        <Category key={i}>{item}</Category>
+                        <Category key={i}>{(i ? ', ' : ' ' ) + item}</Category>
                     ))}
                 </Categories>
                 <Title>{title}</Title>

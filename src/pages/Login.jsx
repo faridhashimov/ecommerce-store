@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Footer, Navbar, SignIn, SignUp } from '../components'
 import { mobile } from '../responsive'
@@ -15,7 +15,6 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 const LoginContainer = styled.div`
     width: 30%;
     /* height: 80%; */
@@ -27,7 +26,6 @@ const LoginContainer = styled.div`
     align-items: center;
     ${mobile({ width: '80%' })}
 `
-
 const ButtonContainer = styled.div`
     width: 100%;
     display: flex;
@@ -51,7 +49,6 @@ const SigninButton = styled.button`
     cursor: pointer;
     ${mobile({ fontSize: '16px', padding: '5px 0px' })}
 `
-
 const Login = () => {
     const [active, setactive] = useState('signin')
 
