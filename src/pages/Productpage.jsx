@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { css } from 'styled-components'
-import { Footer, Navbar } from '../components'
+import { AddReview, Footer, Navbar } from '../components'
 import Spinner from '../components/Spinner'
 import Details from '../components/Details'
 import DeliveryAndPayment from '../components/DeliveryAndPayment'
@@ -31,7 +31,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 `
-
 const Modal = styled.div`
     height: 100%;
     width: 100%;
@@ -272,7 +271,6 @@ const MainInfo = styled.div`
     border: 1px solid #ccc;
     border-radius: 3px;
 `
-
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -282,12 +280,24 @@ const OtherInfoBtn = styled.button`
     font-size: 16px;
     padding: 7px 25px;
     margin: 0px 10px;
-    /* color: #eea287; */
     background-color: transparent;
     border: transparent;
     transition: all 0.2s ease-in;
     cursor: pointer;
-    border-bottom: 2px solid #fff;
+    ${(props) => {
+        if (props.bb) {
+            return css`
+                border-bottom: 2px solid #eea287;
+                transition: all 0.2s ease-in;
+            `
+        } else {
+            return css`
+                border-bottom: 2px solid #fff;
+                transition: all 0.2s ease-in;
+            `
+        }
+    }}
+    /* 2px solid #fff; */
     &:hover {
         color: #eea287;
         transition: all 0.2s ease-in;
@@ -299,88 +309,6 @@ const InfoContainer = styled.div`
     /* border: 1px solid #ccc;
     border-radius: 3px; */
 `
-
-const AddReview = styled.div`
-    padding: 5px 30px;
-    h1 {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        line-height: 20px;
-        margin-bottom: 10px;
-    }
-    p {
-        font-size: 14px;
-        font-weight: 300;
-        color: #777;
-        line-height: 26px;
-    }
-`
-const RatingContainer = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 30px;
-    span {
-        font-size: 14px;
-        font-weight: 300;
-        color: #333;
-    }
-    div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 10px;
-    }
-`
-const AddReviewForm = styled.form`
-    width: 100%;
-    div {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-`
-const ReviewTextarea = styled.textarea`
-    width: 96%;
-    resize: vertical;
-    padding: 10px 20px;
-    outline: none;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    &:focus {
-        border: 1px solid #eea287;
-    }
-`
-const ReviewInput = styled.input`
-    width: 45%;
-    padding: 10px 20px;
-    outline: none;
-    border-radius: 3px;
-
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    &:focus {
-        border: 1px solid #eea287;
-    }
-`
-const AddReviewButton = styled.button`
-    padding: 10px 60px;
-    background-color: #eea287;
-    color: #fff;
-    outline: none;
-    cursor: pointer;
-    margin-bottom: 30px;
-    border: 1px solid #eea287;
-    transition: all 0.2s ease-in;
-    &:hover {
-        background-color: #c9866e;
-        transition: all 0.2s ease-in;
-    }
-`
-
 const StyledSocial = styled(SvgIcon)`
     font-size: 20px !important;
     margin-right: 12px;
@@ -391,7 +319,9 @@ const StyledSocial = styled(SvgIcon)`
 `
 const LoginForReview = styled.div`
     width: 100%;
-    height: 70px;
+    /* height: 70px;
+     */
+    padding:0px 0px 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -404,16 +334,13 @@ const Productpage = () => {
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
     const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState({})
+    const [otherInfo, setOtherInfo] = useState('delivery')
     const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const { id } = useParams()
     const { title, img, color, status, desc, price, size, category } = product
     // console.log(id)
     // console.log(product)
-
-    const [rating, setRating] = useState(0)
-    const [hover, setHover] = useState(0)
-    const [inputs, setInputs] = useState({})
 
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -430,7 +357,7 @@ const Productpage = () => {
         setProduct(data)
     }, [data])
 
-    const handleClik = (exp) => {
+    const onSetQuantity = (exp) => {
         if (exp === 'dec') {
             quantity > 1 && setQuantity(quantity - 1)
         } else {
@@ -440,20 +367,8 @@ const Productpage = () => {
 
     // const spinner = loading && !data ? <Spinner/> : null
 
-    const handleChange = (e) => {
-        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-        console.log(inputs)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        try {
-            const res = axios.post(
-                `http://localhost:5000/api/products/${product._id}/:userId/reviews`
-            )
-        } catch (err) {
-            throw new Error(err)
-        }
+    const onChangeInfo = (e) => {
+        console.log(e.target)
     }
 
     return (
@@ -517,13 +432,13 @@ const Productpage = () => {
                                     <FilterTitle>Qty:</FilterTitle>
                                     <AmountContainer>
                                         <AmountChangeBtn
-                                            onClick={() => handleClik('dec')}
+                                            onClick={() => onSetQuantity('dec')}
                                         >
                                             -
                                         </AmountChangeBtn>
                                         <Amount>{quantity}</Amount>
                                         <AmountChangeBtn
-                                            onClick={() => handleClik('inc')}
+                                            onClick={() => onSetQuantity('inc')}
                                         >
                                             +
                                         </AmountChangeBtn>
@@ -576,107 +491,58 @@ const Productpage = () => {
 
                         <OtherInfo>
                             <ButtonContainer>
-                                <OtherInfoBtn>DETAILS</OtherInfoBtn>
-                                <OtherInfoBtn>
+                                <OtherInfoBtn
+                                    bb={otherInfo === 'details' ? true : false}
+                                    onClick={() => setOtherInfo('details')}
+                                >
+                                    DETAILS
+                                </OtherInfoBtn>
+                                <OtherInfoBtn
+                                    bb={otherInfo === 'delivery' ? true : false}
+                                    onClick={() => setOtherInfo('delivery')}
+                                >
                                     DELIVERY AND PAYMENT
                                 </OtherInfoBtn>
-                                <OtherInfoBtn>PRODUCT BACKGROUND</OtherInfoBtn>
-                                <OtherInfoBtn>REVIEWS ({product.reviews?.length})</OtherInfoBtn>
+                                <OtherInfoBtn
+                                    bb={
+                                        otherInfo === 'background'
+                                            ? true
+                                            : false
+                                    }
+                                    onClick={() => setOtherInfo('background')}
+                                >
+                                    PRODUCT BACKGROUND
+                                </OtherInfoBtn>
+                                <OtherInfoBtn
+                                    bb={otherInfo === 'reviews' ? true : false}
+                                    onClick={() => setOtherInfo('reviews')}
+                                >
+                                    REVIEWS ({product.reviews?.length})
+                                </OtherInfoBtn>
                             </ButtonContainer>
                             <MainInfo>
                                 <InfoContainer>
-                                    {/* <Details /> */}
-                                    {/* <DeliveryAndPayment /> */}
-                                    {/* <ProductBackground /> */}
-                                    <ProductReviews reviews={product.reviews} />
+                                    {otherInfo === 'details' ? (
+                                        <Details />
+                                    ) : otherInfo === 'delivery' ? (
+                                        <DeliveryAndPayment />
+                                    ) : otherInfo === 'background' ? (
+                                        <ProductBackground />
+                                    ) : (
+                                        <>
+                                            <ProductReviews
+                                                reviews={product.reviews}
+                                            />
+                                            {user ? (
+                                                <AddReview id={product._id} />
+                                            ) : (
+                                                <LoginForReview>
+                                                    <p>Log in to add Review</p>
+                                                </LoginForReview>
+                                            )}
+                                        </>
+                                    )}
                                 </InfoContainer>
-                                {/* {user ? (
-                                    <AddReview>
-                                        <h1>Add a Review</h1>
-                                        <p>
-                                            Your email address will not be
-                                            published. Required fields are
-                                            marked *
-                                        </p>
-                                        <RatingContainer>
-                                            <span>Your rating *</span>
-                                            <div>
-                                                {[...Array(5)].map(
-                                                    (star, i) => {
-                                                        i += 1
-                                                        return (
-                                                            <SvgIcon
-                                                                key={i}
-                                                                sx={{
-                                                                    color: '#eea287',
-                                                                    fontSize:
-                                                                        '20px',
-                                                                    cursor: 'pointer',
-                                                                    '&:hover': {
-                                                                        color: '#eea287',
-                                                                    },
-                                                                }}
-                                                                component={
-                                                                    i <=
-                                                                    (hover ||
-                                                                        rating)
-                                                                        ? Star
-                                                                        : StarBorder
-                                                                }
-                                                                onClick={() =>
-                                                                    setRating(i)
-                                                                }
-                                                                onMouseEnter={() =>
-                                                                    setHover(i)
-                                                                }
-                                                                onMouseLeave={() =>
-                                                                    setHover(
-                                                                        rating
-                                                                    )
-                                                                }
-                                                            />
-                                                        )
-                                                    }
-                                                )}
-                                            </div>
-                                        </RatingContainer>
-                                        <AddReviewForm onSubmit={handleSubmit}>
-                                            <ReviewInput
-                                                onChange={handleChange}
-                                                name="title"
-                                                type="text"
-                                                placeholder="Title *"
-                                            />
-                                            <ReviewTextarea
-                                                onChange={handleChange}
-                                                name="desc"
-                                                rows="6"
-                                                placeholder="Comment *"
-                                            />
-                                            <div>
-                                                <ReviewInput
-                                                    onChange={handleChange}
-                                                    name="name"
-                                                    type="text"
-                                                    placeholder="Name *"
-                                                />
-                                                <ReviewInput
-                                                    onChange={handleChange}
-                                                    name="email"
-                                                    type="email"
-                                                    placeholder="Email *"
-                                                />
-                                            </div>
-                                            <AddReviewButton>
-                                                Submit
-                                            </AddReviewButton>
-                                        </AddReviewForm>
-                                    </AddReview>
-                                ) : (
-                                    <LoginForReview>
-                                        <p>Log in to add Review</p>
-                                    </LoginForReview>
-                                )} */}
                             </MainInfo>
                         </OtherInfo>
                     </>

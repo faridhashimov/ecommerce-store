@@ -14,3 +14,4 @@ export { default as SignUp } from './SignUp.jsx';
 export { default as ProductModal } from './ProductModal.jsx';
 export { default as ProductRate } from './ProductRate.jsx';
 export { default as NavbarPopup } from './NavbarPopup.jsx';
+export { default as AddReview } from './AddReview.jsx';

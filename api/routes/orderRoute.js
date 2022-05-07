@@ -9,3 +9,5 @@ const {
 
 router.route('/').post(createOrder).get(getAllOrders)
 router.route('/:id').get(getOrder).put(updateOrder).delete(deleteOrder)
+
+module.exports = router

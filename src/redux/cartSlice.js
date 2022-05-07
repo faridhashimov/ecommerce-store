@@ -4,10 +4,13 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         products: [],
+        // totalSum: 0,
     },
     reducers: {
         addToCart: (state, action) => {
             state.products.push(action.payload)
+            // state.totalSum = state.products.reduce((sum, prevValue) => sum + prevValue.total, 0)
+            // .toFixed(2)
         },
         deleteFromCart: (state, action) => {
             state.products = state.products.filter(
