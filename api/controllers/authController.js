@@ -1,6 +1,8 @@
 const User = require('../models/UserModel')
 const CryptoJS = require('crypto-js')
 const jwt = require('jsonwebtoken')
+const KEY = process.env.STRIPE_KEY
+const stripe = require('stripe')(KEY)
 
 // REGISTER USER
 const userRegister = async (req, res) => {
@@ -14,6 +16,7 @@ const userRegister = async (req, res) => {
     ).toString()
 
     try {
+        const userStripeId = await stripe.customers.create();
         const user = await User.findOne({ email })
         if (user) {
             return res.status(401).json('User already exists')
@@ -22,6 +25,7 @@ const userRegister = async (req, res) => {
             username: email.substr(0, email.indexOf('@')),
             email,
             password: hashedPassword,
+            userStripeId
         })
         await newUser.save()
         res.status(200).json(newUser)

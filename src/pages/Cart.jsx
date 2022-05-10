@@ -1,21 +1,22 @@
 import { Navbar, Footer } from '../components'
 import styled from 'styled-components'
-import { Close, ShoppingCartOutlined } from '@mui/icons-material'
+import { ShoppingCartOutlined } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { decreaseQt, deleteFromCart, increaseQt } from '../redux/cartSlice'
 import { mobile } from '../responsive'
 import { userRequest } from '../requestMethods'
 import { loadStripe } from '@stripe/stripe-js'
 import {
     Elements,
-    PaymentElement,
-    useElements,
+    PaymentRequestButtonElement,
     useStripe,
 } from '@stripe/react-stripe-js'
-import axios from 'axios'
 import CheckoutForm from '../components/CheckoutForm'
+import CartProducts from '../components/CartProducts'
+import axios from 'axios'
+
+const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`)
 
 const Container = styled.div`
     width: 100%;
@@ -75,70 +76,6 @@ const ProductsListBody = styled.div`
     flex: 5;
     ${mobile({ border: '1px solid #efefef' })}
 `
-const ProductsListBodyElement = styled(ProductsListHeader)`
-    ${mobile({
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'spase-between',
-        padding: '10px 0px',
-    })}
-`
-const ImageTitleContainer = styled.div`
-    flex: 14;
-    display: flex;
-    align-items: center;
-    padding: 20px 0px;
-    position: relative;
-    ${mobile({ flexDirection: 'column', padding: '10px 0px' })}
-`
-const PriceContainer = styled.div`
-    flex: 4;
-    ${mobile({ marginBottom: '10px' })}
-`
-const StockStatusContainer = styled.div`
-    flex: 4;
-    ${mobile({ marginBottom: '10px' })}
-`
-const TotalContainer = styled.div`
-    flex: 4;
-    color: #eea287;
-    ${mobile({ marginBottom: '10px' })}
-`
-const DeleteContainer = styled.div`
-    flex: 1;
-    ${mobile({ position: 'absolute', right: '20px' })}
-`
-const Image = styled.img`
-    height: 65px;
-    margin-right: 30px;
-    ${mobile({ margin: '0px 0px 10px 0px ' })}
-`
-const Title = styled.h3`
-    width: 200px;
-    font-size: 14px;
-    font-weight: 400;
-    color: #666;
-    ${mobile({ textAlign: 'center' })}
-`
-const Price = styled.span`
-    font-size: 16px;
-    font-weight: 400;
-`
-const StockStatus = styled.span`
-    font-size: 16px;
-    font-weight: 400;
-    color: #eea287;
-`
-const Delete = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #777;
-    cursor: pointer;
-    &:hover {
-        color: black;
-    }
-`
 const NoProductContainer = styled.div`
     width: 100%;
     height: 250px;
@@ -171,42 +108,6 @@ const OrderInfo = styled.div`
     display: flex;
     align-items: flex-start;
     ${mobile({ flexDirection: 'column', alignItems: 'stretch' })}
-`
-const AmountContainer = styled.div`
-    border: 1px solid #d7d7d7;
-    padding: 7px 5px;
-    font-size: 12px;
-    font-weight: 400;
-    color: #777;
-    width: 95px;
-    display: flex;
-    justify-content: space-between;
-`
-const AmountChangeBtn = styled.button`
-    background: transparent;
-    border: transparent;
-    color: #777;
-    cursor: pointer;
-    &:hover {
-        color: #eea287;
-    }
-`
-const Amount = styled.span``
-const ProductSize = styled.span`
-    margin-left: 10px;
-    position: absolute;
-    right: 55px;
-    ${mobile({ right: '35px' })}
-`
-const ProductColor = styled.div`
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background-color: #${(props) => props.bg};
-    margin-left: 10px;
-    position: absolute;
-    right: 20px;
-    ${mobile({ height: '15px', width: '15px', right: '10px', top: '24px' })}
 `
 const CheckoutContainer = styled.div`
     flex: 2;
@@ -312,42 +213,54 @@ const CheckoutBtn = styled.button`
         color: #fff;
     }
 `
+const CheckoutModal = styled.div`
+    position: fixed;
+    top: 0;
+    /* left: 0; */
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: ${(props) => props.ds};
+    /* display: flex; */
+    /* justify-content: center;
+    align-items: center; */
+    z-index: 999;
+`
+const CheckoutModalBody = styled.div`
+    background-color: #ccc;
+    padding: 20px;
+    margin: 0 auto;
+    height: 50vh;
+    margin-top: 170px;
+`
+const CloseBtn = styled.span`
+    float: right;
+`
 
 const Cart = () => {
     const [discount, setDiscount] = useState(0)
+    const [checkout, setCheckout] = useState(false)
     const product = useSelector((store) => store.cart.products)
+    const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch()
 
+    console.log(checkout)
     const totalSum = product
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
     const cartTotal = (totalSum - discount).toFixed(2)
     // console.log(typeof discount, typeof totalSum)
-    const handleClik = (exp, id) => {
-        if (exp === 'dec') {
-            id.quantity > 1 && dispatch(decreaseQt(id))
-        } else {
-            dispatch(increaseQt(id))
-        }
-    }
-
-    const handleDelete = (id) => {
-        dispatch(deleteFromCart(id))
-    }
 
     const handleRadioChange = (e) => {
         // console.log(e.target)
         setDiscount(e.target.value)
     }
 
-    const stripePromise = loadStripe(
-        `${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`
-    )
-
     const [clientSecret, setClientSecret] = useState('')
 
     useEffect(() => {
         const ac = new AbortController()
+        console.log(user._id)
 
         // Create PaymentIntent as soon as the page loads
         fetch(
@@ -355,15 +268,15 @@ const Cart = () => {
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items: product }),
+                body: JSON.stringify({ items: product, customer: user._id }),
             },
             { signal: ac.signal }
         )
             .then((res) => res.json())
             .then((data) => setClientSecret(data.clientSecret))
 
-            return () => ac.abort(); 
-    }, [product])
+        return () => ac.abort()
+    }, [product, user._id])
 
     const appearance = {
         theme: 'stripe',
@@ -371,233 +284,174 @@ const Cart = () => {
     const options = {
         clientSecret,
         appearance,
+        loader: 'auto'
     }
 
     return (
-        <Container>
-            <Navbar />
-            <CarteHeader>
-                <HeaderTitle>
-                    Shopping Cart <br /> <span>Shop</span>
-                </HeaderTitle>
-            </CarteHeader>
-            <CartBody>
-                <Wrapper>
-                    {product.length === 0 ? (
-                        <NoProduct />
-                    ) : (
-                        <ProductsList>
-                            <OrderInfo>
-                                <ProductsListBody>
-                                    <ProductsListHeader>
-                                        <Element fl="14">
-                                            <span>Product</span>
-                                        </Element>
-                                        <Element fl="4">
-                                            <span>Price</span>
-                                        </Element>
-                                        <Element fl="4">
-                                            <span>Quantity</span>
-                                        </Element>
-                                        <Element fl="4">
-                                            <span>Total</span>
-                                        </Element>
-                                        <Element fl="1">
-                                            {/* <span>Total</span> */}
-                                        </Element>
-                                    </ProductsListHeader>
-                                    {product.map((item, i) => (
-                                        <ProductsListBodyElement key={i}>
-                                            <ImageTitleContainer fl="14">
-                                                <Image
-                                                    src={item.img[0]}
-                                                    alt={item.title}
-                                                />
-                                                <Title>{item.title}</Title>
-                                                <ProductSize>
-                                                    {item.productSize}
-                                                </ProductSize>
-                                                <ProductColor
-                                                    bg={item.productColor}
-                                                />
-                                            </ImageTitleContainer>
-                                            <PriceContainer fl="4">
-                                                <Price>$ {item.price}</Price>
-                                            </PriceContainer>
-                                            <StockStatusContainer fl="4">
-                                                <StockStatus>
-                                                    <AmountContainer>
-                                                        <AmountChangeBtn
-                                                            onClick={() =>
-                                                                handleClik(
-                                                                    'dec',
-                                                                    item
-                                                                )
+        <>
+            <Container>
+                <Navbar />
+                <CarteHeader>
+                    <HeaderTitle>
+                        Shopping Cart <br /> <span>Shop</span>
+                    </HeaderTitle>
+                </CarteHeader>
+                <CartBody>
+                    <Wrapper>
+                        {product.length === 0 ? (
+                            <NoProduct />
+                        ) : (
+                            <ProductsList>
+                                <OrderInfo>
+                                    <ProductsListBody>
+                                        <ProductsListHeader>
+                                            <Element fl="14">
+                                                <span>Product</span>
+                                            </Element>
+                                            <Element fl="4">
+                                                <span>Price</span>
+                                            </Element>
+                                            <Element fl="4">
+                                                <span>Quantity</span>
+                                            </Element>
+                                            <Element fl="4">
+                                                <span>Total</span>
+                                            </Element>
+                                            <Element fl="1">
+                                                {/* <span>Total</span> */}
+                                            </Element>
+                                        </ProductsListHeader>
+                                        {product.map((item, i) => (
+                                            <CartProducts key={i} item={item} />
+                                        ))}
+                                    </ProductsListBody>
+
+                                    <CheckoutContainer>
+                                        <Checkout>
+                                            <CheckoutBody>
+                                                <ChekoutItem>
+                                                    <h1>Cart Total</h1>
+                                                </ChekoutItem>
+                                                <ChekoutItem>
+                                                    <h1>Subtotal:</h1>
+                                                    <span>${totalSum}</span>
+                                                </ChekoutItem>
+                                                <ChekoutItem>
+                                                    <h1>Shipping:</h1>
+                                                </ChekoutItem>
+                                                <ChekoutItem>
+                                                    <InputContainer>
+                                                        <RadioInput
+                                                            checked={
+                                                                +discount === 0
+                                                                    ? true
+                                                                    : false
                                                             }
-                                                        >
-                                                            -
-                                                        </AmountChangeBtn>
-                                                        <Amount>
-                                                            {item.quantity}
-                                                        </Amount>
-                                                        <AmountChangeBtn
-                                                            onClick={() =>
-                                                                handleClik(
-                                                                    'inc',
-                                                                    item
-                                                                )
+                                                            onChange={
+                                                                handleRadioChange
                                                             }
-                                                        >
-                                                            +
-                                                        </AmountChangeBtn>
-                                                    </AmountContainer>
-                                                </StockStatus>
-                                            </StockStatusContainer>
-                                            <TotalContainer fl="4">
-                                                $
-                                                {(
-                                                    item.quantity * item.price
-                                                ).toFixed(2)}
-                                            </TotalContainer>
-                                            <DeleteContainer fl="1">
-                                                <Delete
+                                                            id="free"
+                                                            type="radio"
+                                                            value={0}
+                                                        />
+                                                        <InputLabel htmlFor="free">
+                                                            Free Shipping
+                                                        </InputLabel>
+                                                    </InputContainer>
+                                                    <Discount>$0.00</Discount>
+                                                </ChekoutItem>
+                                                <ChekoutItem>
+                                                    <InputContainer>
+                                                        <RadioInput
+                                                            checked={
+                                                                +discount === 10
+                                                                    ? true
+                                                                    : false
+                                                            }
+                                                            onChange={
+                                                                handleRadioChange
+                                                            }
+                                                            id="standard"
+                                                            type="radio"
+                                                            value={10}
+                                                        />
+                                                        <InputLabel htmlFor="standard">
+                                                            Standard:
+                                                        </InputLabel>
+                                                    </InputContainer>
+                                                    <Discount>$10.00</Discount>
+                                                </ChekoutItem>
+                                                <ChekoutItem>
+                                                    <InputContainer>
+                                                        <RadioInput
+                                                            checked={
+                                                                +discount === 20
+                                                                    ? true
+                                                                    : false
+                                                            }
+                                                            onChange={
+                                                                handleRadioChange
+                                                            }
+                                                            id="express"
+                                                            type="radio"
+                                                            value={20}
+                                                        />
+                                                        <InputLabel htmlFor="express">
+                                                            Express:
+                                                        </InputLabel>
+                                                    </InputContainer>
+                                                    <Discount>$20.00</Discount>
+                                                </ChekoutItem>
+                                                <ShippingAdress>
+                                                    <h1>
+                                                        Estimate for Your
+                                                        Country
+                                                    </h1>
+                                                    <ChangeAdress to="/adress">
+                                                        Change Adress
+                                                    </ChangeAdress>
+                                                </ShippingAdress>
+                                                <Total>
+                                                    <h1>Total:</h1>
+                                                    <span>${cartTotal}</span>
+                                                </Total>
+                                                {/* <CheckoutBtn
                                                     onClick={() =>
-                                                        handleDelete(item)
+                                                        setCheckout(true)
                                                     }
                                                 >
-                                                    <Close
-                                                        sx={{
-                                                            fontSize: '15px',
-                                                        }}
-                                                    />
-                                                </Delete>
-                                            </DeleteContainer>
-                                        </ProductsListBodyElement>
-                                    ))}
-                                </ProductsListBody>
-                                {clientSecret && (
-                                    <Elements
-                                        options={options}
-                                        stripe={stripePromise}
-                                    >
-                                        <CheckoutContainer>
-                                            <Checkout>
-                                                <CheckoutBody>
-                                                    <ChekoutItem>
-                                                        <h1>Cart Total</h1>
-                                                    </ChekoutItem>
-                                                    <ChekoutItem>
-                                                        <h1>Subtotal:</h1>
-                                                        <span>${totalSum}</span>
-                                                    </ChekoutItem>
-                                                    <ChekoutItem>
-                                                        <h1>Shipping:</h1>
-                                                    </ChekoutItem>
-                                                    <ChekoutItem>
-                                                        <InputContainer>
-                                                            <RadioInput
-                                                                checked={
-                                                                    +discount ===
-                                                                    0
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                                onChange={
-                                                                    handleRadioChange
-                                                                }
-                                                                id="free"
-                                                                type="radio"
-                                                                value={0}
-                                                            />
-                                                            <InputLabel htmlFor="free">
-                                                                Free Shipping
-                                                            </InputLabel>
-                                                        </InputContainer>
-                                                        <Discount>
-                                                            $0.00
-                                                        </Discount>
-                                                    </ChekoutItem>
-                                                    <ChekoutItem>
-                                                        <InputContainer>
-                                                            <RadioInput
-                                                                checked={
-                                                                    +discount ===
-                                                                    10
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                                onChange={
-                                                                    handleRadioChange
-                                                                }
-                                                                id="standard"
-                                                                type="radio"
-                                                                value={10}
-                                                            />
-                                                            <InputLabel htmlFor="standard">
-                                                                Standard:
-                                                            </InputLabel>
-                                                        </InputContainer>
-                                                        <Discount>
-                                                            $10.00
-                                                        </Discount>
-                                                    </ChekoutItem>
-                                                    <ChekoutItem>
-                                                        <InputContainer>
-                                                            <RadioInput
-                                                                checked={
-                                                                    +discount ===
-                                                                    20
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                                onChange={
-                                                                    handleRadioChange
-                                                                }
-                                                                id="express"
-                                                                type="radio"
-                                                                value={20}
-                                                            />
-                                                            <InputLabel htmlFor="express">
-                                                                Express:
-                                                            </InputLabel>
-                                                        </InputContainer>
-                                                        <Discount>
-                                                            $20.00
-                                                        </Discount>
-                                                    </ChekoutItem>
-                                                    <ShippingAdress>
-                                                        <h1>
-                                                            Estimate for Your
-                                                            Country
-                                                        </h1>
-                                                        <ChangeAdress to="/adress">
-                                                            Change Adress
-                                                        </ChangeAdress>
-                                                    </ShippingAdress>
-                                                    <Total>
-                                                        <h1>Total:</h1>
-                                                        <span>
-                                                            ${cartTotal}
-                                                        </span>
-                                                    </Total>
-
-                                                    {/* <CheckoutBtn>
-                                                         Proceed To Checkout
-                                                     </CheckoutBtn> */}
-
-                                                    <CheckoutForm />
-                                                </CheckoutBody>
-                                            </Checkout>
-                                        </CheckoutContainer>
-                                    </Elements>
-                                )}
-                            </OrderInfo>
-                        </ProductsList>
+                                                    Proceed To Checkout
+                                                </CheckoutBtn> */}
+                                                {/* {clientSecret && ( */}
+                                                {clientSecret && (
+                                                    <Elements
+                                                        options={options}
+                                                        stripe={stripePromise}
+                                                    >
+                                                        <CheckoutForm />
+                                                    </Elements>
+                                                )}
+                                            </CheckoutBody>
+                                        </Checkout>
+                                    </CheckoutContainer>
+                                </OrderInfo>
+                            </ProductsList>
+                        )}
+                    </Wrapper>
+                </CartBody>
+                <Footer />
+            </Container>
+            {/* <CheckoutModal ds={checkout ? 'inline-block' : 'none'}>
+                <CheckoutModalBody>
+                    <CloseBtn onClick={onCloseCartModal}>x</CloseBtn>
+                    {clientSecret && (
+                        <Elements options={options} stripe={stripePromise}>
+                            <CheckoutForm />
+                        </Elements>
                     )}
-                </Wrapper>
-            </CartBody>
-            <Footer />
-        </Container>
+                </CheckoutModalBody>
+            </CheckoutModal> */}
+        </>
     )
 }
 

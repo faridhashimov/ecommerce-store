@@ -7,11 +7,11 @@ import {
     Search,
     ShoppingCartOutlined,
 } from '@mui/icons-material'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
 import NavbarPopup from './NavbarPopup'
-// import noAvatar from '../resources/noavatar.png'
+import noAvatar from '../resources/noavatar.png'
 
 const Container = styled.div`
     height: 60px;
@@ -129,32 +129,37 @@ const StyledLink = styled(Link)`
         transition: all 0.2s ease;
     }
 `
-// const ProfileContainer = styled.div`
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-//     overflow: hidden;
-//     margin-left: 20px;
-//     border: 1px solid #ccc;
-//     transition: all 0.3s ease-in;
-//     cursor: pointer;
-// `
-// const ProfileImage = styled.img`
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-// `
+const ProfileContainer = styled.div`
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in;
+    cursor: pointer;
+`
+const ProfileImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+`
 const Navbar = () => {
     const product = useSelector((state) => state.wishlist.product)
     const user = useSelector((state) => state.user.user)
     const products = useSelector((state) => state.cart.products)
     const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
+    let navigate = useNavigate()
 
     const [popup, setPopup] = useState(false)
 
     let activeStyle = {
         borderBottom: '2px solid #000',
     }
+
+    // const openProfile = () => {
+    //     navigate('/profile', { replace: true })
+    // }
 
     return (
         <Container>
@@ -254,13 +259,15 @@ const Navbar = () => {
                             />
                         </SearchButton>
                     </SearchContainer>
-                    {/* {user && (
+                    {user && (
                         <ProfileContainer>
-                            <ProfileImage
-                                src={user.img ? user.img : noAvatar}
-                            />
+                            <Link to='/profile'>
+                                <ProfileImage
+                                    src={user.img ? user.img : noAvatar}
+                                />
+                            </Link>
                         </ProfileContainer>
-                    )} */}
+                    )}
                     <RightMenuIcon>
                         <Badge badgeContent={product?.length} color="primary">
                             <StyledLink to="/wishlist">

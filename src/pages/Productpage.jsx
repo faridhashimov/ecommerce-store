@@ -23,6 +23,7 @@ import DeliveryAndPayment from '../components/DeliveryAndPayment'
 import ProductBackground from '../components/ProductBackground'
 import ProductReviews from '../components/ProductReviews'
 import { SvgIcon } from '@mui/material'
+import { addToCart } from '../redux/cartSlice'
 
 const Wrapper = styled.div`
     width: 93vw;
@@ -154,6 +155,19 @@ const Color = styled.div`
     cursor: pointer;
     border: 1.5px solid #fff;
     transition: all 0.2s ease-in;
+    ${(props) => {
+        if (props.shadow) {
+            return css`
+                box-shadow: 0px 0px 2px 1px rgba(34, 60, 80, 0.39);
+                transition: all 0.2s ease-in;
+            `
+        } else {
+            return css`
+                box-shadow: none;
+                transition: all 0.3s ease-in-out;
+            `
+        }
+    }}
     &:hover {
         box-shadow: 0px 0px 2px 1px rgba(34, 60, 80, 0.39);
         transition: all 0.2s ease-in;
@@ -213,6 +227,15 @@ const AddToCartBtn = styled.button`
     color: #eea287;
     border: 1px solid #eea287;
     transition: all 0.2s ease-in;
+    &:disabled {
+        cursor: not-allowed;
+    };
+
+    &:disabled:hover {
+        color: #777;
+        border: 1px solid #777;
+        background-color: transparent;
+    };
     &:hover {
         background-color: #eea287;
         color: #fff;
@@ -321,7 +344,7 @@ const LoginForReview = styled.div`
     width: 100%;
     /* height: 70px;
      */
-    padding:0px 0px 10px 0px;
+    padding: 0px 0px 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -332,6 +355,8 @@ const LoginForReview = styled.div`
 
 const Productpage = () => {
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
+    const [chooseColor, setChooseColor] = useState('')
+    const [chooseSize, setChooseSize] = useState('')
     const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState({})
     const [otherInfo, setOtherInfo] = useState('delivery')
@@ -369,6 +394,23 @@ const Productpage = () => {
 
     const onChangeInfo = (e) => {
         console.log(e.target)
+    }
+    const onChooseColor = (color) => {
+        setChooseColor(color)
+    }
+    const onAddToCart = () => {
+        dispatch(
+            addToCart({
+                id,
+                productColor: chooseColor,
+                productSize: chooseSize,
+                title,
+                img,
+                price,
+                quantity,
+                total: price * quantity,
+            })
+        )
     }
 
     return (
@@ -415,13 +457,24 @@ const Productpage = () => {
                                     <FilterTitle>Color:</FilterTitle>
                                     <FilterColor>
                                         {color?.map((item) => (
-                                            <Color key={item} bg={`#${item}`} />
+                                            <Color
+                                                onClick={() =>
+                                                    onChooseColor(item)
+                                                }
+                                                key={item}
+                                                bg={`#${item}`}
+                                                shadow={
+                                                    chooseColor === item
+                                                        ? true
+                                                        : null
+                                                }
+                                            />
                                         ))}
                                     </FilterColor>
                                 </FilterContainer>
                                 <FilterContainer>
                                     <FilterTitle>Size:</FilterTitle>
-                                    <FilterSize>
+                                    <FilterSize onChange={(e) => setChooseSize(e.target.value)}>
                                         <Size>Select a size</Size>
                                         {size?.map((item) => (
                                             <Size key={item}>{item}</Size>
@@ -445,7 +498,9 @@ const Productpage = () => {
                                     </AmountContainer>
                                 </FilterContainer>
                                 <CartButtonContainer>
-                                    <AddToCartBtn>
+                                    <AddToCartBtn onClick={onAddToCart} disabled={
+                                    !chooseColor || !chooseSize ? true : false
+                                }>
                                         <AddShoppingCart
                                             sx={{
                                                 fontSize: '14px',

@@ -91,7 +91,6 @@ const PaymentForm = styled.div`
     margin: 0 auto;
     align-self: center;
     border-radius: 7px;
-
 `
 
 export default function CheckoutForm() {
@@ -132,13 +131,12 @@ export default function CheckoutForm() {
                     break
             }
         })
-
     }, [stripe])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        
+        console.log('clicked')
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
             // Make sure to disable form submission until Stripe.js has loaded.
@@ -167,8 +165,6 @@ export default function CheckoutForm() {
         }
 
         setIsLoading(false)
-
-       
     }
 
     return (

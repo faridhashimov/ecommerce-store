@@ -204,33 +204,55 @@ const Category = styled.span`
     }
     ${mobile({ display: 'none' })}
 `
-const Title = styled.div`
+const Title = styled.h2`
     transition: all 0.3s ease;
     font-size: 15px;
+    font-weight: 400;
+    color: #555;
+    margin-top: 4px;
+    &:before {
+        content: '${props => props.brand}';
+        font-size: 15px;
+        font-weight: 600;
+        margin-right: 4px;
+    }
     &:hover {
         color: #eea287;
         transition: all 0.3s ease;
     }
     ${mobile({ fontSize: '15px' })}
 `
-const Prices = styled.div`
-    /* color: #eea287; */
+const Prices = styled.h3`
+    font-size: 17px;
+    font-weight: 500;
     color: #777;
-    margin: 5px;
+    margin: 7px 0px;
     ${mobile({ fontSize: '14px', color: '#eea287' })}
 `
 const Rate = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
+`
+const ReviewCount = styled.span`
+    margin-left: 5px;
+    color: #ccc;
+    font-size: 18px;
+    line-height: 16px;
 `
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    /* color: transparent; */
+` 
+
 const Product = (item) => {
-    const { img, status, category, title, price, reviews } = item
+    const { img, status, category, title, price, reviews, brand } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
     const rate = reviews
         ? reviews.reduce((a, c) => c.rating + a, 0) / reviews.length
         : null
-    console.log(rate)
+    console.log(brand)
     const dispatch = useDispatch()
     const handleClick = () => {
         dispatch(openModal(item))
@@ -248,48 +270,51 @@ const Product = (item) => {
 
     return (
         <Container>
-            <ImageContainer>
-                <Image main={img[0]} sec={img[1]} />
-                <ProductStatus>
-                    {status?.map((item, i) => (
-                        <Status fs={item} key={i} order={i + 1}>
-                            {item}
-                        </Status>
-                    ))}
-                </ProductStatus>
-                <ProductAction>
-                    <ProductActionContainer>
-                        <Favorite onClick={handleAdd}>
-                            <FavoriteBorder style={{ fontSize: 16 }} />
-                        </Favorite>
-                    </ProductActionContainer>
-                    <ProductActionContainer onClick={handleClick}>
-                        <Tooltip title="Quick View" placement="right-end">
-                            <Preview style={{ fontSize: 16 }} />
-                        </Tooltip>
-                    </ProductActionContainer>
-                </ProductAction>
-                <Link to={`/product/${item._id}`}>
+            <StyledLink to={`/product/${item._id}`}>
+                <ImageContainer>
+                    <Image main={img[0]} sec={img[1]} />
+                    <ProductStatus>
+                        {status?.map((item, i) => (
+                            <Status fs={item} key={i} order={i + 1}>
+                                {item}
+                            </Status>
+                        ))}
+                    </ProductStatus>
+                    <ProductAction>
+                        <ProductActionContainer>
+                            <Favorite onClick={handleAdd}>
+                                <FavoriteBorder style={{ fontSize: 16 }} />
+                            </Favorite>
+                        </ProductActionContainer>
+                        <ProductActionContainer onClick={handleClick}>
+                            <Tooltip title="Quick View" placement="right-end">
+                                <Preview style={{ fontSize: 16 }} />
+                            </Tooltip>
+                        </ProductActionContainer>
+                    </ProductAction>
                     <Cart>
                         <ShoppingCartContainer>
                             <FormatListNumbered style={{ fontSize: 15 }} />
                         </ShoppingCartContainer>
                         <CartTitle>Select Options</CartTitle>
                     </Cart>
-                </Link>
-            </ImageContainer>
-            <InfoContainer>
-                <Categories>
-                    {category?.map((item, i) => (
-                        <Category key={i}>{(i ? ', ' : ' ' ) + item}</Category>
-                    ))}
-                </Categories>
-                <Title>{title}</Title>
-                <Prices>$ {price}</Prices>
-                <Rate>
-                    <ProductRate rate={rate} />
-                </Rate>
-            </InfoContainer>
+                </ImageContainer>
+                <InfoContainer>
+                    <Categories>
+                        {category?.map((item, i) => (
+                            <Category key={i}>
+                                {(i ? ', ' : ' ') + item}
+                            </Category>
+                        ))}
+                    </Categories>
+                    <Title brand={brand}>{title}</Title>
+                    <Prices>$ {price}</Prices>
+                    <Rate>
+                        <ProductRate rate={rate} />
+                        <ReviewCount>{reviews.length}</ReviewCount>
+                    </Rate>
+                </InfoContainer>
+            </StyledLink>
         </Container>
     )
 }

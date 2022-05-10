@@ -236,7 +236,7 @@ const Footer = () => {
                     <FooterLinks>
                         <InfoLinks>
                             <LinkItem>Information</LinkItem>
-                            <LinkItem>About Molla</LinkItem>
+                            <LinkItem>About FRED</LinkItem>
                             <LinkItem>How to shop on Molla</LinkItem>
                             <LinkItem>FAQ</LinkItem>
                             <LinkItem>Contact us</LinkItem>

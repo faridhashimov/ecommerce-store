@@ -252,6 +252,15 @@ const AddToCartBtn = styled.button`
     color: #eea287;
     border: 1px solid #eea287;
     transition: all 0.2s ease-in;
+    &:disabled {
+        cursor: not-allowed;
+    };
+
+    &:disabled:hover {
+        color: #777;
+        border: 1px solid #777;
+        background-color: transparent;
+    };
     &:hover {
         background-color: #eea287;
         color: #fff;
@@ -458,7 +467,12 @@ const ProductModal = () => {
                             </AmountContainer>
                         </FilterContainer>
                         <CartButtonContainer>
-                            <AddToCartBtn onClick={onAddToCart}>
+                            <AddToCartBtn
+                                disabled={
+                                    !chooseColor || !chooseSize ? true : false
+                                }
+                                onClick={onAddToCart}
+                            >
                                 <AddShoppingCart
                                     sx={{
                                         fontSize: '14px',
