@@ -16,6 +16,12 @@ import CheckoutForm from '../components/CheckoutForm'
 import CartProducts from '../components/CartProducts'
 import axios from 'axios'
 
+import {
+    PayPalScriptProvider,
+    PayPalButtons,
+    usePayPalScriptReducer,
+} from '@paypal/react-paypal-js'
+
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`)
 
 const Container = styled.div`
@@ -238,53 +244,92 @@ const CloseBtn = styled.span`
 `
 
 const Cart = () => {
-    const [discount, setDiscount] = useState(0)
+    const [shipping, setShipping] = useState(0)
+    const [open, setOpen] = useState(false)
     const [checkout, setCheckout] = useState(false)
-    const product = useSelector((store) => store.cart.products)
+    const products = useSelector((store) => store.cart.products)
     const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch()
 
-    console.log(checkout)
-    const totalSum = product
+    const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
-    const cartTotal = (totalSum - discount).toFixed(2)
-    // console.log(typeof discount, typeof totalSum)
+    const cartTotal = parseFloat(totalSum + shipping).toFixed(2)
+
+    // const total = parseFloat(totalSum + shipping).toFixed(2)
 
     const handleRadioChange = (e) => {
-        // console.log(e.target)
-        setDiscount(e.target.value)
+        setShipping(e.target.value)
     }
 
-    const [clientSecret, setClientSecret] = useState('')
 
-    useEffect(() => {
-        const ac = new AbortController()
-        console.log(user._id)
+        const createOrder = async (data) => {
+            const res = await axios.post('http://localhost:5000/api/orders', {
+                body: {
+                    userId: user._id,
+                    products: products,
+                    adress: res.data,
+                    amount: res.data,
+                },
+            })
+        }
+    
 
-        // Create PaymentIntent as soon as the page loads
-        fetch(
-            'http://localhost:5000/api/checkouts/payment',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items: product, customer: user._id }),
-            },
-            { signal: ac.signal }
+    // This values are the props in the UI
+    const amount = cartTotal
+    const currency = 'USD'
+    const style = { layout: 'vertical' }
+
+    // Custom component to wrap the PayPalButtons and handle currency changes
+    const ButtonWrapper = ({ currency, showSpinner }) => {
+        // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+        // This is the main reason to wrap the PayPalButtons in a new component
+        const [{ options, isPending }, dispatch] = usePayPalScriptReducer()
+
+        useEffect(() => {
+            dispatch({
+                type: 'resetOptions',
+                value: {
+                    ...options,
+                    currency: currency,
+                },
+            })
+        }, [currency, showSpinner])
+
+        return (
+            <>
+                {showSpinner && isPending && <div className="spinner" />}
+                <PayPalButtons
+                    style={style}
+                    disabled={false}
+                    forceReRender={[amount, currency, style]}
+                    fundingSource={undefined}
+                    createOrder={(data, actions) => {
+                        return actions.order
+                            .create({
+                                purchase_units: [
+                                    {
+                                        amount: {
+                                            currency_code: currency,
+                                            value: amount,
+                                        },
+                                    },
+                                ],
+                            })
+                            .then((orderId) => {
+                                // Your code here after create the order
+                                return orderId
+                            })
+                    }}
+                    onApprove={function (data, actions) {
+                        return actions.order.capture().then(function (details) {
+
+                            console.log(details)
+                        })
+                    }}
+                />
+            </>
         )
-            .then((res) => res.json())
-            .then((data) => setClientSecret(data.clientSecret))
-
-        return () => ac.abort()
-    }, [product, user._id])
-
-    const appearance = {
-        theme: 'stripe',
-    }
-    const options = {
-        clientSecret,
-        appearance,
-        loader: 'auto'
     }
 
     return (
@@ -298,7 +343,7 @@ const Cart = () => {
                 </CarteHeader>
                 <CartBody>
                     <Wrapper>
-                        {product.length === 0 ? (
+                        {products.length === 0 ? (
                             <NoProduct />
                         ) : (
                             <ProductsList>
@@ -321,7 +366,7 @@ const Cart = () => {
                                                 {/* <span>Total</span> */}
                                             </Element>
                                         </ProductsListHeader>
-                                        {product.map((item, i) => (
+                                        {products.map((item, i) => (
                                             <CartProducts key={i} item={item} />
                                         ))}
                                     </ProductsListBody>
@@ -343,7 +388,7 @@ const Cart = () => {
                                                     <InputContainer>
                                                         <RadioInput
                                                             checked={
-                                                                +discount === 0
+                                                                +shipping === 0
                                                                     ? true
                                                                     : false
                                                             }
@@ -364,7 +409,7 @@ const Cart = () => {
                                                     <InputContainer>
                                                         <RadioInput
                                                             checked={
-                                                                +discount === 10
+                                                                +shipping === 10
                                                                     ? true
                                                                     : false
                                                             }
@@ -385,7 +430,7 @@ const Cart = () => {
                                                     <InputContainer>
                                                         <RadioInput
                                                             checked={
-                                                                +discount === 20
+                                                                +shipping === 20
                                                                     ? true
                                                                     : false
                                                             }
@@ -415,21 +460,29 @@ const Cart = () => {
                                                     <h1>Total:</h1>
                                                     <span>${cartTotal}</span>
                                                 </Total>
-                                                {/* <CheckoutBtn
-                                                    onClick={() =>
-                                                        setCheckout(true)
-                                                    }
-                                                >
-                                                    Proceed To Checkout
-                                                </CheckoutBtn> */}
-                                                {/* {clientSecret && ( */}
-                                                {clientSecret && (
-                                                    <Elements
-                                                        options={options}
-                                                        stripe={stripePromise}
+                                                {open ? (
+                                                    <PayPalScriptProvider
+                                                        options={{
+                                                            'client-id':
+                                                                'AdJDuR9Tp6c1_n7WbFYidv1YO-s4zJkV70g3uGwRNmUwKjTP8MLaEZq3IRcFK_HUbSoB5rWQEOQXYoRf',
+                                                            components:
+                                                                'buttons',
+                                                            currency: 'USD',
+                                                        }}
                                                     >
-                                                        <CheckoutForm />
-                                                    </Elements>
+                                                        <ButtonWrapper
+                                                            currency={currency}
+                                                            showSpinner={false}
+                                                        />
+                                                    </PayPalScriptProvider>
+                                                ) : (
+                                                    <CheckoutBtn
+                                                        onClick={() =>
+                                                            setOpen(true)
+                                                        }
+                                                    >
+                                                        Proceed To Checkout
+                                                    </CheckoutBtn>
                                                 )}
                                             </CheckoutBody>
                                         </Checkout>

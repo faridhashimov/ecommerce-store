@@ -1,6 +1,7 @@
 import { Forum, Logout, Person, ViewInAr } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { loginSuccess } from '../redux/userSlice'
 
@@ -12,7 +13,7 @@ const PopupContainer = styled.div`
     border: 1px solid #ccc;
     display: ${(props) => (props.state ? 'block' : 'none')};
     position: absolute;
-    bottom: -172px;
+    bottom: -165px;
     right: -40px;
     transition: all 0.3s ease-in;
     z-index: 1000;
@@ -21,28 +22,33 @@ const PopupContainer = styled.div`
 const MainPopup = styled.ul`
     list-style: none;
 `
-const MainPopupLink = styled.li`
-    font-size: 14px;
+const MainPopupLink = styled(Link)`
+    font-size: 14px!important;
+    padding: 0px !important;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: #666;
+    color: #666!important;
     margin: 7px 0px;
     cursor: pointer;
+    text-transform: none!important;
     &:first-child {
         margin: 0px 0px 7px;
-        color: #eea287;
+        color: #eea287!important;
         font-weight: 600;
     }
+    &:last-child {
+        margin-bottom: 0px;
+    }
     &:hover {
-        color: #eea287;
+        color: #eea287!important;
     }
 `
 const PopupIcons = styled(SvgIcon)`
     font-size: 16px !important;
     margin-right: 7px;
 `
-const NavbarPopup = ({popup}) => {
+const NavbarPopup = ({ popup }) => {
     const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const handleLogOut = () => {
@@ -51,19 +57,20 @@ const NavbarPopup = ({popup}) => {
     return (
         <PopupContainer state={popup}>
             <MainPopup>
-                <MainPopupLink>{user.email}</MainPopupLink>
-                <MainPopupLink>
-                    <PopupIcons component={ViewInAr} /> Orders
+                <MainPopupLink to="/profile">{user.email}</MainPopupLink>
+                <MainPopupLink to="/orders">
+                    <PopupIcons component={ViewInAr} />
+                    Orders
                 </MainPopupLink>
-                <MainPopupLink>
+                <MainPopupLink to="/profile">
                     <PopupIcons component={Forum} />
                     Messages
                 </MainPopupLink>
-                <MainPopupLink>
+                <MainPopupLink to="/profile">
                     <PopupIcons component={Person} />
                     User info
                 </MainPopupLink>
-                <MainPopupLink onClick={handleLogOut}>
+                <MainPopupLink to="/profile" onClick={handleLogOut}>
                     <PopupIcons component={Logout} /> Log out
                 </MainPopupLink>
             </MainPopup>

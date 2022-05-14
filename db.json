@@ -283,3 +283,81 @@
         "__v": 0
     }
 ]
+
+{
+    "id": "9P806457PH371364W",
+    "intent": "CAPTURE",
+    "status": "COMPLETED",
+    "purchase_units": [
+        {
+            "reference_id": "default",
+            "amount": {
+                "currency_code": "USD",
+                "value": "15.99"
+            },
+            "payee": {
+                "email_address": "sb-ewpuw15239394@business.example.com",
+                "merchant_id": "876TMYA7JVDYJ"
+            },
+            "soft_descriptor": "PAYPAL *TEST STORE",
+            "shipping": {
+                "name": {
+                    "full_name": "Farid Jefersson"
+                },
+                "address": {
+                    "address_line_1": "Main st.125 Brooklyn",
+                    "admin_area_2": "New York",
+                    "admin_area_1": "NY",
+                    "postal_code": "90123",
+                    "country_code": "US"
+                }
+            },
+            "payments": {
+                "captures": [
+                    {
+                        "id": "9NV74385AH648571W",
+                        "status": "COMPLETED",
+                        "amount": {
+                            "currency_code": "USD",
+                            "value": "15.99"
+                        },
+                        "final_capture": true,
+                        "seller_protection": {
+                            "status": "ELIGIBLE",
+                            "dispute_categories": [
+                                "ITEM_NOT_RECEIVED",
+                                "UNAUTHORIZED_TRANSACTION"
+                            ]
+                        },
+                        "create_time": "2022-05-14T18:43:28Z",
+                        "update_time": "2022-05-14T18:43:28Z"
+                    }
+                ]
+            }
+        }
+    ],
+    "payer": {
+        "name": {
+            "given_name": "Farid",
+            "surname": "Jefersson"
+        },
+        "email_address": "fargmov@gmail.com",
+        "payer_id": "CBMM7KNK3VRJN",
+        "address": {
+            "address_line_1": "Main st.125 Brooklyn",
+            "admin_area_2": "New York",
+            "admin_area_1": "NY",
+            "postal_code": "90123",
+            "country_code": "US"
+        }
+    },
+    "create_time": "2022-05-14T18:40:21Z",
+    "update_time": "2022-05-14T18:43:28Z",
+    "links": [
+        {
+            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/9P806457PH371364W",
+            "rel": "self",
+            "method": "GET"
+        }
+    ]
+}

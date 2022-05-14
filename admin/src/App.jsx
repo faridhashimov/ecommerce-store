@@ -1,11 +1,10 @@
-import { Leftbar, Main, Navbar } from './components'
+import { Home } from './pages'
+
 
 const App = () => {
     return (
         <>
-            <Navbar />
-            <Leftbar />
-            <Main />
+            <Home />
         </>
     )
 }

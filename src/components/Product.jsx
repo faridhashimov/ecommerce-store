@@ -2,6 +2,7 @@ import {
     FavoriteBorder,
     FormatListNumbered,
     Preview,
+    FavoriteOutlined,
 } from '@mui/icons-material'
 import styled from 'styled-components'
 import Tooltip from '@mui/material/Tooltip'
@@ -12,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
 import { mobile } from '../responsive'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ProductAction = styled.div`
     position: absolute;
@@ -211,7 +212,7 @@ const Title = styled.h2`
     color: #555;
     margin-top: 4px;
     &:before {
-        content: '${props => props.brand}';
+        content: '${(props) => props.brand}';
         font-size: 15px;
         font-weight: 600;
         margin-right: 4px;
@@ -243,16 +244,17 @@ const ReviewCount = styled.span`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
+    color: inherit;
     /* color: transparent; */
-` 
+`
 
 const Product = (item) => {
     const { img, status, category, title, price, reviews, brand } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
+    let navigate = useNavigate()
     const rate = reviews
         ? reviews.reduce((a, c) => c.rating + a, 0) / reviews.length
         : null
-    console.log(brand)
     const dispatch = useDispatch()
     const handleClick = () => {
         dispatch(openModal(item))
@@ -262,59 +264,76 @@ const Product = (item) => {
         if (productInWishlist.length === 0) {
             dispatch(addToWishlist(item))
         } else if (productInWishlist.some((e) => e._id === item._id)) {
+            navigate('/wishlist', {replace: true})
             return
         } else {
             dispatch(addToWishlist(item))
         }
     }
 
+    const liked = productInWishlist.some((e) => e._id === item._id)
+
     return (
         <Container>
-            <StyledLink to={`/product/${item._id}`}>
-                <ImageContainer>
+            <ImageContainer>
+                <StyledLink to={`/product/${item._id}`}>
+                    {' '}
                     <Image main={img[0]} sec={img[1]} />
-                    <ProductStatus>
-                        {status?.map((item, i) => (
-                            <Status fs={item} key={i} order={i + 1}>
-                                {item}
-                            </Status>
-                        ))}
-                    </ProductStatus>
-                    <ProductAction>
-                        <ProductActionContainer>
-                            <Favorite onClick={handleAdd}>
+                </StyledLink>
+                <ProductStatus>
+                    {status?.map((item, i) => (
+                        <Status fs={item} key={i} order={i + 1}>
+                            {item}
+                        </Status>
+                    ))}
+                </ProductStatus>
+                <ProductAction>
+                    <ProductActionContainer>
+                        <Favorite onClick={handleAdd}>
+                            {liked ? (
+                                <FavoriteOutlined
+                                    style={{ fontSize: 16, color: '#fff' }}
+                                />
+                            ) : (
                                 <FavoriteBorder style={{ fontSize: 16 }} />
-                            </Favorite>
-                        </ProductActionContainer>
-                        <ProductActionContainer onClick={handleClick}>
-                            <Tooltip title="Quick View" placement="right-end">
-                                <Preview style={{ fontSize: 16 }} />
-                            </Tooltip>
-                        </ProductActionContainer>
-                    </ProductAction>
-                    <Cart>
-                        <ShoppingCartContainer>
-                            <FormatListNumbered style={{ fontSize: 15 }} />
-                        </ShoppingCartContainer>
-                        <CartTitle>Select Options</CartTitle>
-                    </Cart>
-                </ImageContainer>
-                <InfoContainer>
-                    <Categories>
-                        {category?.map((item, i) => (
-                            <Category key={i}>
-                                {(i ? ', ' : ' ') + item}
-                            </Category>
-                        ))}
-                    </Categories>
-                    <Title brand={brand}>{title}</Title>
-                    <Prices>$ {price}</Prices>
-                    <Rate>
-                        <ProductRate rate={rate} />
-                        <ReviewCount>{reviews.length}</ReviewCount>
-                    </Rate>
-                </InfoContainer>
-            </StyledLink>
+                            )}
+                        </Favorite>
+                    </ProductActionContainer>
+                    <ProductActionContainer onClick={handleClick}>
+                        <Tooltip title="Quick View" placement="right-end">
+                            <Preview style={{ fontSize: 16 }} />
+                        </Tooltip>
+                    </ProductActionContainer>
+                </ProductAction>
+                <Cart>
+                    <ShoppingCartContainer>
+                        <FormatListNumbered style={{ fontSize: 17 }} />
+                    </ShoppingCartContainer>
+                    <StyledLink
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                        to={`/product/${item._id}`}
+                    >
+                        {' '}
+                        <CartTitle>Select Options</CartTitle>{' '}
+                    </StyledLink>
+                </Cart>
+            </ImageContainer>
+            <InfoContainer>
+                <Categories>
+                    {category?.map((item, i) => (
+                        <Category key={i}>{(i ? ', ' : ' ') + item}</Category>
+                    ))}
+                </Categories>
+                <Title brand={brand}>{title}</Title>
+                <Prices>$ {price}</Prices>
+                <Rate>
+                    <ProductRate rate={rate} />
+                    <ReviewCount>{reviews.length}</ReviewCount>
+                </Rate>
+            </InfoContainer>
         </Container>
     )
 }

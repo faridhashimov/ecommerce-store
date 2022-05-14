@@ -13,7 +13,7 @@ const OrderSchema = new mongoose.Schema(
         ],
         adress: { type: String, required: true },
         amount: { type: Number, required: true },
-        status: { type: String, default: 'Preparing' },
+        status: { type: String, default: 'Pending' },
     },
     { timestamps: true }
 )

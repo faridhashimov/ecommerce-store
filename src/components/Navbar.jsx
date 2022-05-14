@@ -74,12 +74,12 @@ const MenuItemContainer = styled.li`
         font-size: 14px;
     }
 `
+
 const Right = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-    /* position: relative; */
 `
 const SearchContainer = styled.div`
     display: flex;
@@ -105,16 +105,7 @@ const SearchButton = styled.div`
     align-items: center;
     fill: '#EEA287';
 `
-const RightMenuIcon = styled.div`
-    margin-left: 20px;
-    color: #666666;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    &:hover {
-        color: #eea287;
-        transition: all 0.2s ease;
-    }
-`
+
 const CartTotal = styled.span`
     font-size: 13px;
     margin-left: 12px;
@@ -124,7 +115,21 @@ const StyledLink = styled(Link)`
     color: #666666;
     transition: all 0.2s ease;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+`
+const RightMenuIcon = styled.div`
+    margin-left: 20px;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
     &:hover {
+        color: #eea287;
+        transition: all 0.2s ease;
+    }
+    &:hover ${StyledLink} {
         color: #eea287;
         transition: all 0.2s ease;
     }
@@ -156,6 +161,10 @@ const Navbar = () => {
     let activeStyle = {
         borderBottom: '2px solid #000',
     }
+
+    const totalSum = products
+        .reduce((sum, prevValue) => sum + prevValue.total, 0)
+        .toFixed(2)
 
     // const openProfile = () => {
     //     navigate('/profile', { replace: true })
@@ -261,7 +270,7 @@ const Navbar = () => {
                     </SearchContainer>
                     {user && (
                         <ProfileContainer>
-                            <Link to='/profile'>
+                            <Link to="/profile">
                                 <ProfileImage
                                     src={user.img ? user.img : noAvatar}
                                 />
@@ -282,7 +291,9 @@ const Navbar = () => {
                             </StyledLink>
                         </Badge>
                         <StyledLink to="/cart">
-                            <CartTotal>$ 59,98</CartTotal>
+                            <CartTotal>
+                                {totalSum > 0 ? `$ ${totalSum}` : `$ 0,00`}
+                            </CartTotal>
                         </StyledLink>
                     </RightMenuIcon>
                 </Right>
