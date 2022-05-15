@@ -39,7 +39,7 @@ const FilterButton = styled.div`
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 400;
-    color: #777777;
+    /* color: #777777; */
     margin: 0px 5px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;

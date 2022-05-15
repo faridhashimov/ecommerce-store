@@ -2,27 +2,20 @@ import { Navbar, Footer } from '../components'
 import styled from 'styled-components'
 import { ShoppingCartOutlined } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { mobile } from '../responsive'
 import { userRequest } from '../requestMethods'
-import { loadStripe } from '@stripe/stripe-js'
-import {
-    Elements,
-    PaymentRequestButtonElement,
-    useStripe,
-} from '@stripe/react-stripe-js'
-import CheckoutForm from '../components/CheckoutForm'
 import CartProducts from '../components/CartProducts'
 import axios from 'axios'
+import { format, parseISO } from 'date-fns'
 
 import {
     PayPalScriptProvider,
     PayPalButtons,
     usePayPalScriptReducer,
 } from '@paypal/react-paypal-js'
-
-const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`)
+import { resetCart } from '../redux/cartSlice'
 
 const Container = styled.div`
     width: 100%;
@@ -250,6 +243,7 @@ const Cart = () => {
     const products = useSelector((store) => store.cart.products)
     const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
@@ -262,18 +256,46 @@ const Cart = () => {
         setShipping(e.target.value)
     }
 
+    const handlecClick = () => {
+        !user && navigate('/login', { replace: true })
+        setOpen(true)
+    }
 
-        const createOrder = async (data) => {
-            const res = await axios.post('http://localhost:5000/api/orders', {
-                body: {
-                    userId: user._id,
-                    products: products,
-                    adress: res.data,
-                    amount: res.data,
+    const createOrder = async (data) => {
+        const body = {
+            userId: user._id,
+            products: products,
+            adress: `${data.payer.address.address_line_1},
+                ${data.payer.address.admin_area_2},
+                ${data.payer.address.postal_code}`,
+            amount: data.purchase_units[0].amount.value,
+        }
+
+        try {
+            const res = await axios.post(
+                'http://localhost:5000/api/orders',
+                body,
+                {
+                    headers: { 'Content-type': 'application/json' },
+                }
+            )
+            dispatch(resetCart())
+            navigate('/success', {
+                state: {
+                    products: res.data.products,
+                    amount: res.data.amount,
+                    status: res.data.status,
+                    buyer: data.purchase_units[0].shipping.name.full_name,
+                    orderDate: format(
+                        parseISO(res.data.createdAt),
+                        "d MMMM y '-' k:m"
+                    ),
                 },
             })
+        } catch (err) {
+            throw new Error('Something went wrong')
         }
-    
+    }
 
     // This values are the props in the UI
     const amount = cartTotal
@@ -323,8 +345,8 @@ const Cart = () => {
                     }}
                     onApprove={function (data, actions) {
                         return actions.order.capture().then(function (details) {
-
                             console.log(details)
+                            createOrder(details)
                         })
                     }}
                 />
@@ -465,20 +487,20 @@ const Cart = () => {
                                                         options={{
                                                             'client-id':
                                                                 'AdJDuR9Tp6c1_n7WbFYidv1YO-s4zJkV70g3uGwRNmUwKjTP8MLaEZq3IRcFK_HUbSoB5rWQEOQXYoRf',
-                                                            components:
-                                                                'buttons',
+                                                            // components: 'buttons',
                                                             currency: 'USD',
                                                         }}
                                                     >
                                                         <ButtonWrapper
                                                             currency={currency}
-                                                            showSpinner={false}
+                                                            showSpinner={true}
                                                         />
                                                     </PayPalScriptProvider>
                                                 ) : (
                                                     <CheckoutBtn
-                                                        onClick={() =>
-                                                            setOpen(true)
+                                                        onClick={
+                                                            handlecClick
+                                                            // setOpen(true)
                                                         }
                                                     >
                                                         Proceed To Checkout

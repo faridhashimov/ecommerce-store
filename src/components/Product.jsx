@@ -70,8 +70,14 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 540px;
-    margin: 0px 10px;
+    margin: 0px 10px 15px;
+    padding-bottom: 5px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        box-shadow: 0px 0px 22px -8px rgba(0, 0, 0, 0.25);
+        transition: all 0.2s ease-in-out;
+    }
     &:hover ${ProductAction} {
         opacity: 1;
         transform: translateX(0px);
@@ -264,7 +270,7 @@ const Product = (item) => {
         if (productInWishlist.length === 0) {
             dispatch(addToWishlist(item))
         } else if (productInWishlist.some((e) => e._id === item._id)) {
-            navigate('/wishlist', {replace: true})
+            navigate('/wishlist', { replace: true })
             return
         } else {
             dispatch(addToWishlist(item))

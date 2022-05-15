@@ -1,7 +1,6 @@
-import { Footer, Navbar } from '../components'
+import { Footer, Navbar, Order } from '../components'
 import styled from 'styled-components'
 import {
-    Check,
     Email,
     LocationOn,
     Notifications,
@@ -11,17 +10,23 @@ import {
     Store,
 } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { mobile } from '../responsive'
 
 const Wrapper = styled.div`
     width: 93vw;
     margin: 0 auto;
     display: flex;
     margin-top: 20px;
+    ${mobile({ flexDirection: 'column' })}
 `
 const Sidebar = styled.div`
     flex: 1;
     color: #333;
     padding-right: 20px;
+    ${mobile({ padding: '10px' })}
 `
 const SidebarTitle = styled.h1`
     font-size: 20px;
@@ -30,6 +35,7 @@ const SidebarTitle = styled.h1`
 `
 const NavContainer = styled.nav`
     list-style: none;
+    ${mobile({ display: 'flex', flexDirection: 'column' })}
 `
 const StyledNavIcon = styled(SvgIcon)`
     font-size: 18px !important;
@@ -50,6 +56,7 @@ const NavItem = styled.li`
     &:hover ${StyledNavIcon} {
         color: #eea287;
     }
+    /* ${mobile({ justifyContent: 'center' })} */
 `
 const Main = styled.main`
     flex: 4;
@@ -59,6 +66,7 @@ const Main = styled.main`
 // ==============================================My Orders
 
 const MyOrders = styled.div``
+
 const OrderHeader = styled.div`
     display: flex;
     justify-content: space-between;
@@ -70,7 +78,9 @@ const OrderHeader = styled.div`
     h1 {
         font-size: 18px;
         font-weight: 400;
+        ${mobile({ marginBottom: '20px' })}
     }
+    ${mobile({ flexDirection: 'column' })}
 `
 const SearchOrderContainer = styled.div`
     display: flex;
@@ -79,6 +89,7 @@ const SearchOrderContainer = styled.div`
     border: 1px solid #e2e2e2;
     border-radius: 3px;
     padding-right: 5px;
+    ${mobile({ marginBottom: '20px', width: '70%' })}
 `
 const SearchOrder = styled.input`
     font-size: 12px;
@@ -107,7 +118,6 @@ const SearchByDate = styled.select`
 const OrderDateOption = styled.option`
     color: #333;
 `
-
 const OrderFilterContainer = styled.div`
     margin-top: 20px;
     padding-left: 20px;
@@ -130,92 +140,32 @@ const OrderFilterBtn = styled.button`
         color: #eea287;
         transition: all 0.2s ease-in;
     }
+
+    ${mobile({
+        fontSize: '11px',
+        fontWeight: '400',
+        padding: '2px 10px',
+        backgroundColor: '#eea287',
+        color: '#fff',
+    })}
 `
 const OrdersList = styled.div`
     margin-top: 15px;
 `
-const SingleOrder = styled.div`
-    border: 1px solid #e2e2e2;
-    border-radius: 5px;
-`
-const OrderInfoHeader = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #e2e2e2;
-`
-const OrderInfoTitleContainer = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-`
-const OrderInfoTitle = styled.span`
-    color: #666;
-    font-size: 13px;
-    font-weight: 600;
-`
-const OrderInfoDesc = styled.span`
-    color: #333;
-    font-size: 13px;
-    font-weight: 400;
-`
-const OrderDetailsBtn = styled.button`
-    padding: 5px 30px;
-    background-color: #eea287;
-    border: 1px solid #eea287;
-    border-radius: 3px;
-    transition: all 0.2s ease-in;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 400;
-    &:hover {
-        background-color: #d98668;
-        cursor: pointer;
-        transition: all 0.2s ease-in;
-    }
-`
-const OrderInfoBody = styled.div`
-    padding: 20px;
-`
-const OrderInfoBodyContainer = styled.div`
-    display: flex;
-    align-items: center;
-    border: 1px solid #e2e2e2;
-    padding: 17px 20px;
-    border-radius: 5px;
-`
-const OrderStatusContainer = styled.div`
-    width: 50%;
-`
-const OrderStatus = styled.span`
-    font-size: 14px;
-    font-weight: 400;
-    color: #0bc15c;
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-`
-const OrderStatusInfo = styled.p`
-     font-size: 12px;
-    font-weight: 600;
-    color: #333;
-`
-const OrderImageContainer = styled.div`
-    padding: 2px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-`
-const OrderImageWrapper = styled.div`
-    height: 60px;
-    width: 40px;
-`
-const OrderImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-`
 
 const Orders = () => {
+    const [orders, setOrders] = useState([])
+    let user = useSelector((state) => state.user.user)
+    useEffect(() => {
+        const getAllOrders = async () => {
+            const res = await axios.get(
+                'http://localhost:5000/api/orders/find/' + user._id
+            )
+            setOrders(res.data)
+        }
+        getAllOrders()
+    }, [])
+
     return (
         <>
             <Navbar />
@@ -288,52 +238,9 @@ const Orders = () => {
                             <OrderFilterBtn>Cancellations</OrderFilterBtn>
                         </OrderFilterContainer>
                         <OrdersList>
-                            <SingleOrder>
-                                <OrderInfoHeader>
-                                    <OrderInfoTitleContainer>
-                                        <OrderInfoTitle>
-                                            Order date
-                                        </OrderInfoTitle>
-                                        <OrderInfoDesc>
-                                            1 March 2021 - 14:45
-                                        </OrderInfoDesc>
-                                    </OrderInfoTitleContainer>
-                                    <OrderInfoTitleContainer>
-                                        <OrderInfoTitle>Buyer</OrderInfoTitle>
-                                        <OrderInfoDesc>
-                                            James Edgerton
-                                        </OrderInfoDesc>
-                                    </OrderInfoTitleContainer>
-                                    <OrderInfoTitleContainer>
-                                        <OrderInfoTitle>
-                                            Order total
-                                        </OrderInfoTitle>
-                                        <OrderInfoDesc>$ 159.98</OrderInfoDesc>
-                                    </OrderInfoTitleContainer>
-                                    <OrderDetailsBtn>
-                                        Order Details
-                                    </OrderDetailsBtn>
-                                </OrderInfoHeader>
-                                <OrderInfoBody>
-                                    <OrderInfoBodyContainer>
-                                        <OrderStatusContainer>
-                                            <OrderStatus>
-                                                <Check sx={{marginRight: '7px'}} />
-                                                Delivered
-                                            </OrderStatus>
-                                            <OrderStatusInfo>
-                                                1 product was delivered on
-                                                February 5th.
-                                            </OrderStatusInfo>
-                                        </OrderStatusContainer>
-                                        <OrderImageContainer>
-                                            <OrderImageWrapper>
-                                                <OrderImage src="https://cdn.dsmcdn.com/ty61/product/media/images/20210122/8/56024496/86055368/1/1_org_zoom.jpg" />
-                                            </OrderImageWrapper>
-                                        </OrderImageContainer>
-                                    </OrderInfoBodyContainer>
-                                </OrderInfoBody>
-                            </SingleOrder>
+                            {orders.map((order) => (
+                                <Order key={order._id} {...order} />
+                            ))}
                         </OrdersList>
                     </MyOrders>
                 </Main>

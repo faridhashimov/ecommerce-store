@@ -13,11 +13,12 @@ import {
     Profile,
     List,
     Orders,
-    Order,
+    SingleOrder,
 } from './pages'
 import Productpage from './pages/Productpage'
 import WishList from './pages/WishList'
 import ScrollToTop from './components/ScrollToTop'
+// import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 function App() {
     const active = useSelector((state) => state.modal.active)
@@ -36,7 +37,7 @@ function App() {
                         <Route path="/wishlist" element={<WishList />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/orders" element={<Orders />} />
-                        <Route path="/orders/:id" element={<Order />} />
+                        <Route path="/orders/:id" element={<SingleOrder />} />
                         <Route path="/success" element={<Success />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/list" element={<List />} />

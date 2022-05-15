@@ -24,6 +24,7 @@ const updateOrder = async (req, res) => {
     }
 }
 
+// DELETE ORDER
 const deleteOrder = async (req, res) => {
     try {
         await Order.findByIdAndDelete(req.body.id)
@@ -32,6 +33,8 @@ const deleteOrder = async (req, res) => {
         res.status(401).json(err)
     }
 }
+
+// GET ORDER
 const getOrder = async (req, res) => {
     try {
         const order = await Order.findById(req.body.id)
@@ -40,6 +43,19 @@ const getOrder = async (req, res) => {
         res.status(401).json(err)
     }
 }
+
+// GET USER ORDERS
+const getUserOrders = async (req, res) => {
+    // const { userId } = req.params
+    try {
+        const userOrders = await Order.find({ userId: req.params.userId }).exec()
+        res.status(200).json(userOrders)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+// GET USER ORDERS
 const getAllOrders = async (req, res) => {
     try {
         const allOrders = await Order.find({})
@@ -54,5 +70,6 @@ module.exports = {
     updateOrder,
     deleteOrder,
     getOrder,
+    getUserOrders,
     getAllOrders,
 }

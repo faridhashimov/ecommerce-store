@@ -126,7 +126,7 @@ const updateReview = async (req, res) => {
                 },
             }
         )
-        res.status(201).json('ok')
+        res.status(201).json('Review has been updated')
     } catch (err) {
         res.status(401).json(err)
     }
