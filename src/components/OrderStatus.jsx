@@ -3,7 +3,6 @@ import {
     Cancel,
     Check,
     LocalShippingOutlined,
-    PendingActionsRounded,
 } from '@mui/icons-material'
 import styled from 'styled-components'
 import { css } from 'styled-components'

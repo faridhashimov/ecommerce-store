@@ -3,7 +3,8 @@ import { SvgIcon } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { loginSuccess } from '../redux/userSlice'
+import { css } from 'styled-components'
+import { logOut } from '../redux/userSlice'
 
 const PopupContainer = styled.div`
     width: 140px;
@@ -22,37 +23,44 @@ const PopupContainer = styled.div`
 const MainPopup = styled.ul`
     list-style: none;
 `
-const MainPopupLink = styled(Link)`
-    font-size: 14px!important;
+const sharedStyle = css`
+    font-size: 14px !important;
     padding: 0px !important;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: #666!important;
+    color: #666 !important;
     margin: 7px 0px;
     cursor: pointer;
-    text-transform: none!important;
+    text-transform: none !important;
     &:first-child {
         margin: 0px 0px 7px;
-        color: #eea287!important;
+        color: #eea287 !important;
         font-weight: 600;
     }
     &:last-child {
         margin-bottom: 0px;
     }
     &:hover {
-        color: #eea287!important;
+        color: #eea287 !important;
     }
+`
+const MainPopupLink = styled(Link)`
+    ${sharedStyle}
 `
 const PopupIcons = styled(SvgIcon)`
     font-size: 16px !important;
     margin-right: 7px;
 `
+const LogOutLink = styled.li`
+    ${sharedStyle}
+`
+
 const NavbarPopup = ({ popup }) => {
     const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const handleLogOut = () => {
-        dispatch(loginSuccess(null))
+        dispatch(logOut())
     }
     return (
         <PopupContainer state={popup}>
@@ -70,9 +78,9 @@ const NavbarPopup = ({ popup }) => {
                     <PopupIcons component={Person} />
                     User info
                 </MainPopupLink>
-                <MainPopupLink to="/profile" onClick={handleLogOut}>
+                <LogOutLink onClick={handleLogOut}>
                     <PopupIcons component={Logout} /> Log out
-                </MainPopupLink>
+                </LogOutLink>
             </MainPopup>
         </PopupContainer>
     )

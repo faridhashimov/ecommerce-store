@@ -1,8 +1,8 @@
-import { ArrowForward, Facebook, Google } from '@mui/icons-material'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { ArrowForward, Facebook, Google } from '@mui/icons-material'
 import { loginCall } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 
@@ -38,7 +38,7 @@ const LoginButtonContainer = styled.div`
     align-items: center;
     padding: 5px 0px 10px;
     margin: 40.9px 0px;
-    ${mobile({margin: '33.5px 0px'})}
+    ${mobile({ margin: '33.5px 0px' })}
 `
 
 const LoginButton = styled.button`
@@ -58,7 +58,7 @@ const LoginButton = styled.button`
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
-    ${mobile({padding: '7px 15px'})}
+    ${mobile({ padding: '7px 15px' })}
 `
 const ForgotPassword = styled.a`
     font-weight: 300;
@@ -103,13 +103,14 @@ const ErorMsg = styled.p`
 `
 
 const SignIn = () => {
-    const [inputs, setInputs] = useState(null)
+    // const [inputs, setInputs] = useState(null)
     const [errMsg, setErrMsg] = useState('')
     const [focus, setFocus] = useState(false)
     const emailRef = useRef()
+    const passwordRef = useRef()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
-    console.log(user)
+    // console.log(user)
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -121,21 +122,29 @@ const SignIn = () => {
         focus && setErrMsg('')
     }, [focus])
 
-    const handleChange = (e) => {
-        setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    }
+    // const handleChange = (e) => {
+    //     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // }
 
     useEffect(() => {
         setFocus(false)
         if (user.error) {
             setErrMsg('Wrong email or password')
         }
-        user.user && navigate(-1)
+        user.user && navigate('/', { replace: true })
     }, [user.error, user.user, navigate])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        loginCall(inputs, dispatch)
+        loginCall(
+            {
+                email: emailRef.current.value,
+                password: passwordRef.current.value,
+            },
+            dispatch
+        )
+        navigate(-1)
+       
     }
 
     return (
@@ -147,17 +156,19 @@ const SignIn = () => {
                     ref={emailRef}
                     id="email"
                     name="email"
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     required
                     type="email"
                 />
             </InputContainer>
             <InputContainer>
-                <Label>Password *</Label>
+                <Label htmlFor="password">Password *</Label>
                 <Input
                     onFocus={() => setFocus(true)}
+                    ref={passwordRef}
                     name="password"
-                    onChange={handleChange}
+                    id="password"
+                    // onChange={handleChange}
                     required
                     type="password"
                     minLength={6}

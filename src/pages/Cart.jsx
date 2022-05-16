@@ -257,7 +257,7 @@ const Cart = () => {
     }
 
     const handlecClick = () => {
-        !user && navigate('/login', { replace: true })
+        !user && navigate('/login')
         setOpen(true)
     }
 

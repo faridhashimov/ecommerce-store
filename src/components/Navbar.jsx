@@ -7,7 +7,7 @@ import {
     Search,
     ShoppingCartOutlined,
 } from '@mui/icons-material'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
 import NavbarPopup from './NavbarPopup'
@@ -74,7 +74,6 @@ const MenuItemContainer = styled.li`
         font-size: 14px;
     }
 `
-
 const Right = styled.div`
     display: flex;
     justify-content: center;
@@ -105,7 +104,6 @@ const SearchButton = styled.div`
     align-items: center;
     fill: '#EEA287';
 `
-
 const CartTotal = styled.span`
     font-size: 13px;
     margin-left: 12px;
@@ -154,7 +152,6 @@ const Navbar = () => {
     const user = useSelector((state) => state.user.user)
     const products = useSelector((state) => state.cart.products)
     const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
-    let navigate = useNavigate()
 
     const [popup, setPopup] = useState(false)
 
@@ -165,10 +162,6 @@ const Navbar = () => {
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
-
-    // const openProfile = () => {
-    //     navigate('/profile', { replace: true })
-    // }
 
     return (
         <Container>

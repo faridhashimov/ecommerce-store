@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Footer, Navbar, SignIn, SignUp } from '../components'
 import { mobile } from '../responsive'
@@ -68,7 +68,7 @@ const Login = () => {
                                 toggle('signin')
                             }}
                         >
-                            Sing in
+                            Sign in
                         </SigninButton>
                         <SigninButton
                             button={active === 'register' ? '#eea287' : '#fff'}

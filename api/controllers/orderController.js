@@ -1,5 +1,6 @@
 const Order = require('../models/OrderModel')
 
+// CREATE ORDER
 const createOrder = async (req, res) => {
     try {
         const newOrder = await Order.create(req.body)
@@ -9,6 +10,7 @@ const createOrder = async (req, res) => {
     }
 }
 
+// UPDATE ORDER
 const updateOrder = async (req, res) => {
     try {
         const updatedOrder = await Order.findByIdAndUpdate(

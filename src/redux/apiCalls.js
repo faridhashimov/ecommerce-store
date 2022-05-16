@@ -10,6 +10,6 @@ export const loginCall = async (userCredentials, dispatch) => {
         )
         dispatch(loginSuccess(res.data))
     } catch (err) {
-        dispatch(loginFailure(err))
+        dispatch(loginFailure(err.response.data))
     }
 }

@@ -1,9 +1,19 @@
-import { ArrowForward, Facebook, Google } from '@mui/icons-material'
+import { useRef, useEffect, useState } from 'react'
+import {
+    ArrowForward,
+    Facebook,
+    Google,
+    ReportGmailerrorred,
+} from '@mui/icons-material'
 import styled from 'styled-components'
-import { useRef, useEffect } from 'react'
 import { mobile } from '../responsive'
+import { publicRequest } from '../requestMethods'
 
-const LoginPageContainer = styled.div`
+const REGEXP_PASS = new RegExp(
+    '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+)
+
+const LoginPageContainer = styled.form`
     width: 100%;
     ${mobile({ width: '90%' })}
 `
@@ -48,6 +58,14 @@ const LoginButton = styled.button`
     border: 1px solid #eea287;
     transition: all 0.3s ease-in-out;
     margin-right: 20px;
+    &:disabled {
+        cursor: not-allowed;
+    }
+    &:disabled:hover {
+        border: 1px solid #777;
+        color: #777;
+        background-color: transparent;
+    }
     &:hover {
         background-color: #eea287;
         color: #fff;
@@ -101,58 +119,175 @@ const SignSocialContainer = styled.button`
     }
     ${mobile({ padding: ' 10px 25px' })}
 `
+const ValidPassword = styled.p`
+    color: #d0021b;
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 7px;
+    border-radius: 3px;
+    border: 1px solid #d0021b;
+    background-color: #fff4f6;
+`
+const ValidMatch = styled.span`
+    color: #d0021b;
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 7px;
+    border-radius: 3px;
+    border: 1px solid #d0021b;
+    background-color: #fff4f6;
+`
+const Success = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #6ce86c;
+    h1 {
+        font-size: 20px;
+        margin-bottom: 30px
+    }
+    p {
+        font-size: 14px;
+    }
+`
 const SignUp = () => {
+    const [email, setEmail] = useState('')
+
+    const [password, setPassword] = useState('')
+    const [validPassword, setValidPassword] = useState(false)
+    const [passwordFocus, setPasswordFocus] = useState(false)
+
+    const [match, setMatch] = useState('')
+    const [validMatch, setValidMatch] = useState(false)
+    const [matchFocus, setMatchFocus] = useState(false)
+
+    const [errMsg, setErrMsg] = useState('')
+    const [success, setSuccess] = useState(false)
+    const [newUser, setNewUSer] = useState(false)
+
     const emailRef = useRef()
 
     useEffect(() => {
         emailRef.current.focus()
     }, [])
 
+    useEffect(() => {
+        setErrMsg('')
+    }, [email, password, match])
+
+    useEffect(() => {
+        setValidPassword(REGEXP_PASS.test(password))
+        setValidMatch(password === match)
+    }, [password, match])
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            const res = await publicRequest.post('auth/register', {
+                email,
+                password,
+            })
+            setNewUSer(res.data.username)
+            setSuccess(true)
+        } catch (err) {
+            setErrMsg(err)
+        }
+    }
+
     return (
-        <LoginPageContainer>
-            <InputContainer>
-                <Label>Your email address *</Label>
-                <Input
-                    ref={emailRef}
-                    type="email"
-                    required
-                    autoComplete="off"
-                />
-            </InputContainer>
+        <>
+            {success ? (
+                <Success>
+                    <h1>Welome {newUser}</h1>{' '}
+                    <p>Please Login to purchase products</p>
+                </Success>
+            ) : (
+                <LoginPageContainer onSubmit={onSubmit}>
+                    <InputContainer>
+                        <Label htmlFor="email">Your email address *</Label>
+                        <Input
+                            ref={emailRef}
+                            type="email"
+                            id="email"
+                            required
+                            autoComplete="off"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </InputContainer>
 
-            <InputContainer>
-                <Label>Password *</Label>
-                <Input type="password" required />
-            </InputContainer>
-            <InputContainer>
-                <Label>Re-type Password *</Label>
-                <Input type="password" required />
-            </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="password">Password *</Label>
+                        <Input
+                            onChange={(e) => setPassword(e.target.value)}
+                            onFocus={() => setPasswordFocus(true)}
+                            onBlur={() => setPasswordFocus(false)}
+                            id="password"
+                            type="password"
+                            required
+                        />
+                        {passwordFocus && !validPassword ? (
+                            <ValidPassword>
+                                ! Must contain minimum 8 chrarcters, at least
+                                one upper case and one lower case letter, one
+                                digit, one special chracter
+                            </ValidPassword>
+                        ) : null}
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="match">Re-type Password *</Label>
+                        <Input
+                            onChange={(e) => setMatch(e.target.value)}
+                            onFocus={() => setMatchFocus(true)}
+                            onBlur={() => setMatchFocus(false)}
+                            id="match"
+                            type="password"
+                            required
+                        />
+                        {matchFocus && !validMatch ? (
+                            <ValidMatch>! Passwords does not match</ValidMatch>
+                        ) : null}
+                    </InputContainer>
 
-            <LoginButtonContainer>
-                <LoginButton>
-                    Sign Up{' '}
-                    <ArrowForward style={{ fontSize: 10, marginLeft: 5 }} />
-                </LoginButton>
-                <PrivacyPolicy>
-                    <Checkbox type="checkbox" />
-                    <PrivacyPolicyButtonTitle mr="reg">
-                        I agree to the privacy policy *
-                    </PrivacyPolicyButtonTitle>
-                </PrivacyPolicy>
-            </LoginButtonContainer>
-            <SignInWith>or sign up with</SignInWith>
-            <SocialButtons>
-                <SignSocialContainer>
-                    <Google style={{ color: '#CC3333', marginRight: 10 }} />{' '}
-                    Google
-                </SignSocialContainer>
-                <SignSocialContainer>
-                    <Facebook style={{ color: '#3366CC', marginRight: 10 }} />{' '}
-                    Facebook
-                </SignSocialContainer>
-            </SocialButtons>
-        </LoginPageContainer>
+                    <LoginButtonContainer>
+                        <LoginButton
+                            disabled={!email || !validPassword || !validMatch}
+                        >
+                            Sign Up{' '}
+                            <ArrowForward
+                                style={{ fontSize: 10, marginLeft: 5 }}
+                            />
+                        </LoginButton>
+                        <PrivacyPolicy>
+                            <Checkbox type="checkbox" />
+                            <PrivacyPolicyButtonTitle mr="reg">
+                                I agree to the privacy policy *
+                            </PrivacyPolicyButtonTitle>
+                        </PrivacyPolicy>
+                    </LoginButtonContainer>
+                    <SignInWith>or sign up with</SignInWith>
+                    <SocialButtons>
+                        <SignSocialContainer>
+                            <Google
+                                style={{ color: '#CC3333', marginRight: 10 }}
+                            />{' '}
+                            Google
+                        </SignSocialContainer>
+                        <SignSocialContainer>
+                            <Facebook
+                                style={{ color: '#3366CC', marginRight: 10 }}
+                            />{' '}
+                            Facebook
+                        </SignSocialContainer>
+                    </SocialButtons>
+                </LoginPageContainer>
+            )}
+        </>
     )
 }
 

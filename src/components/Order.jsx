@@ -1,5 +1,4 @@
 import { format, parseISO } from 'date-fns'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { OrderStatus } from '../components'
