@@ -37,6 +37,7 @@ const OrderStatusStatus = styled.span`
     display: flex;
     align-items: center;
     margin-bottom: 5px;
+    ${mobile({justifyContent: 'center'})}
 `
 
 const OrderStatusInfo = styled.p`
@@ -45,7 +46,7 @@ const OrderStatusInfo = styled.p`
     color: #333;
 `
 
-const OrderStatus = ({ status, orderDate }) => {
+const OrderStatus = ({ status, orderDate, products }) => {
     // const status = 'Cancelled'
     return (
         <OrderStatusContainer>
@@ -56,17 +57,17 @@ const OrderStatus = ({ status, orderDate }) => {
                         {status}
                     </OrderStatusStatus>
                     <OrderStatusInfo>
-                        1 product was delivered on February 5th.
+                        {products.length} product(s) Pending fulfillment.
                     </OrderStatusInfo>{' '}
                 </>
-            ) : status === 'Handed over to the local carrier' ? (
+            ) : status === 'Shipped' ? (
                 <>
                     <OrderStatusStatus status={status}>
                         <LocalShippingOutlined sx={{ marginRight: '7px' }} />
                         {status}
                     </OrderStatusStatus>
                     <OrderStatusInfo>
-                        1 product was delivered on February 5th.
+                    {products.length} product(s) was handed over to the local carrier on February 5th.
                     </OrderStatusInfo>{' '}
                 </>
             ) : status === 'Delivered' ? (
@@ -76,7 +77,7 @@ const OrderStatus = ({ status, orderDate }) => {
                         {status}
                     </OrderStatusStatus>
                     <OrderStatusInfo>
-                        1 product was delivered on February 5th.
+                    {products.length} product(s) was delivered on February 5th.
                     </OrderStatusInfo>{' '}
                 </>
             ) : (

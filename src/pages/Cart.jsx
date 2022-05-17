@@ -244,6 +244,7 @@ const Cart = () => {
     const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    console.log(products)
 
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
@@ -263,6 +264,7 @@ const Cart = () => {
 
     const createOrder = async (data) => {
         const body = {
+            _id: data.id,
             userId: user._id,
             products: products,
             adress: `${data.payer.address.address_line_1},
@@ -282,6 +284,7 @@ const Cart = () => {
             dispatch(resetCart())
             navigate('/success', {
                 state: {
+                    id: res.data._id,
                     products: res.data.products,
                     amount: res.data.amount,
                     status: res.data.status,

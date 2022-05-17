@@ -109,7 +109,7 @@ const SignIn = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user)
+    const { user, pending, error } = useSelector((state) => state.user)
     // console.log(user)
     let navigate = useNavigate()
 
@@ -128,11 +128,11 @@ const SignIn = () => {
 
     useEffect(() => {
         setFocus(false)
-        if (user.error) {
+        if (error) {
             setErrMsg('Wrong email or password')
         }
-        user.user && navigate('/', { replace: true })
-    }, [user.error, user.user, navigate])
+        user && navigate(-1)
+    }, [error, user, navigate])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -143,8 +143,7 @@ const SignIn = () => {
             },
             dispatch
         )
-        navigate(-1)
-       
+       user && navigate(-1)
     }
 
     return (

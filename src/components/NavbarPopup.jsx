@@ -1,7 +1,7 @@
 import { Forum, Logout, Person, ViewInAr } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { css } from 'styled-components'
 import { logOut } from '../redux/userSlice'
@@ -57,20 +57,22 @@ const LogOutLink = styled.li`
 `
 
 const NavbarPopup = ({ popup }) => {
+    const navigate = useNavigate()
     const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const handleLogOut = () => {
         dispatch(logOut())
+        navigate('/', {replace: true})
     }
     return (
         <PopupContainer state={popup}>
             <MainPopup>
-                <MainPopupLink to="/profile">{user.email}</MainPopupLink>
-                <MainPopupLink to="/orders">
+                <MainPopupLink to="/profile/orders">{user.email}</MainPopupLink>
+                <MainPopupLink to="/profile/orders">
                     <PopupIcons component={ViewInAr} />
                     Orders
                 </MainPopupLink>
-                <MainPopupLink to="/profile">
+                <MainPopupLink to="/profile/messages">
                     <PopupIcons component={Forum} />
                     Messages
                 </MainPopupLink>

@@ -366,7 +366,7 @@ const ProductModal = () => {
     const onAddToCart = () => {
         dispatch(
             addToCart({
-                id: _id,
+                _id,
                 productColor: chooseColor,
                 productSize: chooseSize,
                 title,

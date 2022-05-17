@@ -29,7 +29,7 @@ const updateOrder = async (req, res) => {
 // DELETE ORDER
 const deleteOrder = async (req, res) => {
     try {
-        await Order.findByIdAndDelete(req.body.id)
+        await Order.findByIdAndDelete(req.params.id)
         res.status(200).json('Order has been deleted')
     } catch (err) {
         res.status(401).json(err)

@@ -1,5 +1,9 @@
 const SingleOrder = () => {
-    return <div>SingleOrder</div>
+    return (
+        <>
+            <div>Single oreder</div>
+        </>
+    )
 }
 
 export default SingleOrder

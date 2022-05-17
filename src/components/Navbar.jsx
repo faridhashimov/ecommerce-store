@@ -22,6 +22,7 @@ const Container = styled.div`
 `
 const Wrapper = styled.div`
     width: 93vw;
+    /* max-width: 1210px; */
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -238,7 +239,7 @@ const Navbar = () => {
                                     style={({ isActive }) =>
                                         isActive ? activeStyle : undefined
                                     }
-                                    to="/profile"
+                                    to="/profile/orders"
                                 >
                                     Profile
                                 </NavLink>

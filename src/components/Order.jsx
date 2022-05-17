@@ -7,10 +7,12 @@ import { mobile } from '../responsive'
 const SingleOrder = styled.div`
     border: 1px solid #e2e2e2;
     border-radius: 5px;
+    margin-bottom: 15px;
 `
 const OrderInfoHeader = styled.div`
     display: flex;
     align-items: center;
+    background-color: #FAFAFA;
     padding: 20px;
     border-bottom: 1px solid #e2e2e2;
     ${mobile({ flexDirection: 'column', alignItems: 'flex-start', gap: '7px' })}
@@ -54,12 +56,18 @@ const OrderInfoBodyContainer = styled.div`
     border: 1px solid #e2e2e2;
     padding: 17px 20px;
     border-radius: 5px;
-    ${mobile({ justifyContent: 'space-between', padding: '5px' })}
+    ${mobile({ flexDirection: 'column', padding: '10px 5px;' })}
+`
+const OrderProductsImages = styled.div`
+     display: flex;
+    align-items: center;
+    ${mobile({ marginTop: '10px' })}
 `
 const OrderImageContainer = styled.div`
     padding: 2px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    margin: 0px 2.5px;
 `
 const OrderImageWrapper = styled.div`
     height: 60px;
@@ -71,8 +79,10 @@ const OrderImage = styled.img`
     object-fit: contain;
 `
 
-const Order = ({ amount, products, status, createdAt }) => {
-    let user = useSelector(state => state.user.user)
+const Order = (order) => {
+    const { amount, products, createdAt } = order;
+    let user = useSelector((state) => state.user.user)
+    console.log(products)
     let orderDate = format(parseISO(createdAt), "d MMMM y '-' k:m")
     return (
         <SingleOrder>
@@ -93,14 +103,20 @@ const Order = ({ amount, products, status, createdAt }) => {
             </OrderInfoHeader>
             <OrderInfoBody>
                 <OrderInfoBodyContainer>
-                    <OrderStatus status={status} orderDate={orderDate} />
-                    {products.map((product) => (
-                        <OrderImageContainer key={product.id}>
-                            <OrderImageWrapper>
-                                <OrderImage src="https://cdn.dsmcdn.com/ty61/product/media/images/20210122/8/56024496/86055368/1/1_org_zoom.jpg" />
-                            </OrderImageWrapper>
-                        </OrderImageContainer>
-                    ))}
+                    
+                    {/* Order Status */}
+                    <OrderStatus {...order} />
+
+                    {/* Order Products Image */}
+                    <OrderProductsImages>
+                        {products.map((product) => (
+                            <OrderImageContainer key={product._id}>
+                                <OrderImageWrapper>
+                                    <OrderImage src={product.img[0]} />
+                                </OrderImageWrapper>
+                            </OrderImageContainer>
+                        ))}
+                    </OrderProductsImages>
                 </OrderInfoBodyContainer>
             </OrderInfoBody>
         </SingleOrder>

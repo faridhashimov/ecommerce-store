@@ -229,13 +229,13 @@ const AddToCartBtn = styled.button`
     transition: all 0.2s ease-in;
     &:disabled {
         cursor: not-allowed;
-    };
+    }
 
     &:disabled:hover {
         color: #777;
         border: 1px solid #777;
         background-color: transparent;
-    };
+    }
     &:hover {
         background-color: #eea287;
         color: #fff;
@@ -401,7 +401,7 @@ const Productpage = () => {
     const onAddToCart = () => {
         dispatch(
             addToCart({
-                id,
+                _id: id,
                 productColor: chooseColor,
                 productSize: chooseSize,
                 title,
@@ -474,7 +474,11 @@ const Productpage = () => {
                                 </FilterContainer>
                                 <FilterContainer>
                                     <FilterTitle>Size:</FilterTitle>
-                                    <FilterSize onChange={(e) => setChooseSize(e.target.value)}>
+                                    <FilterSize
+                                        onChange={(e) =>
+                                            setChooseSize(e.target.value)
+                                        }
+                                    >
                                         <Size>Select a size</Size>
                                         {size?.map((item) => (
                                             <Size key={item}>{item}</Size>
@@ -498,9 +502,14 @@ const Productpage = () => {
                                     </AmountContainer>
                                 </FilterContainer>
                                 <CartButtonContainer>
-                                    <AddToCartBtn onClick={onAddToCart} disabled={
-                                    !chooseColor || !chooseSize ? true : false
-                                }>
+                                    <AddToCartBtn
+                                        onClick={onAddToCart}
+                                        disabled={
+                                            !chooseColor || !chooseSize
+                                                ? true
+                                                : false
+                                        }
+                                    >
                                         <AddShoppingCart
                                             sx={{
                                                 fontSize: '14px',

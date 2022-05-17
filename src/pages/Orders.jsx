@@ -1,69 +1,10 @@
-import { Footer, Navbar, Order } from '../components'
+import { NoOrders, Order } from '../components'
 import styled from 'styled-components'
-import {
-    Email,
-    LocationOn,
-    Notifications,
-    Person,
-    RateReview,
-    Search,
-    Store,
-} from '@mui/icons-material'
-import { SvgIcon } from '@mui/material'
+import { Search } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
-
-const Wrapper = styled.div`
-    width: 93vw;
-    margin: 0 auto;
-    display: flex;
-    margin-top: 20px;
-    ${mobile({ flexDirection: 'column' })}
-`
-const Sidebar = styled.div`
-    flex: 1;
-    color: #333;
-    padding-right: 20px;
-    ${mobile({ padding: '10px' })}
-`
-const SidebarTitle = styled.h1`
-    font-size: 20px;
-    font-weight: 500;
-    margin: 0px 0px 10px 10px;
-`
-const NavContainer = styled.nav`
-    list-style: none;
-    ${mobile({ display: 'flex', flexDirection: 'column' })}
-`
-const StyledNavIcon = styled(SvgIcon)`
-    font-size: 18px !important;
-    color: #999;
-    margin-right: 10px;
-`
-const NavItem = styled.li`
-    font-size: 14px;
-    font-weight: 400;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 5px;
-    &:hover {
-        background-color: #f2f2f2;
-    }
-    &:hover ${StyledNavIcon} {
-        color: #eea287;
-    }
-    /* ${mobile({ justifyContent: 'center' })} */
-`
-const Main = styled.main`
-    flex: 4;
-    margin-bottom: 30px;
-`
-
-// ==============================================My Orders
 
 const MyOrders = styled.div``
 
@@ -156,6 +97,7 @@ const OrdersList = styled.div`
 const Orders = () => {
     const [orders, setOrders] = useState([])
     let user = useSelector((state) => state.user.user)
+    console.log(orders.length ? 'true' : 'false')
     useEffect(() => {
         const getAllOrders = async () => {
             const res = await axios.get(
@@ -168,84 +110,51 @@ const Orders = () => {
 
     return (
         <>
-            <Navbar />
-            <Wrapper>
-                <Sidebar>
-                    <SidebarTitle>My profile</SidebarTitle>
-                    <NavContainer>
-                        <NavItem>
-                            <StyledNavIcon component={Store} />
-                            My orders
-                        </NavItem>
-                        <NavItem>
-                            <StyledNavIcon component={RateReview} />
-                            My reviews
-                        </NavItem>
-                        <NavItem>
-                            <StyledNavIcon component={Email} />
-                            My messages
-                        </NavItem>
-                        <NavItem>
-                            <StyledNavIcon component={Person} />
-                            My user information
-                        </NavItem>
-                        <NavItem>
-                            <StyledNavIcon component={LocationOn} />
-                            My adresses
-                        </NavItem>
-                        <NavItem>
-                            <StyledNavIcon component={Notifications} />
-                            Settings
-                        </NavItem>
-                    </NavContainer>
-                </Sidebar>
-                <Main>
-                    <MyOrders>
-                        <OrderHeader>
-                            <h1>My Orders</h1>
-                            <SearchOrderContainer>
-                                <SearchOrder
-                                    type="text"
-                                    placeholder="Product or brand name"
-                                />
-                                <Search
-                                    sx={{
-                                        fontSize: 20,
-                                        color: '#eea287',
-                                        cursor: 'pointer',
-                                    }}
-                                />
-                            </SearchOrderContainer>
-                            <SearchByDate>
-                                <OrderDateOption value="all">
-                                    All orders
-                                </OrderDateOption>
-                                <OrderDateOption value="all">
-                                    Last 1 month
-                                </OrderDateOption>
-                                <OrderDateOption value="all">
-                                    Last 3 month
-                                </OrderDateOption>
-                                <OrderDateOption value="all">
-                                    2021
-                                </OrderDateOption>
-                            </SearchByDate>
-                        </OrderHeader>
-                        <OrderFilterContainer>
-                            <OrderFilterBtn>All</OrderFilterBtn>
-                            <OrderFilterBtn>Ongoing Orders</OrderFilterBtn>
-                            <OrderFilterBtn>Returns</OrderFilterBtn>
-                            <OrderFilterBtn>Cancellations</OrderFilterBtn>
-                        </OrderFilterContainer>
-                        <OrdersList>
-                            {orders.map((order) => (
-                                <Order key={order._id} {...order} />
-                            ))}
-                        </OrdersList>
-                    </MyOrders>
-                </Main>
-            </Wrapper>
-            <Footer />
+            <MyOrders>
+                <OrderHeader>
+                    <h1>My Orders</h1>
+                    <SearchOrderContainer>
+                        <SearchOrder
+                            type="text"
+                            placeholder="Product or brand name"
+                        />
+                        <Search
+                            sx={{
+                                fontSize: 20,
+                                color: '#eea287',
+                                cursor: 'pointer',
+                            }}
+                        />
+                    </SearchOrderContainer>
+                    <SearchByDate>
+                        <OrderDateOption value="all">
+                            All orders
+                        </OrderDateOption>
+                        <OrderDateOption value="all">
+                            Last 1 month
+                        </OrderDateOption>
+                        <OrderDateOption value="all">
+                            Last 3 month
+                        </OrderDateOption>
+                        <OrderDateOption value="all">2021</OrderDateOption>
+                    </SearchByDate>
+                </OrderHeader>
+                <OrderFilterContainer>
+                    <OrderFilterBtn>All</OrderFilterBtn>
+                    <OrderFilterBtn>Ongoing Orders</OrderFilterBtn>
+                    <OrderFilterBtn>Returns</OrderFilterBtn>
+                    <OrderFilterBtn>Cancellations</OrderFilterBtn>
+                </OrderFilterContainer>
+                <OrdersList>
+                    {orders.length ? (
+                        orders.map((order) => (
+                            <Order key={order._id} {...order} />
+                        ))
+                    ) : (
+                        <NoOrders />
+                    )}
+                </OrdersList>
+            </MyOrders>
         </>
     )
 }

@@ -18,6 +18,7 @@ const Container = styled.div`
 `
 const Wrapper = styled.div`
     width: 93vw;
+    /* max-width: 1210px; */
     margin-top: 50px;
     display: flex;
     flex-direction: column;

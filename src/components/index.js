@@ -17,3 +17,4 @@ export { default as NavbarPopup } from './NavbarPopup.jsx';
 export { default as AddReview } from './AddReview.jsx';
 export { default as OrderStatus } from './OrderStatus.jsx';
 export { default as Order } from './Order.jsx';
+export { default as NoOrders } from './NoOrders.jsx';

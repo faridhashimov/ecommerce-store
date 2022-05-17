@@ -65,7 +65,7 @@ const OrdersBtn = styled.button`
 
 const Success = () => {
     const { state } = useLocation()
-    const { amount, buyer, orderDate, products, status } = state
+    const { amount, buyer, orderDate, id, status } = state
 
     return (
         <>
@@ -84,11 +84,11 @@ const Success = () => {
                         <Element c="header">Amount:</Element>
                     </InfoHeader>
                     <InfoHeader>
-                        <Element c="body">Order id:</Element>
+                        <Element c="body">{id}</Element>
                         <Element c="body">{orderDate}</Element>
                         <Element c="body">{buyer}</Element>
                         <Element c="body">{status}</Element>
-                        <Element c="body">{amount}</Element>
+                        <Element c="body">$ {amount}</Element>
                     </InfoHeader>
                 </InfoContainer>
                 <BtnContainer>
