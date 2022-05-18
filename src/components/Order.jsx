@@ -1,5 +1,6 @@
 import { format, parseISO } from 'date-fns'
 import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { OrderStatus } from '../components'
 import { mobile } from '../responsive'
@@ -12,7 +13,7 @@ const SingleOrder = styled.div`
 const OrderInfoHeader = styled.div`
     display: flex;
     align-items: center;
-    background-color: #FAFAFA;
+    background-color: #fafafa;
     padding: 20px;
     border-bottom: 1px solid #e2e2e2;
     ${mobile({ flexDirection: 'column', alignItems: 'flex-start', gap: '7px' })}
@@ -32,7 +33,7 @@ const OrderInfoDesc = styled.span`
     font-size: 13px;
     font-weight: 400;
 `
-const OrderDetailsBtn = styled.button`
+const OrderDetailsBtn = styled.div`
     padding: 5px 30px;
     background-color: #eea287;
     border: 1px solid #eea287;
@@ -59,7 +60,7 @@ const OrderInfoBodyContainer = styled.div`
     ${mobile({ flexDirection: 'column', padding: '10px 5px;' })}
 `
 const OrderProductsImages = styled.div`
-     display: flex;
+    display: flex;
     align-items: center;
     ${mobile({ marginTop: '10px' })}
 `
@@ -80,10 +81,13 @@ const OrderImage = styled.img`
 `
 
 const Order = (order) => {
-    const { amount, products, createdAt } = order;
+    const { _id, amount, products, createdAt } = order
     let user = useSelector((state) => state.user.user)
     console.log(products)
+    let navigate = useNavigate()
+
     let orderDate = format(parseISO(createdAt), "d MMMM y '-' k:m")
+
     return (
         <SingleOrder>
             <OrderInfoHeader>
@@ -99,11 +103,12 @@ const Order = (order) => {
                     <OrderInfoTitle>Order total</OrderInfoTitle>
                     <OrderInfoDesc>$ {amount}</OrderInfoDesc>
                 </OrderInfoTitleContainer>
-                <OrderDetailsBtn>Order Details</OrderDetailsBtn>
+                <OrderDetailsBtn>
+                    <Link to={'/'+_id}>Order Details</Link>
+                </OrderDetailsBtn>
             </OrderInfoHeader>
             <OrderInfoBody>
                 <OrderInfoBodyContainer>
-                    
                     {/* Order Status */}
                     <OrderStatus {...order} />
 

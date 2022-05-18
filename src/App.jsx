@@ -38,9 +38,9 @@ function App() {
                         <Route path="orders/:id" element={<SingleOrder />} />
                         <Route path="success" element={<Success />} />
                         <Route path="profile/*" element={<Profile />}>
-                            <Route path="orders" element={<Orders />} />
+                            <Route path="orders/*" element={<Orders />} />
                             <Route
-                                path="orders/:id"
+                                path=":id"
                                 element={<SingleOrder />}
                             />
                         </Route>

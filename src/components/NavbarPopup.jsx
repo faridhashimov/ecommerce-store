@@ -14,8 +14,8 @@ const PopupContainer = styled.div`
     border: 1px solid #ccc;
     display: ${(props) => (props.state ? 'block' : 'none')};
     position: absolute;
-    bottom: -165px;
-    right: -40px;
+    bottom: -164px;
+    right: -42px;
     transition: all 0.3s ease-in;
     z-index: 1000;
     padding: 10px;

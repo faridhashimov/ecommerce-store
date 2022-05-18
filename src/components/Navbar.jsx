@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Badge from '@mui/material/Badge'
 import {
     FavoriteBorder,
-    // Person,
     Search,
     ShoppingCartOutlined,
 } from '@mui/icons-material'
@@ -22,7 +21,6 @@ const Container = styled.div`
 `
 const Wrapper = styled.div`
     width: 93vw;
-    /* max-width: 1210px; */
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -40,7 +38,6 @@ const Reverse = styled.span`
     color: #eea287;
 `
 const Center = styled.div``
-
 const Menu = styled.ul`
     list-style: none;
     display: flex;
@@ -57,7 +54,7 @@ const MenuItemContainer = styled.li`
         bottom: -11px;
         display: block;
         width: 0;
-        height: 2px;
+        height: 1.8px;
         background: #000;
         transition: width 0.3s;
     }
@@ -94,7 +91,6 @@ const Input = styled.input`
     padding: 10px 25px;
     border: none;
     font-size: 14px;
-    /* display: none; */
     &:focus {
         outline: none;
     }

@@ -22,11 +22,11 @@ const OrderStatusStatus = styled.span`
             `
         } else if (props.status === 'Handed over to the local carrier') {
             return css`
-                color: #8efb01;
+                color: #01e6fb;
             `
         } else if (props.status === 'Delivered') {
             return css`
-                color: #33ff55;
+                color: #59C15C;
             `
         } else {
             return css`

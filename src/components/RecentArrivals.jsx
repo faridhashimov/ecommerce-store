@@ -38,7 +38,7 @@ const FilterButton = styled.div`
     padding: 5px 10px;
     text-transform: uppercase;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     /* color: #777777; */
     margin: 0px 5px;
     cursor: pointer;
@@ -51,13 +51,13 @@ const FilterButton = styled.div`
         if (props.bg) {
             return css`
                 color: #eea287;
-                border-bottom: 1px solid #eea287;
+                border-bottom: 1.7px solid #eea287;
                 transition: all 0.3s ease-in-out;
             `
         } else {
             return css`
                 color: #777777;
-                border-bottom: 1px solid transparent;
+                border-bottom: 1.7px solid #fff;;
                 transition: all 0.3s ease-in-out;
             `
         }
