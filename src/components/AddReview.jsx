@@ -150,23 +150,9 @@ const AddReview = ({id}) => {
                 <ReviewTextarea
                     onChange={onSetInputs}
                     name="desc"
-                    rows="6"
+                    rows="3"
                     placeholder="Comment *"
                 />
-                <div>
-                    <ReviewInput
-                        onChange={onSetInputs}
-                        name="name"
-                        type="text"
-                        placeholder="Name *"
-                    />
-                    <ReviewInput
-                        onChange={onSetInputs}
-                        name="email"
-                        type="email"
-                        placeholder="Email *"
-                    />
-                </div>
                 <AddReviewButton>Submit</AddReviewButton>
             </AddReviewForm>
         </AddReviewContainer>

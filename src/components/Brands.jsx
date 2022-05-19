@@ -9,29 +9,61 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     /* padding: 0px 10px; */
-    margin-top: 20px;
+    margin-top: 40px;
     ${mobile({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' })}
 `
-
-const BranItemContainer = styled.div`
-    flex: 1;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    ${mobile({ height: '50px'})}
-
+const BranItemImageContainer = styled.div`
+    height: 68px;
+    width: 68px;
+    border-radius: 50%;
+    border: 1px solid #e2e2e2;
+    overflow: hidden;
+    transition: all 0.2s ease-in;
+    ${mobile({ height: '50px' })}
 `
-const BrandItem = styled.img`
+const BrandItemImage = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+`
+const BrandItemName = styled.span`
+    width: 74px;
+    height: 42px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    line-height: 16px;
+    transition: all 0.2s ease-in;
+`
+const BrandItemContainer = styled.div`
+    width: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    &:hover ${BrandItemName} {
+        color: #f27a1a;
+        transition: all 0.2s ease-in;
+    }
+    &:hover ${BranItemImageContainer} {
+        border: 1px solid #f27a1a;
+        transition: all 0.2s ease-in;
+    }
 `
 
 const Brands = () => {
     return (
         <Container>
             {brandItems.map((item) => (
-                <BranItemContainer key={item.id}>
-                    <BrandItem src={item.img} />
-                </BranItemContainer>
+                <BrandItemContainer key={item.id}>
+                    <BranItemImageContainer>
+                        <BrandItemImage src={item.img} />
+                    </BranItemImageContainer>
+                    <BrandItemName>{item.name}</BrandItemName>
+                </BrandItemContainer>
             ))}
         </Container>
     )

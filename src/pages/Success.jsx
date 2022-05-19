@@ -95,7 +95,7 @@ const Success = () => {
                     <OrdersBtn>
                         <Link
                             style={{ textDecoration: 'none', color: 'inherit' }}
-                            to="/orders"
+                            to="/profile/orders"
                         >
                             Go to Orders page
                         </Link>

@@ -99,13 +99,13 @@ const Orders = () => {
     let user = useSelector((state) => state.user.user)
     console.log(orders.length ? 'true' : 'false')
     useEffect(() => {
-        const getAllOrders = async () => {
+        const getUserOrders = async () => {
             const res = await axios.get(
                 'http://localhost:5000/api/orders/find/' + user._id
             )
             setOrders(res.data)
         }
-        getAllOrders()
+        getUserOrders()
     }, [])
 
     return (

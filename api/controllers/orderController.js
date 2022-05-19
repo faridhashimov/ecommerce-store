@@ -14,7 +14,7 @@ const createOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
     try {
         const updatedOrder = await Order.findByIdAndUpdate(
-            req.body.id,
+            req.params.id,
             {
                 $set: req.body,
             },
@@ -39,7 +39,7 @@ const deleteOrder = async (req, res) => {
 // GET ORDER
 const getOrder = async (req, res) => {
     try {
-        const order = await Order.findById(req.body.id)
+        const order = await Order.findById(req.params.id)
         res.status(200).json(order)
     } catch (err) {
         res.status(401).json(err)

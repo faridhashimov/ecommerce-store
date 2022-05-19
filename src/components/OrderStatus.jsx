@@ -4,6 +4,7 @@ import {
     Check,
     LocalShippingOutlined,
 } from '@mui/icons-material'
+import { format, parseISO } from 'date-fns'
 import styled from 'styled-components'
 import { css } from 'styled-components'
 import { mobile } from '../responsive'
@@ -26,7 +27,7 @@ const OrderStatusStatus = styled.span`
             `
         } else if (props.status === 'Delivered') {
             return css`
-                color: #59C15C;
+                color: #59c15c;
             `
         } else {
             return css`
@@ -37,17 +38,17 @@ const OrderStatusStatus = styled.span`
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-    ${mobile({justifyContent: 'center'})}
+    ${mobile({ justifyContent: 'center' })}
 `
-
 const OrderStatusInfo = styled.p`
     font-size: 12px;
     font-weight: 600;
     color: #333;
 `
 
-const OrderStatus = ({ status, orderDate, products }) => {
+const OrderStatus = ({ status, createdAt, updatedAt, products }) => {
     // const status = 'Cancelled'
+    console.log(createdAt)
     return (
         <OrderStatusContainer>
             {status === 'Pending' ? (
@@ -67,7 +68,9 @@ const OrderStatus = ({ status, orderDate, products }) => {
                         {status}
                     </OrderStatusStatus>
                     <OrderStatusInfo>
-                    {products.length} product(s) was handed over to the local carrier on February 5th.
+                        {products.length} product(s) was handed over to the
+                        local carrier on{' '}
+                        {format(parseISO(updatedAt), 'd MMMM y')}.
                     </OrderStatusInfo>{' '}
                 </>
             ) : status === 'Delivered' ? (
@@ -77,7 +80,8 @@ const OrderStatus = ({ status, orderDate, products }) => {
                         {status}
                     </OrderStatusStatus>
                     <OrderStatusInfo>
-                    {products.length} product(s) was delivered on February 5th.
+                        {products.length} product(s) was delivered on{' '}
+                        {format(parseISO(updatedAt), 'd MMMM y')}.
                     </OrderStatusInfo>{' '}
                 </>
             ) : (
@@ -87,7 +91,8 @@ const OrderStatus = ({ status, orderDate, products }) => {
                         {status}
                     </OrderStatusStatus>
                     <OrderStatusInfo>
-                        1 product was delivered on February 5th.
+                        This order was cancelled on{' '}
+                        {format(parseISO(updatedAt), 'd MMMM y')}.
                     </OrderStatusInfo>{' '}
                 </>
             )}

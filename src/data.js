@@ -1,32 +1,60 @@
+
 export const brandItems = [
     {
         id: 1,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/1.png',
+        img: 'https://www2.hm.com/hm-logo.png',
+        name: 'H&M',
     },
     {
         id: 2,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/2.png',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Pull%26Bear_logo.svg/1200px-Pull%26Bear_logo.svg.png',
+        name: 'Pull&Bear',
     },
     {
         id: 3,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/3.png',
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15471619354871_Bershka.png',
+        name: 'Bershka',
     },
     {
         id: 4,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/4.png',
+        img: 'https://www.forumcamlik.com/media/image/11R8RW2GA33U82.png',
+        name: 'Mavi',
     },
     {
         id: 5,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/5.png',
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15511619355115_Koton.png',
+        name: 'Koton',
     },
     {
         id: 6,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/6.png',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Logo_of_Mango_%28new%29.svg/2560px-Logo_of_Mango_%28new%29.svg.png',
+        name: 'Mango',
     },
     {
-        id: 7,
-        img: 'https://d-themes.com/react/molla/demo-8/images/brands/7.png',
+        id: 8,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15561619355397_USPoloAssn.png',
+        name: 'U.S Polo Assn.',
     },
+    {
+        id: 9,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15521619355121_Lacoste.png',
+        name: 'Lacoste',
+    },
+    {
+        id: 10,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/automation/2022/2/28/Pierrecardin_202202282024.jpg',
+        name: 'Pierre Cardin',
+    },
+    // {
+    //     id: 11,
+    //     img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15531619355204_NewBalance.png',
+    //     name: 'New Balance',
+    // },
+    // {
+    //     id: 11,
+    //     img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15511619355085_JackJones.png',
+    //     name: 'Jack&Jones',
+    // },
 ]
 
 //===================================================================================================
@@ -56,146 +84,6 @@ export const catItems = [
 ]
 
 //===================================================================================================
-
-export const products = [
-    {
-        id: 1,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_1_1_300x408_1f662c0197.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_1_2_300x408_9e213baa0a.jpg',
-        ],
-        status: ['Sale'],
-        categories: ['Women', 'Clothing'],
-        title: 'Printed Sweatshirt',
-        price: '7.99',
-    },
-    {
-        id: 2,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x408_edddfecb50.jpg',
-        ],
-        status: ['New', 'Sale'],
-        categories: ['Women', 'Clothing'],
-        title: 'Black Jeans',
-        price: '9.99',
-    },
-    {
-        id: 3,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_7_2_300x408_22bf0655ad.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_7_3_300x408_2e98eaeb9f.jpg',
-        ],
-        status: ['Top'],
-        categories: ['Women', 'Clothing'],
-        title: 'Denim Jacket',
-        price: '19.99',
-    },
-    {
-        id: 4,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x408_f2de20153a.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_12_2_300x408_040de8318b.jpg',
-        ],
-        status: ['New', 'Top'],
-        categories: ['Women', 'Clothing'],
-        title: 'Fashion Sandals',
-        price: '24.99',
-    },
-]
-
-//===================================================================================================
-
-export const recentArrivals = [
-    {
-        id: 1,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/1_90856a8f53.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/2_4d45fbbc96.jpg',
-        ],
-        status: ['New'],
-        categories: ['Women', 'Shoes', 'Men'],
-        title: 'Loafers',
-        price: '7.99',
-    },
-    {
-        id: 2,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_1_1_300x408_1f662c0197.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_1_2_300x408_9e213baa0a.jpg',
-        ],
-        status: ['Sale'],
-        categories: ['Women', 'Clothing'],
-        title: 'Printed Sweatshirt',
-        price: '7.99',
-    },
-    {
-        id: 3,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x408_8a022bf381.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x408_edddfecb50.jpg',
-        ],
-        status: ['New', 'Sale'],
-        categories: ['Women', 'Men', 'Clothing'],
-        title: 'Black Jeans',
-        price: '9.99',
-    },
-    {
-        id: 4,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_4_1_300x408_5d955e425b.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_4_2_300x408_5c1ff41318.jpg',
-        ],
-        status: [],
-        categories: ['Women', 'Clothing'],
-        title: 'Biker Jacket',
-        price: '23.99',
-    },
-    {
-        id: 5,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_7_2_300x408_22bf0655ad.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_7_3_300x408_2e98eaeb9f.jpg',
-        ],
-        status: ['Top'],
-        categories: ['Women', 'Clothing'],
-        title: 'Denim Jacket',
-        price: '19.99',
-    },
-    {
-        id: 6,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_8_1_300x408_d451a2ae2b.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_8_2_300x408_fd68021adc.jpg',
-        ],
-        status: [],
-        categories: ['Women', 'Clothing'],
-        title: 'Linen-blend paper bag trousers',
-        price: '15.99',
-    },
-    {
-        id: 7,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_10_1_300x408_ee78dab46b.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_10_2_300x408_6cffdb4228.jpg',
-        ],
-        status: ['Top', 'Out of Stock'],
-        categories: ['Women', 'Shoes'],
-        title: 'Fashion Sandals',
-        price: '17.99',
-    },
-    {
-        id: 8,
-        img: [
-            'https://d-themes.com/react_asset_api/molla/uploads/product_11_1_300x408_3315022870.jpg',
-            'https://d-themes.com/react_asset_api/molla/uploads/product_11_2_300x408_6ffa44abed.jpg',
-        ],
-        status: ['Top'],
-        categories: ['Women', 'Clothing'],
-        title: 'Short wrap dress',
-        price: '24.99',
-    },
-]
 
 export const shippingInfo = [
     {

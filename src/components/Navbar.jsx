@@ -260,7 +260,7 @@ const Navbar = () => {
                     </SearchContainer>
                     {user && (
                         <ProfileContainer>
-                            <Link to="/profile">
+                            <Link to="/profile/orders">
                                 <ProfileImage
                                     src={user.img ? user.img : noAvatar}
                                 />

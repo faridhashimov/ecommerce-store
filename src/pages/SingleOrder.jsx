@@ -1,11 +1,16 @@
 import { Check, ReceiptOutlined, Store } from '@mui/icons-material'
 import axios from 'axios'
+import { format, parseISO } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { OrderStatus, SingleOrderItem, Spinner } from '../components'
 import { mobile } from '../responsive'
 
-const MyOrders = styled.div``
+const MyOrders = styled.div`
+    display: flex;
+    flex-direction: column;
+`
 const OrderHeader = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -130,13 +135,13 @@ const OrderInfoBody = styled.div`
 const OrderStatusContainer = styled.div`
     margin-bottom: 20px;
 `
-const OrderStatus = styled.div`
-    color: #59c15c;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-`
+// const OrderStatus = styled.div`
+//     color: #59c15c;
+//     font-size: 14px;
+//     font-weight: 600;
+//     display: flex;
+//     align-items: center;
+// `
 const OrderStatusDesc = styled.p`
     font-size: 14px;
     font-weight: 600;
@@ -157,213 +162,107 @@ const OrderIconContainer = styled.div`
     justify-content: center;
     align-items: center;
 `
-const ProductContainer = styled.div`
-    border: 1px solid #e2e2e2;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-`
-const ProductImageContainer = styled.div`
-    height: 110px;
-    width: 70px;
-    border: 1px solid #e2e2e2;
-    padding: 2px 4px;
-    margin-right: 15px;
-    border-radius: 5px;
-`
-const ProductImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-`
-const ProductInfoContainer = styled.div``
-const BrandNTitle = styled.div`
-    font-size: 14px;
-    font-weight: 400;
-    color: #333;
-    span {
-        font-weight: 600;
-    }
-`
-const ProductInfo = styled.div`
-    display: flex;
-    margin: 5px 0px;
-`
-const Size = styled.div`
-    font-size: 12px;
-    font-weight: 400;
-    color: #999;
-    margin-right: 10px;
-`
-const Qt = styled(Size)``
-const ColorContainer = styled(Size)`
-    display: flex;
-    align-items: center;
-`
-const Color = styled.div`
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: #${(props) => props.c};
-    margin-left: 5px;
-`
-const Price = styled.div`
-    color: #eea287;
-    font-weight: 500;
-    font-size: 14px;
-    margin-bottom: 15px;
-`
-const AddReviewBtn = styled.button`
-    background-color: transparent;
-    border: 1px solid #eea287;
-    color: #eea287;
-    padding: 4px 25px;
-    transition: all 0.2s ease-in;
-    cursor: pointer;
-    border-radius: 5px;
-    &:hover {
-        background-color: #eea287;
-        color: #fff;
-        transition: all 0.2s ease-in;
-    }
-`
+
 const SingleOrder = () => {
-    const [order, setOrder] = useState([])
+    const [order, setOrder] = useState(null)
     const { id } = useParams()
+    console.log(id)
 
     useEffect(() => {
         const getOrder = async () => {
-            const res = await axios.get(
-                'http://localhost:5000/api/orders/' + id
-            )
-            setOrder(res.data)
+            try {
+                const res = await axios.get(
+                    'http://localhost:5000/api/orders/' + id
+                )
+                setOrder(res.data)
+            } catch (error) {
+                console.log(error)
+            }
         }
         getOrder()
-        console.log(order);
     }, [])
+
+    console.log(order)
 
     return (
         <>
             <MyOrders>
-                <OrderHeader>
-                    <h1>Order Details</h1>
-                    <OrderHeaderInfo>
-                        <OrderInfoItem>
-                            <span>Order date</span>
-                            27 March 2020 - 16:11
-                        </OrderInfoItem>
-                        <OrderInfoItem>
-                            <span>Order No</span>
-                            324160811
-                        </OrderInfoItem>
-                        <OrderInfoItem>
-                            <span>Order info</span>3 Deliveries, 3 Products
-                        </OrderInfoItem>
-                    </OrderHeaderInfo>
-                </OrderHeader>
-                <OrderInfo>
-                    <OrderInfoHeader>
-                        <HeaderLeft>
-                            <DeliveryContainer>
-                                <OrderIconContainer>
-                                    <Store
-                                        sx={{
-                                            fontSize: '25px',
-                                            color: '#eea287',
-                                        }}
-                                    />
-                                </OrderIconContainer>
-                                <OrderNo>
-                                    Delivery No <span>609481035</span>
-                                </OrderNo>
-                            </DeliveryContainer>
-                            <CargoCompanyContainer>
-                                Cargo Company
-                                <span>United Parcel Service Inc.</span>
-                            </CargoCompanyContainer>
-                        </HeaderLeft>
-                        <HeaderRight>
-                            <SendInvoice>
-                                <ReceiptOutlined
-                                    sx={{
-                                        fontSize: '18px',
-                                        color: '#eea287',
-                                        marginRight: '5px',
-                                    }}
-                                />
-                                Send Invoice
-                            </SendInvoice>
-                        </HeaderRight>
-                    </OrderInfoHeader>
-                    <OrderInfoBody>
-                        <OrderStatusContainer>
-                            <OrderStatus>
-                                <Check sx={{ marginRight: '7px' }} />
-                                Delivered
-                            </OrderStatus>
-                            <OrderStatusDesc>
-                                {' '}
-                                The following 3 product(s) was delivered on
-                                February 5th.
-                            </OrderStatusDesc>
-                        </OrderStatusContainer>
-                        <OrdersContainer>
-                            <ProductContainer>
-                                <ProductImageContainer>
-                                    <ProductImage
-                                        src="https://cdn.dsmcdn.com/assets/product/media/images/20191001/6/273657/57017727/1/1_org_zoom.jpg"
-                                        alt=""
-                                    />
-                                </ProductImageContainer>
-                                <ProductInfoContainer>
-                                    <BrandNTitle>
-                                        <span>Mango</span> Cotton Shirt
-                                    </BrandNTitle>
-                                    <ProductInfo>
-                                        <Size>
-                                            Size: <span>XS</span>
-                                        </Size>
-                                        <ColorContainer>
-                                            Color: <Color c="245778"></Color>
-                                        </ColorContainer>
-                                        <Qt>
-                                            Qt: <span>1</span>
-                                        </Qt>
-                                    </ProductInfo>
-                                    <Price>$ 59.99</Price>
-                                    <AddReviewBtn>Add Review</AddReviewBtn>
-                                </ProductInfoContainer>
-                            </ProductContainer>
-                            <ProductContainer>
-                                <ProductImageContainer>
-                                    <ProductImage
-                                        src="https://cdn.dsmcdn.com/assets/product/media/images/20191001/6/273657/57017727/1/1_org_zoom.jpg"
-                                        alt=""
-                                    />
-                                </ProductImageContainer>
-                                <ProductInfoContainer>
-                                    <BrandNTitle>
-                                        <span>Mango</span> Cotton Shirt
-                                    </BrandNTitle>
-                                    <ProductInfo>
-                                        <Size>
-                                            Size: <span>XS</span>
-                                        </Size>
-                                        <ColorContainer>
-                                            Color: <Color c="245778"></Color>
-                                        </ColorContainer>
-                                        <Qt>
-                                            Qt: <span>1</span>
-                                        </Qt>
-                                    </ProductInfo>
-                                    <Price>$ 59.99</Price>
-                                    <AddReviewBtn>Add Review</AddReviewBtn>
-                                </ProductInfoContainer>
-                            </ProductContainer>
-                        </OrdersContainer>
-                    </OrderInfoBody>
-                </OrderInfo>
+                {!order ? (
+                    <Spinner />
+                ) : (
+                    <>
+                        <OrderHeader>
+                            <h1>Order Details</h1>
+                            <OrderHeaderInfo>
+                                <OrderInfoItem>
+                                    <span>Order date</span>
+                                    {order &&
+                                        format(
+                                            parseISO(order.updatedAt),
+                                            "d MMMM y '-' k:m"
+                                        )}
+                                    {/* {order.updatedAt} */}
+                                </OrderInfoItem>
+                                <OrderInfoItem>
+                                    <span>Order No</span>
+                                    {order._id}
+                                </OrderInfoItem>
+                                <OrderInfoItem>
+                                    <span>Order info</span>3 Deliveries, 3
+                                    Products
+                                </OrderInfoItem>
+                            </OrderHeaderInfo>
+                        </OrderHeader>
+                        <OrderInfo>
+                            <OrderInfoHeader>
+                                <HeaderLeft>
+                                    <DeliveryContainer>
+                                        <OrderIconContainer>
+                                            <Store
+                                                sx={{
+                                                    fontSize: '25px',
+                                                    color: '#eea287',
+                                                }}
+                                            />
+                                        </OrderIconContainer>
+                                        <OrderNo>
+                                            Delivery No <span>609481035</span>
+                                        </OrderNo>
+                                    </DeliveryContainer>
+                                    <CargoCompanyContainer>
+                                        Cargo Company
+                                        <span>United Parcel Service Inc.</span>
+                                    </CargoCompanyContainer>
+                                </HeaderLeft>
+                                <HeaderRight>
+                                    <SendInvoice>
+                                        <ReceiptOutlined
+                                            sx={{
+                                                fontSize: '18px',
+                                                color: '#eea287',
+                                                marginRight: '5px',
+                                            }}
+                                        />
+                                        Send Invoice
+                                    </SendInvoice>
+                                </HeaderRight>
+                            </OrderInfoHeader>
+                            <OrderInfoBody>
+                                <OrderStatusContainer>
+                                    <OrderStatus {...order} />
+                                </OrderStatusContainer>
+                                <OrdersContainer>
+                                    {order.products.map((product) => (
+                                        <SingleOrderItem
+                                            key={product._id}
+                                            {...product}
+                                        />
+                                    ))}
+                                </OrdersContainer>
+                            </OrderInfoBody>
+                        </OrderInfo>
+                    </>
+                )}
             </MyOrders>
         </>
     )

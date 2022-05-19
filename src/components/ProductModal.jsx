@@ -8,7 +8,7 @@ import {
     Twitter,
 } from '@mui/icons-material'
 import { Icon } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { css } from 'styled-components'
@@ -254,13 +254,13 @@ const AddToCartBtn = styled.button`
     transition: all 0.2s ease-in;
     &:disabled {
         cursor: not-allowed;
-    };
+    }
 
     &:disabled:hover {
         color: #777;
         border: 1px solid #777;
         background-color: transparent;
-    };
+    }
     &:hover {
         background-color: #eea287;
         color: #fff;
@@ -319,15 +319,25 @@ const StyledIcon = styled(Icon)`
     }
 `
 
-const ProductModal = () => {
+const ProductModal = ({ product, setOpen }) => {
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
     const [chooseColor, setChooseColor] = useState('')
     const [chooseSize, setChooseSize] = useState('')
     const [quantity, setQuantity] = useState(1)
     const productInWishlist = useSelector((state) => state.wishlist.product)
     const dispatch = useDispatch()
-    const { _id, title, img, color, status, desc, price, size, category } =
-        useSelector((state) => state.modal.product)
+    const {
+        _id,
+        brand,
+        title,
+        img,
+        color,
+        status,
+        desc,
+        price,
+        size,
+        category,
+    } = product
     const productItem = useSelector((state) => state.modal.product)
     // console.log(chooseColor, chooseSize)
 
@@ -344,9 +354,6 @@ const ProductModal = () => {
         } else {
             setQuantity(quantity + 1)
         }
-    }
-    const handleClose = () => {
-        dispatch(closeModal())
     }
 
     const handleAdd = () => {
@@ -367,10 +374,11 @@ const ProductModal = () => {
         dispatch(
             addToCart({
                 _id,
-                productColor: chooseColor,
-                productSize: chooseSize,
+                brand,
                 title,
                 img,
+                productSize: chooseSize,
+                productColor: chooseColor,
                 price,
                 quantity,
                 total: price * quantity,
@@ -383,14 +391,14 @@ const ProductModal = () => {
         if (modalBg !== 'modal-bg') {
             return
         } else {
-            dispatch(closeModal())
+            setOpen(false)
         }
     }
 
     return (
         <ModalBackground data-bg="modal-bg" onClick={handleModalClose}>
             <ModalContainer>
-                <ModalClose onClick={handleClose}>
+                <ModalClose onClick={() => setOpen(false)}>
                     <Close />
                 </ModalClose>
                 <Modal>

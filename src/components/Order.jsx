@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns'
 import { useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { OrderStatus } from '../components'
 import { mobile } from '../responsive'
@@ -83,8 +83,7 @@ const OrderImage = styled.img`
 const Order = (order) => {
     const { _id, amount, products, createdAt } = order
     let user = useSelector((state) => state.user.user)
-    console.log(products)
-    let navigate = useNavigate()
+    console.log(createdAt)
 
     let orderDate = format(parseISO(createdAt), "d MMMM y '-' k:m")
 
@@ -104,7 +103,7 @@ const Order = (order) => {
                     <OrderInfoDesc>$ {amount}</OrderInfoDesc>
                 </OrderInfoTitleContainer>
                 <OrderDetailsBtn>
-                    <Link to={'/'+_id}>Order Details</Link>
+                    <Link style={{textDecoration: 'none', color: 'inherit'}} to={_id}>Order Details</Link>
                 </OrderDetailsBtn>
             </OrderInfoHeader>
             <OrderInfoBody>

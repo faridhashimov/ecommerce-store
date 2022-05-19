@@ -363,7 +363,7 @@ const Productpage = () => {
     const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const { id } = useParams()
-    const { title, img, color, status, desc, price, size, category } = product
+    const {brand, title, img, color, status, desc, price, size, category } = product
     // console.log(id)
     // console.log(product)
 
@@ -402,10 +402,11 @@ const Productpage = () => {
         dispatch(
             addToCart({
                 _id: id,
-                productColor: chooseColor,
-                productSize: chooseSize,
+                brand,
                 title,
                 img,
+                productColor: chooseColor,
+                productSize: chooseSize,
                 price,
                 quantity,
                 total: price * quantity,
