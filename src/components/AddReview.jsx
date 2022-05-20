@@ -108,11 +108,6 @@ const AddReview = ({id}) => {
 
     return (
         <AddReviewContainer>
-            <h1>Add a Review</h1>
-            <p>
-                Your email address will not be published. Required fields are
-                marked *
-            </p>
             <RatingContainer>
                 <span>Your rating *</span>
                 <div>
