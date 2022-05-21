@@ -68,8 +68,8 @@ const CategoryButton = styled.h2`
     align-items: center;
     font-size: 14px;
     font-weight: 400;
-    color: #eea287;
-    border: 2px solid #eea287;
+    color: #F27A1A;
+    border: 2px solid #F27A1A;
     min-width: 120px;
     text-transform: uppercase;
     padding: 6px 10px;
@@ -78,7 +78,7 @@ const CategoryButton = styled.h2`
     transition: all 0.2s ease;
     background-color: transparent;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         color: #fff;
     }
 `;

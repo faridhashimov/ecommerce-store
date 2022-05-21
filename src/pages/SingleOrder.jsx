@@ -120,8 +120,8 @@ const SendInvoice = styled.button`
     cursor: pointer;
     transition: all 0.2s ease-in;
     &:hover {
-        color: #eea287;
-        border: 1px solid #eea287;
+        color: #F27A1A;
+        border: 1px solid #F27A1A;
         transition: all 0.2s ease-in;
     }
 `
@@ -166,7 +166,6 @@ const OrderIconContainer = styled.div`
 const SingleOrder = () => {
     const [order, setOrder] = useState(null)
     const { id } = useParams()
-    console.log(id)
 
     useEffect(() => {
         const getOrder = async () => {
@@ -182,7 +181,7 @@ const SingleOrder = () => {
         getOrder()
     }, [])
 
-    console.log(order)
+
 
     return (
         <>
@@ -221,7 +220,7 @@ const SingleOrder = () => {
                                             <Store
                                                 sx={{
                                                     fontSize: '25px',
-                                                    color: '#eea287',
+                                                    color: '#F27A1A',
                                                 }}
                                             />
                                         </OrderIconContainer>
@@ -239,7 +238,7 @@ const SingleOrder = () => {
                                         <ReceiptOutlined
                                             sx={{
                                                 fontSize: '18px',
-                                                color: '#eea287',
+                                                color: '#F27A1A',
                                                 marginRight: '5px',
                                             }}
                                         />

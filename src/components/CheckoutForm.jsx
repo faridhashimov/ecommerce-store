@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 const CheckOutBtn = styled.button`
     text-transform: uppercase;
-    border: 1px solid #eea287;
+    border: 1px solid #F27A1A;
     outline: none;
-    color: #eea287;
+    color: #F27A1A;
     cursor: pointer;
     width: 100%;
     padding: 7px 30px;
@@ -14,7 +14,7 @@ const CheckOutBtn = styled.button`
     transition: all 0.2s ease-in;
     margin-top: 10px;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         transition: all 0.2s ease-in;
         color: #fff;
     }
@@ -46,7 +46,7 @@ const CheckoutSpinner = styled.div`
     &:before {
         width: 10.4px;
         height: 20.4px;
-        background: #eea287;
+        background: #F27A1A;
         border-radius: 20.4px 0 0 20.4px;
         top: -0.2px;
         left: -0.2px;
@@ -58,7 +58,7 @@ const CheckoutSpinner = styled.div`
     &:after {
         width: 10.4px;
         height: 10.2px;
-        background: #eea287;
+        background: #F27A1A;
         border-radius: 0 10.2px 10.2px 0;
         top: -0.1px;
         left: 10.2px;

@@ -39,7 +39,7 @@ const ChevronContainer = styled.div`
     z-index: 2;
     opacity: 0.5;
     &:hover {
-        background-color: #eea287;
+        background-color: #F27A1A;
         color: #f9f9f9;
     }
 `
@@ -140,7 +140,7 @@ const Sale = styled.span`
     font-weight: 700;
     margin: 20px 0px;
     line-height: 7rem;
-    color: #eea287;
+    color: #F27A1A;
     ${mobile({
         fontSize: '40px',
         margin: '0',

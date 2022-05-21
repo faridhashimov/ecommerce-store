@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Portal from '../Portal'
-import {AddReviewModal} from '../components'
-
+import { AddReviewModal } from '../components'
 
 const ProductImageContainer = styled(Link)`
     height: 110px;
@@ -66,21 +65,21 @@ const Color = styled.div`
     margin-left: 5px;
 `
 const Price = styled.div`
-    color: #eea287;
+    color: #F27A1A;
     font-weight: 500;
     font-size: 14px;
     margin-bottom: 15px;
 `
 const AddReviewBtn = styled.button`
     background-color: transparent;
-    border: 1px solid #eea287;
-    color: #eea287;
+    border: 1px solid #F27A1A;
+    color: #F27A1A;
     padding: 4px 25px;
     transition: all 0.2s ease-in;
     cursor: pointer;
     border-radius: 5px;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         color: #fff;
         transition: all 0.2s ease-in;
     }
@@ -105,7 +104,7 @@ const SingleOrderItem = ({
 }) => {
     const [open, setOpen] = useState(false)
 
-
+    console.log(productSize ? 'true' : 'false')
     return (
         <>
             <ProductContainer>
@@ -117,9 +116,11 @@ const SingleOrderItem = ({
                         <span>{brand}</span> {title}
                     </BrandNTitle>
                     <ProductInfo>
-                        <Size>
-                            Size: <span>{productSize}</span>
-                        </Size>
+                        {productSize && (
+                            <Size>
+                                Size: <span>{productSize}</span>
+                            </Size>
+                        )}
                         <ColorContainer>
                             Color: <Color c={productColor}></Color>
                         </ColorContainer>
@@ -135,7 +136,10 @@ const SingleOrderItem = ({
             </ProductContainer>
             {open && (
                 <Portal>
-                    <AddReviewModal setOpen={setOpen} />
+                    <AddReviewModal
+                        item={{ brand, title, img }}
+                        setOpen={setOpen}
+                    />
                 </Portal>
             )}
         </>

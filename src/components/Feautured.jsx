@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import Products from './Products'
 import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
+// import { useAxios } from '../hooks/useAxios'
 import { useAxios } from '../hooks/useAxios'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
@@ -53,7 +54,7 @@ const FilterButton = styled.div`
         transition: all 0.3s ease-in-out;
     }
 
-    ${mobile({fontSize: '15px', margin: '0px 10px', padding: '4px'})}
+    ${mobile({ fontSize: '15px', margin: '0px 10px', padding: '4px' })}
 `
 
 const ProductsContainer = styled.div`
@@ -65,13 +66,18 @@ const ProductsContainer = styled.div`
 `
 
 const Feautured = () => {
-    const { data, error, loading } = useAxios(
-        'http://localhost:5000/api/products'
-    )
-    const [products, setProducts] = useState([])
-    const [filteredProducts, setFilteredProducts] = useState([])
+    // const { data, error, loading } = useAxios(
+    //     'http://localhost:5000/api/products'
+    // )
+    const [products, setProducts] = useState(null)
+    const [filteredProducts, setFilteredProducts] = useState(null)
     const [active, setActive] = useState('All')
 
+    const { clearError, error, data, loading } = useAxios(
+        'http://localhost:5000/api/products'
+    )
+    console.log(loading)
+    console.log(error)
     const handleClick = (e) => {
         const productStatus = e.target.getAttribute('data-id')
         setActive(productStatus)
@@ -94,17 +100,14 @@ const Feautured = () => {
 
     let spinner = loading ? <Spinner /> : null
     let content =
-        !loading && data.length !== 0 ? (
+        !loading && filteredProducts ? (
             <Products products={filteredProducts.slice(0, 4)} />
         ) : null
-    let errorMsg =
-        (!data || error) && !loading ? (
-            <>
-                <p style={{ color: 'red', textAlign: 'center' }}>
-                    Something went wrong: {error}...
-                </p>
-            </>
-        ) : null
+    let errorMsg = error ? (
+        <p style={{ color: 'red', textAlign: 'center' }}>
+            Something went wrong: {error}...
+        </p>
+    ) : null
 
     return (
         <Container>

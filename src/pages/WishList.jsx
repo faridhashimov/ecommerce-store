@@ -33,7 +33,7 @@ const HeaderTitle = styled.h2`
     span {
         font-weight: 400;
         font-size: 20px;
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const Wrapper = styled.div`
@@ -100,13 +100,13 @@ const Title = styled.h3`
 const Price = styled.span`
     font-size: 16px;
     font-weight: 400;
-    color: #eea287;
+    color: #F27A1A;
     ${mobile({fontSize: '12px'})}
 `
 const StockStatus = styled.span`
     font-size: 16px;
     font-weight: 400;
-    color: #eea287;
+    color: #F27A1A;
     ${mobile({fontSize: '12px'})}
 `
 const Select = styled.button`
@@ -117,13 +117,13 @@ const Select = styled.button`
     width: 100%;
     padding: 5px 0px;
     background: transparent;
-    border: 1px solid #eea287;
-    color: #eea287;
+    border: 1px solid #F27A1A;
+    color: #F27A1A;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease-in;
     &:hover {
-        background-color: #eea287;
+        background-color: #F27A1A;
         color: #fff;
         transition: all 0.2s ease-in;
     }
@@ -155,8 +155,8 @@ const NoProductContainer = styled.div`
 `
 const GoShopBtn = styled(Link)`
     padding: 7px 45px;
-    background-color: #eea287;
-    border: 1px solid #c9866e;
+    background-color: #F27A1A;
+    border: 1px solid #f08936;
     cursor: pointer;
     color: #fff;
     font-size: 13px;
@@ -164,7 +164,7 @@ const GoShopBtn = styled(Link)`
     outline: none;
     text-decoration: none;
     &:hover {
-        background-color: #c9866e;
+        background-color: #f08936;
     }
 `
 

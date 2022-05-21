@@ -148,7 +148,7 @@ const ProductTitle = styled.h1`
 const ProductPrice = styled.h3`
     font-size: 22px;
     font-weight: 400;
-    color: #eea287;
+    color: #f27a1a;
     margin-bottom: 10px;
 `
 const ProductDescription = styled.p`
@@ -231,7 +231,7 @@ const AmountChangeBtn = styled.button`
     color: #777;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
     }
 `
 const Amount = styled.span``
@@ -249,8 +249,8 @@ const AddToCartBtn = styled.button`
     background: transparent;
     text-transform: uppercase;
     cursor: pointer;
-    color: #eea287;
-    border: 1px solid #eea287;
+    color: #f27a1a;
+    border: 1px solid #f27a1a;
     transition: all 0.2s ease-in;
     &:disabled {
         cursor: not-allowed;
@@ -262,7 +262,7 @@ const AddToCartBtn = styled.button`
         background-color: transparent;
     }
     &:hover {
-        background-color: #eea287;
+        background-color: #f27a1a;
         color: #fff;
         transition: all 0.2s ease-in;
     }
@@ -280,7 +280,7 @@ const WishlistBtn = styled.button`
     border: transparent;
     transition: all 0.3s ease-in;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
         transition: all 0.3s ease-in;
     }
 `
@@ -315,7 +315,7 @@ const StyledIcon = styled(Icon)`
     margin-right: 10px;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
     }
 `
 
@@ -338,8 +338,8 @@ const ProductModal = ({ product, setOpen }) => {
         size,
         category,
     } = product
+    const [image, setImage] = useState(img[0])
     const productItem = useSelector((state) => state.modal.product)
-    // console.log(chooseColor, chooseSize)
 
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -406,7 +406,11 @@ const ProductModal = ({ product, setOpen }) => {
                         <Images>
                             {' '}
                             {img.map((item, i) => (
-                                <Image key={i} src={item} />
+                                <Image
+                                    onClick={() => setImage(item)}
+                                    key={i}
+                                    src={item}
+                                />
                             ))}
                         </Images>
                         <MainImageContainer>
@@ -421,10 +425,10 @@ const ProductModal = ({ product, setOpen }) => {
                                 onMouseMove={handleMouseMove}
                                 style={{
                                     backgroundPosition: `${backgroundPosition}`,
-                                    backgroundImage: `url(${img[0]})`,
+                                    backgroundImage: `url(${image})`,
                                 }}
                             >
-                                <MainImage src={img[0]} />
+                                <MainImage src={image} />
                             </MainImageWrapper>
                         </MainImageContainer>
                     </ModalView>
@@ -447,17 +451,21 @@ const ProductModal = ({ product, setOpen }) => {
                                 ))}
                             </FilterColor>
                         </FilterContainer>
-                        <FilterContainer>
-                            <FilterTitle>Size:</FilterTitle>
-                            <FilterSize
-                                onChange={(e) => setChooseSize(e.target.value)}
-                            >
-                                <Size>Select a size</Size>
-                                {size.map((item) => (
-                                    <Size key={item}>{item}</Size>
-                                ))}
-                            </FilterSize>
-                        </FilterContainer>
+                        {size?.length > 0 && (
+                            <FilterContainer>
+                                <FilterTitle>Size:</FilterTitle>
+                                <FilterSize
+                                    onChange={(e) =>
+                                        setChooseSize(e.target.value)
+                                    }
+                                >
+                                    <Size>Select a size</Size>
+                                    {size.map((item) => (
+                                        <Size key={item}>{item}</Size>
+                                    ))}
+                                </FilterSize>
+                            </FilterContainer>
+                        )}
                         <FilterContainer>
                             <FilterTitle>Qty:</FilterTitle>
                             <AmountContainer>
@@ -477,7 +485,12 @@ const ProductModal = ({ product, setOpen }) => {
                         <CartButtonContainer>
                             <AddToCartBtn
                                 disabled={
-                                    !chooseColor || !chooseSize ? true : false
+                                    (!chooseColor || !chooseSize) &&
+                                    size?.length > 0
+                                        ? true
+                                        : !chooseColor && size?.length === 0
+                                        ? true
+                                        : false
                                 }
                                 onClick={onAddToCart}
                             >

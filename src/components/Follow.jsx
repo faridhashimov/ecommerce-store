@@ -90,7 +90,7 @@ const Likes = styled.div`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease-in-out;
     }
     ${mobile({  marginRight: '0px'})}
@@ -102,7 +102,7 @@ const Comments = styled.div`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease-in-out;
     }
 `

@@ -2,9 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { ArrowForward, Facebook, Google } from '@mui/icons-material'
+import {
+    ArrowForward,
+    Facebook,
+    Google,
+    Visibility,
+    VisibilityOff,
+} from '@mui/icons-material'
 import { loginCall } from '../redux/apiCalls'
 import { mobile } from '../responsive'
+import { SvgIcon } from '@mui/material'
 
 const LoginPageContainer = styled.form`
     width: 100%;
@@ -21,15 +28,22 @@ const Label = styled.label`
     font-weight: 300;
     font-size: 14px;
 `
+const PasswordContainer = styled.div`
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+`
 const Input = styled.input`
     padding: 7px 20px;
     color: #777;
     background-color: #f4f4f4;
     border: 1px solid #ebebeb;
-    transition: all 0.2s ease;
+    &:not(:last-child) {
+        width: 90%;
+    }
     &:focus {
-        outline: 1px solid #eea287;
-        transition: all 0.2s ease;
+        border: 1px solid #eea287;
+        outline: none;
     }
 `
 const LoginButtonContainer = styled.div`
@@ -47,14 +61,14 @@ const LoginButton = styled.button`
     align-items: center;
     padding: 7px 25px;
     text-transform: uppercase;
-    color: #eea287;
+    color: #F27A1A;
     cursor: pointer;
     background-color: transparent;
-    border: 1px solid #eea287;
+    border: 1px solid #F27A1A;
     transition: all 0.3s ease-in-out;
     margin-right: 20px;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
@@ -67,7 +81,7 @@ const ForgotPassword = styled.a`
     transition: all 0.2s ease;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease;
     }
 `
@@ -102,10 +116,32 @@ const ErorMsg = styled.p`
     color: red;
 `
 
+const StyledSvg = styled(SvgIcon)`
+    transition: all 0.2s ease-in;
+`
+const ShowPassWordIconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5.1px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    width: 10%;
+    &:hover {
+        border: 1px solid #F27A1A;
+        transition: all 0.2s ease-in;
+    }
+    &:hover ${StyledSvg} {
+        color: #F27A1A;
+        transition: all 0.2s ease-in;
+    }
+`
+
 const SignIn = () => {
     // const [inputs, setInputs] = useState(null)
     const [errMsg, setErrMsg] = useState('')
     const [focus, setFocus] = useState(false)
+    const [showPwd, setShowPwd] = useState(false)
     const emailRef = useRef()
     const passwordRef = useRef()
     const dispatch = useDispatch()
@@ -121,10 +157,6 @@ const SignIn = () => {
     useEffect(() => {
         focus && setErrMsg('')
     }, [focus])
-
-    // const handleChange = (e) => {
-    //     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // }
 
     useEffect(() => {
         setFocus(false)
@@ -143,8 +175,12 @@ const SignIn = () => {
             },
             dispatch
         )
-       user && navigate(-1)
+        user && navigate(-1)
     }
+
+    // const handleChange = () => {
+    //     showPwd
+    // }
 
     return (
         <LoginPageContainer onSubmit={handleSubmit}>
@@ -162,16 +198,31 @@ const SignIn = () => {
             </InputContainer>
             <InputContainer>
                 <Label htmlFor="password">Password *</Label>
-                <Input
-                    onFocus={() => setFocus(true)}
-                    ref={passwordRef}
-                    name="password"
-                    id="password"
-                    // onChange={handleChange}
-                    required
-                    type="password"
-                    minLength={6}
-                />
+                <PasswordContainer>
+                    <Input
+                        onFocus={() => setFocus(true)}
+                        ref={passwordRef}
+                        name="password"
+                        id="password"
+                        // onChange={handleChange}
+                        required
+                        type={showPwd ? 'text' : 'password'}
+                        minLength={6}
+                    />
+                    <ShowPassWordIconContainer
+                        onClick={() => setShowPwd(!showPwd)}
+                    >
+                        {' '}
+                        {showPwd ? (
+                            <StyledSvg
+                                sx={{ color: '#F27A1A' }}
+                                component={Visibility}
+                            />
+                        ) : (
+                            <StyledSvg component={VisibilityOff} />
+                        )}
+                    </ShowPassWordIconContainer>
+                </PasswordContainer>
             </InputContainer>
             <ErorMsg>{errMsg}</ErorMsg>
             <LoginButtonContainer>

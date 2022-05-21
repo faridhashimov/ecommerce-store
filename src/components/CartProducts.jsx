@@ -37,7 +37,7 @@ const StockStatusContainer = styled.div`
 `
 const TotalContainer = styled.div`
     flex: 4;
-    color: #eea287;
+    color: #F27A1A;
     ${mobile({ marginBottom: '10px' })}
 `
 const DeleteContainer = styled.div`
@@ -63,7 +63,7 @@ const Price = styled.span`
 const StockStatus = styled.span`
     font-size: 16px;
     font-weight: 400;
-    color: #eea287;
+    color: #F27A1A;
 `
 const Delete = styled.div`
     display: flex;
@@ -107,7 +107,7 @@ const AmountChangeBtn = styled.button`
     color: #777;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const Amount = styled.span``

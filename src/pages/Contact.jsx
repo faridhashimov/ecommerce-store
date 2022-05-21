@@ -118,7 +118,7 @@ const IconContainer = styled.div`
     align-items: center;
     margin-right: 10px;
     margin-top: 5px;
-    color: #eea287;
+    color: #F27A1A;
     ${mobile({  marginRight: '0px' })}
 `
 const OfficeHours = styled.div`
@@ -148,7 +148,7 @@ const Input = styled.input`
     border: 1px solid #ebebeb;
     &:focus {
         outline: none;
-        border: 1px solid #eea287;
+        border: 1px solid #F27A1A;
     }
 `
 const Message = styled.textarea`
@@ -160,7 +160,7 @@ const Message = styled.textarea`
     background-color: #fafafa;
     &:focus {
         outline: none;
-        border: 1px solid #eea287;
+        border: 1px solid #F27A1A;
     }
 `
 const Submit = styled.button`
@@ -169,8 +169,8 @@ const Submit = styled.button`
     align-items: center;
     font-size: 14px;
     font-weight: 400;
-    color: #eea287;
-    border: 1px solid #eea287;
+    color: #F27A1A;
+    border: 1px solid #F27A1A;
     min-width: 120px;
     text-transform: uppercase;
     padding: 6px 10px;
@@ -179,7 +179,7 @@ const Submit = styled.button`
     transition: all 0.2s ease;
     background-color: transparent;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         color: #fff;
     }
 `
@@ -227,13 +227,13 @@ const Top = styled.div`
 const ViewButton = styled.button`
     background: transparent;
     border: none;
-    color: #eea287;
+    color: #F27A1A;
     padding-bottom: 5px;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1.5px solid #fff;
     cursor: pointer;
     transition: all 0.2s ease;
     &:hover {
-        border-bottom: 1px solid #eea287;
+        border-bottom: 1.5px solid #F27A1A;
         transition: all 0.2s ease;
     }
     ${mobile({ display: 'none' })};

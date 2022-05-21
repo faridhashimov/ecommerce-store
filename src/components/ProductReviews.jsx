@@ -64,7 +64,7 @@ const UsefullnessBtn = styled.button`
         margin-left: 5px;
     }
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const Username = styled.h2`

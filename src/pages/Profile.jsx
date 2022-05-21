@@ -57,7 +57,7 @@ const NavItem = styled.li`
         background-color: #f2f2f2;
     }
     &:hover ${StyledNavIcon} {
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const StyledNavLink = styled(NavLink)`
@@ -85,7 +85,7 @@ const Profile = () => {
                                     bg={isActive ? '#FFF1E6' : 'transparent'}
                                 >
                                     <StyledNavIcon
-                                        t={isActive ? '#eea287' : '#999'}
+                                        t={isActive ? '#F27A1A' : '#999'}
                                         component={Store}
                                     />
                                     My orders
@@ -98,7 +98,7 @@ const Profile = () => {
                                     bg={isActive ? '#FFF1E6' : 'transparent'}
                                 >
                                     <StyledNavIcon
-                                        t={isActive ? '#eea287' : '#999'}
+                                        t={isActive ? '#F27A1A' : '#999'}
                                         component={RateReview}
                                     />
                                     My reviews
@@ -111,7 +111,7 @@ const Profile = () => {
                                     bg={isActive ? '#FFF1E6' : 'transparent'}
                                 >
                                     <StyledNavIcon
-                                        t={isActive ? '#eea287' : '#999'}
+                                        t={isActive ? '#F27A1A' : '#999'}
                                         component={Email}
                                     />
                                     My messages
@@ -124,7 +124,7 @@ const Profile = () => {
                                     bg={isActive ? '#FFF1E6' : 'transparent'}
                                 >
                                     <StyledNavIcon
-                                        t={isActive ? '#eea287' : '#999'}
+                                        t={isActive ? '#F27A1A' : '#999'}
                                         component={Person}
                                     />
                                     My user information
@@ -137,7 +137,7 @@ const Profile = () => {
                                     bg={isActive ? '#FFF1E6' : 'transparent'}
                                 >
                                     <StyledNavIcon
-                                        t={isActive ? '#eea287' : '#999'}
+                                        t={isActive ? '#F27A1A' : '#999'}
                                         component={LocationOn}
                                     />
                                     My adresses
@@ -150,7 +150,7 @@ const Profile = () => {
                                     bg={isActive ? '#FFF1E6' : 'transparent'}
                                 >
                                     <StyledNavIcon
-                                        t={isActive ? '#eea287' : '#999'}
+                                        t={isActive ? '#F27A1A' : '#999'}
                                         component={Notifications}
                                     />
                                     Settings

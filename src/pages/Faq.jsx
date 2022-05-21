@@ -37,7 +37,7 @@ const TopTitle = styled.h2`
     span {
         font-weight: 400;
         font-size: 20px;
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const QuestionsContainer = styled.div`

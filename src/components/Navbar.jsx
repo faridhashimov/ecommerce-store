@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Badge from '@mui/material/Badge'
 import {
     FavoriteBorder,
+    Person,
     Search,
     ShoppingCartOutlined,
 } from '@mui/icons-material'
@@ -11,6 +12,7 @@ import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
 import NavbarPopup from './NavbarPopup'
 import noAvatar from '../resources/noavatar.png'
+import { SvgIcon } from '@mui/material'
 
 const Container = styled.div`
     height: 60px;
@@ -35,7 +37,7 @@ const Logo = styled.h1`
     margin-left: 10px;
 `
 const Reverse = styled.span`
-    color: #eea287;
+    color: #F27A1A;
 `
 const Center = styled.div``
 const Menu = styled.ul`
@@ -99,7 +101,7 @@ const SearchButton = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    fill: '#EEA287';
+    fill: '#F27A1A';
 `
 const CartTotal = styled.span`
     font-size: 13px;
@@ -107,7 +109,7 @@ const CartTotal = styled.span`
     font-weight: 600;
 `
 const StyledLink = styled(Link)`
-    color: #666666;
+    color: #666;
     transition: all 0.2s ease;
     text-decoration: none;
     display: flex;
@@ -121,29 +123,47 @@ const RightMenuIcon = styled.div`
     display: flex;
     align-items: center;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease;
     }
     &:hover ${StyledLink} {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease;
     }
 `
+const StyledPersonIcon = styled(SvgIcon)`
+    color: #666;
+    font-size: 24px;
+    transition: all 0.2s ease-in;
+`
 const ProfileContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 30px;
     height: 30px;
     border-radius: 50%;
     overflow: hidden;
     margin-left: 20px;
-    border: 1px solid #ccc;
+    border: 2px solid #666;
     transition: all 0.3s ease-in;
     cursor: pointer;
+    transition: all 0.2s ease-in;
+    &:hover {
+        border: 2px solid #F27A1A;
+        transition: all 0.2s ease-in;
+    }
+    &:hover ${StyledPersonIcon} {
+        color: #F27A1A;
+        transition: all 0.2s ease-in;
+    }
 `
 const ProfileImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
 `
+
 const Navbar = () => {
     const product = useSelector((state) => state.wishlist.product)
     const user = useSelector((state) => state.user.user)
@@ -260,11 +280,13 @@ const Navbar = () => {
                     </SearchContainer>
                     {user && (
                         <ProfileContainer>
-                            <Link to="/profile/orders">
-                                <ProfileImage
-                                    src={user.img ? user.img : noAvatar}
-                                />
-                            </Link>
+                            <StyledLink to="/profile/orders">
+                                {user.img ? (
+                                    <ProfileImage src={user.img} />
+                                ) : (
+                                    <StyledPersonIcon component={Person} />
+                                )}
+                            </StyledLink>
                         </ProfileContainer>
                     )}
                     <RightMenuIcon>

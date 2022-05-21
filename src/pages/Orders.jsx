@@ -1,4 +1,4 @@
-import { NoOrders, Order } from '../components'
+import { NoOrders, Order, Spinner } from '../components'
 import styled from 'styled-components'
 import { Search } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
@@ -77,8 +77,8 @@ const OrderFilterBtn = styled.button`
     &:hover {
         cursor: pointer;
         padding: 7px 20px;
-        border: 2px solid #eea287;
-        color: #eea287;
+        border: 2px solid #F27A1A;
+        color: #F27A1A;
         transition: all 0.2s ease-in;
     }
 
@@ -86,7 +86,7 @@ const OrderFilterBtn = styled.button`
         fontSize: '11px',
         fontWeight: '400',
         padding: '2px 10px',
-        backgroundColor: '#eea287',
+        backgroundColor: '#F27A1A',
         color: '#fff',
     })}
 `
@@ -95,15 +95,22 @@ const OrdersList = styled.div`
 `
 
 const Orders = () => {
+    const [loading, setLoading] = useState(true)
     const [orders, setOrders] = useState([])
     let user = useSelector((state) => state.user.user)
-    console.log(orders.length ? 'true' : 'false')
+    // console.log(orders.length ? 'true' : 'false')
     useEffect(() => {
         const getUserOrders = async () => {
-            const res = await axios.get(
-                'http://localhost:5000/api/orders/find/' + user._id
-            )
-            setOrders(res.data)
+            try {
+                const res = await axios.get(
+                    'http://localhost:5000/api/orders/find/' + user._id
+                )
+                setLoading(false)
+                setOrders(res.data)
+            } catch (err) {
+                setLoading(false)
+                throw new Error(err)
+            }
         }
         getUserOrders()
     }, [])
@@ -121,7 +128,7 @@ const Orders = () => {
                         <Search
                             sx={{
                                 fontSize: 20,
-                                color: '#eea287',
+                                color: '#F27A1A',
                                 cursor: 'pointer',
                             }}
                         />
@@ -146,7 +153,9 @@ const Orders = () => {
                     <OrderFilterBtn>Cancellations</OrderFilterBtn>
                 </OrderFilterContainer>
                 <OrdersList>
-                    {orders.length ? (
+                    {loading ? (
+                        <Spinner />
+                    ) : orders.length ? (
                         orders.map((order) => (
                             <Order key={order._id} {...order} />
                         ))

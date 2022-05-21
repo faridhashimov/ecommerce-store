@@ -55,7 +55,7 @@ const ReviewTextarea = styled.textarea`
     border: 1px solid #ccc;
     border-radius: 3px;
     &:focus {
-        border: 1px solid #eea287;
+        border: 1px solid #F27A1A;
     }
 `
 const ReviewInput = styled.input`
@@ -67,20 +67,20 @@ const ReviewInput = styled.input`
     margin-bottom: 10px;
     border: 1px solid #ccc;
     &:focus {
-        border: 1px solid #eea287;
+        border: 1px solid #F27A1A;
     }
 `
 const AddReviewButton = styled.button`
     padding: 10px 60px;
-    background-color: #eea287;
+    background-color: #F27A1A;
     color: #fff;
     outline: none;
     cursor: pointer;
     margin-bottom: 30px;
-    border: 1px solid #eea287;
+    border: 1px solid #F27A1A;
     transition: all 0.2s ease-in;
     &:hover {
-        background-color: #c9866e;
+        background-color: #f08936;
         transition: all 0.2s ease-in;
     }
 `

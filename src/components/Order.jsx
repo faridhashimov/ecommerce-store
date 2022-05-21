@@ -33,17 +33,18 @@ const OrderInfoDesc = styled.span`
     font-size: 13px;
     font-weight: 400;
 `
-const OrderDetailsBtn = styled.div`
+const OrderDetailsBtn = styled(Link)`
     padding: 5px 30px;
-    background-color: #eea287;
-    border: 1px solid #eea287;
+    background-color: #F27A1A;
+    border: 1px solid #F27A1A;
     border-radius: 3px;
     transition: all 0.2s ease-in;
     color: #fff;
     font-size: 14px;
     font-weight: 400;
+    text-decoration: none;
     &:hover {
-        background-color: #d98668;
+        background-color: #f08936;
         cursor: pointer;
         transition: all 0.2s ease-in;
     }
@@ -83,7 +84,6 @@ const OrderImage = styled.img`
 const Order = (order) => {
     const { _id, amount, products, createdAt } = order
     let user = useSelector((state) => state.user.user)
-    console.log(createdAt)
 
     let orderDate = format(parseISO(createdAt), "d MMMM y '-' k:m")
 
@@ -102,9 +102,7 @@ const Order = (order) => {
                     <OrderInfoTitle>Order total</OrderInfoTitle>
                     <OrderInfoDesc>$ {amount}</OrderInfoDesc>
                 </OrderInfoTitleContainer>
-                <OrderDetailsBtn>
-                    <Link style={{textDecoration: 'none', color: 'inherit'}} to={_id}>Order Details</Link>
-                </OrderDetailsBtn>
+                <OrderDetailsBtn to={_id}>Order Details</OrderDetailsBtn>
             </OrderInfoHeader>
             <OrderInfoBody>
                 <OrderInfoBodyContainer>
@@ -116,7 +114,9 @@ const Order = (order) => {
                         {products.map((product) => (
                             <OrderImageContainer key={product._id}>
                                 <OrderImageWrapper>
-                                    <OrderImage src={product.img[0]} />
+                                    <Link to={'/product/' + product._id}>
+                                        <OrderImage src={product.img[0]} />
+                                    </Link>
                                 </OrderImageWrapper>
                             </OrderImageContainer>
                         ))}

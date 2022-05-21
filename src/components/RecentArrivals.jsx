@@ -25,7 +25,7 @@ const Title = styled.div`
     line-height: 34px;
     color: #333;
     font-weight: 600;
-    ${mobile({fontSize: '28px'})}
+    ${mobile({ fontSize: '28px' })}
 `
 const Filters = styled.div`
     width: 100%;
@@ -44,25 +44,25 @@ const FilterButton = styled.div`
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
         transition: all 0.3s ease-in-out;
     }
     ${(props) => {
         if (props.bg) {
             return css`
-                color: #eea287;
-                border-bottom: 1.7px solid #eea287;
+                color: #f27a1a;
+                border-bottom: 1.7px solid #f27a1a;
                 transition: all 0.3s ease-in-out;
             `
         } else {
             return css`
                 color: #777777;
-                border-bottom: 1.7px solid #fff;;
+                border-bottom: 1.7px solid #fff;
                 transition: all 0.3s ease-in-out;
             `
         }
     }}
-    ${mobile({fontSize: '12px'})}
+    ${mobile({ fontSize: '12px' })}
 `
 const ButtonContainer = styled.div`
     width: 100%;
@@ -99,12 +99,16 @@ const ProductsContainer = styled.div`
 `
 
 const RecentArrivals = () => {
-    const { data, error, loading } = useAxios(
-        'http://localhost:5000/api/products'
-    )
+    // const { data, error, loading } = useAxios(
+    //     'http://localhost:5000/api/products'
+    // )
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
+
+    const { clearError, error, data, loading } = useAxios(
+        'http://localhost:5000/api/products'
+    )
 
     useEffect(() => {
         setProducts(data)
@@ -126,17 +130,16 @@ const RecentArrivals = () => {
     }
     let spinner = loading ? <Spinner /> : null
     let content =
-        !loading && data.length !== 0 ? (
-            <Products products={filteredProducts} />
+        !loading && filteredProducts ? (
+            <Products products={filteredProducts.slice(0, 8)} />
         ) : null
-    let errorMsg =
-        (!data || error) && !loading ? (
-            <>
-                <p style={{ color: 'red', textAlign: 'center' }}>
-                    Something went wrong: {error}...
-                </p>
-            </>
-        ) : null
+    let errorMsg = error ? (
+        <>
+            <p style={{ color: 'red', textAlign: 'center' }}>
+                Something went wrong: {error}...
+            </p>
+        </>
+    ) : null
 
     return (
         <Container>
@@ -184,7 +187,7 @@ const RecentArrivals = () => {
                     {content}
                     {errorMsg}
                 </ProductsContainer>
-                {data.length > 0 ? (
+                {data?.length > 0 ? (
                     <ButtonContainer>
                         <InfoButton>
                             View More

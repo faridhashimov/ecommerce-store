@@ -59,7 +59,7 @@ const Cart = styled.div`
     align-items: center;
     transition: all 0.2s ease-in-out;
     &:hover {
-        background-color: #eea287;
+        background-color: #F27A1A;
         transition: all 0.2s ease-in-out;
     }
     &:hover ${ShoppingCartContainer} {
@@ -154,7 +154,7 @@ const ProductActionContainer = styled.div`
     color: #fff;
     transition: background-color 0.2s ease-in-out;
     &:hover {
-        background-color: #eea287;
+        background-color: #F27A1A;
         transition: background-color 0.2s ease-in-out;
     }
 `
@@ -180,7 +180,7 @@ const Favorite = styled.div`
         height: 100%;
         border-radius: 15px;
         padding-left: 20px;
-        background-color: #eea287;
+        background-color: #F27A1A;
         top: 0px;
         right: 0px;
         z-index: -5;
@@ -209,7 +209,7 @@ const Category = styled.span`
     font-size: 13px;
     color: #ccc;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
     }
     ${mobile({ display: 'none' })}
 `
@@ -226,7 +226,7 @@ const Title = styled.h2`
         margin-right: 4px;
     }
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.3s ease;
     }
     ${mobile({ fontSize: '15px' })}
@@ -236,7 +236,7 @@ const Prices = styled.h3`
     font-weight: 500;
     color: #777;
     margin: 7px 0px;
-    ${mobile({ fontSize: '14px', color: '#eea287' })}
+    ${mobile({ fontSize: '14px', color: '#F27A1A' })}
 `
 const Rate = styled.div`
     display: flex;

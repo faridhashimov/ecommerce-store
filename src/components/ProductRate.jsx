@@ -9,7 +9,7 @@ const StarContainer = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #eea287;
+    color: #F27A1A;
 `
 
 const ProductRate = ({rate}) => {

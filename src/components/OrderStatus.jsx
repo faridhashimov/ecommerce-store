@@ -48,7 +48,7 @@ const OrderStatusInfo = styled.p`
 
 const OrderStatus = ({ status, createdAt, updatedAt, products }) => {
     // const status = 'Cancelled'
-    console.log(createdAt)
+    // console.log(createdAt)
     return (
         <OrderStatusContainer>
             {status === 'Pending' ? (
@@ -72,7 +72,7 @@ const OrderStatus = ({ status, createdAt, updatedAt, products }) => {
                         local carrier on{' '}
                         {format(parseISO(updatedAt), 'd MMMM y')}.
                     </OrderStatusInfo>{' '}
-                </>
+                </> 
             ) : status === 'Delivered' ? (
                 <>
                     <OrderStatusStatus status={status}>

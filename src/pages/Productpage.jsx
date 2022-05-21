@@ -10,13 +10,13 @@ import {
     Twitter,
 } from '@mui/icons-material'
 import axios from 'axios'
-import { useAxios } from '../hooks/useAxios'
-import { useEffect, useState } from 'react'
+// import { useAxios } from '../hooks/useAxios'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { css } from 'styled-components'
-import { AddReview, Footer, Navbar } from '../components'
+import { AddReview, Footer, MainImageComponent, Navbar } from '../components'
 import Spinner from '../components/Spinner'
 import Details from '../components/Details'
 import DeliveryAndPayment from '../components/DeliveryAndPayment'
@@ -24,6 +24,7 @@ import ProductBackground from '../components/ProductBackground'
 import ProductReviews from '../components/ProductReviews'
 import { SvgIcon } from '@mui/material'
 import { addToCart } from '../redux/cartSlice'
+import { useAxios } from '../hooks/useAxios'
 
 const Wrapper = styled.div`
     width: 93vw;
@@ -43,12 +44,7 @@ const ModalView = styled.div`
     display: flex;
     justify-content: flex-start;
 `
-const Images = styled.div`
-    /* flex: 2; */
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
-`
+
 const MainImageContainer = styled.div`
     position: relative;
     /* flex: 8; */
@@ -85,17 +81,10 @@ const Status = styled.div`
         }
     }};
 `
-const MainImage = styled.img`
-    width: 100%;
-    height: 100%;
-`
-const MainImageWrapper = styled.figure`
-    width: 100%;
-    height: 95%;
-    cursor: move;
-    &:hover ${MainImage} {
-        opacity: 0;
-    }
+const Images = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
 `
 const Image = styled.img`
     height: 118px;
@@ -126,7 +115,7 @@ const ProductTitle = styled.h1`
 const ProductPrice = styled.h3`
     font-size: 24px;
     font-weight: 400;
-    color: #eea287;
+    color: #f27a1a;
     margin-bottom: 10px;
 `
 const ProductDescription = styled.p`
@@ -206,7 +195,7 @@ const AmountChangeBtn = styled.button`
     color: #777;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
     }
 `
 const Amount = styled.span``
@@ -224,8 +213,8 @@ const AddToCartBtn = styled.button`
     background: transparent;
     text-transform: uppercase;
     cursor: pointer;
-    color: #eea287;
-    border: 1px solid #eea287;
+    color: #f27a1a;
+    border: 1px solid #f27a1a;
     transition: all 0.2s ease-in;
     &:disabled {
         cursor: not-allowed;
@@ -237,7 +226,7 @@ const AddToCartBtn = styled.button`
         background-color: transparent;
     }
     &:hover {
-        background-color: #eea287;
+        background-color: #f27a1a;
         color: #fff;
         transition: all 0.2s ease-in;
     }
@@ -255,7 +244,7 @@ const WishlistBtn = styled.button`
     border: transparent;
     transition: all 0.3s ease-in;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
         transition: all 0.3s ease-in;
     }
 `
@@ -310,7 +299,7 @@ const OtherInfoBtn = styled.button`
     ${(props) => {
         if (props.bb) {
             return css`
-                border-bottom: 2px solid #eea287;
+                border-bottom: 2px solid #f27a1a;
                 transition: all 0.2s ease-in;
             `
         } else {
@@ -322,9 +311,9 @@ const OtherInfoBtn = styled.button`
     }}
     /* 2px solid #fff; */
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
         transition: all 0.2s ease-in;
-        border-bottom: 2px solid #eea287;
+        border-bottom: 2px solid #f27a1a;
     }
 `
 const InfoContainer = styled.div`
@@ -337,7 +326,7 @@ const StyledSocial = styled(SvgIcon)`
     margin-right: 12px;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #f27a1a;
     }
 `
 const LoginForReview = styled.div`
@@ -354,33 +343,35 @@ const LoginForReview = styled.div`
 `
 
 const Productpage = () => {
-    const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
     const [chooseColor, setChooseColor] = useState('')
     const [chooseSize, setChooseSize] = useState('')
     const [quantity, setQuantity] = useState(1)
-    const [product, setProduct] = useState({})
+    const [product, setProduct] = useState(null)
     const [otherInfo, setOtherInfo] = useState('delivery')
     const user = useSelector((state) => state.user.user)
     const dispatch = useDispatch()
     const { id } = useParams()
-    const {brand, title, img, color, status, desc, price, size, category } = product
-    // console.log(id)
+
+    // const { brand, title, img, color, status, desc, price, size, category } =
+    //     product
+    const [image, setImage] = useState('')
+
     // console.log(product)
 
-    const handleMouseMove = (e) => {
-        const { left, top, width, height } = e.target.getBoundingClientRect()
-        const x = ((e.pageX - left) / width) * 100
-        const y = ((e.pageY - top) / height) * 100
-        setBackgroundPosition(`${x}% ${y}%`)
-    }
-
-    const { loading, error, data } = useAxios(
-        `http://localhost:5000/api/products/${id}`
+    const { clearError, error, data, loading } = useAxios(
+        'http://localhost:5000/api/products/' + id
     )
+    // console.log(loading)
+    console.log('render')
 
     useEffect(() => {
         setProduct(data)
-    }, [data])
+        data && setImage(data.img[0])
+    }, [id, data])
+
+    const onSetImage = useCallback((item) => {
+        setImage(item)
+    }, [])
 
     const onSetQuantity = (exp) => {
         if (exp === 'dec') {
@@ -390,11 +381,6 @@ const Productpage = () => {
         }
     }
 
-    // const spinner = loading && !data ? <Spinner/> : null
-
-    const onChangeInfo = (e) => {
-        console.log(e.target)
-    }
     const onChooseColor = (color) => {
         setChooseColor(color)
     }
@@ -402,17 +388,19 @@ const Productpage = () => {
         dispatch(
             addToCart({
                 _id: id,
-                brand,
-                title,
-                img,
+                brand: product.brand,
+                title: product.title,
+                img: product.img,
                 productColor: chooseColor,
                 productSize: chooseSize,
-                price,
+                price: product.price,
                 quantity,
-                total: price * quantity,
+                total: product.price * quantity,
             })
         )
     }
+
+    // const spinner = loading && !product ? <Spinner /> : null
 
     return (
         <>
@@ -425,39 +413,35 @@ const Productpage = () => {
                         <Modal>
                             <ModalView>
                                 <Images>
-                                    {img?.map((item, i) => (
-                                        <Image key={i} src={item} />
+                                    {product?.img?.map((item, i) => (
+                                        <Image
+                                            onClick={() => onSetImage(item)}
+                                            key={i}
+                                            src={item}
+                                        />
                                     ))}
                                 </Images>
                                 <MainImageContainer>
                                     <ProductStatuses>
-                                        {status?.map((item) => (
+                                        {product.status?.map((item) => (
                                             <Status key={item} bg={item}>
                                                 {item}
                                             </Status>
                                         ))}
                                     </ProductStatuses>
-                                    <MainImageWrapper
-                                        onMouseMove={handleMouseMove}
-                                        style={{
-                                            backgroundPosition: `${backgroundPosition}`,
-                                            backgroundImage: `url(${
-                                                img ? img[0] : null
-                                            })`,
-                                        }}
-                                    >
-                                        <MainImage src={img ? img[0] : null} />
-                                    </MainImageWrapper>
+                                    <MainImageComponent image={image} />
                                 </MainImageContainer>
                             </ModalView>
                             <ModalInfo>
-                                <ProductTitle>{title}</ProductTitle>
-                                <ProductPrice>$ {price}</ProductPrice>
-                                <ProductDescription>{desc}</ProductDescription>
+                                <ProductTitle>{product.title}</ProductTitle>
+                                <ProductPrice>$ {product.price}</ProductPrice>
+                                <ProductDescription>
+                                    {product.desc}
+                                </ProductDescription>
                                 <FilterContainer>
                                     <FilterTitle>Color:</FilterTitle>
                                     <FilterColor>
-                                        {color?.map((item) => (
+                                        {product.color?.map((item) => (
                                             <Color
                                                 onClick={() =>
                                                     onChooseColor(item)
@@ -473,19 +457,21 @@ const Productpage = () => {
                                         ))}
                                     </FilterColor>
                                 </FilterContainer>
-                                <FilterContainer>
-                                    <FilterTitle>Size:</FilterTitle>
-                                    <FilterSize
-                                        onChange={(e) =>
-                                            setChooseSize(e.target.value)
-                                        }
-                                    >
-                                        <Size>Select a size</Size>
-                                        {size?.map((item) => (
-                                            <Size key={item}>{item}</Size>
-                                        ))}
-                                    </FilterSize>
-                                </FilterContainer>
+                                {product.size?.length > 0 && (
+                                    <FilterContainer>
+                                        <FilterTitle>Size:</FilterTitle>
+                                        <FilterSize
+                                            onChange={(e) =>
+                                                setChooseSize(e.target.value)
+                                            }
+                                        >
+                                            <Size>Select a size</Size>
+                                            {product.size?.map((item) => (
+                                                <Size key={item}>{item}</Size>
+                                            ))}
+                                        </FilterSize>
+                                    </FilterContainer>
+                                )}
                                 <FilterContainer>
                                     <FilterTitle>Qty:</FilterTitle>
                                     <AmountContainer>
@@ -506,7 +492,11 @@ const Productpage = () => {
                                     <AddToCartBtn
                                         onClick={onAddToCart}
                                         disabled={
-                                            !chooseColor || !chooseSize
+                                            (!chooseColor || !chooseSize) &&
+                                            product.size?.length > 0
+                                                ? true
+                                                : !chooseColor &&
+                                                  product.size?.length === 0
                                                 ? true
                                                 : false
                                         }
@@ -523,7 +513,7 @@ const Productpage = () => {
                                         {' '}
                                         <FavoriteBorder
                                             sx={{
-                                                color: '#eea287',
+                                                color: '#F27A1A',
                                                 fontSize: '14px',
                                                 marginRight: '7px',
                                             }}
@@ -535,7 +525,7 @@ const Productpage = () => {
                                 <ProductCategory>
                                     <CategoryTitle>Category:</CategoryTitle>
                                     <Categories>
-                                        {category?.map((item, i) => (
+                                        {product.category?.map((item, i) => (
                                             <Category key={i}>
                                                 {(i ? ', ' : '') + item}
                                             </Category>
@@ -594,18 +584,9 @@ const Productpage = () => {
                                     ) : otherInfo === 'background' ? (
                                         <ProductBackground />
                                     ) : (
-                                        <>
-                                            <ProductReviews
-                                                reviews={product.reviews}
-                                            />
-                                            {user ? (
-                                                <AddReview id={product._id} />
-                                            ) : (
-                                                <LoginForReview>
-                                                    <p>Log in to add Review</p>
-                                                </LoginForReview>
-                                            )}
-                                        </>
+                                        <ProductReviews
+                                            reviews={product.reviews}
+                                        />
                                     )}
                                 </InfoContainer>
                             </MainInfo>

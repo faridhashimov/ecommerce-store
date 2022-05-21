@@ -11,7 +11,7 @@ const OrderSchema = new mongoose.Schema(
                 brand: { type: String, required: true },
                 title: { type: String, required: true },
                 price: { type: Number, required: true },
-                productSize: { type: String, required: true },
+                productSize: { type: String },
                 productColor: { type: String, required: true },
                 img: { type: Array, required: true },
             },

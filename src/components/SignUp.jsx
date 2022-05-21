@@ -4,10 +4,13 @@ import {
     Facebook,
     Google,
     ReportGmailerrorred,
+    Visibility,
+    VisibilityOff,
 } from '@mui/icons-material'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
 import { publicRequest } from '../requestMethods'
+import { SvgIcon } from '@mui/material'
 
 const REGEXP_PASS = new RegExp(
     '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
@@ -33,10 +36,13 @@ const Input = styled.input`
     color: #777;
     background-color: #f4f4f4;
     border: 1px solid #ebebeb;
-    transition: all 0.2s ease;
+    &:not(:last-child) {
+        width: 90%;
+    }
+   
     &:focus {
-        outline: 1px solid #eea287;
-        transition: all 0.2s ease;
+        border: 1px solid #F27A1A;
+        outline: none;
     }
 `
 const LoginButtonContainer = styled.div`
@@ -52,10 +58,10 @@ const LoginButton = styled.button`
     align-items: center;
     padding: 7px 25px;
     text-transform: uppercase;
-    color: #eea287;
+    color: #F27A1A;
     cursor: pointer;
     background-color: transparent;
-    border: 1px solid #eea287;
+    border: 1px solid #F27A1A;
     transition: all 0.3s ease-in-out;
     margin-right: 20px;
     &:disabled {
@@ -67,7 +73,7 @@ const LoginButton = styled.button`
         background-color: transparent;
     }
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         color: #fff;
         transition: all 0.3s ease-in-out;
     }
@@ -149,10 +155,35 @@ const Success = styled.div`
     color: #6ce86c;
     h1 {
         font-size: 20px;
-        margin-bottom: 30px
+        margin-bottom: 30px;
     }
     p {
         font-size: 14px;
+    }
+`
+const PasswordContainer = styled.div`
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+`
+const StyledSvg = styled(SvgIcon)`
+    transition: all 0.2s ease-in;
+`
+const ShowPassWordIconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5.1px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    width: 10%;
+    &:hover {
+        border: 1px solid #F27A1A;
+        transition: all 0.2s ease-in;
+    }
+    &:hover ${StyledSvg} {
+        color: #F27A1A;
+        transition: all 0.2s ease-in;
     }
 `
 const SignUp = () => {
@@ -169,6 +200,9 @@ const SignUp = () => {
     const [errMsg, setErrMsg] = useState('')
     const [success, setSuccess] = useState(false)
     const [newUser, setNewUSer] = useState(false)
+
+    const [showPwd, setShowPwd] = useState(false)
+    const [showMatch, setShowMatch] = useState(false)
 
     const emailRef = useRef()
 
@@ -223,14 +257,29 @@ const SignUp = () => {
 
                     <InputContainer>
                         <Label htmlFor="password">Password *</Label>
-                        <Input
-                            onChange={(e) => setPassword(e.target.value)}
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
-                            id="password"
-                            type="password"
-                            required
-                        />
+                        <PasswordContainer>
+                            <Input
+                                onChange={(e) => setPassword(e.target.value)}
+                                onFocus={() => setPasswordFocus(true)}
+                                onBlur={() => setPasswordFocus(false)}
+                                id="password"
+                                type={showPwd ? 'text' : 'password'}
+                                required
+                            />
+                            <ShowPassWordIconContainer
+                                onClick={() => setShowPwd(!showPwd)}
+                            >
+                                {' '}
+                                {showPwd ? (
+                                    <StyledSvg
+                                        sx={{ color: '#F27A1A' }}
+                                        component={Visibility}
+                                    />
+                                ) : (
+                                    <StyledSvg component={VisibilityOff} />
+                                )}
+                            </ShowPassWordIconContainer>
+                        </PasswordContainer>
                         {passwordFocus && !validPassword ? (
                             <ValidPassword>
                                 ! Must contain minimum 8 chrarcters, at least
@@ -241,14 +290,29 @@ const SignUp = () => {
                     </InputContainer>
                     <InputContainer>
                         <Label htmlFor="match">Re-type Password *</Label>
-                        <Input
-                            onChange={(e) => setMatch(e.target.value)}
-                            onFocus={() => setMatchFocus(true)}
-                            onBlur={() => setMatchFocus(false)}
-                            id="match"
-                            type="password"
-                            required
-                        />
+                        <PasswordContainer>
+                            <Input
+                                onChange={(e) => setMatch(e.target.value)}
+                                onFocus={() => setMatchFocus(true)}
+                                onBlur={() => setMatchFocus(false)}
+                                id="match"
+                                type={showMatch ? 'text' : 'password'}
+                                required
+                            />
+                            <ShowPassWordIconContainer
+                                onClick={() => setShowMatch(!showMatch)}
+                            >
+                                {' '}
+                                {showMatch ? (
+                                    <StyledSvg
+                                        sx={{ color: '#F27A1A' }}
+                                        component={Visibility}
+                                    />
+                                ) : (
+                                    <StyledSvg component={VisibilityOff} />
+                                )}
+                            </ShowPassWordIconContainer>
+                        </PasswordContainer>
                         {matchFocus && !validMatch ? (
                             <ValidMatch>! Passwords does not match</ValidMatch>
                         ) : null}

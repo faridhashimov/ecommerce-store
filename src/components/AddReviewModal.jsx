@@ -54,7 +54,7 @@ const StyledIcon = styled(Icon)`
     margin-right: 10px;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 
@@ -103,7 +103,7 @@ const PointInfo = styled.div`
         font-weight: 600;
         color: #333;
         span {
-            color: #F27A1A;
+            color: #f27a1a;
         }
     }
 `
@@ -202,17 +202,19 @@ const SubmitBtn = styled.button`
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
-    transition: all .2s ease-in;
+    transition: all 0.2s ease-in;
     &:hover {
-        background-color: #ef964d;
-        transition: all .2s ease-in;
+        background-color: #f08936;
+        transition: all 0.2s ease-in;
     }
 `
 //=================Review Rating Container
 
-const AddReviewModal = ({ setOpen }) => {
+const AddReviewModal = ({ item, setOpen }) => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
+    console.log(item)
+    const { brand, img, title } = item
 
     const handleModalClose = (e) => {
         let modalBg = e.target.getAttribute('data-bg')
@@ -253,23 +255,23 @@ const AddReviewModal = ({ setOpen }) => {
                         </IconContainer>
                         <PointInfo>
                             <p>
-                                When your review will approve, you will see <span>25 </span> 
+                                When your review will approve, you will see{' '}
+                                <span>25 </span>
                                 Points in your account. If your review gets 3
-                                likes, you will get <span>+50</span> Points!{' '}
+                                likes, you will get <span>
+                                    +50
+                                </span> Points!{' '}
                             </p>
                         </PointInfo>
                     </PointInfoBody>
                     <ProductInfoContainer>
                         <ProductImageContainer>
-                            <ProductImage src="https://cdn.dsmcdn.com/ty61/product/media/images/20210122/8/56024496/86055368/1/1_org_zoom.jpg" />
+                            <ProductImage src={img[0]} />
                         </ProductImageContainer>
                         <ProductInfo>
                             <ProductTitleContainer>
-                                <ProductBrand>MANGO Man</ProductBrand>
-                                <ProductTitle>
-                                    Erkek Gri Dar Kesimli Kalipli Pamuklu
-                                    Pantolon
-                                </ProductTitle>
+                                <ProductBrand>{brand}</ProductBrand>
+                                <ProductTitle>{title}</ProductTitle>
                             </ProductTitleContainer>
                             <RatingContainer>
                                 <div>

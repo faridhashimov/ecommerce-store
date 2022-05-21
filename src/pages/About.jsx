@@ -82,7 +82,7 @@ const MainInfo = styled.p`
     font-size: 16px;
     font-weight: 400;
     line-height: 30px;
-    color: #eea287;
+    color: #F27A1A;
     margin-bottom: 40px;
     ${mobile({ marginBottom: '10px'})}
 `;
@@ -141,8 +141,8 @@ const CategoryButton = styled.h2`
     align-items: center;
     font-size: 14px;
     font-weight: 400;
-    color: #eea287;
-    border: 1.2px solid #eea287;
+    color: #F27A1A;
+    border: 1.2px solid #F27A1A;
     min-width: 120px;
     text-transform: uppercase;
     padding: 6px 10px;
@@ -151,7 +151,7 @@ const CategoryButton = styled.h2`
     transition: all 0.2s ease;
     background-color: transparent;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         color: #fff;
     }
     ${mobile({ marginTop: '10px'})}
@@ -259,7 +259,7 @@ const SocialIconContainer = styled.div`
     align-items: center;
     cursor: pointer;
     &:hover {
-        color: #eea287;
+        color: #f08936;
     }
 `;
 

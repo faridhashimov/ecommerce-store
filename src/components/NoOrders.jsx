@@ -31,14 +31,14 @@ const NoOrderInfo = styled.p`
 
 const BackToAllBtn = styled.button`
     padding: 10px 47px;
-    background-color: #eea287;
-    border: 1px solid #eea287;
+    background-color: #F27A1A;
+    border: 1px solid #F27A1A;
     border-radius: 5px;
     color: #fff;
     font-weight: 600;
     transition: all .2s ease-in;
     &:hover{
-        background-color: #f29573;
+        background-color: #f08936;
         transition: all .2s ease-in;
         cursor: pointer;
     }

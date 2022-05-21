@@ -63,7 +63,7 @@ const Login = () => {
                 <LoginContainer>
                     <ButtonContainer>
                         <SigninButton
-                            button={active === 'signin' ? '#eea287' : '#fff'}
+                            button={active === 'signin' ? '#F27A1A' : '#fff'}
                             onClick={(e) => {
                                 toggle('signin')
                             }}
@@ -71,7 +71,7 @@ const Login = () => {
                             Sign in
                         </SigninButton>
                         <SigninButton
-                            button={active === 'register' ? '#eea287' : '#fff'}
+                            button={active === 'register' ? '#F27A1A' : '#fff'}
                             onClick={(e) => toggle('register')}
                         >
                             Register

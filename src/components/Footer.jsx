@@ -72,7 +72,7 @@ const Title = styled.span`
 `
 const ContactNumber = styled.a`
     font-size: 20px;
-    color: #eea287;
+    color: #F27A1A;
     text-decoration: none;
 `
 const Payment = styled.div`
@@ -107,7 +107,7 @@ const LinkItem = styled.li`
     cursor: pointer;
     transition: all 0.2s ease;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease;
     }
     &:first-child {
@@ -163,7 +163,7 @@ const Link = styled.a`
     transition: all 0.2s ease;
     &:hover {
         transition: all 0.2s ease;
-        color: #eea287;
+        color: #F27A1A;
     }
     &:last-child::before {
         content: '';
@@ -198,7 +198,7 @@ const SocialIconContainer = styled.div`
     color: #${(props) => props.color};
     transition: all 0.2s ease;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease;
     }
 `

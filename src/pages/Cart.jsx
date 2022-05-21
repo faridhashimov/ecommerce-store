@@ -39,7 +39,7 @@ const HeaderTitle = styled.h2`
     span {
         font-weight: 400;
         font-size: 20px;
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const CartBody = styled.div`
@@ -90,8 +90,8 @@ const NoProductContainer = styled.div`
 `
 const GoShopBtn = styled(Link)`
     padding: 7px 45px;
-    background-color: #eea287;
-    border: 1px solid #c9866e;
+    background-color: #F27A1A;
+    border: 1px solid #F27A1A;
     cursor: pointer;
     color: #fff;
     font-size: 13px;
@@ -99,7 +99,7 @@ const GoShopBtn = styled(Link)`
     outline: none;
     text-decoration: none;
     &:hover {
-        background-color: #c9866e;
+        background-color: #f08936;
     }
 `
 const OrderInfo = styled.div`
@@ -162,7 +162,7 @@ const InputContainer = styled.div`
 `
 const RadioInput = styled.input`
     &:checked {
-        color: #eea287;
+        color: #F27A1A;
     }
 `
 const InputLabel = styled.label`
@@ -185,29 +185,29 @@ const ChangeAdress = styled(Link)`
     margin-top: 10px;
     transition: all 0.2s ease-in;
     &:hover {
-        color: #eea287;
+        color: #F27A1A;
         transition: all 0.2s ease-in;
     }
 `
 const Total = styled(ChekoutItem)`
     h1 {
-        color: #eea287;
+        color: #F27A1A;
     }
-    color: #eea287;
+    color: #F27A1A;
     padding: 25px 0px;
 `
 const CheckoutBtn = styled.button`
     text-transform: uppercase;
-    border: 1px solid #eea287;
+    border: 1px solid #F27A1A;
     outline: none;
-    color: #eea287;
+    color: #F27A1A;
     cursor: pointer;
     width: 100%;
     padding: 7px 30px;
     background-color: transparent;
     transition: all 0.2s ease-in;
     &:hover {
-        background-color: #eea287;
+        background-color: #f08936;
         transition: all 0.2s ease-in;
         color: #fff;
     }

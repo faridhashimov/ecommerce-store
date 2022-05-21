@@ -34,7 +34,7 @@ const InfoIcon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #eea287;
+    color: #F27A1A;
 `;
 
 const InfoContainer = styled.div`
@@ -49,8 +49,8 @@ const InfoContainer = styled.div`
     transition: all .2s ease-in-out;
     &:hover {
         color: #fff;
-        background-color: #eea287;
-        border: 2px solid #eea287;
+        background-color: #F27A1A;
+        border: 2px solid #F27A1A;
     }
     &:hover ${InfoTitle} {
         color: #fff;

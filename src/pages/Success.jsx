@@ -36,7 +36,7 @@ const InfoHeader = styled.div`
 `
 const Element = styled.span`
     flex: 1;
-    color: ${(props) => (props.c === 'body' ? '#eea287' : '#333')};
+    color: ${(props) => (props.c === 'body' ? '#F27A1A' : '#333')};
     font-weight: 600;
     font-size: 14px;
     border: 1px solid #ccc;
