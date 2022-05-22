@@ -137,7 +137,7 @@ const SingleOrderItem = ({
             {open && (
                 <Portal>
                     <AddReviewModal
-                        item={{ brand, title, img }}
+                        item={{_id, brand, title, img }}
                         setOpen={setOpen}
                     />
                 </Portal>

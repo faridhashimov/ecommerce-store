@@ -76,8 +76,7 @@ const Feautured = () => {
     const { clearError, error, data, loading } = useAxios(
         'http://localhost:5000/api/products'
     )
-    console.log(loading)
-    console.log(error)
+
     const handleClick = (e) => {
         const productStatus = e.target.getAttribute('data-id')
         setActive(productStatus)

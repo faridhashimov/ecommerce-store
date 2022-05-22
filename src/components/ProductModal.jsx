@@ -15,6 +15,7 @@ import { css } from 'styled-components'
 import { addToCart } from '../redux/cartSlice'
 import { closeModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
+import MainImageComponent from './MainImageComponent'
 
 const ModalBackground = styled.div`
     width: 100vw;
@@ -91,20 +92,6 @@ const Status = styled.div`
         }
     }};
 `
-
-const MainImage = styled.img`
-    width: 100%;
-    height: 100%;
-`
-const MainImageWrapper = styled.figure`
-    width: 100%;
-    height: 100%;
-    cursor: move;
-    &:hover ${MainImage} {
-        opacity: 0;
-    }
-`
-
 const Image = styled.img`
     height: 108px;
     width: 78px;
@@ -158,7 +145,6 @@ const ProductDescription = styled.p`
     margin-bottom: 15px;
     line-height: 24px;
 `
-
 const FilterContainer = styled.div`
     display: flex;
     align-items: center;
@@ -170,7 +156,6 @@ const FilterColor = styled.div`
     align-items: center;
     margin-left: 30px;
 `
-
 const Color = styled.div`
     background-color: ${(props) => props.bg};
     height: 15px;
@@ -320,7 +305,6 @@ const StyledIcon = styled(Icon)`
 `
 
 const ProductModal = ({ product, setOpen }) => {
-    const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
     const [chooseColor, setChooseColor] = useState('')
     const [chooseSize, setChooseSize] = useState('')
     const [quantity, setQuantity] = useState(1)
@@ -341,13 +325,6 @@ const ProductModal = ({ product, setOpen }) => {
     const [image, setImage] = useState(img[0])
     const productItem = useSelector((state) => state.modal.product)
 
-    const handleMouseMove = (e) => {
-        const { left, top, width, height } = e.target.getBoundingClientRect()
-        const x = ((e.pageX - left) / width) * 100
-        const y = ((e.pageY - top) / height) * 100
-        setBackgroundPosition(`${x}% ${y}%`)
-    }
-
     const handleClik = (exp) => {
         if (exp === 'dec') {
             quantity > 1 && setQuantity(quantity - 1)
@@ -355,6 +332,8 @@ const ProductModal = ({ product, setOpen }) => {
             setQuantity(quantity + 1)
         }
     }
+
+    console.log('redered')
 
     const handleAdd = () => {
         if (productInWishlist.length === 0) {
@@ -421,15 +400,8 @@ const ProductModal = ({ product, setOpen }) => {
                                     </Status>
                                 ))}
                             </ProductStatuses>
-                            <MainImageWrapper
-                                onMouseMove={handleMouseMove}
-                                style={{
-                                    backgroundPosition: `${backgroundPosition}`,
-                                    backgroundImage: `url(${image})`,
-                                }}
-                            >
-                                <MainImage src={image} />
-                            </MainImageWrapper>
+                            <MainImageComponent image={image}/>
+                           
                         </MainImageContainer>
                     </ModalView>
                     <ModalInfo>

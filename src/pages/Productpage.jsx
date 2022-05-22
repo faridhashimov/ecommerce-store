@@ -356,13 +356,11 @@ const Productpage = () => {
     //     product
     const [image, setImage] = useState('')
 
-    // console.log(product)
-
     const { clearError, error, data, loading } = useAxios(
         'http://localhost:5000/api/products/' + id
     )
     // console.log(loading)
-    console.log('render')
+    // console.log('render')
 
     useEffect(() => {
         setProduct(data)

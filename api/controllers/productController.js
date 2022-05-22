@@ -44,18 +44,29 @@ const deleteProduct = async (req, res) => {
 const getAllProducts = async (req, res) => {
     const qNew = req.query.new
     const qCat = req.query.category
+    const qSize = req.query.size
+    const qGender = req.query.gender
+    const qBrand = req.query.brand
+    let query
+    const reqQuery = { ...req.query }
+    console.log(reqQuery)
 
+    let queryStr = JSON.stringify(reqQuery)
+
+    console.log(queryStr)
     try {
-        let products
-        if (qNew) {
-            products = await Product.find().sort({ createdAt: -1 })
-        } else if (qCat) {
-            products = await Product.find({
-                category: { $in: [qCat] },
-            })
-        } else {
-            products = await Product.find({})
-        }
+        // let products
+        // if (qNew) {
+        //     products = await Product.find().sort({ createdAt: -1 })
+        // } else if (qCat) {
+        //     products = await Product.find({
+        //         category: { $in: [qCat] },
+        //     })
+        // } else {
+        //     products = await Product.find({})
+        // }
+
+        const products = await Product.find(reqQuery)
         res.status(200).json(products)
     } catch (err) {
         res.status(401).json(err)

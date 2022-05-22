@@ -1,9 +1,12 @@
 import { Close, Star, StarBorder, ThumbUp } from '@mui/icons-material'
 import { Icon, SvgIcon } from '@mui/material'
-import { useState } from 'react'
+import axios from 'axios'
+import { useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { css } from 'styled-components'
 import AddReview from './AddReview'
+import ReviewSucces from './ReviewSucces'
 
 //====================== Modal background
 const ModalBackground = styled.div`
@@ -20,7 +23,6 @@ const ModalBackground = styled.div`
     right: 0;
     position: fixed;
 `
-
 //====================== Modal container
 const ModalContainer = styled.div`
     position: relative;
@@ -34,7 +36,6 @@ const ModalContainer = styled.div`
     padding: 15px 20px 20px;
     border-radius: 3px;
 `
-
 const ModalInfo = styled.div`
     flex: 1;
     padding-left: 15px;
@@ -48,16 +49,14 @@ const ModalInfo = styled.div`
         border-radius: 4px;
     }
 `
-
 const StyledIcon = styled(Icon)`
     font-size: 16px !important;
     margin-right: 10px;
     cursor: pointer;
     &:hover {
-        color: #F27A1A;
+        color: #f27a1a;
     }
 `
-
 //=================== Modal header
 const ModalHeader = styled.div`
     display: flex;
@@ -66,6 +65,7 @@ const ModalHeader = styled.div`
     width: 100%;
     padding-bottom: 10px;
     border-bottom: 1px solid #ccc;
+    margin-bottom: 7px;
 `
 const ModalHeaderTitle = styled.h1`
     font-size: 16px;
@@ -75,11 +75,11 @@ const ModalHeaderTitle = styled.h1`
 const ModalBody = styled.div`
     height: 100%;
     width: 100%;
-    display: flex;
 `
-
 //=====================Point Info Container
-const PointInfoContainer = styled.div``
+const PointInfoContainer = styled.div`
+    margin-bottom: 7px;
+`
 const PointInfoBody = styled.div`
     background-color: #ffeada;
     padding: 10px;
@@ -107,7 +107,6 @@ const PointInfo = styled.div`
         }
     }
 `
-
 //Product Info Container
 
 const ProductInfoContainer = styled.div`
@@ -152,8 +151,11 @@ const RatingContainer = styled.div`
         align-items: center;
     }
 `
-
-const AddReviewForm = styled.form``
+const AddReviewForm = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`
 const TexteareLabel = styled.label`
     display: flex;
     align-items: center;
@@ -170,9 +172,21 @@ const TexteareLabel = styled.label`
         text-decoration: underline;
     }
 `
+const TitleInput = styled.input`
+    margin-top: 7px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: #666;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    &:focus {
+        outline: none;
+    }
+`
+
 const ReviewInput = styled.textarea`
-    padding: 10px;
-    margin: 7px 0px 20px;
+    padding: 3px 10px;
+    margin: 10px 0px 20px;
     resize: none;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -213,8 +227,12 @@ const SubmitBtn = styled.button`
 const AddReviewModal = ({ item, setOpen }) => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
-    console.log(item)
-    const { brand, img, title } = item
+    const [success, setSucces] = useState(false)
+    const user = useSelector((state) => state.user.user)
+    const { _id, brand, img, title } = item
+    // console.log(rating)
+    const titleRef = useRef()
+    const reviewRef = useRef()
 
     const handleModalClose = (e) => {
         let modalBg = e.target.getAttribute('data-bg')
@@ -224,106 +242,141 @@ const AddReviewModal = ({ item, setOpen }) => {
             setOpen(false)
         }
     }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.post(
+                `http://localhost:5000/api/products//${_id}/${user._id}/reviews`,
+                {
+                    title: titleRef.current.value,
+                    desc: reviewRef.current.value,
+                    rating,
+                }
+            )
+            setSucces(true)
+
+            console.log(res.data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     return (
         <ModalBackground data-bg="modal-bg" onClick={handleModalClose}>
-            <ModalContainer>
-                {/* Modal Header */}
-                <ModalHeader>
-                    <ModalHeaderTitle>
-                        How would you rate this product
-                    </ModalHeaderTitle>
+            {!success ? (
+                <ModalContainer>
+                    <ModalHeader>
+                        <ModalHeaderTitle>
+                            How would you rate this product
+                        </ModalHeaderTitle>
 
-                    <Close
-                        sx={{
-                            color: '#1b1b1b',
-                            fontSize: '18px',
-                            cursor: 'pointer',
-                        }}
-                        onClick={() => setOpen(false)}
-                    />
-                </ModalHeader>
-                <PointInfoContainer>
-                    <PointInfoBody>
-                        <IconContainer>
-                            {' '}
-                            <ThumbUp
-                                sx={{
-                                    color: '#F27A1A',
-                                    fontSize: '25px',
-                                }}
-                            />
-                        </IconContainer>
-                        <PointInfo>
-                            <p>
-                                When your review will approve, you will see{' '}
-                                <span>25 </span>
-                                Points in your account. If your review gets 3
-                                likes, you will get <span>
-                                    +50
-                                </span> Points!{' '}
-                            </p>
-                        </PointInfo>
-                    </PointInfoBody>
-                    <ProductInfoContainer>
-                        <ProductImageContainer>
-                            <ProductImage src={img[0]} />
-                        </ProductImageContainer>
-                        <ProductInfo>
-                            <ProductTitleContainer>
-                                <ProductBrand>{brand}</ProductBrand>
-                                <ProductTitle>{title}</ProductTitle>
-                            </ProductTitleContainer>
-                            <RatingContainer>
-                                <div>
-                                    {[...Array(5)].map((star, i) => {
-                                        i += 1
-                                        return (
-                                            <SvgIcon
-                                                key={i}
-                                                sx={{
-                                                    color: '#eea287',
-                                                    fontSize: '25px',
-                                                    marginRight: '7px',
-                                                    cursor: 'pointer',
-                                                    '&:hover': {
+                        <Close
+                            sx={{
+                                color: '#1b1b1b',
+                                fontSize: '18px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => setOpen(false)}
+                        />
+                    </ModalHeader>
+                    <PointInfoContainer>
+                        <PointInfoBody>
+                            <IconContainer>
+                                {' '}
+                                <ThumbUp
+                                    sx={{
+                                        color: '#F27A1A',
+                                        fontSize: '22px',
+                                    }}
+                                />
+                            </IconContainer>
+                            <PointInfo>
+                                <p>
+                                    When your review will approve, you will see{' '}
+                                    <span>25 </span>
+                                    Points in your account. If your review gets
+                                    3 likes, you will get <span>+50</span>{' '}
+                                    Points!{' '}
+                                </p>
+                            </PointInfo>
+                        </PointInfoBody>
+                        <ProductInfoContainer>
+                            <ProductImageContainer>
+                                <ProductImage src={img[0]} />
+                            </ProductImageContainer>
+                            <ProductInfo>
+                                <ProductTitleContainer>
+                                    <ProductBrand>{brand}</ProductBrand>
+                                    <ProductTitle>{title}</ProductTitle>
+                                </ProductTitleContainer>
+                                <RatingContainer>
+                                    <div>
+                                        {[...Array(5)].map((star, i) => {
+                                            i += 1
+                                            return (
+                                                <SvgIcon
+                                                    key={i}
+                                                    sx={{
                                                         color: '#eea287',
-                                                    },
-                                                }}
-                                                component={
-                                                    i <= (hover || rating)
-                                                        ? Star
-                                                        : StarBorder
-                                                }
-                                                onClick={() => setRating(i)}
-                                                onMouseEnter={() => setHover(i)}
-                                                onMouseLeave={() =>
-                                                    setHover(rating)
-                                                }
-                                            />
-                                        )
-                                    })}
-                                </div>
-                            </RatingContainer>
-                        </ProductInfo>
-                    </ProductInfoContainer>
-                </PointInfoContainer>
-                <ModalBody>
-                    <AddReviewForm>
-                        <TexteareLabel htmlFor="review">
-                            <h3>Your Review</h3>
-                            <span>Review Posting Criteria</span>
-                        </TexteareLabel>
-                        <ReviewInput id="review" cols="58" rows="4" />
-                        <ReviewPolicyContainer>
-                            <ReviewPolicy type="checkbox" />
-                            <ReviewPolicyLabel>
-                                I accept the User Agreement to add review.
-                            </ReviewPolicyLabel>
-                        </ReviewPolicyContainer>
-                        <SubmitBtn>Add Review</SubmitBtn>
-                    </AddReviewForm>
-                </ModalBody>
-            </ModalContainer>
+                                                        fontSize: '25px',
+                                                        marginRight: '7px',
+                                                        cursor: 'pointer',
+                                                        '&:hover': {
+                                                            color: '#eea287',
+                                                        },
+                                                    }}
+                                                    component={
+                                                        i <= (hover || rating)
+                                                            ? Star
+                                                            : StarBorder
+                                                    }
+                                                    onClick={() => setRating(i)}
+                                                    onMouseEnter={() =>
+                                                        setHover(i)
+                                                    }
+                                                    onMouseLeave={() =>
+                                                        setHover(rating)
+                                                    }
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                </RatingContainer>
+                            </ProductInfo>
+                        </ProductInfoContainer>
+                    </PointInfoContainer>
+                    <ModalBody>
+                        <AddReviewForm onSubmit={handleSubmit}>
+                            <TexteareLabel htmlFor="review">
+                                <h3>Your Review</h3>
+                                <span>Review Posting Criteria</span>
+                            </TexteareLabel>
+                            <TitleInput
+                                ref={titleRef}
+                                placeholder="Very pleased"
+                                id="review"
+                                type="text"
+                            />
+                            <ReviewInput
+                                ref={reviewRef}
+                                placeholder="You won't be disappointed with these product"
+                                cols="58"
+                                rows="5"
+                            />
+                            <ReviewPolicyContainer>
+                                <ReviewPolicy type="checkbox" />
+                                <ReviewPolicyLabel>
+                                    I accept the User Agreement to add review.
+                                </ReviewPolicyLabel>
+                            </ReviewPolicyContainer>
+                            <SubmitBtn>Add Review</SubmitBtn>
+                        </AddReviewForm>
+                    </ModalBody>
+                </ModalContainer>
+            ) : (
+                <ReviewSucces setOpen={setOpen} setSucces={setSucces} />
+            )}
         </ModalBackground>
     )
 }
