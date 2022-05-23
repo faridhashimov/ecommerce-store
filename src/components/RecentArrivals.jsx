@@ -6,6 +6,7 @@ import { css } from 'styled-components'
 import { useAxios } from '../hooks/useAxios'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
     width: 100%;
@@ -71,7 +72,7 @@ const ButtonContainer = styled.div`
     align-items: center;
     margin-top: 30px;
 `
-const InfoButton = styled.button`
+const InfoButton = styled(Link)`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -189,7 +190,7 @@ const RecentArrivals = () => {
                 </ProductsContainer>
                 {data?.length > 0 ? (
                     <ButtonContainer>
-                        <InfoButton>
+                        <InfoButton to='/list'>
                             View More
                             <ArrowRightAltOutlined
                                 style={{

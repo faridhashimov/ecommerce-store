@@ -52,13 +52,14 @@ const ModalView = styled.div`
     display: flex;
 `
 const Images = styled.div`
-    flex: 2;
+    /* flex: 2; */
     display: flex;
     flex-direction: column;
+    margin-right: 10px;
 `
 const MainImageContainer = styled.div`
     position: relative;
-    flex: 8;
+    /* flex: 8; */
     overflow: hidden;
 `
 const ProductStatuses = styled.div`

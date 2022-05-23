@@ -1,66 +1,64 @@
-import {
-    Star,
-    StarBorder,
-    StarHalf,
-} from '@mui/icons-material'
+import { Star, StarBorder, StarHalf } from '@mui/icons-material'
+import { SvgIcon } from '@mui/material'
 import styled from 'styled-components'
 
 const StarContainer = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #F27A1A;
+    color: #FFC000;
 `
 
-const ProductRate = ({rate}) => {
+const ProductRate = ({ fz, rate }) => {
+    // const fz = '22'
     return (
         <>
             <StarContainer>
                 {rate >= 1 ? (
-                    <Star />
+                    <Star sx={{ fontSize: `${fz}px` }} />
                 ) : rate >= 0.5 ? (
-                    <StarHalf />
+                    <StarHalf sx={{ fontSize: `${fz}px` }} />
                 ) : (
-                    <StarBorder />
+                    <StarBorder sx={{ fontSize: `${fz}px` }} />
                 )}
             </StarContainer>
             <StarContainer>
                 {rate >= 2 ? (
-                    <Star />
+                    <Star sx={{ fontSize: `${fz}px` }} />
                 ) : rate >= 1.5 ? (
-                    <StarHalf />
+                    <StarHalf sx={{ fontSize: `${fz}px` }} />
                 ) : (
-                    <StarBorder />
+                    <StarBorder sx={{ fontSize: `${fz}px` }} />
                 )}
             </StarContainer>
 
             <StarContainer>
                 {rate >= 3 ? (
-                    <Star />
+                    <Star sx={{ fontSize: `${fz}px` }} />
                 ) : rate >= 2.5 ? (
-                    <StarHalf />
+                    <StarHalf sx={{ fontSize: `${fz}px` }} />
                 ) : (
-                    <StarBorder />
+                    <StarBorder sx={{ fontSize: `${fz}px` }} />
                 )}
             </StarContainer>
 
             <StarContainer>
                 {rate >= 4 ? (
-                    <Star />
+                    <Star sx={{ fontSize: `${fz}px` }} />
                 ) : rate >= 3.5 ? (
-                    <StarHalf />
+                    <StarHalf sx={{ fontSize: `${fz}px` }} />
                 ) : (
-                    <StarBorder />
+                    <StarBorder sx={{ fontSize: `${fz}px` }} />
                 )}
             </StarContainer>
 
             <StarContainer>
                 {rate >= 5 ? (
-                    <Star />
+                    <Star sx={{ fontSize: `${fz}px` }} />
                 ) : rate >= 4.5 ? (
-                    <StarHalf />
+                    <StarHalf sx={{ fontSize: `${fz}px` }} />
                 ) : (
-                    <StarBorder />
+                    <StarBorder sx={{ fontSize: `${fz}px` }} />
                 )}
             </StarContainer>
         </>

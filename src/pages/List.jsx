@@ -1,7 +1,8 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Footer, Navbar } from '../components'
+import { Footer, ListProduct, Navbar } from '../components'
 
 const Container = styled.div`
     width: 100%;
@@ -62,28 +63,72 @@ const Brand = styled.div``
 const Color = styled.div``
 const Size = styled.div``
 const ProductRating = styled.div``
-const ListHeader = styled.div``
-const FilterBy = styled.div``
-const Products = styled.div``
+const ListHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 15px 20px;
+`
+const ListHeadeTitle = styled.h1`
+    font-size: 17px;
+    font-weight: 500;
+`
+const FilterBy = styled.select`
+    padding: 2px 5px;
+    width: 180px;
+    border: 1px solid #ccc;
+    color: #666;
+    &:focus {
+        outline: none;
+    }
+`
+const FilterByOption = styled.option``
+const Products = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding-left: 20px;
+`
 
-const List = () => {
-    const [filters, setFilters] = useState([
+const List = ({ cat }) => {
+    const [products, setProducts] = useState([])
+    const [category, setCategory] = useState(cat)
+    const [openFilter, setOpenFilters] = useState([
         'categories',
         'gender',
         'size',
         'brand',
     ])
 
-    // console.log(filters)
+    // console.log(location);
+
+    useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const res = await axios.get(
+                    cat
+                        ? `http://localhost:5000/api/products?category=${category}`
+                        : `http://localhost:5000/api/products`
+                )
+                setProducts(res.data)
+                console.log(res)
+            } catch (error) {
+                throw new Error(error)
+                // console.log(error)
+            }
+        }
+        getProducts()
+    }, [cat, category])
 
     const openFilters = (index) => {
-        if (filters.includes(index)) {
-            setFilters((filters) => filters.filter((item) => item !== index))
-            // filters.filter((item) => item !== index)
+        if (openFilter.includes(index)) {
+            setOpenFilters((openFilter) =>
+                openFilter.filter((item) => item !== index)
+            )
+            // openFilter.filter((item) => item !== index)
         } else {
-            setFilters((filters) => [...filters, index])
+            setOpenFilters((openFilter) => [...openFilter, index])
         }
-        console.log(filters)
+        console.log(openFilter)
     }
 
     return (
@@ -97,7 +142,7 @@ const List = () => {
                                 onClick={() => openFilters('categories')}
                             >
                                 <Title>Catergories</Title>
-                                {filters.includes('categories') ? (
+                                {openFilter.includes('categories') ? (
                                     <ExpandLess sx={{ color: '#F27A1A' }} />
                                 ) : (
                                     <ExpandMore />
@@ -105,7 +150,7 @@ const List = () => {
                             </FilterHeader>
                             <Filters
                                 style={{
-                                    height: filters.includes('categories')
+                                    height: openFilter.includes('categories')
                                         ? 'fit-content'
                                         : '0px',
                                 }}
@@ -145,7 +190,7 @@ const List = () => {
                         <CategoriesContainer>
                             <FilterHeader onClick={() => openFilters('gender')}>
                                 <Title>Gender</Title>
-                                {filters.includes('gender') ? (
+                                {openFilter.includes('gender') ? (
                                     <ExpandLess sx={{ color: '#F27A1A' }} />
                                 ) : (
                                     <ExpandMore />
@@ -153,7 +198,7 @@ const List = () => {
                             </FilterHeader>
                             <Filters
                                 style={{
-                                    height: filters.includes('gender')
+                                    height: openFilter.includes('gender')
                                         ? 'fit-content'
                                         : '0px',
                                 }}
@@ -175,7 +220,7 @@ const List = () => {
                         <CategoriesContainer>
                             <FilterHeader onClick={() => openFilters('brand')}>
                                 <Title>Brand</Title>
-                                {filters.includes('brand') ? (
+                                {openFilter.includes('brand') ? (
                                     <ExpandLess sx={{ color: '#F27A1A' }} />
                                 ) : (
                                     <ExpandMore />
@@ -183,7 +228,7 @@ const List = () => {
                             </FilterHeader>
                             <Filters
                                 style={{
-                                    height: filters.includes('brand')
+                                    height: openFilter.includes('brand')
                                         ? 'fit-content'
                                         : '0px',
                                 }}
@@ -209,7 +254,7 @@ const List = () => {
                         <CategoriesContainer>
                             <FilterHeader onClick={() => openFilters('size')}>
                                 <Title>Size</Title>
-                                {filters.includes('size') ? (
+                                {openFilter.includes('size') ? (
                                     <ExpandLess sx={{ color: '#F27A1A' }} />
                                 ) : (
                                     <ExpandMore />
@@ -217,7 +262,7 @@ const List = () => {
                             </FilterHeader>
                             <Filters
                                 style={{
-                                    height: filters.includes('size')
+                                    height: openFilter.includes('size')
                                         ? 'fit-content'
                                         : '0px',
                                 }}
@@ -254,9 +299,29 @@ const List = () => {
                         </CategoriesContainer>
                     </FilterContainer>
                     <ProductsContainer>
-                        <ListHeader></ListHeader>
-                        <FilterBy></FilterBy>
-                        <Products></Products>
+                        <ListHeader>
+                            <ListHeadeTitle>
+                                1077 results are listed for the search "Mango"
+                            </ListHeadeTitle>
+                            <FilterBy>
+                                <FilterByOption>Sort By:</FilterByOption>
+                                <FilterByOption value="new">
+                                    Newest Arrivals
+                                </FilterByOption>
+                                <FilterByOption value="low">
+                                    Price: Low
+                                </FilterByOption>
+                                <FilterByOption value="high">
+                                    Price: High
+                                </FilterByOption>
+                            </FilterBy>
+                        </ListHeader>
+
+                        <Products>
+                            {products.map((item) => (
+                                <ListProduct key={item._id} {...item} />
+                            ))}
+                        </Products>
                     </ProductsContainer>
                 </Wrapper>
             </Container>

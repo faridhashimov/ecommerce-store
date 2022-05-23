@@ -90,7 +90,7 @@ const CategoryButton = styled.h2`
     transition: all 0.2s ease;
     background-color: transparent;
     &:hover {
-        background-color: #f08936;
+        background-color: #F27A1A;
         color: #fff;
     }
     ${mobile({   marginTop: '10px'})}

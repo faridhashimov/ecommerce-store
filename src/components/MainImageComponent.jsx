@@ -19,16 +19,13 @@ const MainImageWrapper = styled.figure`
 const MainImageComponent = ({ image }) => {
     const [backgroundPosition, setBackgroundPosition] = useState('0% 0%')
 
-    const handleMouseMove = useCallback(
-        (e) => {
-            const { left, top, width, height } =
-                e.target.getBoundingClientRect()
-            const x = ((e.pageX - left) / width) * 50
-            const y = ((e.pageY - top) / height) * 50
-            setBackgroundPosition(`${x}% ${y}%`)
-        },
-        [backgroundPosition]
-    )
+    const handleMouseMove = (e) => {
+        const { left, top, width, height } = e.target.getBoundingClientRect()
+        const x = ((e.pageX - left) / width) * 100
+        const y = ((e.pageY - top) / height) * 10
+        setBackgroundPosition(`${x}% ${y}%`)
+    }
+
     return (
         <MainImageWrapper
             onMouseMove={handleMouseMove}

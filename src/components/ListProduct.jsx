@@ -20,11 +20,11 @@ import ProductModal from './ProductModal'
 const ProductAction = styled.div`
     position: absolute;
     right: 20px;
-    top: 35px;
+    top: 40px;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column;
     justify-content: space-between;
-    height: 70px;
+    height: 70px; */
     opacity: 0;
     transform: translateX(-20px);
     transition: all 0.2s ease-in-out;
@@ -68,11 +68,23 @@ const Cart = styled.div`
         transition: all 0.2s ease-in-out;
     }
 `
+
+const Image = styled.div`
+    width: 100%;
+    height: 100%;
+    background: url(${(props) => props.main}) center center/cover;
+    transition: all 0.2s ease-in;
+    &:hover {
+        background: url(${(props) => props.sec}) center center/cover;
+        transition: all 0.2s ease-in;
+    }
+`
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    height: 540px;
-    margin: 0px 10px 15px;
+    height: 470px;
+    /* margin: 0px 10px 15px; */
     padding-bottom: 5px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -93,52 +105,47 @@ const Container = styled.div`
     ${mobile({ height: '350px' })}
 `
 const ImageContainer = styled.div`
-    height: 390px;
+    height: 340px;
     position: relative;
     margin-bottom: 10px;
     ${mobile({ height: '250px' })}
 `
-const Image = styled.div`
-    width: 100%;
-    height: 100%;
-    background: url(${(props) => props.main}) center center/cover;
-    transition: all 0.2s ease-in;
-    &:hover {
-        background: url(${(props) => props.sec}) center center/cover;
-        transition: all 0.2s ease-in;
-    }
+
+const ProductStatus = styled.div`
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
 `
-const ProductStatus = styled.div``
 const Status = styled.div`
-    position: absolute;
-    top: ${(props) => props.order * 35}px;
-    left: 20px;
-    height: 48px;
-    width: 48px;
+    width: 40px;
+    padding: 4px;
+    border-radius: 3px;
     color: #fff;
     font-size: ${(props) => (props.fs === 'Out of Stock' ? '11px' : '13px')};
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: 50%;
-    border: none;
     ${(props) => {
         if (props.fs === 'Sale') {
             return css`
                 background-color: #ef837b;
+                border: 1px #ef837b;
             `
         } else if (props.fs === 'New') {
             return css`
                 background-color: #a6c76c;
+                border: 1px #a6c76c;
             `
         } else if (props.fs === 'Top') {
             return css`
                 background-color: #7dd2ea;
+                border: 1px #7dd2ea;
             `
         } else {
             return css`
                 background-color: #cccccc;
+                border: 1px #cccccc;
             `
         }
     }};
@@ -197,31 +204,20 @@ const Favorite = styled.div`
     }
 `
 const InfoContainer = styled.div`
-    text-align: center;
-`
-const Categories = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-const Category = styled.span`
-    /* margin-right: 5px; */
-    font-size: 13px;
-    color: #ccc;
-    &:hover {
-        color: #f27a1a;
-    }
-    ${mobile({ display: 'none' })}
+    text-align: left;
+    padding: 0px 7px;
 `
 const Title = styled.h2`
     transition: all 0.3s ease;
-    font-size: 15px;
+    font-size: 12.9px;
     font-weight: 400;
+    line-height: 19px;
     color: #555;
-    margin-top: 4px;
+    margin: 5px 0px;
+    height: 40px;
     &:before {
         content: '${(props) => props.brand}';
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
         margin-right: 4px;
     }
@@ -232,21 +228,22 @@ const Title = styled.h2`
     ${mobile({ fontSize: '15px' })}
 `
 const Prices = styled.h3`
-    font-size: 17px;
+    font-size: 15px;
+    line-height: 16px;
     font-weight: 500;
-    color: #777;
+    color: #f27a1a;
     margin: 7px 0px;
     ${mobile({ fontSize: '14px', color: '#F27A1A' })}
 `
 const Rate = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 `
 const ReviewCount = styled.span`
-    margin-left: 10px;
+    margin-left: 5px;
     color: #ccc;
-    font-size: 18px;
+    font-size: 10px;
     line-height: 16px;
 `
 
@@ -256,7 +253,8 @@ const StyledLink = styled(Link)`
     /* color: transparent; */
 `
 
-const Product = (item) => {
+const ListProduct = (item) => {
+    // console.log(item)
     const [open, setOpen] = useState(false)
     const { img, status, category, title, price, reviews, brand } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
@@ -265,9 +263,6 @@ const Product = (item) => {
         ? reviews.reduce((a, c) => c.rating + a, 0) / reviews.length
         : null
     const dispatch = useDispatch()
-    const handleClick = () => {
-        dispatch(openModal(item))
-    }
 
     const handleAdd = () => {
         if (productInWishlist.length === 0) {
@@ -283,77 +278,64 @@ const Product = (item) => {
     const liked = productInWishlist.some((e) => e._id === item._id)
 
     return (
-        <>
-            <Container>
-                <ImageContainer>
-                    <StyledLink to={`/product/${item._id}`}>
+        <Container>
+            <ImageContainer>
+                <StyledLink to={`/product/${item._id}`}>
+                    {' '}
+                    <Image main={img[0]} sec={img[1]} />
+                </StyledLink>
+
+                <ProductActionContainer>
+                    <Favorite onClick={handleAdd}>
+                        {liked ? (
+                            <FavoriteOutlined
+                                style={{ fontSize: 16, color: '#fff' }}
+                            />
+                        ) : (
+                            <FavoriteBorder style={{ fontSize: 16 }} />
+                        )}
+                    </Favorite>
+                </ProductActionContainer>
+                <ProductAction>
+                    <ProductActionContainer onClick={() => setOpen(true)}>
+                        <Tooltip title="Quick View" placement="right-end">
+                            <Preview style={{ fontSize: 16 }} />
+                        </Tooltip>
+                    </ProductActionContainer>
+                </ProductAction>
+                <Cart>
+                    <ShoppingCartContainer>
+                        <FormatListNumbered style={{ fontSize: 17 }} />
+                    </ShoppingCartContainer>
+                    <StyledLink
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                        to={`/product/${item._id}`}
+                    >
                         {' '}
-                        <Image main={img[0]} sec={img[1]} />
+                        <CartTitle>Select Options</CartTitle>{' '}
                     </StyledLink>
-                    <ProductStatus>
-                        {status?.map((item, i) => (
-                            <Status fs={item} key={i} order={i + 1}>
-                                {item}
-                            </Status>
-                        ))}
-                    </ProductStatus>
-                    <ProductAction>
-                        <ProductActionContainer>
-                            <Favorite onClick={handleAdd}>
-                                {liked ? (
-                                    <FavoriteOutlined
-                                        style={{ fontSize: 16, color: '#fff' }}
-                                    />
-                                ) : (
-                                    <FavoriteBorder style={{ fontSize: 16 }} />
-                                )}
-                            </Favorite>
-                        </ProductActionContainer>
-                        <ProductActionContainer onClick={() => setOpen(true)}>
-                            <Tooltip title="Quick View" placement="right-end">
-                                <Preview style={{ fontSize: 16 }} />
-                            </Tooltip>
-                        </ProductActionContainer>
-                    </ProductAction>
-                    <Cart>
-                        <ShoppingCartContainer>
-                            <FormatListNumbered style={{ fontSize: 17 }} />
-                        </ShoppingCartContainer>
-                        <StyledLink
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                            to={`/product/${item._id}`}
-                        >
-                            {' '}
-                            <CartTitle>Select Options</CartTitle>{' '}
-                        </StyledLink>
-                    </Cart>
-                </ImageContainer>
-                <InfoContainer>
-                    <Categories>
-                        {category?.map((item, i) => (
-                            <Category key={i}>
-                                {(i ? ', ' : ' ') + item}
-                            </Category>
-                        ))}
-                    </Categories>
-                    <Title brand={brand}>{title}</Title>
-                    <Prices>$ {price}</Prices>
-                    <Rate>
-                        <ProductRate fz={22} rate={rate} />
-                        <ReviewCount>{reviews.length}</ReviewCount>
-                    </Rate>
-                </InfoContainer>
-            </Container>
-            {open && (
-                <Portal>
-                    <ProductModal product={item} setOpen={setOpen} />
-                </Portal>
-            )}
-        </>
+                </Cart>
+            </ImageContainer>
+            <InfoContainer>
+                <Title brand={brand}>{title}</Title>
+                <Rate>
+                    <ProductRate fz={15} rate={rate} />
+                    <ReviewCount>({reviews.length})</ReviewCount>
+                </Rate>
+                <Prices>$ {price}</Prices>
+                <ProductStatus>
+                    {status?.map((item, i) => (
+                        <Status fs={item} key={i} order={i + 1}>
+                            {item}
+                        </Status>
+                    ))}
+                </ProductStatus>
+            </InfoContainer>
+        </Container>
     )
 }
 
-export default Product
+export default ListProduct

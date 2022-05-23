@@ -360,7 +360,7 @@ const Productpage = () => {
         'http://localhost:5000/api/products/' + id
     )
     // console.log(loading)
-    // console.log('render')
+    console.log('render')
 
     useEffect(() => {
         setProduct(data)
