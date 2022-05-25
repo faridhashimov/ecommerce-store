@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { brandItems } from '../data'
 import { mobile } from '../responsive'
@@ -55,10 +56,18 @@ const BrandItemContainer = styled.div`
 `
 
 const Brands = () => {
+    let navigate = useNavigate()
+    const onOpenProducts = (item) => {
+        navigate('/list', { state: { item: item.name } })
+    }
+
     return (
         <Container>
             {brandItems.map((item) => (
-                <BrandItemContainer key={item.id}>
+                <BrandItemContainer
+                    onClick={() => onOpenProducts(item)}
+                    key={item.id}
+                >
                     <BranItemImageContainer>
                         <BrandItemImage src={item.img} />
                     </BranItemImageContainer>

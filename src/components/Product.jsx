@@ -203,14 +203,20 @@ const Categories = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
-const Category = styled.span`
-    /* margin-right: 5px; */
     font-size: 13px;
     color: #ccc;
-    &:hover {
-        color: #f27a1a;
+    a {
+        &:hover {
+            color: #f27a1a;
+        }
     }
+`
+const Category = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    /* &:hover {
+        color: #f27a1a;
+    } */
     ${mobile({ display: 'none' })}
 `
 const Title = styled.h2`
@@ -265,9 +271,6 @@ const Product = (item) => {
         ? reviews.reduce((a, c) => c.rating + a, 0) / reviews.length
         : null
     const dispatch = useDispatch()
-    const handleClick = () => {
-        dispatch(openModal(item))
-    }
 
     const handleAdd = () => {
         if (productInWishlist.length === 0) {
@@ -334,7 +337,7 @@ const Product = (item) => {
                 <InfoContainer>
                     <Categories>
                         {category?.map((item, i) => (
-                            <Category key={i}>
+                            <Category key={i} to="/list" state={{ item }}>
                                 {(i ? ', ' : ' ') + item}
                             </Category>
                         ))}

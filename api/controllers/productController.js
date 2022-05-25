@@ -43,18 +43,15 @@ const deleteProduct = async (req, res) => {
 //GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
     const qNew = req.query.new
-    const qCat = req.query.category
+
+    let findProduct = req.query
 
     try {
         let products
         if (qNew) {
             products = await Product.find().sort({ createdAt: -1 })
-        } else if (qCat) {
-            products = await Product.find({
-                category: { $in: qCat },
-            })
-        } else {
-            products = await Product.find({})
+        }  else {
+            products = await Product.find(findProduct)
         }
 
         res.status(200).json(products)

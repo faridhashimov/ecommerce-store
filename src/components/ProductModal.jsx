@@ -55,6 +55,8 @@ const Images = styled.div`
     /* flex: 2; */
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     margin-right: 10px;
 `
 const MainImageContainer = styled.div`
@@ -93,13 +95,24 @@ const Status = styled.div`
         }
     }};
 `
-const Image = styled.img`
+const ImageContainer = styled.div`
     height: 108px;
-    width: 78px;
+    width: 70px;
     margin-bottom: 7px;
-    object-fit: cover;
     cursor: pointer;
-    /* border: 1px solid coral; */
+    transition: all 0.2s ease-in;
+    opacity: ${(props) => (props.img === true ? '1' : '0.5')};
+    border: ${(props) =>
+        props.img === true ? '1px solid #f27a1a' : '1px solid #fff'};
+    &:hover {
+        opacity: 1;
+        transition: all 0.2s ease-in;
+    }
+`
+const Image = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 `
 const ModalInfo = styled.div`
     flex: 1;
@@ -386,11 +399,15 @@ const ProductModal = ({ product, setOpen }) => {
                         <Images>
                             {' '}
                             {img.map((item, i) => (
-                                <Image
-                                    onClick={() => setImage(item)}
+                                <ImageContainer
+                                    img={item === image ? true : false}
                                     key={i}
-                                    src={item}
-                                />
+                                >
+                                    <Image
+                                        onClick={() => setImage(item)}
+                                        src={item}
+                                    />
+                                </ImageContainer>
                             ))}
                         </Images>
                         <MainImageContainer>
@@ -401,8 +418,7 @@ const ProductModal = ({ product, setOpen }) => {
                                     </Status>
                                 ))}
                             </ProductStatuses>
-                            <MainImageComponent image={image}/>
-                           
+                            <MainImageComponent image={image} />
                         </MainImageContainer>
                     </ModalView>
                     <ModalInfo>

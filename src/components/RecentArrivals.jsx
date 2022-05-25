@@ -77,11 +77,13 @@ const InfoButton = styled(Link)`
     justify-content: center;
     align-items: center;
     background: transparent;
+    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #232323;
     border: 2px solid #232323;
     padding: 10px 24px;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     &:hover {
@@ -122,7 +124,7 @@ const RecentArrivals = () => {
         if (productType !== 'All') {
             setFilteredProducts(
                 products.filter(
-                    (product) => product.category.indexOf(productType) > -1
+                    (product) => product.category.indexOf(productType) > -1 || product.gender.indexOf(productType) > -1
                 )
             )
         } else {

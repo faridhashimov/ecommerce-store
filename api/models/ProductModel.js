@@ -21,6 +21,7 @@ const ProductSchema = new mongoose.Schema(
         brand: {type: String, required: true },
         img: { type: Array, required: true },
         category: { type: Array },
+        gender: { type: String },
         size: { type: Array },
         color: { type: Array },
         price: { type: Number, required: true },

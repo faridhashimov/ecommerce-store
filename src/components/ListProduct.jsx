@@ -16,15 +16,16 @@ import { mobile } from '../responsive'
 import { Link, useNavigate } from 'react-router-dom'
 import Portal from '../Portal'
 import ProductModal from './ProductModal'
+import DiscountInfoComponent from './DiscountInfoComponent'
 
 const ProductAction = styled.div`
     position: absolute;
     right: 20px;
-    top: 40px;
+    top: 45px;
     display: flex;
-    /* flex-direction: column;
+    flex-direction: column;
     justify-content: space-between;
-    height: 70px; */
+    /* height: 70px; */
     opacity: 0;
     transform: translateX(-20px);
     transition: all 0.2s ease-in-out;
@@ -46,7 +47,7 @@ const ShoppingCartContainer = styled.div`
 `
 const Cart = styled.div`
     width: 100%;
-    background-color: #232323;
+    background-color: rgba(36, 36, 36, 0.7);
     color: #fff;
     height: 0px;
     opacity: 0;
@@ -59,7 +60,7 @@ const Cart = styled.div`
     align-items: center;
     transition: all 0.2s ease-in-out;
     &:hover {
-        background-color: #f27a1a;
+        background-color: rgba(242, 124, 28, 0.7);
         transition: all 0.2s ease-in-out;
     }
     &:hover ${ShoppingCartContainer} {
@@ -85,7 +86,7 @@ const Container = styled.div`
     flex-direction: column;
     height: 470px;
     /* margin: 0px 10px 15px; */
-    padding-bottom: 5px;
+    padding-bottom: 7px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     &:hover {
@@ -110,45 +111,43 @@ const ImageContainer = styled.div`
     margin-bottom: 10px;
     ${mobile({ height: '250px' })}
 `
-
-const ProductStatus = styled.div`
-    display: flex;
-    gap: 5px;
-    margin-top: 5px;
-`
+const ProductStatus = styled.div``
 const Status = styled.div`
-    width: 40px;
-    padding: 4px;
-    border-radius: 3px;
+    position: absolute;
+    top: ${(props) => props.order * 25}px;
+    left: 10px;
+    height: 35px;
+    width: 35px;
     color: #fff;
-    font-size: ${(props) => (props.fs === 'Out of Stock' ? '11px' : '13px')};
+    font-size: ${(props) => (props.fs === 'Out of Stock' ? '9px' : '11px')};
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    border-radius: 50%;
+    border: none;
     ${(props) => {
         if (props.fs === 'Sale') {
             return css`
                 background-color: #ef837b;
-                border: 1px #ef837b;
             `
         } else if (props.fs === 'New') {
             return css`
                 background-color: #a6c76c;
-                border: 1px #a6c76c;
             `
         } else if (props.fs === 'Top') {
             return css`
                 background-color: #7dd2ea;
-                border: 1px #7dd2ea;
             `
         } else {
             return css`
                 background-color: #cccccc;
-                border: 1px #cccccc;
             `
         }
     }};
+    span {
+        z-index: 1000;
+    }
 `
 const ProductActionContainer = styled.div`
     height: 30px;
@@ -157,13 +156,29 @@ const ProductActionContainer = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: black;
-    color: #fff;
-    transition: background-color 0.2s ease-in-out;
-    &:hover {
+    background-color: #fff;
+    color: #f27a1a;
+    box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.46);
+    transition: all 0.2s ease-in-out;
+    /* &:hover {
         background-color: #f27a1a;
-        transition: background-color 0.2s ease-in-out;
-    }
+        color: #fff;
+        transition: all 0.2s ease-in-out;
+    } */
+`
+const FavoriteContainer = styled.div`
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #f27a1a;
+    box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.46);
 `
 const Favorite = styled.div`
     display: flex;
@@ -230,7 +245,7 @@ const Title = styled.h2`
 const Prices = styled.h3`
     font-size: 15px;
     line-height: 16px;
-    font-weight: 500;
+    font-weight: 600;
     color: #f27a1a;
     margin: 7px 0px;
     ${mobile({ fontSize: '14px', color: '#F27A1A' })}
@@ -278,63 +293,70 @@ const ListProduct = (item) => {
     const liked = productInWishlist.some((e) => e._id === item._id)
 
     return (
-        <Container>
-            <ImageContainer>
-                <StyledLink to={`/product/${item._id}`}>
-                    {' '}
-                    <Image main={img[0]} sec={img[1]} />
-                </StyledLink>
-
-                <ProductActionContainer>
-                    <Favorite onClick={handleAdd}>
-                        {liked ? (
-                            <FavoriteOutlined
-                                style={{ fontSize: 16, color: '#fff' }}
-                            />
-                        ) : (
-                            <FavoriteBorder style={{ fontSize: 16 }} />
-                        )}
-                    </Favorite>
-                </ProductActionContainer>
-                <ProductAction>
-                    <ProductActionContainer onClick={() => setOpen(true)}>
-                        <Tooltip title="Quick View" placement="right-end">
-                            <Preview style={{ fontSize: 16 }} />
-                        </Tooltip>
-                    </ProductActionContainer>
-                </ProductAction>
-                <Cart>
-                    <ShoppingCartContainer>
-                        <FormatListNumbered style={{ fontSize: 17 }} />
-                    </ShoppingCartContainer>
-                    <StyledLink
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                        }}
-                        to={`/product/${item._id}`}
-                    >
+        <>
+            <Container>
+                <ImageContainer>
+                    <StyledLink to={`/product/${item._id}`}>
                         {' '}
-                        <CartTitle>Select Options</CartTitle>{' '}
+                        <Image main={img[0]} sec={img[1]} />
                     </StyledLink>
-                </Cart>
-            </ImageContainer>
-            <InfoContainer>
-                <Title brand={brand}>{title}</Title>
-                <Rate>
-                    <ProductRate fz={15} rate={rate} />
-                    <ReviewCount>({reviews.length})</ReviewCount>
-                </Rate>
-                <Prices>$ {price}</Prices>
-                <ProductStatus>
-                    {status?.map((item, i) => (
-                        <Status fs={item} key={i} order={i + 1}>
-                            {item}
-                        </Status>
-                    ))}
-                </ProductStatus>
-            </InfoContainer>
-        </Container>
+                    <ProductStatus>
+                        {status?.map((item, i) => (
+                            <Status fs={item} key={i} order={i + 1}>
+                                <span>{item}</span>
+                            </Status>
+                        ))}
+                    </ProductStatus>
+                    <FavoriteContainer>
+                        <Favorite onClick={handleAdd}>
+                            {liked ? (
+                                <FavoriteOutlined style={{ fontSize: 16 }} />
+                            ) : (
+                                <FavoriteBorder style={{ fontSize: 16 }} />
+                            )}
+                        </Favorite>
+                    </FavoriteContainer>
+                    <ProductAction>
+                        <ProductActionContainer onClick={() => setOpen(true)}>
+                            <Tooltip title="Quick View" placement="right-end">
+                                <Preview style={{ fontSize: 16 }} />
+                            </Tooltip>
+                        </ProductActionContainer>
+                    </ProductAction>
+                    <Cart>
+                        <ShoppingCartContainer>
+                            <FormatListNumbered style={{ fontSize: 17 }} />
+                        </ShoppingCartContainer>
+                        <StyledLink
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                            to={`/product/${item._id}`}
+                        >
+                            {' '}
+                            <CartTitle>Select Options</CartTitle>{' '}
+                        </StyledLink>
+                    </Cart>
+                </ImageContainer>
+                <InfoContainer>
+                    <Title brand={brand}>{title}</Title>
+                    <Rate>
+                        <ProductRate fz={15} rate={rate} />
+                        <ReviewCount>({reviews.length})</ReviewCount>
+                    </Rate>
+                    <Prices>$ {price}</Prices>
+                   
+                        <DiscountInfoComponent status={status[0]} />
+                    
+                </InfoContainer>
+            </Container>
+            {open && (
+                <Portal>
+                    <ProductModal product={item} setOpen={setOpen} />
+                </Portal>
+            )}
+        </>
     )
 }
 

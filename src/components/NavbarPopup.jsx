@@ -31,6 +31,7 @@ const sharedStyle = css`
     align-items: center;
     color: #666 !important;
     margin: 7px 0px;
+    font-weight: 500;
     cursor: pointer;
     text-transform: none !important;
     &:first-child {
@@ -62,7 +63,7 @@ const NavbarPopup = ({ popup }) => {
     const dispatch = useDispatch()
     const handleLogOut = () => {
         dispatch(logOut())
-        navigate('/', {replace: true})
+        navigate('/', { replace: true })
     }
     return (
         <PopupContainer state={popup}>

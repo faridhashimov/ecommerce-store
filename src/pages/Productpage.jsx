@@ -28,10 +28,12 @@ import { useAxios } from '../hooks/useAxios'
 
 const Wrapper = styled.div`
     width: 93vw;
+    min-height: 100vh;
     height: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 `
 const Modal = styled.div`
     height: 100%;
@@ -84,14 +86,28 @@ const Status = styled.div`
 const Images = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     margin-right: 10px;
 `
-const Image = styled.img`
-    height: 118px;
-    width: 86px;
+const ImageContainer = styled.div`
+    height: 108px;
+    width: 70px;
     margin-bottom: 7px;
-    object-fit: cover;
     cursor: pointer;
+    transition: all 0.2s ease-in;
+    opacity: ${(props) => (props.img === true ? '1' : '0.5')};
+    border: ${(props) =>
+        props.img === true ? '1px solid #f27a1a' : '1px solid #fff'};
+    &:hover {
+        opacity: 1;
+        transition: all 0.2s ease-in;
+    }
+`
+const Image = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 `
 const ModalInfo = styled.div`
     flex: 1;
@@ -412,11 +428,16 @@ const Productpage = () => {
                             <ModalView>
                                 <Images>
                                     {product?.img?.map((item, i) => (
-                                        <Image
-                                            onClick={() => onSetImage(item)}
+                                        <ImageContainer
+                                            img={item === image ? true : false}
                                             key={i}
-                                            src={item}
-                                        />
+                                        >
+                                            <Image
+                                                onClick={() => onSetImage(item)}
+                                                key={i}
+                                                src={item}
+                                            />
+                                        </ImageContainer>
                                     ))}
                                 </Images>
                                 <MainImageContainer>
