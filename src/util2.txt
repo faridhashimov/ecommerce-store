@@ -7,9 +7,7 @@ import {
     Footer,
     ListFilters,
     ListProduct,
-    ListProducts,
     Navbar,
-    SearchFilterItem,
     Spinner,
 } from '../components'
 import { useAxios } from '../hooks/useAxios'
@@ -88,18 +86,8 @@ const Check = styled.input`
 `
 const ListHeader = styled.div`
     display: flex;
-    flex-direction: column;
-    padding: 0px 0px 15px 20px;
-`
-const ListHeaderTop = styled.div`
-    display: flex;
     justify-content: space-between;
-`
-const ListHeaderBottom = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 10px;
-    padding-bottom: 10px;
+    padding: 0px 0px 15px 20px;
 `
 const ListHeadeTitle = styled.h1`
     font-size: 17px;
@@ -160,68 +148,45 @@ const List = () => {
             .join('&')
 
     useEffect(() => {
-        let isMounted = true
-        const source = axios.CancelToken.source()
         const getProducts = async () => {
             setLoading(true)
             try {
                 const res = await axios.get(
                     cat
                         ? `http://localhost:5000/api/products?${qs}`
-                        : `http://localhost:5000/api/products`,
-
-                    {
-                        cancelToken: source.token,
-                    }
+                        : `http://localhost:5000/api/products`
                 )
-                if (isMounted) {
-                    setProducts(res.data)
-                    setError(null)
-                    const allCats = [
-                        ...new Set(
-                            res.data.map((item) => item.category).flat()
-                        ),
-                    ]
-                    const allBrands = [
-                        ...new Set(res.data.map((item) => item.brand)),
-                    ]
-                    const allGenders = [
-                        ...new Set(res.data.map((item) => item.gender)),
-                    ]
-                    const allSizes = [
-                        ...new Set(res.data.map((item) => item.size).flat()),
-                    ]
-                    setFilters({
-                        categoryFilter: allCats,
-                        brandFilter: allBrands,
-                        sizeFilter: allSizes,
-                        genderFilter: allGenders,
-                    })
-                }
+                setProducts(res.data)
+                setLoading(false)
+                console.log(res.data)
+                const allCats = [
+                    ...new Set(res.data.map((item) => item.category).flat()),
+                ]
+                const allBrands = [
+                    ...new Set(res.data.map((item) => item.brand)),
+                ]
+                const allGenders = [
+                    ...new Set(res.data.map((item) => item.gender)),
+                ]
+                const allSizes = [
+                    ...new Set(res.data.map((item) => item.size).flat()),
+                ]
+
+                setFilters({
+                    categoryFilter: allCats,
+                    brandFilter: allBrands,
+                    sizeFilter: allSizes,
+                    genderFilter: allGenders,
+                })
             } catch (error) {
-                if (isMounted) {
-                    setError(error.message)
-                    setProducts(null)
-                }
-            } finally {
-                isMounted && setLoading(false)
+                setError(error.message)
+                throw new Error(error)
             }
         }
         getProducts()
-
-        const cleanUp = () => {
-            isMounted = false
-            source.cancel()
-        }
-
-        return cleanUp
     }, [cat, qs])
 
     console.log('rendered')
-
-    const onDeleteFilter = (id) => {
-        setCat(Object.keys(cat).filter((item) => cat[item] !== id))
-    }
 
     return (
         <>
@@ -240,39 +205,32 @@ const List = () => {
 
                             <ProductsContainer>
                                 <ListHeader>
-                                    <ListHeaderTop>
-                                        <ListHeadeTitle>
-                                            {products.length} result
-                                            {products.length > 1 ? 's ' : null}
-                                            are listed for your search
-                                        </ListHeadeTitle>
-                                        <FilterBy>
-                                            <FilterByOption>
-                                                Sort By:
-                                            </FilterByOption>
-                                            <FilterByOption value="new">
-                                                Newest Arrivals
-                                            </FilterByOption>
-                                            <FilterByOption value="low">
-                                                Price: Low
-                                            </FilterByOption>
-                                            <FilterByOption value="high">
-                                                Price: High
-                                            </FilterByOption>
-                                        </FilterBy>
-                                    </ListHeaderTop>
-                                    <ListHeaderBottom>
-                                        {cat &&
-                                            Object.keys(cat).map((key) => (
-                                                <SearchFilterItem
-                                                    onDeleteFilter={
-                                                        onDeleteFilter
-                                                    }
-                                                    key={key}
-                                                    info={cat[key]}
-                                                />
-                                            ))}
-                                    </ListHeaderBottom>
+                                    <ListHeadeTitle>
+                                        {products.length} result
+                                        {products.length > 1 ? 's' : null} are
+                                        listed{' '}
+                                        {cat
+                                            ? `for the search "${Object.keys(
+                                                  cat
+                                              )
+                                                  .map((key) => cat[key])
+                                                  .join(', ')}"`
+                                            : null}
+                                    </ListHeadeTitle>
+                                    <FilterBy>
+                                        <FilterByOption>
+                                            Sort By:
+                                        </FilterByOption>
+                                        <FilterByOption value="new">
+                                            Newest Arrivals
+                                        </FilterByOption>
+                                        <FilterByOption value="low">
+                                            Price: Low
+                                        </FilterByOption>
+                                        <FilterByOption value="high">
+                                            Price: High
+                                        </FilterByOption>
+                                    </FilterBy>
                                 </ListHeader>
 
                                 <Products>
@@ -288,6 +246,11 @@ const List = () => {
             <Footer />
         </>
     )
+}
+
+
+const Products = ({}) => {
+
 }
 
 export default List

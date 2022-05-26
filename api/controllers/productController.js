@@ -46,6 +46,8 @@ const getAllProducts = async (req, res) => {
 
     let findProduct = req.query
 
+    console.log(findProduct)
+    
     try {
         let products
         if (qNew) {

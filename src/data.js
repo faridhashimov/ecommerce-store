@@ -8,7 +8,7 @@ export const brandItems = [
     {
         id: 2,
         img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Pull%26Bear_logo.svg/1200px-Pull%26Bear_logo.svg.png',
-        name: 'Pull&Bear',
+        name: 'Pull & Bear',
     },
     {
         id: 3,
