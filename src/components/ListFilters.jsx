@@ -1,4 +1,10 @@
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import {
+    CheckBox,
+    CheckBoxOutlineBlank,
+    ExpandLess,
+    ExpandMore,
+} from '@mui/icons-material'
+import { SvgIcon } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 
@@ -43,7 +49,7 @@ const Filters = styled.ul`
 `
 const FilterName = styled.span`
     font-size: 13px;
-    color: #1b1b1b;
+    /* color: #1b1b1b; */
     transition: all 0.2s ease-in;
 `
 const FilterItem = styled.li`
@@ -59,6 +65,14 @@ const FilterItem = styled.li`
 const Check = styled.input`
     margin-right: 7px;
 `
+
+const StyledCheckbox = styled(SvgIcon)`
+    margin-right: 5px;
+
+    stroke: black;
+    stroke-width: .25px;
+`
+
 const ListFilters = ({ filters, cat, setCat }) => {
     const [openFilter, setOpenFilters] = useState([
         'categories',
@@ -113,7 +127,19 @@ const ListFilters = ({ filters, cat, setCat }) => {
                                     })
                                 }
                             >
-                                <FilterName>{item}</FilterName>
+                                <FilterName
+                                    style={{
+                                        color: !cat
+                                            ? '#1b1b1b'
+                                            : Object.entries(cat)
+                                                  .flat()
+                                                  .includes(item)
+                                            ? '#f27a1a'
+                                            : '#1b1b1b',
+                                    }}
+                                >
+                                    {item}
+                                </FilterName>
                             </FilterItem>
                         ))}
                     </Filters>
@@ -150,7 +176,18 @@ const ListFilters = ({ filters, cat, setCat }) => {
                                     })
                                 }
                             >
-                                <Check type="checkbox" />{' '}
+                                {!cat ? (
+                                    <StyledCheckbox
+                                        component={CheckBoxOutlineBlank}
+                                    />
+                                ) : Object.entries(cat)
+                                      .flat()
+                                      .includes(item) ? (
+                                    <CheckBox />
+                                ) : (
+                                    <CheckBoxOutlineBlank />
+                                )}
+                                {/* <Check type="checkbox" /> */}
                                 <FilterName>{item}</FilterName>
                             </FilterItem>
                         ))}

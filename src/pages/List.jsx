@@ -217,11 +217,17 @@ const List = () => {
         return cleanUp
     }, [cat, qs])
 
-    console.log('rendered')
+   
 
     const onDeleteFilter = (id) => {
-        setCat(Object.keys(cat).filter((item) => cat[item] !== id))
+        console.log(id)
+        setCat(
+            Object.fromEntries(
+                Object.entries(cat).filter(([key, value]) => value !== id)
+            )
+        )
     }
+    console.log(cat)
 
     return (
         <>
