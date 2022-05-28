@@ -14,9 +14,9 @@ import {
     List,
     Orders,
     SingleOrder,
+    Productpage,
+    WishList
 } from './pages'
-import Productpage from './pages/Productpage'
-import WishList from './pages/WishList'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {

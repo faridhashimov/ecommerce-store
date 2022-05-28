@@ -1,18 +1,15 @@
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import axios from 'axios'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import {
     Footer,
     ListFilters,
     ListProduct,
-    ListProducts,
     Navbar,
     SearchFilterItem,
     Spinner,
 } from '../components'
-import { useAxios } from '../hooks/useAxios'
 
 const Container = styled.div`
     width: 100%;
@@ -24,67 +21,11 @@ const Wrapper = styled.div`
     padding: 30px 0px;
     display: flex;
     align-items: center;
-`
-const FilterContainer = styled.div`
-    flex: 1;
-    align-self: flex-start;
+    opacity: ${(props) => props.opacity};
 `
 const ProductsContainer = styled.div`
     flex: 5;
     align-self: flex-start;
-`
-const CategoriesContainer = styled.div`
-    padding-bottom: 15px;
-
-    border-bottom: 1px solid #dfdfdf;
-`
-const Categories = styled.div`
-    height: ${(props) => props.height};
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-        width: 8px;
-        background-color: #f1f1f1;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #888888;
-        border-radius: 4px;
-        min-height: 10px;
-    }
-`
-const FilterHeader = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0px 10px;
-    cursor: pointer;
-`
-const Title = styled.h3`
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-`
-const Filters = styled.ul`
-    list-style: none;
-    overflow: hidden;
-`
-const FilterName = styled.span`
-    font-size: 13px;
-    color: #1b1b1b;
-    transition: all 0.2s ease-in;
-`
-const FilterItem = styled.li`
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 3px 0px;
-    &:hover ${FilterName} {
-        color: #999;
-        transition: all 0.2s ease-in;
-    }
-`
-const Check = styled.input`
-    margin-right: 7px;
 `
 const ListHeader = styled.div`
     display: flex;
@@ -127,7 +68,6 @@ const List = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [products, setProducts] = useState([])
-    const [category, setCategory] = useState(location?.state?.item)
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -148,7 +88,7 @@ const List = () => {
         }
     }, [])
 
-    console.log(location.state)
+    // console.log(location.state)
 
     const qs =
         cat &&
@@ -217,31 +157,51 @@ const List = () => {
         return cleanUp
     }, [cat, qs])
 
-   
+    const onToggleFilter = (categ, id) => {
+        if (cat && Object.entries(cat).flat().includes(id)) {
+            setCat(
+                Object.fromEntries(
+                    Object.entries(cat).filter(([key, value]) => value !== id)
+                )
+            )
+        } else {
+            if (categ === 'gender') {
+                setCat({ ...cat, gender: id })
+            } else if (categ === 'size') {
+                setCat({ ...cat, size: id })
+            } else if (categ === 'brand') {
+                setCat({ ...cat, brand: id })
+            } else {
+                setCat({ ...cat, category: id })
+            }
+        }
+    }
 
     const onDeleteFilter = (id) => {
-        console.log(id)
+        // console.log(id)
         setCat(
             Object.fromEntries(
                 Object.entries(cat).filter(([key, value]) => value !== id)
             )
         )
     }
+
     console.log(cat)
 
     return (
         <>
             <Navbar />
             <Container>
-                <Wrapper>
-                    {loading ? (
+                <Wrapper opacity={loading ? 0.5 : 1}>
+                    {/* {loading ? (
                         <Spinner />
                     ) : (
-                        <>
+                        <> */}
                             <ListFilters
                                 cat={cat}
                                 setCat={setCat}
                                 filters={filters}
+                                onToggleFilter={onToggleFilter}
                             />
 
                             <ProductsContainer>
@@ -249,8 +209,8 @@ const List = () => {
                                     <ListHeaderTop>
                                         <ListHeadeTitle>
                                             {products.length} result
-                                            {products.length > 1 ? 's ' : null}
-                                            are listed for your search
+                                            {products.length > 1 ? 's' : null}
+                                            {' are listed for your search'}
                                         </ListHeadeTitle>
                                         <FilterBy>
                                             <FilterByOption>
@@ -287,8 +247,8 @@ const List = () => {
                                     ))}
                                 </Products>
                             </ProductsContainer>
-                        </>
-                    )}
+                        {/* </>
+                    )} */}
                 </Wrapper>
             </Container>
             <Footer />

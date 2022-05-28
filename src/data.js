@@ -1,4 +1,3 @@
-
 export const brandItems = [
     {
         id: 1,
@@ -62,22 +61,22 @@ export const brandItems = [
 export const catItems = [
     {
         id: 1,
-        title: 'final reduction',
-        cat: 'sandals & flip flops',
+        title: 'Final Reduction',
+        cat: 'Sandals & Flip Flops',
         disc: 'up to 60% off',
         img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-1.jpg',
     },
     {
         id: 2,
-        title: 'limited time only',
-        cat: 'trainers & sportwear',
+        title: 'Limited Time Only',
+        cat: 'Trainers & Sportwear',
         disc: '50 - 70% off',
         img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-2.jpg',
     },
     {
         id: 3,
-        title: 'this week we love...',
-        cat: "women's accessories",
+        title: 'This Week We Love...',
+        cat: "Women's Accessories",
         disc: 'from $6.99',
         img: 'https://d-themes.com/react/molla/demo-8/images/home/banners/banner-3.jpg',
     },

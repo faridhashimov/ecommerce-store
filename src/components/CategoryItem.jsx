@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { ArrowRightAltOutlined } from '@mui/icons-material';
+import styled from 'styled-components'
+import { ArrowRightAltOutlined } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
 
 const Category = styled.div`
     flex: 1;
@@ -7,7 +8,7 @@ const Category = styled.div`
     position: relative;
     height: 480px;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
 
     &:after {
         content: '';
@@ -18,19 +19,18 @@ const Category = styled.div`
         left: 0;
         background-color: rgba(0, 0, 0, 0.2);
         opacity: 0;
-        transition: all .2s ease;
+        transition: all 0.2s ease;
     }
     &:hover::after {
         opacity: 1;
-        transition: all .2s ease;
-
+        transition: all 0.2s ease;
     }
-`;
+`
 const CategoryImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-`;
+`
 const CategoryInfo = styled.div`
     display: flex;
     flex-direction: column;
@@ -42,34 +42,35 @@ const CategoryInfo = styled.div`
     text-transform: uppercase;
     width: 150px;
     z-index: 2;
-`;
+`
 const CategoryTitle = styled.span`
     margin-bottom: 20px;
     font-size: 13px;
     font-weight: 300;
     color: #777777;
-`;
+`
 const CategoryName = styled.h1`
     font-size: 22px;
     font-weight: 700;
     line-height: 24px;
     color: #333333;
-`;
+`
 const CategoryDiscount = styled.h2`
     font-size: 22px;
     font-weight: 300;
     letter-spacing: -1px;
     color: #333333;
-`;
+`
 
-const CategoryButton = styled.h2`
+const CategoryButton = styled(Link)`
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
     font-size: 14px;
     font-weight: 400;
-    color: #F27A1A;
-    border: 2px solid #F27A1A;
+    color: #f27a1a;
+    border: 2px solid #f27a1a;
     min-width: 120px;
     text-transform: uppercase;
     padding: 6px 10px;
@@ -78,13 +79,13 @@ const CategoryButton = styled.h2`
     transition: all 0.2s ease;
     background-color: transparent;
     &:hover {
-        background-color: #F27A1A;
+        background-color: #f27a1a;
         color: #fff;
         transition: all 0.2s ease;
     }
-`;
+`
 
-const CategoryItem = ({img, title, cat, disc}) => {
+const CategoryItem = ({ img, title, cat, disc, dataurl }) => {
     return (
         <Category>
             <CategoryImage src={img} />
@@ -92,7 +93,7 @@ const CategoryItem = ({img, title, cat, disc}) => {
                 <CategoryTitle>{title}</CategoryTitle>
                 <CategoryName>{cat}</CategoryName>
                 <CategoryDiscount>{disc}</CategoryDiscount>
-                <CategoryButton>
+                <CategoryButton to="/list" state={{ item: cat }}>
                     Shop Now
                     <ArrowRightAltOutlined
                         style={{
@@ -104,7 +105,7 @@ const CategoryItem = ({img, title, cat, disc}) => {
                 </CategoryButton>
             </CategoryInfo>
         </Category>
-    );
-};
+    )
+}
 
-export default CategoryItem;
+export default CategoryItem

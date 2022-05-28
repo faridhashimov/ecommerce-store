@@ -10,7 +10,6 @@ import ProductRate from './ProductRate'
 import { css } from 'styled-components'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { openModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
 import { mobile } from '../responsive'
 import { Link, useNavigate } from 'react-router-dom'
@@ -271,7 +270,7 @@ const StyledLink = styled(Link)`
 const ListProduct = (item) => {
     // console.log(item)
     const [open, setOpen] = useState(false)
-    const { img, status, category, title, price, reviews, brand } = item
+    const { img, status, title, price, reviews, brand } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
     let navigate = useNavigate()
     const rate = reviews

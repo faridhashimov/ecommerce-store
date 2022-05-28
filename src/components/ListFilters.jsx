@@ -5,7 +5,7 @@ import {
     ExpandMore,
 } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 const FilterContainer = styled.div`
@@ -14,7 +14,6 @@ const FilterContainer = styled.div`
 `
 const CategoriesContainer = styled.div`
     padding-bottom: 15px;
-
     border-bottom: 1px solid #dfdfdf;
 `
 const Categories = styled.div`
@@ -23,6 +22,7 @@ const Categories = styled.div`
     &::-webkit-scrollbar {
         width: 8px;
         background-color: #f1f1f1;
+        border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -57,23 +57,20 @@ const FilterItem = styled.li`
     align-items: center;
     cursor: pointer;
     padding: 3px 0px;
+    transition: all 0.2s ease-in;
     &:hover ${FilterName} {
         color: #999;
         transition: all 0.2s ease-in;
     }
 `
-const Check = styled.input`
-    margin-right: 7px;
-`
-
 const StyledCheckbox = styled(SvgIcon)`
     margin-right: 5px;
-
-    stroke: black;
-    stroke-width: .25px;
+    border: none;
+    color: ${(props) => props.c};
+    stroke-width: 0.2px;
 `
 
-const ListFilters = ({ filters, cat, setCat }) => {
+const ListFilters = ({ filters, cat, onToggleFilter }) => {
     const [openFilter, setOpenFilters] = useState([
         'categories',
         'gender',
@@ -91,7 +88,7 @@ const ListFilters = ({ filters, cat, setCat }) => {
         }
     }
 
-    console.log('render')
+    // console.log('render')
 
     return (
         <FilterContainer>
@@ -119,13 +116,13 @@ const ListFilters = ({ filters, cat, setCat }) => {
                         {filters.categoryFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                // onClick={() => setCategory(item)}
-                                onClick={() =>
-                                    setCat({
-                                        ...cat,
-                                        category: item,
-                                    })
-                                }
+                                // onClick={() =>
+                                //     setCat({
+                                //         ...cat,
+                                //         category: item,
+                                //     })
+                                // }
+                                onClick={() => onToggleFilter('category', item)}
                             >
                                 <FilterName
                                     style={{
@@ -158,7 +155,7 @@ const ListFilters = ({ filters, cat, setCat }) => {
                     height={
                         openFilter.includes('gender') &&
                         filters.genderFilter.length >= 4
-                            ? '105px'
+                            ? '120px'
                             : openFilter.includes('gender') &&
                               filters.genderFilter.length < 4
                             ? 'fit-content'
@@ -169,25 +166,32 @@ const ListFilters = ({ filters, cat, setCat }) => {
                         {filters.genderFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                onClick={() =>
-                                    setCat({
-                                        ...cat,
-                                        gender: item,
-                                    })
-                                }
+                                // onClick={() =>
+                                //     setCat({
+                                //         ...cat,
+                                //         gender: item,
+                                //     })
+                                // }
+                                onClick={() => onToggleFilter('gender', item)}
                             >
                                 {!cat ? (
                                     <StyledCheckbox
+                                        c="#999"
                                         component={CheckBoxOutlineBlank}
                                     />
                                 ) : Object.entries(cat)
                                       .flat()
                                       .includes(item) ? (
-                                    <CheckBox />
+                                    <StyledCheckbox
+                                        c="#F27A1A"
+                                        component={CheckBox}
+                                    />
                                 ) : (
-                                    <CheckBoxOutlineBlank />
+                                    <StyledCheckbox
+                                        c="#999"
+                                        component={CheckBoxOutlineBlank}
+                                    />
                                 )}
-                                {/* <Check type="checkbox" /> */}
                                 <FilterName>{item}</FilterName>
                             </FilterItem>
                         ))}
@@ -218,14 +222,32 @@ const ListFilters = ({ filters, cat, setCat }) => {
                         {filters.brandFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                onClick={() =>
-                                    setCat({
-                                        ...cat,
-                                        brand: item,
-                                    })
-                                }
+                                // onClick={() =>
+                                //     setCat({
+                                //         ...cat,
+                                //         brand: item,
+                                //     })
+                                // }
+                                onClick={() => onToggleFilter('brand', item)}
                             >
-                                <Check type="checkbox" />{' '}
+                                {!cat ? (
+                                    <StyledCheckbox
+                                        c="#999"
+                                        component={CheckBoxOutlineBlank}
+                                    />
+                                ) : Object.entries(cat)
+                                      .flat()
+                                      .includes(item) ? (
+                                    <StyledCheckbox
+                                        c="#F27A1A"
+                                        component={CheckBox}
+                                    />
+                                ) : (
+                                    <StyledCheckbox
+                                        c="#999"
+                                        component={CheckBoxOutlineBlank}
+                                    />
+                                )}
                                 <FilterName>{item}</FilterName>
                             </FilterItem>
                         ))}
@@ -256,14 +278,32 @@ const ListFilters = ({ filters, cat, setCat }) => {
                         {filters.sizeFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                onClick={() =>
-                                    setCat({
-                                        ...cat,
-                                        size: item,
-                                    })
-                                }
+                                // onClick={() =>
+                                //     setCat({
+                                //         ...cat,
+                                //         size: item,
+                                //     })
+                                // }
+                                onClick={() => onToggleFilter('size', item)}
                             >
-                                <Check type="checkbox" />{' '}
+                                {!cat ? (
+                                    <StyledCheckbox
+                                        c="#999"
+                                        component={CheckBoxOutlineBlank}
+                                    />
+                                ) : Object.entries(cat)
+                                      .flat()
+                                      .includes(item) ? (
+                                    <StyledCheckbox
+                                        c="#F27A1A"
+                                        component={CheckBox}
+                                    />
+                                ) : (
+                                    <StyledCheckbox
+                                        c="#999"
+                                        component={CheckBoxOutlineBlank}
+                                    />
+                                )}
                                 <FilterName>{item}</FilterName>
                             </FilterItem>
                         ))}
