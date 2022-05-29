@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFromWishlist } from '../redux/wishlistSlice'
 import { Link } from 'react-router-dom'
 import { mobile } from '../responsive'
+import { List } from '@mui/material'
 
 const Container = styled.div`
     width: 100%;
@@ -33,7 +34,7 @@ const HeaderTitle = styled.h2`
     span {
         font-weight: 400;
         font-size: 20px;
-        color: #F27A1A;
+        color: #f27a1a;
     }
 `
 const Wrapper = styled.div`
@@ -72,7 +73,7 @@ const ImageTitleContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 30px 0px;
-    ${mobile({padding: '10px 0px'})}
+    ${mobile({ padding: '10px 0px' })}
 `
 const PriceContainer = styled.div`
     flex: 4;
@@ -86,48 +87,62 @@ const SelectContainer = styled.div`
 const DeleteContainer = styled.div`
     flex: 1;
 `
-const Image = styled.img`
+const ImagerContainer = styled.div`
+    cursor: pointer;
     height: 65px;
     margin-right: 30px;
-    ${mobile({marginRight: '10px'})}
+    padding: 2px;
+    border: 1px solid #999;
+    transition: all 0.2s ease-in;
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in;
+    }
+    ${mobile({ marginRight: '10px' })}
+`
+const Image = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 `
 const Title = styled.h3`
     font-size: 16px;
     font-weight: 400;
     color: #232323;
-    ${mobile({fontSize: '12px'})}
+    ${mobile({ fontSize: '12px' })}
 `
 const Price = styled.span`
     font-size: 16px;
     font-weight: 400;
-    color: #F27A1A;
-    ${mobile({fontSize: '12px'})}
+    color: #f27a1a;
+    ${mobile({ fontSize: '12px' })}
 `
 const StockStatus = styled.span`
     font-size: 16px;
     font-weight: 400;
-    color: #F27A1A;
-    ${mobile({fontSize: '12px'})}
+    color: #f27a1a;
+    ${mobile({ fontSize: '12px' })}
 `
-const Select = styled.button`
+const Select = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
     font-size: 13px;
     width: 100%;
     padding: 5px 0px;
     background: transparent;
-    border: 1px solid #F27A1A;
-    color: #F27A1A;
+    border: 1px solid #f27a1a;
+    color: #f27a1a;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease-in;
     &:hover {
-        background-color: #F27A1A;
+        background-color: #f27a1a;
         color: #fff;
         transition: all 0.2s ease-in;
     }
-    ${mobile({display: 'none'})}
+    ${mobile({ display: 'none' })}
 `
 const Delete = styled.div`
     display: flex;
@@ -138,7 +153,7 @@ const Delete = styled.div`
     &:hover {
         color: black;
     }
-    ${mobile({marginLeft: '5px'})}
+    ${mobile({ marginLeft: '5px' })}
 `
 const NoProductContainer = styled.div`
     width: 100%;
@@ -155,7 +170,7 @@ const NoProductContainer = styled.div`
 `
 const GoShopBtn = styled(Link)`
     padding: 7px 45px;
-    background-color: #F27A1A;
+    background-color: #f27a1a;
     border: 1px solid #f08936;
     cursor: pointer;
     color: #fff;
@@ -182,7 +197,7 @@ const WishList = () => {
             <Navbar />
             <CarteHeader>
                 <HeaderTitle>
-                    WishList <br /> <span>Shop</span>
+                    WishList <br /> <span>Favorites</span>
                 </HeaderTitle>
             </CarteHeader>
 
@@ -208,10 +223,12 @@ const WishList = () => {
                             {product.map((item) => (
                                 <ProductsListBodyElement key={item._id}>
                                     <ImageTitleContainer fl="14">
-                                        <Image
-                                            src={item.img[0]}
-                                            alt={item.title}
-                                        />
+                                        <ImagerContainer>
+                                            <Image
+                                                src={item.img[0]}
+                                                alt={item.title}
+                                            />
+                                        </ImagerContainer>
                                         <Title>{item.title}</Title>
                                     </ImageTitleContainer>
                                     <PriceContainer fl="4">
@@ -221,7 +238,7 @@ const WishList = () => {
                                         <StockStatus>In Stock</StockStatus>
                                     </StockStatusContainer>
                                     <SelectContainer fl="4">
-                                        <Select>
+                                        <Select to={'/product/' + item._id}>
                                             <FormatListNumbered
                                                 sx={{
                                                     fontSize: '14px',
@@ -257,7 +274,7 @@ const NoProduct = () => {
         <NoProductContainer>
             <FavoriteBorderOutlined sx={{ fontSize: '140px', color: '#666' }} />
             <span>No products added to wishlist</span>
-            <GoShopBtn to='/'>Go Shop</GoShopBtn>
+            <GoShopBtn to="/">Go Shop</GoShopBtn>
         </NoProductContainer>
     )
 }

@@ -10,12 +10,11 @@ import {
 import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
-import NavbarPopup from './NavbarPopup'
-import noAvatar from '../resources/noavatar.png'
 import { SvgIcon } from '@mui/material'
+import { Categories, NavbarPopup } from '../components'
 
 const Container = styled.div`
-    height: 60px;
+    height: 90px;
     position: sticky;
     top: 0;
     z-index: 999;
@@ -26,9 +25,17 @@ const Wrapper = styled.div`
     height: 100%;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+const MainNav = styled.div`
+    width: 100%;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 `
+
 const Left = styled.div``
 const Logo = styled.h1`
     font-weight: bold;
@@ -37,7 +44,7 @@ const Logo = styled.h1`
     margin-left: 10px;
 `
 const Reverse = styled.span`
-    color: #F27A1A;
+    color: #f27a1a;
 `
 const Center = styled.div``
 const Menu = styled.ul`
@@ -48,6 +55,7 @@ const Menu = styled.ul`
     ${mobile({ display: 'none' })}
 `
 const MenuItemContainer = styled.li`
+ letter-spacing: 1px;
     position: relative;
     margin: 0px 2px;
     &:after {
@@ -72,6 +80,32 @@ const MenuItemContainer = styled.li`
         cursor: pointer;
         font-weight: 500;
         font-size: 14px;
+    }
+`
+const ShopAnimation = styled.span`
+    letter-spacing: 2px;
+    background-image: linear-gradient(
+        -225deg,
+        #0d350f 0%,
+        #bee0bf 29%,
+        #ff1361 67%,
+        #fff800 100%
+    );
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 2s linear infinite;
+    display: inline-block;
+
+    @keyframes textclip {
+        to {
+            background-position: 200% center;
+        }
     }
 `
 const Right = styled.div`
@@ -123,11 +157,11 @@ const RightMenuIcon = styled.div`
     display: flex;
     align-items: center;
     &:hover {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease;
     }
     &:hover ${StyledLink} {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease;
     }
 `
@@ -150,11 +184,11 @@ const ProfileContainer = styled.div`
     cursor: pointer;
     transition: all 0.2s ease-in;
     &:hover {
-        border: 2px solid #F27A1A;
+        border: 2px solid #f27a1a;
         transition: all 0.2s ease-in;
     }
     &:hover ${StyledPersonIcon} {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease-in;
     }
 `
@@ -183,132 +217,153 @@ const Navbar = () => {
     return (
         <Container>
             <Wrapper>
-                <Left>
-                    <Logo>
-                        <Link
-                            style={{ color: 'inherit', textDecoration: 'none' }}
-                            to="/"
-                        >
-                            F<Reverse>R</Reverse>ED
-                        </Link>
-                    </Logo>
-                </Left>
-                <Center>
-                    <Menu>
-                        <MenuItemContainer>
-                            <NavLink
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
+                <MainNav>
+                    <Left>
+                        <Logo>
+                            <Link
+                                style={{
+                                    color: 'inherit',
+                                    textDecoration: 'none',
+                                }}
                                 to="/"
                             >
-                                Home
-                            </NavLink>
-                        </MenuItemContainer>
-                        <MenuItemContainer>
-                            <NavLink
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
-                                to="/about"
-                            >
-                                About
-                            </NavLink>
-                        </MenuItemContainer>
-                        <MenuItemContainer>
-                            <NavLink
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
-                                to="/contact"
-                            >
-                                Contact
-                            </NavLink>
-                        </MenuItemContainer>
-                        <MenuItemContainer>
-                            <NavLink
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
-                                to="/faq"
-                            >
-                                FAQ
-                            </NavLink>
-                        </MenuItemContainer>
-                        {!user ? (
+                                F<Reverse>R</Reverse>ED
+                            </Link>
+                        </Logo>
+                    </Left>
+                    <Center>
+                        <Menu>
                             <MenuItemContainer>
                                 <NavLink
                                     style={({ isActive }) =>
                                         isActive ? activeStyle : undefined
                                     }
-                                    to="/login"
+                                    to="/"
                                 >
-                                    Login
+                                    Home
                                 </NavLink>
                             </MenuItemContainer>
-                        ) : (
-                            <MenuItemContainer
-                                onMouseEnter={() => setPopup(true)}
-                                onMouseLeave={() => setPopup(false)}
-                            >
+                            <MenuItemContainer>
                                 <NavLink
                                     style={({ isActive }) =>
                                         isActive ? activeStyle : undefined
                                     }
-                                    to="/profile/orders"
+                                    to="/about"
                                 >
-                                    Profile
+                                    About
                                 </NavLink>
-                                <NavbarPopup popup={popup} />
                             </MenuItemContainer>
+                            <MenuItemContainer>
+                                <NavLink
+                                    style={({ isActive }) =>
+                                        isActive ? activeStyle : undefined
+                                    }
+                                    to="/contact"
+                                >
+                                    Contact
+                                </NavLink>
+                            </MenuItemContainer>
+                            <MenuItemContainer>
+                                <NavLink
+                                    style={({ isActive }) =>
+                                        isActive ? activeStyle : undefined
+                                    }
+                                    to="/faq"
+                                >
+                                    FAQ
+                                </NavLink>
+                            </MenuItemContainer>
+                            {!user ? (
+                                <MenuItemContainer>
+                                    <NavLink
+                                        style={({ isActive }) =>
+                                            isActive ? activeStyle : undefined
+                                        }
+                                        to="/login"
+                                    >
+                                        Login
+                                    </NavLink>
+                                </MenuItemContainer>
+                            ) : (
+                                <MenuItemContainer
+                                    onMouseEnter={() => setPopup(true)}
+                                    onMouseLeave={() => setPopup(false)}
+                                >
+                                    <NavLink
+                                        style={({ isActive }) =>
+                                            isActive ? activeStyle : undefined
+                                        }
+                                        to="/profile/orders"
+                                    >
+                                        Profile
+                                    </NavLink>
+                                    <NavbarPopup popup={popup} />
+                                </MenuItemContainer>
+                            )}
+                            <MenuItemContainer>
+                                <ShopAnimation>
+                                    <NavLink
+                                        style={({ isActive }) =>
+                                            isActive ? activeStyle : undefined
+                                        }
+                                        to="/faq"
+                                    >
+                                        Shop
+                                    </NavLink>
+                                </ShopAnimation>
+                            </MenuItemContainer>
+                        </Menu>
+                    </Center>
+                    <Right>
+                        <SearchContainer>
+                            <Input placeholder="Search product..." />
+                            <SearchButton>
+                                <Search
+                                    style={{
+                                        fontSize: 28,
+                                        fontWeight: 300,
+                                        marginRight: 15,
+                                        cursor: 'pointer',
+                                    }}
+                                />
+                            </SearchButton>
+                        </SearchContainer>
+                        {user && (
+                            <ProfileContainer>
+                                <StyledLink to="/profile/orders">
+                                    {user.img ? (
+                                        <ProfileImage src={user.img} />
+                                    ) : (
+                                        <StyledPersonIcon component={Person} />
+                                    )}
+                                </StyledLink>
+                            </ProfileContainer>
                         )}
-                    </Menu>
-                </Center>
-                <Right>
-                    <SearchContainer>
-                        <Input placeholder="Search product..." />
-                        <SearchButton>
-                            <Search
-                                style={{
-                                    fontSize: 28,
-                                    fontWeight: 300,
-                                    marginRight: 15,
-                                    cursor: 'pointer',
-                                }}
-                            />
-                        </SearchButton>
-                    </SearchContainer>
-                    {user && (
-                        <ProfileContainer>
-                            <StyledLink to="/profile/orders">
-                                {user.img ? (
-                                    <ProfileImage src={user.img} />
-                                ) : (
-                                    <StyledPersonIcon component={Person} />
-                                )}
-                            </StyledLink>
-                        </ProfileContainer>
-                    )}
-                    <RightMenuIcon>
-                        <Badge badgeContent={product?.length} color="primary">
-                            <StyledLink to="/wishlist">
-                                <FavoriteBorder />
-                            </StyledLink>
-                        </Badge>
-                    </RightMenuIcon>
-                    <RightMenuIcon>
-                        <Badge badgeContent={quantity} color="primary">
+                        <RightMenuIcon>
+                            <Badge
+                                badgeContent={product?.length}
+                                color="primary"
+                            >
+                                <StyledLink to="/wishlist">
+                                    <FavoriteBorder />
+                                </StyledLink>
+                            </Badge>
+                        </RightMenuIcon>
+                        <RightMenuIcon>
+                            <Badge badgeContent={quantity} color="primary">
+                                <StyledLink to="/cart">
+                                    <ShoppingCartOutlined />
+                                </StyledLink>
+                            </Badge>
                             <StyledLink to="/cart">
-                                <ShoppingCartOutlined />
+                                <CartTotal>
+                                    {totalSum > 0 ? `$ ${totalSum}` : `$ 0,00`}
+                                </CartTotal>
                             </StyledLink>
-                        </Badge>
-                        <StyledLink to="/cart">
-                            <CartTotal>
-                                {totalSum > 0 ? `$ ${totalSum}` : `$ 0,00`}
-                            </CartTotal>
-                        </StyledLink>
-                    </RightMenuIcon>
-                </Right>
+                        </RightMenuIcon>
+                    </Right>
+                </MainNav>
+                <Categories />
             </Wrapper>
         </Container>
     )

@@ -37,17 +37,30 @@ const StockStatusContainer = styled.div`
 `
 const TotalContainer = styled.div`
     flex: 4;
-    color: #F27A1A;
+    color: #f27a1a;
     ${mobile({ marginBottom: '10px' })}
 `
 const DeleteContainer = styled.div`
     flex: 1;
     ${mobile({ position: 'absolute', right: '20px' })}
 `
-const Image = styled.img`
+const ImagerContainer = styled.div`
+    cursor: pointer;
     height: 65px;
     margin-right: 30px;
+    padding: 2px;
+    border: 1px solid #999;
+    transition: all 0.2s ease-in;
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in;
+    }
     ${mobile({ margin: '0px 0px 10px 0px ' })}
+`
+const Image = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 `
 const Title = styled.h3`
     width: 200px;
@@ -63,7 +76,7 @@ const Price = styled.span`
 const StockStatus = styled.span`
     font-size: 16px;
     font-weight: 400;
-    color: #F27A1A;
+    color: #f27a1a;
 `
 const Delete = styled.div`
     display: flex;
@@ -107,7 +120,7 @@ const AmountChangeBtn = styled.button`
     color: #777;
     cursor: pointer;
     &:hover {
-        color: #F27A1A;
+        color: #f27a1a;
     }
 `
 const Amount = styled.span``
@@ -127,7 +140,9 @@ const CartProducts = ({ item, i }) => {
     return (
         <ProductsListBodyElement>
             <ImageTitleContainer fl="14">
-                <Image src={item.img[0]} alt={item.title} />
+                <ImagerContainer>
+                    <Image src={item.img[0]} alt={item.title} />
+                </ImagerContainer>
                 <Title>{item.title}</Title>
                 <ProductSize>{item.productSize}</ProductSize>
                 <ProductColor bg={item.productColor} />

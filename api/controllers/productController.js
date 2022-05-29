@@ -46,13 +46,17 @@ const getAllProducts = async (req, res) => {
 
     let findProduct = req.query
 
-    // console.log(findProduct)
-    
+    console.log(findProduct)
+
     try {
         let products
         if (qNew) {
-            products = await Product.find().sort({ createdAt: -1 })
-        }  else {
+            products = await Product.find({
+                createdAt: {
+                    $gte: new Date(new Date() - qNew * 60 * 60 * 24 * 1000),
+                },
+            })
+        } else {
             products = await Product.find(findProduct)
         }
 

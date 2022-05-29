@@ -30,7 +30,7 @@ const ProductsContainer = styled.div`
 const ListHeader = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0px 0px 15px 20px;
+    padding: 0px 0px 10px 20px;
 `
 const ListHeaderTop = styled.div`
     display: flex;
@@ -40,7 +40,7 @@ const ListHeaderBottom = styled.div`
     display: flex;
     justify-content: flex-start;
     margin-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 `
 const ListHeadeTitle = styled.h1`
     font-size: 17px;
@@ -74,6 +74,7 @@ const List = () => {
         brandFilter: [],
         sizeFilter: [],
         genderFilter: [],
+        colorFilter: [],
     })
 
     const [cat, setCat] = useState(null)
@@ -83,6 +84,8 @@ const List = () => {
             setCat({ ...cat, category: location?.state?.item })
         } else if (location?.state?.brand) {
             setCat({ ...cat, brand: location?.state?.brand })
+        } else if (location?.state?.status) {
+            setCat({ ...cat, status: location?.state?.status })
         } else {
             setCat(null)
         }
@@ -131,11 +134,15 @@ const List = () => {
                     const allSizes = [
                         ...new Set(res.data.map((item) => item.size).flat()),
                     ]
+                    const allColors = [
+                        ...new Set(res.data.map((item) => item.color).flat()),
+                    ]
                     setFilters({
                         categoryFilter: allCats,
                         brandFilter: allBrands,
                         sizeFilter: allSizes,
                         genderFilter: allGenders,
+                        colorFilter: allColors,
                     })
                 }
             } catch (error) {
@@ -171,8 +178,10 @@ const List = () => {
                 setCat({ ...cat, size: id })
             } else if (categ === 'brand') {
                 setCat({ ...cat, brand: id })
-            } else {
+            } else if (categ === 'category') {
                 setCat({ ...cat, category: id })
+            } else {
+                setCat({ ...cat, color: id })
             }
         }
     }
@@ -197,57 +206,54 @@ const List = () => {
                         <Spinner />
                     ) : (
                         <> */}
-                            <ListFilters
-                                cat={cat}
-                                setCat={setCat}
-                                filters={filters}
-                                onToggleFilter={onToggleFilter}
-                            />
+                    <ListFilters
+                        cat={cat}
+                        setCat={setCat}
+                        filters={filters}
+                        onToggleFilter={onToggleFilter}
+                    />
 
-                            <ProductsContainer>
-                                <ListHeader>
-                                    <ListHeaderTop>
-                                        <ListHeadeTitle>
-                                            {products.length} result
-                                            {products.length > 1 ? 's' : null}
-                                            {' are listed for your search'}
-                                        </ListHeadeTitle>
-                                        <FilterBy>
-                                            <FilterByOption>
-                                                Sort By:
-                                            </FilterByOption>
-                                            <FilterByOption value="new">
-                                                Newest Arrivals
-                                            </FilterByOption>
-                                            <FilterByOption value="low">
-                                                Price: Low
-                                            </FilterByOption>
-                                            <FilterByOption value="high">
-                                                Price: High
-                                            </FilterByOption>
-                                        </FilterBy>
-                                    </ListHeaderTop>
-                                    <ListHeaderBottom>
-                                        {cat &&
-                                            Object.keys(cat).map((key) => (
-                                                <SearchFilterItem
-                                                    onDeleteFilter={
-                                                        onDeleteFilter
-                                                    }
-                                                    key={key}
-                                                    info={cat[key]}
-                                                />
-                                            ))}
-                                    </ListHeaderBottom>
-                                </ListHeader>
-
-                                <Products>
-                                    {products.map((item) => (
-                                        <ListProduct key={item._id} {...item} />
+                    <ProductsContainer>
+                        <ListHeader>
+                            <ListHeaderTop>
+                                <ListHeadeTitle>
+                                    {products.length} result
+                                    {products.length > 1 ? 's' : null}
+                                    {' are listed for your search'}
+                                </ListHeadeTitle>
+                                <FilterBy>
+                                    <FilterByOption>Sort By:</FilterByOption>
+                                    <FilterByOption value="new">
+                                        Newest Arrivals
+                                    </FilterByOption>
+                                    <FilterByOption value="low">
+                                        Price: Low
+                                    </FilterByOption>
+                                    <FilterByOption value="high">
+                                        Price: High
+                                    </FilterByOption>
+                                </FilterBy>
+                            </ListHeaderTop>
+                            <ListHeaderBottom>
+                                {cat &&
+                                    Object.entries(cat).map(([key, value]) => (
+                                        <SearchFilterItem
+                                            onDeleteFilter={onDeleteFilter}
+                                            key={key}
+                                            info={cat[key]}
+                                            ct={key}
+                                        />
                                     ))}
-                                </Products>
-                            </ProductsContainer>
-                        {/* </>
+                            </ListHeaderBottom>
+                        </ListHeader>
+
+                        <Products>
+                            {products.map((item) => (
+                                <ListProduct key={item._id} {...item} />
+                            ))}
+                        </Products>
+                    </ProductsContainer>
+                    {/* </>
                     )} */}
                 </Wrapper>
             </Container>

@@ -1,8 +1,8 @@
 import {
     Announcement,
     Navbar,
-    Categories,
     Slider,
+    BannerGroup,
     Feautured,
     NewArrivals,
     RecentArrivals,
@@ -18,7 +18,7 @@ const Homepage = () => {
             <Announcement />
             <Navbar />
             <Slider />
-            <Categories />
+            <BannerGroup />
             <Feautured />
             <Trending />
             <NewArrivals />

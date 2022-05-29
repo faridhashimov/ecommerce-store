@@ -6,6 +6,7 @@ import {
     YouTube,
 } from '@mui/icons-material'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { mobile } from '../responsive'
 
 const Container = styled.div`
@@ -24,7 +25,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 `
 const FooterTop = styled.div`
     display: flex;
@@ -128,7 +128,6 @@ const FooterBottom = styled.div`
     margin-top: 20px;
     border-top: 1.5px solid #444444;
     ${mobile({flexDirection: 'column', marginTop: '10px'})}
-
 `
 const BottomLeft = styled.div`
     display: flex;
@@ -154,7 +153,7 @@ const Terms = styled.div`
     display: flex;
     justify-content: space-between;
 `
-const Link = styled.a`
+const TermsLink = styled.a`
     font-size: 14px;
     color: #777;
     border-bottom: 1.4px solid #b5b5b5;
@@ -175,21 +174,18 @@ const Link = styled.a`
         bottom: 3px;
     }
 `
-
 const BottomRight = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
 `
-
 const SocialIcons = styled.div`
     width: 150px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 `
-
 const SocialIconContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -206,6 +202,10 @@ const Social = styled.p`
     font-size: 14px;
     color: #777;
     margin-right: 20px;
+`
+const StyledLink = styled(Link)`
+    color: inherit;
+    text-decoration: none;
 `
 
 const Footer = () => {
@@ -237,28 +237,28 @@ const Footer = () => {
                     <FooterLinks>
                         <InfoLinks>
                             <LinkItem>Information</LinkItem>
-                            <LinkItem>About FRED</LinkItem>
-                            <LinkItem>How to shop on Molla</LinkItem>
-                            <LinkItem>FAQ</LinkItem>
-                            <LinkItem>Contact us</LinkItem>
-                            <LinkItem>Log in</LinkItem>
+                            <LinkItem><StyledLink to='/about'>About FRED</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/about'>How to shop on Molla</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/faq'>FAQ</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/contact'>Contact us</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/login'>Log in</StyledLink></LinkItem>
                         </InfoLinks>
                         <InfoLinks>
                             <LinkItem>Customer Service</LinkItem>
                             <LinkItem>Payment Methods</LinkItem>
                             <LinkItem>Money-back guarantee!</LinkItem>
                             <LinkItem>Returns</LinkItem>
-                            <LinkItem>Shipping</LinkItem>
+                            <LinkItem><StyledLink to='/faq'>Shipping</StyledLink></LinkItem>
                             <LinkItem>Terms and conditions</LinkItem>
                             <LinkItem>Privacy Policy</LinkItem>
                         </InfoLinks>
                         <InfoLinks>
                             <LinkItem>My Account</LinkItem>
-                            <LinkItem>Sign In</LinkItem>
-                            <LinkItem>View Cart</LinkItem>
-                            <LinkItem>My Wishlist</LinkItem>
-                            <LinkItem>Track My Order</LinkItem>
-                            <LinkItem>Help</LinkItem>
+                            <LinkItem><StyledLink to='/profile/userinfo'>Account</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/cart'>View Cart</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/wishlist'>My Wishlist</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/profile/orders'>Track My Order</StyledLink></LinkItem>
+                            <LinkItem><StyledLink to='/faq'>Help</StyledLink></LinkItem>
                         </InfoLinks>
                     </FooterLinks>
                 </FooterTop>
@@ -270,8 +270,8 @@ const Footer = () => {
                                 Reserved.
                             </Copyright>
                             <Terms>
-                                <Link>Terms Of Use</Link>
-                                <Link>Privacy Policy</Link>
+                                <TermsLink>Terms Of Use</TermsLink>
+                                <TermsLink>Privacy Policy</TermsLink>
                             </Terms>
                         </CopyrightContainer>
                     </BottomLeft>

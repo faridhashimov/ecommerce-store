@@ -1,40 +1,37 @@
-import React from 'react';
-import styled from 'styled-components';
-import CategoryItem from './CategoryItem';
-import Brands from './Brands';
-import { catItems } from '../data';
-import { mobile } from '../responsive';
-
-const Container = styled.div`
+import React from 'react'
+import styled from 'styled-components'
+const CategoriesContainer = styled.div`
     width: 100%;
+    margin-top: 5px;
+    border-bottom: 1px solid #e8e8e8;
+`
+const CategoriesList = styled.ul`
     display: flex;
     justify-content: center;
-    align-items: center;
-`;
-const Wrapper = styled.div`
-    width: 93vw;
-`;
-const AllCategories = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    ${mobile({flexDirection: 'column'})}
-`;
+    list-style: none;
+`
+const CategoryItem = styled.li`
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    padding: 5px 20px;
+    text-transform: uppercase;
+`
+// const CategoriesList = styled.ul``
+// const CategoriesList = styled.ul``
 
 const Categories = () => {
     return (
-        <Container>
-            <Wrapper>
-                <AllCategories>
-                    {catItems.map((item) => (
-                        <CategoryItem key={item.id} {...item} />
-                    ))}
-                </AllCategories>
-                <Brands />
-            </Wrapper>
-        </Container>
-    );
-};
+        <CategoriesContainer>
+            <CategoriesList>
+                <CategoryItem>Women</CategoryItem>
+                <CategoryItem>Men</CategoryItem>
+                <CategoryItem>Kids</CategoryItem>
+                <CategoryItem>Accessories</CategoryItem>
+                <CategoryItem>Shoes</CategoryItem>
+            </CategoriesList>
+        </CategoriesContainer>
+    )
+}
 
-export default Categories;
+export default Categories

@@ -13,7 +13,7 @@ const Container = styled.div`
     margin-top: 40px;
     ${mobile({ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' })}
 `
-const BranItemImageContainer = styled.div`
+const BrandItemImageContainer = styled.div`
     height: 68px;
     width: 68px;
     border-radius: 50%;
@@ -49,7 +49,7 @@ const BrandItemContainer = styled.div`
         color: #f27a1a;
         transition: all 0.2s ease-in;
     }
-    &:hover ${BranItemImageContainer} {
+    &:hover ${BrandItemImageContainer} {
         border: 1px solid #f27a1a;
         transition: all 0.2s ease-in;
     }
@@ -68,9 +68,9 @@ const Brands = () => {
                     onClick={() => onOpenProducts(item)}
                     key={item.id}
                 >
-                    <BranItemImageContainer>
+                    <BrandItemImageContainer>
                         <BrandItemImage src={item.img} />
-                    </BranItemImageContainer>
+                    </BrandItemImageContainer>
                     <BrandItemName>{item.name}</BrandItemName>
                 </BrandItemContainer>
             ))}

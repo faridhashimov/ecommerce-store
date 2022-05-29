@@ -1,4 +1,5 @@
 import {
+    Check,
     CheckBox,
     CheckBoxOutlineBlank,
     ExpandLess,
@@ -69,6 +70,24 @@ const StyledCheckbox = styled(SvgIcon)`
     color: ${(props) => props.c};
     stroke-width: 0.2px;
 `
+const FilterColorContainer = styled.div`
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+`
+const FilterColor = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: 1px solid #999999;
+    cursor: pointer;
+    margin-right: 5px;
+    background-color: #${(props) => props.c};
+`
 
 const ListFilters = ({ filters, cat, onToggleFilter }) => {
     const [openFilter, setOpenFilters] = useState([
@@ -116,12 +135,6 @@ const ListFilters = ({ filters, cat, onToggleFilter }) => {
                         {filters.categoryFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                // onClick={() =>
-                                //     setCat({
-                                //         ...cat,
-                                //         category: item,
-                                //     })
-                                // }
                                 onClick={() => onToggleFilter('category', item)}
                             >
                                 <FilterName
@@ -166,12 +179,6 @@ const ListFilters = ({ filters, cat, onToggleFilter }) => {
                         {filters.genderFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                // onClick={() =>
-                                //     setCat({
-                                //         ...cat,
-                                //         gender: item,
-                                //     })
-                                // }
                                 onClick={() => onToggleFilter('gender', item)}
                             >
                                 {!cat ? (
@@ -222,12 +229,6 @@ const ListFilters = ({ filters, cat, onToggleFilter }) => {
                         {filters.brandFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                // onClick={() =>
-                                //     setCat({
-                                //         ...cat,
-                                //         brand: item,
-                                //     })
-                                // }
                                 onClick={() => onToggleFilter('brand', item)}
                             >
                                 {!cat ? (
@@ -278,12 +279,6 @@ const ListFilters = ({ filters, cat, onToggleFilter }) => {
                         {filters.sizeFilter.map((item) => (
                             <FilterItem
                                 key={item}
-                                // onClick={() =>
-                                //     setCat({
-                                //         ...cat,
-                                //         size: item,
-                                //     })
-                                // }
                                 onClick={() => onToggleFilter('size', item)}
                             >
                                 {!cat ? (
@@ -307,6 +302,56 @@ const ListFilters = ({ filters, cat, onToggleFilter }) => {
                                 <FilterName>{item}</FilterName>
                             </FilterItem>
                         ))}
+                    </Filters>
+                </Categories>
+            </CategoriesContainer>
+            <CategoriesContainer>
+                <FilterHeader onClick={() => openFilters('color')}>
+                    <Title>Color</Title>
+                    {openFilter.includes('color') ? (
+                        <ExpandLess sx={{ color: '#F27A1A' }} />
+                    ) : (
+                        <ExpandMore />
+                    )}
+                </FilterHeader>
+                <Categories
+                    height={
+                        openFilter.includes('color') &&
+                        filters.sizeFilter.length >= 10
+                            ? '200px'
+                            : openFilter.includes('color') &&
+                              filters.sizeFilter.length < 10
+                            ? 'fit-content'
+                            : '0px'
+                    }
+                >
+                    <Filters>
+                        <FilterColorContainer>
+                            {filters.colorFilter.map((item) => (
+                                <FilterColor
+                                    c={item}
+                                    key={item}
+                                    onClick={() =>
+                                        onToggleFilter('color', item)
+                                    }
+                                >
+                                    {cat &&
+                                    Object.entries(cat)
+                                        .flat()
+                                        .includes(item) ? (
+                                        <StyledCheckbox
+                                            style={{
+                                                fontSize: '15px',
+                                                stroke: '#fff',
+                                                marginRight: '0px',
+                                            }}
+                                            c="#f2bc1a"
+                                            component={Check}
+                                        />
+                                    ) : null}
+                                </FilterColor>
+                            ))}
+                        </FilterColorContainer>
                     </Filters>
                 </Categories>
             </CategoriesContainer>

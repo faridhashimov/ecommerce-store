@@ -4,10 +4,11 @@ import {
     ArrowRightAltOutlined,
 } from '@mui/icons-material'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import sale from '../resources/img-1.webp'
 import cNj from '../resources/img-2.webp'
-import sv from '../resources/img-3.webp'
+import sv from '../resources/img-4.webp'
 import { mobile } from '../responsive'
 
 const Container = styled.div`
@@ -39,7 +40,7 @@ const ChevronContainer = styled.div`
     z-index: 2;
     opacity: 0.5;
     &:hover {
-        background-color: #F27A1A;
+        background-color: #f27a1a;
         color: #f9f9f9;
     }
 `
@@ -97,12 +98,16 @@ const Image = styled.img`
         );
     }
 `
-const InfoButton = styled.button`
+const InfoButton = styled(Link)`
     display: flex;
+    width: 30%;
+    font-size: 16px;
     justify-content: center;
     align-items: center;
+    color: #232323;
     border: 2px solid #232323;
     text-transform: uppercase;
+    text-decoration: none;
     padding: 12px 32px;
     letter-spacing: 2px;
     margin-top: 30px;
@@ -113,7 +118,12 @@ const InfoButton = styled.button`
         background-color: #232323;
         color: #fff;
     }
-    ${mobile({ padding: '7px 17px', marginTop: '15px' })}
+    ${mobile({
+        padding: '7px 17px',
+        marginTop: '15px',
+        width: '75%',
+        fontSize: '12px',
+    })}
 `
 
 const InfoTitle = styled.div``
@@ -140,7 +150,7 @@ const Sale = styled.span`
     font-weight: 700;
     margin: 20px 0px;
     line-height: 7rem;
-    color: #F27A1A;
+    color: #f27a1a;
     ${mobile({
         fontSize: '40px',
         margin: '0',
@@ -186,7 +196,7 @@ const Slider = () => {
                                 </MainTitle>
                                 <SecondaryTitle>Up To 20% Off</SecondaryTitle>
                             </InfoTitle>
-                            <InfoButton>
+                            <InfoButton to="/list" state={{ status: 'Sale' }}>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{
@@ -214,7 +224,10 @@ const Slider = () => {
                                 </MainTitle>
                                 <SecondaryTitle>50% Off</SecondaryTitle>
                             </InfoTitle>
-                            <InfoButton>
+                            <InfoButton
+                                to="/list"
+                                state={{ item: 'Coats & Jackets' }}
+                            >
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{
@@ -235,10 +248,10 @@ const Slider = () => {
                         <Info>
                             <InfoTitle>
                                 <SecondaryTitle>Shop now</SecondaryTitle>
-                                <MainTitle size="100px">switch verse</MainTitle>
+                                <MainTitle size="90px">HOODIES &amp; SWEATSHIRTS</MainTitle>
                                 <SecondaryTitle>shop mens</SecondaryTitle>
                             </InfoTitle>
-                            <InfoButton>
+                            <InfoButton to="/list" state={{ item: 'Hoodies & Sweatshirts' }}>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{

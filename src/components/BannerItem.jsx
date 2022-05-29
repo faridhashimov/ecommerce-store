@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { ArrowRightAltOutlined } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 
-const Category = styled.div`
+const Banner = styled.div`
     flex: 1;
     margin: 0px 10px;
     position: relative;
@@ -26,12 +26,12 @@ const Category = styled.div`
         transition: all 0.2s ease;
     }
 `
-const CategoryImage = styled.img`
+const BannerImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
 `
-const CategoryInfo = styled.div`
+const BannerInfo = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,26 +43,26 @@ const CategoryInfo = styled.div`
     width: 150px;
     z-index: 2;
 `
-const CategoryTitle = styled.span`
+const BannerTitle = styled.span`
     margin-bottom: 20px;
     font-size: 13px;
     font-weight: 300;
     color: #777777;
 `
-const CategoryName = styled.h1`
+const BannerName = styled.h1`
     font-size: 22px;
     font-weight: 700;
     line-height: 24px;
     color: #333333;
 `
-const CategoryDiscount = styled.h2`
+const BannerDiscount = styled.h2`
     font-size: 22px;
     font-weight: 300;
     letter-spacing: -1px;
     color: #333333;
 `
 
-const CategoryButton = styled(Link)`
+const BannerButton = styled(Link)`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,15 +85,15 @@ const CategoryButton = styled(Link)`
     }
 `
 
-const CategoryItem = ({ img, title, cat, disc, dataurl }) => {
+const BannerItem = ({ img, title, cat, disc, dataurl }) => {
     return (
-        <Category>
-            <CategoryImage src={img} />
-            <CategoryInfo>
-                <CategoryTitle>{title}</CategoryTitle>
-                <CategoryName>{cat}</CategoryName>
-                <CategoryDiscount>{disc}</CategoryDiscount>
-                <CategoryButton to="/list" state={{ item: cat }}>
+        <Banner>
+            <BannerImage src={img} />
+            <BannerInfo>
+                <BannerTitle>{title}</BannerTitle>
+                <BannerName>{cat}</BannerName>
+                <BannerDiscount>{disc}</BannerDiscount>
+                <BannerButton to="/list" state={{ item: cat }}>
                     Shop Now
                     <ArrowRightAltOutlined
                         style={{
@@ -102,10 +102,10 @@ const CategoryItem = ({ img, title, cat, disc, dataurl }) => {
                             fontWeight: 300,
                         }}
                     />
-                </CategoryButton>
-            </CategoryInfo>
-        </Category>
+                </BannerButton>
+            </BannerInfo>
+        </Banner>
     )
 }
 
-export default CategoryItem
+export default BannerItem
