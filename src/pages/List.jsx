@@ -86,12 +86,18 @@ const List = () => {
             setCat({ ...cat, brand: location?.state?.brand })
         } else if (location?.state?.status) {
             setCat({ ...cat, status: location?.state?.status })
+        } else if (location?.state?.category && location?.state?.gender) {
+            setCat({
+                ...cat,
+                category: location?.state?.category,
+                gender: location?.state?.gender,
+            })
         } else {
             setCat(null)
         }
     }, [])
 
-    // console.log(location.state)
+    console.log(location)
 
     const qs =
         cat &&
@@ -195,7 +201,7 @@ const List = () => {
         )
     }
 
-    console.log(cat)
+    // console.log(cat)
 
     return (
         <>

@@ -14,7 +14,7 @@ const PopupContainer = styled.div`
     border: 1px solid #ccc;
     display: ${(props) => (props.state ? 'block' : 'none')};
     position: absolute;
-    bottom: -164px;
+    bottom: -154px;
     right: -42px;
     transition: all 0.3s ease-in;
     z-index: 1000;
@@ -32,18 +32,19 @@ const sharedStyle = css`
     color: #666 !important;
     margin: 7px 0px;
     font-weight: 500;
+    text-decoration: none;
     cursor: pointer;
     text-transform: none !important;
     &:first-child {
         margin: 0px 0px 7px;
-        color: #eea287 !important;
+        color: #f27a1a !important;
         font-weight: 600;
     }
     &:last-child {
         margin-bottom: 0px;
     }
     &:hover {
-        color: #eea287 !important;
+        color: #f27a1a !important;
     }
 `
 const MainPopupLink = styled(Link)`

@@ -14,7 +14,7 @@ import { SvgIcon } from '@mui/material'
 import { Categories, NavbarPopup } from '../components'
 
 const Container = styled.div`
-    height: 90px;
+    height: 60px;
     position: sticky;
     top: 0;
     z-index: 999;
@@ -46,7 +46,13 @@ const Logo = styled.h1`
 const Reverse = styled.span`
     color: #f27a1a;
 `
-const Center = styled.div``
+const Center = styled.div`
+    /* width: 50%; */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 const Menu = styled.ul`
     list-style: none;
     display: flex;
@@ -55,7 +61,7 @@ const Menu = styled.ul`
     ${mobile({ display: 'none' })}
 `
 const MenuItemContainer = styled.li`
- letter-spacing: 1px;
+    letter-spacing: 1px;
     position: relative;
     margin: 0px 2px;
     &:after {
@@ -83,6 +89,8 @@ const MenuItemContainer = styled.li`
     }
 `
 const ShopAnimation = styled.span`
+    font-weight: 500;
+    font-size: 14px;
     letter-spacing: 2px;
     background-image: linear-gradient(
         -225deg,
@@ -138,8 +146,8 @@ const SearchButton = styled.div`
     fill: '#F27A1A';
 `
 const CartTotal = styled.span`
-    font-size: 13px;
-    margin-left: 12px;
+    font-size: 11px;
+    margin-left: 5px;
     font-weight: 600;
 `
 const StyledLink = styled(Link)`
@@ -148,9 +156,11 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     display: flex;
     align-items: center;
+    font-size: 12px;
 `
-const RightMenuIcon = styled.div`
-    margin-left: 20px;
+const Wishlist = styled.div`
+    position: relative;
+    margin-left: 10px;
     color: #666666;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -165,31 +175,70 @@ const RightMenuIcon = styled.div`
         transition: all 0.2s ease;
     }
 `
+const Cart = styled(Wishlist)`
+    position: relative;
+`
+const CartQt = styled.div`
+    position: absolute;
+    left: 14px;
+    top: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 400;
+    padding: 1px;
+    color: #fff;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: #1976d2;
+`
+const WishlistQt = styled(CartQt)``
+
 const StyledPersonIcon = styled(SvgIcon)`
     color: #666;
     font-size: 24px;
     transition: all 0.2s ease-in;
 `
+
 const ProfileContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     overflow: hidden;
-    margin-left: 20px;
+    margin: 0px 5px;
     border: 2px solid #666;
     transition: all 0.3s ease-in;
     cursor: pointer;
     transition: all 0.2s ease-in;
-    &:hover {
+`
+const ProfileLink = styled(Link)`
+    color: #666;
+    font-size: 12px;
+    /* font-weight: 500; */
+    text-decoration: none;
+`
+const Profile = styled.div`
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-left: 10px;
+    cursor: pointer;
+    &:hover ${ProfileContainer} {
         border: 2px solid #f27a1a;
-        transition: all 0.2s ease-in;
+        transition: all 0.1s ease-in;
     }
     &:hover ${StyledPersonIcon} {
         color: #f27a1a;
-        transition: all 0.2s ease-in;
+        transition: all 0.1s ease-in;
+    }
+    &:hover ${ProfileLink} {
+        color: #f27a1a;
+        transition: all 0.1s ease-in;
     }
 `
 const ProfileImage = styled.img`
@@ -205,6 +254,7 @@ const Navbar = () => {
     const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
 
     const [popup, setPopup] = useState(false)
+    const [openShop, setOpenShop] = useState(false)
 
     let activeStyle = {
         borderBottom: '2px solid #000',
@@ -231,7 +281,7 @@ const Navbar = () => {
                             </Link>
                         </Logo>
                     </Left>
-                    <Center>
+                    <Center onMouseLeave={() => setOpenShop(false)}>
                         <Menu>
                             <MenuItemContainer>
                                 <NavLink
@@ -273,44 +323,19 @@ const Navbar = () => {
                                     FAQ
                                 </NavLink>
                             </MenuItemContainer>
-                            {!user ? (
-                                <MenuItemContainer>
-                                    <NavLink
-                                        style={({ isActive }) =>
-                                            isActive ? activeStyle : undefined
-                                        }
-                                        to="/login"
-                                    >
-                                        Login
-                                    </NavLink>
-                                </MenuItemContainer>
-                            ) : (
-                                <MenuItemContainer
-                                    onMouseEnter={() => setPopup(true)}
-                                    onMouseLeave={() => setPopup(false)}
+
+                            <MenuItemContainer
+                                onMouseEnter={() => setOpenShop(true)}
+                            >
+                                <NavLink
+                                    style={({ isActive }) =>
+                                        isActive ? activeStyle : undefined
+                                    }
+                                    to="/list"
                                 >
-                                    <NavLink
-                                        style={({ isActive }) =>
-                                            isActive ? activeStyle : undefined
-                                        }
-                                        to="/profile/orders"
-                                    >
-                                        Profile
-                                    </NavLink>
-                                    <NavbarPopup popup={popup} />
-                                </MenuItemContainer>
-                            )}
-                            <MenuItemContainer>
-                                <ShopAnimation>
-                                    <NavLink
-                                        style={({ isActive }) =>
-                                            isActive ? activeStyle : undefined
-                                        }
-                                        to="/faq"
-                                    >
-                                        Shop
-                                    </NavLink>
-                                </ShopAnimation>
+                                    <ShopAnimation>Shop</ShopAnimation>
+                                </NavLink>
+                                <Categories openShop={openShop} />
                             </MenuItemContainer>
                         </Menu>
                     </Center>
@@ -328,42 +353,67 @@ const Navbar = () => {
                                 />
                             </SearchButton>
                         </SearchContainer>
-                        {user && (
-                            <ProfileContainer>
-                                <StyledLink to="/profile/orders">
-                                    {user.img ? (
-                                        <ProfileImage src={user.img} />
-                                    ) : (
-                                        <StyledPersonIcon component={Person} />
-                                    )}
-                                </StyledLink>
-                            </ProfileContainer>
+                        {user ? (
+                            <>
+                                <Profile
+                                    onMouseEnter={() => setPopup(true)}
+                                    onMouseLeave={() => setPopup(false)}
+                                >
+                                    <ProfileContainer>
+                                        <StyledLink to="/profile/orders">
+                                            {user.img ? (
+                                                <ProfileImage src={user.img} />
+                                            ) : (
+                                                <StyledPersonIcon
+                                                    sx={{ fontSize: '17px' }}
+                                                    component={Person}
+                                                />
+                                            )}
+                                        </StyledLink>
+                                    </ProfileContainer>
+                                    <ProfileLink to="/profile/orders">
+                                        Profile
+                                    </ProfileLink>
+                                    <NavbarPopup popup={popup} />
+                                </Profile>
+                            </>
+                        ) : (
+                            <Menu>
+                                <MenuItemContainer>
+                                    <NavLink
+                                        style={({ isActive }) =>
+                                            isActive ? activeStyle : undefined
+                                        }
+                                        to="/login"
+                                    >
+                                        Login
+                                    </NavLink>
+                                </MenuItemContainer>
+                            </Menu>
                         )}
-                        <RightMenuIcon>
-                            <Badge
-                                badgeContent={product?.length}
-                                color="primary"
-                            >
-                                <StyledLink to="/wishlist">
-                                    <FavoriteBorder />
-                                </StyledLink>
-                            </Badge>
-                        </RightMenuIcon>
-                        <RightMenuIcon>
-                            <Badge badgeContent={quantity} color="primary">
-                                <StyledLink to="/cart">
-                                    <ShoppingCartOutlined />
-                                </StyledLink>
-                            </Badge>
+                        <Wishlist>
+                            <StyledLink to="/wishlist">
+                                {product?.length > 0 && (
+                                    <WishlistQt>{product?.length}</WishlistQt>
+                                )}
+                                <FavoriteBorder sx={{ marginRight: '3px' }} />
+                                Favorites
+                            </StyledLink>
+                        </Wishlist>
+                        <Cart>
                             <StyledLink to="/cart">
+                                {quantity > 0 && <CartQt>{quantity}</CartQt>}
+                                <ShoppingCartOutlined
+                                    sx={{ marginRight: '3px' }}
+                                />
+                                Shopping bag
                                 <CartTotal>
-                                    {totalSum > 0 ? `$ ${totalSum}` : `$ 0,00`}
+                                    {totalSum > 0 ? `($ ${totalSum})` : `(0)`}
                                 </CartTotal>
                             </StyledLink>
-                        </RightMenuIcon>
+                        </Cart>
                     </Right>
                 </MainNav>
-                <Categories />
             </Wrapper>
         </Container>
     )
