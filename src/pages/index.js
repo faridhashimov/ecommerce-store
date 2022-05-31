@@ -12,3 +12,5 @@ export { default as Orders } from './Orders.jsx'
 export { default as SingleOrder } from './SingleOrder.jsx'
 export { default as Productpage } from './Productpage.jsx'
 export { default as WishList } from './WishList.jsx'
+
+export { default as Products } from './Products.jsx'

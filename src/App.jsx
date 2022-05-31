@@ -15,12 +15,12 @@ import {
     Orders,
     SingleOrder,
     Productpage,
-    WishList
+    WishList,
+    Products
 } from './pages'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
-
     return (
         <>
             <BrowserRouter>
@@ -42,7 +42,9 @@ function App() {
                                 element={<SingleOrder />}
                             />
                         </Route>
-                        <Route path="list" element={<List />} />
+                        <Route path="list" element={<List />}>
+                            {/* <Route path="products" element={<Products />} /> */}
+                        </Route>
                         <Route path="*" element={<Error404 />} />
                     </Routes>
                 </ScrollToTop>

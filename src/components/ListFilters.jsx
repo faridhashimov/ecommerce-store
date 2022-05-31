@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
 import { useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const FilterContainer = styled.div`
@@ -59,6 +60,8 @@ const FilterItem = styled.li`
     cursor: pointer;
     padding: 3px 0px;
     transition: all 0.2s ease-in;
+    text-decoration: none;
+    color: #1b1b1b;
     &:hover ${FilterName} {
         color: #999;
         transition: all 0.2s ease-in;
@@ -89,7 +92,13 @@ const FilterColor = styled.div`
     background-color: #${(props) => props.c};
 `
 
-const ListFilters = ({ filters, cat, onToggleFilter }) => {
+const ListFilters = ({
+    filters,
+    cat,
+    setCat,
+    searchParams,
+    setSearchParams,
+}) => {
     const [openFilter, setOpenFilters] = useState([
         'categories',
         'gender',
@@ -107,8 +116,39 @@ const ListFilters = ({ filters, cat, onToggleFilter }) => {
         }
     }
 
-    // console.log('render')
+    const qs =
+        cat &&
+        Object.keys(cat)
+            .map(
+                (key) =>
+                    `${encodeURIComponent(key)}=${encodeURIComponent(cat[key])}`
+            )
+            .join('&')
 
+    const onToggleFilter = (categ, id) => {
+        if (cat && Object.entries(cat).flat().includes(id)) {
+            setCat(
+                Object.fromEntries(
+                    Object.entries(cat).filter(([key, value]) => value !== id)
+                )
+            )
+        } else {
+            if (categ === 'gender') {
+                setCat({ ...cat, gender: id })
+            } else if (categ === 'size') {
+                setCat({ ...cat, size: id })
+            } else if (categ === 'brand') {
+                setCat({ ...cat, brand: id })
+            } else if (categ === 'category') {
+                setCat({ ...cat, category: id })
+            } else {
+                setCat({ ...cat, color: id })
+            }
+        }
+        setSearchParams(cat)
+    }
+
+    // console.log(searchParams.get(''))
     return (
         <FilterContainer>
             <CategoriesContainer>

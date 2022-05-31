@@ -166,7 +166,7 @@ const CategoryPopup = ({ popup, cat }) => {
                         <CategoryListItem>Clothing</CategoryListItem>
                         <CategoryListItem>
                             <StyledLink
-                                to="/list"
+                                to="/list?category=T-shirts&gender=Women"
                                 state={{
                                     category: 'T-shirts',
                                     gender: 'Women',

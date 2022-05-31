@@ -37,7 +37,7 @@ const CloseContainer = styled.div`
 `
 
 const SearchFilterItem = ({ info, onDeleteFilter, ct }) => {
-    console.log(ct)
+    // console.log(ct)
     return (
         <Container>
             {ct === 'color' ? <Color c={info} /> : <Info>{info}</Info>}

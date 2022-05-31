@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import {
     Footer,
@@ -10,6 +10,7 @@ import {
     SearchFilterItem,
     Spinner,
 } from '../components'
+import { Products } from '../pages'
 
 const Container = styled.div`
     width: 100%;
@@ -56,18 +57,21 @@ const FilterBy = styled.select`
     }
 `
 const FilterByOption = styled.option``
-const Products = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding-left: 20px;
-`
+
+const Main = styled.div``
 
 const List = () => {
     const location = useLocation()
+    const [searchParams, setSearchParams] = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        for(var key of searchParams.keys()) {
+            console.log(key);
+          } // get new values onchange
+    }, [])
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -95,9 +99,7 @@ const List = () => {
         } else {
             setCat(null)
         }
-    }, [])
-
-    console.log(location)
+    }, [location])
 
     const qs =
         cat &&
@@ -125,6 +127,7 @@ const List = () => {
                 )
                 if (isMounted) {
                     setProducts(res.data)
+                    window.history.replaceState(null, '')
                     setError(null)
                     const allCats = [
                         ...new Set(
@@ -170,27 +173,27 @@ const List = () => {
         return cleanUp
     }, [cat, qs])
 
-    const onToggleFilter = (categ, id) => {
-        if (cat && Object.entries(cat).flat().includes(id)) {
-            setCat(
-                Object.fromEntries(
-                    Object.entries(cat).filter(([key, value]) => value !== id)
-                )
-            )
-        } else {
-            if (categ === 'gender') {
-                setCat({ ...cat, gender: id })
-            } else if (categ === 'size') {
-                setCat({ ...cat, size: id })
-            } else if (categ === 'brand') {
-                setCat({ ...cat, brand: id })
-            } else if (categ === 'category') {
-                setCat({ ...cat, category: id })
-            } else {
-                setCat({ ...cat, color: id })
-            }
-        }
-    }
+    // const onToggleFilter = (categ, id) => {
+    //     if (cat && Object.entries(cat).flat().includes(id)) {
+    //         setCat(
+    //             Object.fromEntries(
+    //                 Object.entries(cat).filter(([key, value]) => value !== id)
+    //             )
+    //         )
+    //     } else {
+    //         if (categ === 'gender') {
+    //             setCat({ ...cat, gender: id })
+    //         } else if (categ === 'size') {
+    //             setCat({ ...cat, size: id })
+    //         } else if (categ === 'brand') {
+    //             setCat({ ...cat, brand: id })
+    //         } else if (categ === 'category') {
+    //             setCat({ ...cat, category: id })
+    //         } else {
+    //             setCat({ ...cat, color: id })
+    //         }
+    //     }
+    // }
 
     const onDeleteFilter = (id) => {
         // console.log(id)
@@ -216,7 +219,8 @@ const List = () => {
                         cat={cat}
                         setCat={setCat}
                         filters={filters}
-                        onToggleFilter={onToggleFilter}
+                        searchParams={setSearchParams}
+                        setSearchParams={setSearchParams}
                     />
 
                     <ProductsContainer>
@@ -252,12 +256,9 @@ const List = () => {
                                     ))}
                             </ListHeaderBottom>
                         </ListHeader>
-
-                        <Products>
-                            {products.map((item) => (
-                                <ListProduct key={item._id} {...item} />
-                            ))}
-                        </Products>
+                        <Main>
+                            <Products products={products} />
+                        </Main>
                     </ProductsContainer>
                     {/* </>
                     )} */}

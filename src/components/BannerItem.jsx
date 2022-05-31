@@ -85,7 +85,7 @@ const BannerButton = styled(Link)`
     }
 `
 
-const BannerItem = ({ img, title, cat, disc, dataurl }) => {
+const BannerItem = ({ img, title, cat, disc }) => {
     return (
         <Banner>
             <BannerImage src={img} />
@@ -93,7 +93,7 @@ const BannerItem = ({ img, title, cat, disc, dataurl }) => {
                 <BannerTitle>{title}</BannerTitle>
                 <BannerName>{cat}</BannerName>
                 <BannerDiscount>{disc}</BannerDiscount>
-                <BannerButton to="/list" state={{ item: cat }}>
+                <BannerButton to={`/list?category=${cat}`}>
                     Shop Now
                     <ArrowRightAltOutlined
                         style={{
