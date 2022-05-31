@@ -437,13 +437,29 @@ const CategoryPopup = ({ popup, cat }) => {
                     <CategoryList>
                         <CategoryListItem>Boys</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Shirts</StyledLink>
+                            <StyledLink
+                                to="/list"
+                                state={{
+                                    category: 'Shirts',
+                                    gender: 'Boys',
+                                }}
+                            >
+                                Shirts
+                            </StyledLink>
                         </CategoryListItem>
                     </CategoryList>
                     <CategoryList>
                         <CategoryListItem>Girls</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Tshirts</StyledLink>
+                            <StyledLink
+                                to="/list"
+                                state={{
+                                    category: 'T-shirts',
+                                    gender: 'Girls',
+                                }}
+                            >
+                                Tshirts
+                            </StyledLink>
                         </CategoryListItem>
                     </CategoryList>
                 </CategoryListInfo>

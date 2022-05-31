@@ -95,7 +95,7 @@ const List = () => {
         } else {
             setCat(null)
         }
-    }, [])
+    }, [location])
 
     console.log(location)
 
@@ -126,6 +126,7 @@ const List = () => {
                 if (isMounted) {
                     setProducts(res.data)
                     setError(null)
+                    
                     const allCats = [
                         ...new Set(
                             res.data.map((item) => item.category).flat()
