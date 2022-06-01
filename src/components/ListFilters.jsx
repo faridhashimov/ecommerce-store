@@ -54,7 +54,7 @@ const FilterName = styled.span`
     /* color: #1b1b1b; */
     transition: all 0.2s ease-in;
 `
-const FilterItem = styled.li`
+const FilterItem = styled(Link)`
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -79,7 +79,7 @@ const FilterColorContainer = styled.div`
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
 `
-const FilterColor = styled.div`
+const FilterColor = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,13 +92,7 @@ const FilterColor = styled.div`
     background-color: #${(props) => props.c};
 `
 
-const ListFilters = ({
-    filters,
-    cat,
-    setCat,
-    searchParams,
-    setSearchParams,
-}) => {
+const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl }) => {
     const [openFilter, setOpenFilters] = useState([
         'categories',
         'gender',
@@ -115,15 +109,6 @@ const ListFilters = ({
             setOpenFilters((openFilter) => [...openFilter, index])
         }
     }
-
-    const qs =
-        cat &&
-        Object.keys(cat)
-            .map(
-                (key) =>
-                    `${encodeURIComponent(key)}=${encodeURIComponent(cat[key])}`
-            )
-            .join('&')
 
     const onToggleFilter = (categ, id) => {
         if (cat && Object.entries(cat).flat().includes(id)) {
@@ -145,10 +130,9 @@ const ListFilters = ({
                 setCat({ ...cat, color: id })
             }
         }
-        setSearchParams(cat)
     }
 
-    // console.log(searchParams.get(''))
+    console.log(cat)
     return (
         <FilterContainer>
             <CategoriesContainer>
@@ -176,6 +160,7 @@ const ListFilters = ({
                             <FilterItem
                                 key={item}
                                 onClick={() => onToggleFilter('category', item)}
+                                to={getFiltersUrl({ category: item })}
                             >
                                 <FilterName
                                     style={{
@@ -220,6 +205,7 @@ const ListFilters = ({
                             <FilterItem
                                 key={item}
                                 onClick={() => onToggleFilter('gender', item)}
+                                to={getFiltersUrl({ gender: item })}
                             >
                                 {!cat ? (
                                     <StyledCheckbox
@@ -270,6 +256,7 @@ const ListFilters = ({
                             <FilterItem
                                 key={item}
                                 onClick={() => onToggleFilter('brand', item)}
+                                to={getFiltersUrl({ brand: item })}
                             >
                                 {!cat ? (
                                     <StyledCheckbox
@@ -320,6 +307,7 @@ const ListFilters = ({
                             <FilterItem
                                 key={item}
                                 onClick={() => onToggleFilter('size', item)}
+                                to={getFiltersUrl({ size: item })}
                             >
                                 {!cat ? (
                                     <StyledCheckbox
@@ -374,6 +362,7 @@ const ListFilters = ({
                                     onClick={() =>
                                         onToggleFilter('color', item)
                                     }
+                                    to={getFiltersUrl({ color: item })}
                                 >
                                     {cat &&
                                     Object.entries(cat)

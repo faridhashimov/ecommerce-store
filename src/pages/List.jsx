@@ -67,11 +67,16 @@ const List = () => {
     const [error, setError] = useState(false)
     const [products, setProducts] = useState([])
 
-    useEffect(() => {
-        for(var key of searchParams.keys()) {
-            console.log(key);
-          } // get new values onchange
-    }, [])
+    console.log(location)
+    const sp = new URLSearchParams(location.search)
+    const category = sp.get('category') || 'all'
+    const brand = sp.get('brand') || 'all'
+    const status = sp.get('status') || 'all'
+    const gender = sp.get('gender') || 'all'
+    const size = sp.get('size') || 'all'
+    const color = sp.get('color') || 'all'
+    console.log(brand)
+    console.log(category)
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -84,31 +89,8 @@ const List = () => {
     const [cat, setCat] = useState(null)
 
     useEffect(() => {
-        if (location?.state?.item) {
-            setCat({ ...cat, category: location?.state?.item })
-        } else if (location?.state?.brand) {
-            setCat({ ...cat, brand: location?.state?.brand })
-        } else if (location?.state?.status) {
-            setCat({ ...cat, status: location?.state?.status })
-        } else if (location?.state?.category && location?.state?.gender) {
-            setCat({
-                ...cat,
-                category: location?.state?.category,
-                gender: location?.state?.gender,
-            })
-        } else {
-            setCat(null)
-        }
+        setCat({ ...cat, category, brand, gender, size, color })
     }, [location])
-
-    const qs =
-        cat &&
-        Object.keys(cat)
-            .map(
-                (key) =>
-                    `${encodeURIComponent(key)}=${encodeURIComponent(cat[key])}`
-            )
-            .join('&')
 
     useEffect(() => {
         let isMounted = true
@@ -118,7 +100,11 @@ const List = () => {
             try {
                 const res = await axios.get(
                     cat
-                        ? `http://localhost:5000/api/products?${qs}`
+                        ? `http://localhost:5000/api/products?category=${encodeURIComponent(
+                              category
+                          )}&brand=${encodeURIComponent(
+                              brand
+                          )}&gender=${gender}&size=${size}&color=${color}&status=${status}`
                         : `http://localhost:5000/api/products`,
 
                     {
@@ -171,38 +157,43 @@ const List = () => {
         }
 
         return cleanUp
-    }, [cat, qs])
+    }, [cat])
 
-    // const onToggleFilter = (categ, id) => {
-    //     if (cat && Object.entries(cat).flat().includes(id)) {
-    //         setCat(
-    //             Object.fromEntries(
-    //                 Object.entries(cat).filter(([key, value]) => value !== id)
-    //             )
-    //         )
-    //     } else {
-    //         if (categ === 'gender') {
-    //             setCat({ ...cat, gender: id })
-    //         } else if (categ === 'size') {
-    //             setCat({ ...cat, size: id })
-    //         } else if (categ === 'brand') {
-    //             setCat({ ...cat, brand: id })
-    //         } else if (categ === 'category') {
-    //             setCat({ ...cat, category: id })
-    //         } else {
-    //             setCat({ ...cat, color: id })
-    //         }
-    //     }
-    // }
+    const getFiltersUrl = (filter) => {
+        console.log(cat)
+        console.log(filter)
+        const filterCategory = Object.entries(cat)
+            .flat()
+            .includes(filter.category)
+            ? 'all'
+            : filter.category || category
+        const filterBrand = Object.entries(cat).flat().includes(filter.brand)
+            ? 'all'
+            : filter.brand || brand
+        const filterGender = Object.entries(cat).flat().includes(filter.gender)
+            ? 'all'
+            : filter.gender || gender
+        const filterSize = Object.entries(cat).flat().includes(filter.size)
+            ? 'all'
+            : filter.size || size
+        const filterColor = Object.entries(cat).flat().includes(filter.color)
+            ? 'all'
+            : filter.color || color
 
-    const onDeleteFilter = (id) => {
-        // console.log(id)
-        setCat(
-            Object.fromEntries(
-                Object.entries(cat).filter(([key, value]) => value !== id)
-            )
-        )
+        return `/list?category=${encodeURIComponent(
+            filterCategory
+        )}&brand=${encodeURIComponent(
+            filterBrand
+        )}&gender=${filterGender}&size=${filterSize}&color=${filterColor}`
     }
+
+    // const onDeleteFilter = (id) => {
+    //     setCat(
+    //         Object.fromEntries(
+    //             Object.entries(cat).filter(([key, value]) => value !== id)
+    //         )
+    //     )
+    // }
 
     // console.log(cat)
 
@@ -219,8 +210,15 @@ const List = () => {
                         cat={cat}
                         setCat={setCat}
                         filters={filters}
-                        searchParams={setSearchParams}
-                        setSearchParams={setSearchParams}
+                        getFiltersUrl={getFiltersUrl}
+                        filterUrl={{
+                            category,
+                            brand,
+                            gender,
+                            size,
+                            color,
+                            status,
+                        }}
                     />
 
                     <ProductsContainer>
@@ -248,7 +246,8 @@ const List = () => {
                                 {cat &&
                                     Object.entries(cat).map(([key, value]) => (
                                         <SearchFilterItem
-                                            onDeleteFilter={onDeleteFilter}
+                                            // onDeleteFilter={onDeleteFilter}
+                                            getFiltersUrl={getFiltersUrl}
                                             key={key}
                                             info={cat[key]}
                                             ct={key}

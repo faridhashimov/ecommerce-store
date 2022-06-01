@@ -1,4 +1,5 @@
 import { Close } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -25,7 +26,7 @@ const Color = styled.div`
     border: 1px solid #999999;
     background-color: #${(props) => props.c};
 `
-const CloseContainer = styled.div`
+const CloseContainer = styled(Link)`
     cursor: pointer;
     height: 15px;
     width: 15px;
@@ -36,18 +37,38 @@ const CloseContainer = styled.div`
     align-items: center;
 `
 
-const SearchFilterItem = ({ info, onDeleteFilter, ct }) => {
+const SearchFilterItem = ({ info, onDeleteFilter, ct, getFiltersUrl }) => {
     // console.log(ct)
     return (
-        <Container>
-            {ct === 'color' ? <Color c={info} /> : <Info>{info}</Info>}
+        <>
+            {info === 'all' ? null : (
+                <Container>
+                    {ct === 'color' ? <Color c={info} /> : <Info>{info}</Info>}
 
-            <CloseContainer onClick={() => onDeleteFilter(info)}>
-                <Close
-                    sx={{ fontSize: '8px', stroke: 'black', strokeWidth: '2' }}
-                />
-            </CloseContainer>
-        </Container>
+                    <CloseContainer
+                        to={
+                            ct === 'category'
+                                ? getFiltersUrl({ category: info })
+                                : ct === 'brand'
+                                ? getFiltersUrl({ brand: info })
+                                : ct === 'size'
+                                ? getFiltersUrl({ size: info })
+                                : ct === 'gender'
+                                ? getFiltersUrl({ gender: info })
+                                : getFiltersUrl({ color: info })
+                        }
+                    >
+                        <Close
+                            sx={{
+                                fontSize: '8px',
+                                stroke: 'black',
+                                strokeWidth: '2',
+                            }}
+                        />
+                    </CloseContainer>
+                </Container>
+            )}
+        </>
     )
 }
 

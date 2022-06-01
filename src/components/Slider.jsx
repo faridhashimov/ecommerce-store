@@ -196,7 +196,7 @@ const Slider = () => {
                                 </MainTitle>
                                 <SecondaryTitle>Up To 20% Off</SecondaryTitle>
                             </InfoTitle>
-                            <InfoButton to="/list" state={{ status: 'Sale' }}>
+                            <InfoButton to={`/list?status=Sale`}>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{
@@ -225,8 +225,9 @@ const Slider = () => {
                                 <SecondaryTitle>50% Off</SecondaryTitle>
                             </InfoTitle>
                             <InfoButton
-                                to="/list"
-                                state={{ item: 'Coats & Jackets' }}
+                                to={`/list?category=${encodeURIComponent(
+                                    'Coats & Jackets'
+                                )}`}
                             >
                                 Shop Now
                                 <ArrowRightAltOutlined
@@ -248,10 +249,16 @@ const Slider = () => {
                         <Info>
                             <InfoTitle>
                                 <SecondaryTitle>Shop now</SecondaryTitle>
-                                <MainTitle size="90px">HOODIES &amp; SWEATSHIRTS</MainTitle>
+                                <MainTitle size="90px">
+                                    HOODIES &amp; SWEATSHIRTS
+                                </MainTitle>
                                 <SecondaryTitle>shop mens</SecondaryTitle>
                             </InfoTitle>
-                            <InfoButton to="/list" state={{ item: 'Hoodies & Sweatshirts' }}>
+                            <InfoButton
+                                to={`/list?category=${encodeURIComponent(
+                                    'Hoodies & Sweatshirts'
+                                )}`}
+                            >
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{

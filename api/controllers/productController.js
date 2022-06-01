@@ -42,23 +42,31 @@ const deleteProduct = async (req, res) => {
 
 //GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
-    const qNew = req.query.new
+    const category = req.query.category
+    const brand = req.query.brand
+    const gender = req.query.gender
+    const size = req.query.size
+    const color = req.query.color
+    const status = req.query.status
 
-    let findProduct = req.query
+    const searchCategory = category && category !== 'all' ? { category } : {}
+    const searchBrand = brand && brand !== 'all' ? { brand } : {}
+    const searchGender = gender && gender !== 'all' ? { gender } : {}
+    const searchSize = size && size !== 'all' ? { size } : {}
+    const searchColor = color && color !== 'all' ? { color } : {}
+    const searchStatus = status && status !== 'all' ? { status } : {}
 
-    // console.log(findProduct)
+    console.log(req.query)
 
     try {
-        let products
-        if (qNew) {
-            products = await Product.find({
-                createdAt: {
-                    $gte: new Date(new Date() - qNew * 60 * 60 * 24 * 1000),
-                },
-            })
-        } else {
-            products = await Product.find(findProduct)
-        }
+        const products = await Product.find({
+            ...searchCategory,
+            ...searchBrand,
+            ...searchGender,
+            ...searchSize,
+            ...searchColor,
+            ...searchStatus,
+        })
 
         res.status(200).json(products)
     } catch (err) {

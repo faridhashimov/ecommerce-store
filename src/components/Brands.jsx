@@ -58,7 +58,7 @@ const BrandItemContainer = styled.div`
 const Brands = () => {
     let navigate = useNavigate()
     const onOpenProducts = (item) => {
-        navigate(`/list?brand=${item.name}`)
+        navigate(`/list?brand=${encodeURIComponent(item.name)}`)
     }
 
     return (

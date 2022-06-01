@@ -93,7 +93,7 @@ const BannerItem = ({ img, title, cat, disc }) => {
                 <BannerTitle>{title}</BannerTitle>
                 <BannerName>{cat}</BannerName>
                 <BannerDiscount>{disc}</BannerDiscount>
-                <BannerButton to={`/list?category=${cat}`}>
+                <BannerButton to={`/list?category=${encodeURIComponent(cat)}`}>
                     Shop Now
                     <ArrowRightAltOutlined
                         style={{
