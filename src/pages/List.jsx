@@ -62,12 +62,11 @@ const Main = styled.div``
 
 const List = () => {
     const location = useLocation()
-    const [searchParams, setSearchParams] = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [products, setProducts] = useState([])
+    const [newProducts, setNewProducts] = useState([])
 
-    console.log(location)
     const sp = new URLSearchParams(location.search)
     const category = sp.get('category') || 'all'
     const brand = sp.get('brand') || 'all'
@@ -75,8 +74,7 @@ const List = () => {
     const gender = sp.get('gender') || 'all'
     const size = sp.get('size') || 'all'
     const color = sp.get('color') || 'all'
-    console.log(brand)
-    console.log(category)
+    const page = sp.get('page') || 1
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -85,6 +83,8 @@ const List = () => {
         genderFilter: [],
         colorFilter: [],
     })
+
+    console.log('render')
 
     const [cat, setCat] = useState(null)
 
@@ -99,13 +99,11 @@ const List = () => {
             setLoading(true)
             try {
                 const res = await axios.get(
-                    cat
-                        ? `http://localhost:5000/api/products?category=${encodeURIComponent(
-                              category
-                          )}&brand=${encodeURIComponent(
-                              brand
-                          )}&gender=${gender}&size=${size}&color=${color}&status=${status}`
-                        : `http://localhost:5000/api/products`,
+                    `http://localhost:5000/api/products?category=${encodeURIComponent(
+                        category
+                    )}&brand=${encodeURIComponent(
+                        brand
+                    )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}`,
 
                     {
                         cancelToken: source.token,
@@ -113,7 +111,7 @@ const List = () => {
                 )
                 if (isMounted) {
                     setProducts(res.data)
-                    window.history.replaceState(null, '')
+                    // window.history.replaceState(null, '')
                     setError(null)
                     const allCats = [
                         ...new Set(
@@ -157,11 +155,9 @@ const List = () => {
         }
 
         return cleanUp
-    }, [cat])
+    }, [cat, category, brand, gender, size, color, status])
 
     const getFiltersUrl = (filter) => {
-        console.log(cat)
-        console.log(filter)
         const filterCategory = Object.entries(cat)
             .flat()
             .includes(filter.category)
@@ -186,16 +182,6 @@ const List = () => {
             filterBrand
         )}&gender=${filterGender}&size=${filterSize}&color=${filterColor}`
     }
-
-    // const onDeleteFilter = (id) => {
-    //     setCat(
-    //         Object.fromEntries(
-    //             Object.entries(cat).filter(([key, value]) => value !== id)
-    //         )
-    //     )
-    // }
-
-    // console.log(cat)
 
     return (
         <>

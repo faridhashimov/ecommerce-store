@@ -132,7 +132,6 @@ const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl }) => {
         }
     }
 
-    console.log(cat)
     return (
         <FilterContainer>
             <CategoriesContainer>

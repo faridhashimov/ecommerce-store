@@ -48,6 +48,7 @@ const getAllProducts = async (req, res) => {
     const size = req.query.size
     const color = req.query.color
     const status = req.query.status
+    const page = req.query.page
 
     const searchCategory = category && category !== 'all' ? { category } : {}
     const searchBrand = brand && brand !== 'all' ? { brand } : {}
@@ -67,6 +68,8 @@ const getAllProducts = async (req, res) => {
             ...searchColor,
             ...searchStatus,
         })
+            .skip(12 * (page - 1))
+            .limit(12)
 
         res.status(200).json(products)
     } catch (err) {

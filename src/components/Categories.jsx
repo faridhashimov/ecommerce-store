@@ -4,13 +4,15 @@ import styled from 'styled-components'
 import { css } from 'styled-components'
 
 const CategoriesContainer = styled.div`
+    box-shadow: 0px 35px 75px -2px rgba(34, 60, 80, 0.47);
+    width: 1100px;
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid #ccc;
     display: ${(props) => (props.state ? 'block' : 'none')};
     position: absolute;
     bottom: -56px;
-    right: -102px;
+    right: -602px;
     transition: all 0.3s ease-in;
     z-index: 1000;
     padding: 0px 10px;
@@ -46,6 +48,8 @@ const CategoryItem = styled.li`
 //=================================================
 
 const CategoryListContainer = styled.div`
+    /* box-shadow: 0px 100px 440px 100px rgba(34, 60, 80, 0.39); */
+    box-shadow: 2px 200px 400px 200px rgba(0,0,0,0.22);
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -57,11 +61,12 @@ const CategoryListContainer = styled.div`
     z-index: 1000;
     padding: 10px;
     height: 210px;
-    width: 480px;
+    width: 1100px;
 `
+
 const CategoryListInfo = styled.div`
     display: flex;
-    /* padding: 0px 10px; */
+    padding: 0px 20px;
 `
 const CategoryList = styled.ul`
     list-style: none;
@@ -160,95 +165,52 @@ const Categories = ({ openShop }) => {
 const CategoryPopup = ({ popup, cat }) => {
     return (
         <CategoryListContainer popup={popup}>
+            {/* <Wrapper> */}
             {cat === 'Women' ? (
                 <CategoryListInfo>
                     <CategoryList>
                         <CategoryListItem>Clothing</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list?category=T-shirts&gender=Women"
-                                state={{
-                                    category: 'T-shirts',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=T-shirts&gender=Women">
                                 T-shirts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Skirts',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Skirts&gender=Women">
                                 Skirts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Shirts',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Shirts&gender=Women">
                                 Shirts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Shorts',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Shorts&gender=Women">
                                 Shorts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Pants',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Pants&gender=Women">
                                 Pants
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
                             <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Coats & Jackets',
-                                    gender: 'Women',
-                                }}
+                                to={`/list?category=${encodeURIComponent(
+                                    'Coats & Jackets'
+                                )}&gender=Women`}
                             >
                                 Coats & Jackets
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Hoodies',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Hoodies&gender=Women">
                                 Hoodies
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Sweatshirts',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Sweatshirts&gender=Women">
                                 Sweatshirts
                             </StyledLink>
                         </CategoryListItem>
@@ -256,46 +218,26 @@ const CategoryPopup = ({ popup, cat }) => {
                     <CategoryList>
                         <CategoryListItem>Shoes</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Loafers',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Loafers&gender=Women">
                                 Loafers
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Sandals',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Sandals&gender=Women">
                                 Sandals
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
                             <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Strappy Sandals',
-                                    gender: 'Women',
-                                }}
+                                to={`/list?category=${encodeURIComponent(
+                                    'Strappy Sandals'
+                                )}&gender=Women`}
                             >
                                 Strappy Sandals
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Sneakers',
-                                    gender: 'Women',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Sneakers&gender=Women">
                                 Sneakers
                             </StyledLink>
                         </CategoryListItem>
@@ -306,90 +248,46 @@ const CategoryPopup = ({ popup, cat }) => {
                     <CategoryList>
                         <CategoryListItem>Clothing</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'T-shirts',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=T-shirts&gender=Men">
                                 T-shirts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Skirts',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Skirts&gender=Men">
                                 Skirts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Shirts',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Shirts&gender=Men">
                                 Shirts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Shorts',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Shorts&gender=Men">
                                 Shorts
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Pants',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Pants&gender=Men">
                                 Pants
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
                             <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Coats & Jackets',
-                                    gender: 'Men',
-                                }}
+                                to={`/list?category=${encodeURIComponent(
+                                    'Coats & Jackets'
+                                )}&gender=Men`}
                             >
                                 Coats & Jackets
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Hoodies',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Hoodies&gender=Men">
                                 Hoodies
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Sweatshirts',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Sweatshirts&gender=Men">
                                 Sweatshirts
                             </StyledLink>
                         </CategoryListItem>
@@ -397,36 +295,21 @@ const CategoryPopup = ({ popup, cat }) => {
                     <CategoryList>
                         <CategoryListItem>Shoes</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Loafers',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Loafers&gender=Men">
                                 Loafers
                             </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
                             <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Sandals & Flip Flops',
-                                    gender: 'Men',
-                                }}
+                                to={`/list?category=${encodeURIComponent(
+                                    'Sandals & Flip Flops'
+                                )}&gender=Men`}
                             >
                                 Sandals & Flip Flops
                             </StyledLink>
                         </CategoryListItem>
-
                         <CategoryListItem>
-                            <StyledLink
-                                to="/list"
-                                state={{
-                                    category: 'Sneakers',
-                                    gender: 'Men',
-                                }}
-                            >
+                            <StyledLink to="/list?category=Sneakers&gender=Men">
                                 Sneakers
                             </StyledLink>
                         </CategoryListItem>
@@ -437,13 +320,17 @@ const CategoryPopup = ({ popup, cat }) => {
                     <CategoryList>
                         <CategoryListItem>Boys</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Shirts</StyledLink>
+                            <StyledLink to="/list?category=Shirts&gender=Boys">
+                                Shirts
+                            </StyledLink>
                         </CategoryListItem>
                     </CategoryList>
                     <CategoryList>
                         <CategoryListItem>Girls</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Tshirts</StyledLink>
+                            <StyledLink to="/list?category=T-shirts&gender=Girls">
+                                T-shirts
+                            </StyledLink>
                         </CategoryListItem>
                     </CategoryList>
                 </CategoryListInfo>
@@ -452,18 +339,32 @@ const CategoryPopup = ({ popup, cat }) => {
                     <CategoryList>
                         <CategoryListItem>Women's Accessories</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Jevelry</StyledLink>
+                            <StyledLink to="/list?category=Jevelry&gender=Women">
+                                Jevelry
+                            </StyledLink>
                         </CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Earrings</StyledLink>
-                            <StyledLink to="/">Hats</StyledLink>
-                            <StyledLink to="/">Bags</StyledLink>
+                            <StyledLink to="/list?category=Earrings&gender=Women">
+                                Earrings
+                            </StyledLink>
+                        </CategoryListItem>
+                        <CategoryListItem>
+                            <StyledLink to="/list?category=Hats&gender=Women">
+                                Hats
+                            </StyledLink>
+                        </CategoryListItem>
+                        <CategoryListItem>
+                            <StyledLink to="/list?category=Bags&gender=Women">
+                                Bags
+                            </StyledLink>
                         </CategoryListItem>
                     </CategoryList>
                     <CategoryList>
                         <CategoryListItem>Men's Accessories</CategoryListItem>
                         <CategoryListItem>
-                            <StyledLink to="/">Bags</StyledLink>
+                            <StyledLink to="/list?category=Bags&gender=Men">
+                                Bags
+                            </StyledLink>
                         </CategoryListItem>
                     </CategoryList>
                 </CategoryListInfo>
@@ -489,6 +390,7 @@ const CategoryPopup = ({ popup, cat }) => {
                     </CategoryList>
                 </CategoryListInfo>
             )}
+            {/* </Wrapper> */}
         </CategoryListContainer>
     )
 }
