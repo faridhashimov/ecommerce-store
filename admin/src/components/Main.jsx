@@ -1,75 +1,105 @@
-import { ShoppingBasket } from '@mui/icons-material'
-import { LocalShipping } from '@mui/icons-material'
-import { MonetizationOn } from '@mui/icons-material'
-import { Stack } from '@mui/material'
-import { styled } from '@mui/material'
-import { Typography } from '@mui/material'
-import { Box } from '@mui/material'
+import { Stack, Typography, styled, Box } from '@mui/material'
+import Chart from './Chart'
+import Widgets from './Widgets'
 
-const WidgetContainer = styled(Box)(({ theme }) => ({
-    padding: '20px',
-    borderRadius: theme.shape.borderRadius,
+const StatisticsContainer = styled(Box)(({ theme }) => ({
+    padding: 20,
     boxShadow: theme.shadows[2],
+    borderRadius: theme.shape.borderRadius,
 }))
 
-const IconContainer = styled(Box)(({ theme }) => ({
-    marginRight: 10,
-    padding: 12,
+const RevenueContainer = styled(Box)(({ theme }) => ({
+    padding: 20,
+    boxShadow: theme.shadows[2],
+    borderRadius: theme.shape.borderRadius,
     display: 'flex',
-    justifyContent: 'center',
-    borderRadius: '50%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
 }))
 
-const WidgetHeader = styled(Typography)({
+const StyledTypo = styled(Typography)({
+    color: '#9a9a9a',
+    lineHeight: 1,
+})
+
+const SalesContainer = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     fontWeight: 500,
-    mb: 1,
-    fontSize: 16,
+    fontSize: 15,
+})
+
+const SalesAmount = styled(StyledTypo)({
+    marginTop: 10,
 })
 
 const Main = () => {
     return (
         <Box sx={{ padding: '30px' }}>
-            <Typography variant="h3" mb={3} fontSize={28}>
+            <StyledTypo variant="h5" mb={3} fontWeight={500}>
                 Dashboard
-            </Typography>
+            </StyledTypo>
 
-            <Stack direction="row" spacing={3}>
-                <WidgetContainer flex={1}>
-                    <Box display={'flex'}>
-                        <IconContainer sx={{ backgroundColor: '#D6E1FB' }}>
-                            <MonetizationOn sx={{ color: '#3167EB' }} />
-                        </IconContainer>
-                        <Stack>
-                            <WidgetHeader variant="h6">
-                                Totals Sales
-                            </WidgetHeader>
-                        </Stack>
-                    </Box>
-                </WidgetContainer>
-                <WidgetContainer flex={1}>
-                    <Box display={'flex'}>
-                        <IconContainer sx={{ backgroundColor: '#CCF0D1' }}>
-                            <LocalShipping sx={{ color: '#00B517' }} />
-                        </IconContainer>
-                        <Stack>
-                            <WidgetHeader variant="h6">
-                                Totals Sales
-                            </WidgetHeader>
-                        </Stack>
-                    </Box>
-                </WidgetContainer>
-                <WidgetContainer flex={1}>
-                    <Box display={'flex'}>
-                        <IconContainer sx={{ backgroundColor: '#FFE8D0' }}>
-                            <ShoppingBasket sx={{ color: '#FD8A14' }} />
-                        </IconContainer>
-                        <Stack>
-                            <WidgetHeader variant="h6">
-                                Totals Sales
-                            </WidgetHeader>
-                        </Stack>
-                    </Box>
-                </WidgetContainer>
+            <Widgets />
+            <Stack mt={3} direction="row">
+                <StatisticsContainer flex={2}>
+                    <StyledTypo mb={2} variant="h6" fontWeight={400}>
+                        Last 6 Months (income)
+                    </StyledTypo>
+                    <Chart />
+                </StatisticsContainer>
+                <RevenueContainer ml={4} flex={1}>
+                    <StyledTypo variant="span">Total Revenue</StyledTypo>
+                    <Stack direction="column" sx={{ textAlign: 'center' }}>
+                        <StyledTypo
+                            variant="span"
+                            sx={{ margin: '20px 0px', fontWeight: 500 }}
+                        >
+                            Total sales made today
+                        </StyledTypo>
+                        <StyledTypo variant="h4" sx={{ color: '#232323' }}>
+                            $420
+                        </StyledTypo>
+                        <StyledTypo
+                            variant="p"
+                            margin="20px 0px"
+                            sx={{ fontSize: 14 }}
+                        >
+                            Previous transactions processing. Last payments may
+                            not be included.
+                        </StyledTypo>
+                    </Stack>
+                    <Stack direction="row" justifyContent="space-between">
+                        <SalesContainer>
+                            <StyledTypo variant="span">Last Quarter</StyledTypo>
+                            <SalesAmount
+                                variant="span"
+                                sx={{ color: '#d1515c' }}
+                            >
+                                $ 7.5k
+                            </SalesAmount>
+                        </SalesContainer>
+                        <SalesContainer>
+                            <StyledTypo variant="span">Last Week</StyledTypo>
+                            <SalesAmount
+                                variant="span"
+                                sx={{ color: '#64b484' }}
+                            >
+                                $ 15.5k
+                            </SalesAmount>
+                        </SalesContainer>
+                        <SalesContainer>
+                            <StyledTypo variant="span">Last Month</StyledTypo>
+                            <SalesAmount
+                                variant="span"
+                                sx={{ color: '#d1515c' }}
+                            >
+                                $ 12.4k
+                            </SalesAmount>
+                        </SalesContainer>
+                    </Stack>
+                </RevenueContainer>
             </Stack>
         </Box>
     )
