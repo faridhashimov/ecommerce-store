@@ -19,7 +19,6 @@ import {
     List,
 } from '@mui/material'
 import { styled } from '@mui/system'
-import { theme } from '../theme.js'
 
 const StyledListBtn = styled(ListItemButton)({
     color: '#ADB5BD',
@@ -48,7 +47,7 @@ const Leftbar = () => {
                 }}
                 component="nav"
                 subheader={
-                    <ListSubheader component="div" sx={{ fontSize: 20 }}>
+                    <ListSubheader component="div" sx={{ fontSize: 20, padding: '15px' }}>
                         FRED Admin
                     </ListSubheader>
                 }
