@@ -11,6 +11,8 @@ import { Link, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const FilterContainer = styled.div`
+    position: sticky;
+    top: 0;
     flex: 1;
     align-self: flex-start;
 `
@@ -92,7 +94,7 @@ const FilterColor = styled(Link)`
     background-color: #${(props) => props.c};
 `
 
-const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl }) => {
+const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl, setClicked }) => {
     const [openFilter, setOpenFilters] = useState([
         'categories',
         'gender',
@@ -111,6 +113,7 @@ const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl }) => {
     }
 
     const onToggleFilter = (categ, id) => {
+        setClicked(id)
         if (cat && Object.entries(cat).flat().includes(id)) {
             setCat(
                 Object.fromEntries(

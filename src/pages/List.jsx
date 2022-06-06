@@ -1,6 +1,6 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Outlet, useLocation, useSearchParams } from 'react-router-dom'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
     Footer,
@@ -8,7 +8,6 @@ import {
     ListProduct,
     Navbar,
     SearchFilterItem,
-    Spinner,
 } from '../components'
 import { Products } from '../pages'
 
@@ -65,16 +64,10 @@ const List = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [products, setProducts] = useState([])
-    const [newProducts, setNewProducts] = useState([])
-
-    const sp = new URLSearchParams(location.search)
-    const category = sp.get('category') || 'all'
-    const brand = sp.get('brand') || 'all'
-    const status = sp.get('status') || 'all'
-    const gender = sp.get('gender') || 'all'
-    const size = sp.get('size') || 'all'
-    const color = sp.get('color') || 'all'
-    const page = sp.get('page') || 1
+    const [hasMore, setHasMore] = useState(false)
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState()
+    const [clicked, setClicked] = useState(null)
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -83,14 +76,25 @@ const List = () => {
         genderFilter: [],
         colorFilter: [],
     })
+    let navigate = useNavigate()
 
-    console.log('render')
+    const sp = new URLSearchParams(location.search)
+    const category = sp.get('category') || 'all'
+    const brand = sp.get('brand') || 'all'
+    const status = sp.get('status') || 'all'
+    const gender = sp.get('gender') || 'all'
+    const size = sp.get('size') || 'all'
+    const color = sp.get('color') || 'all'
 
     const [cat, setCat] = useState(null)
 
     useEffect(() => {
-        setCat({ ...cat, category, brand, gender, size, color })
+        setCat({ ...cat, category, brand, gender, size, color, status })
     }, [location])
+
+    useEffect(() => {
+        setPage(1)
+    }, [clicked])
 
     useEffect(() => {
         let isMounted = true
@@ -110,33 +114,47 @@ const List = () => {
                     }
                 )
                 if (isMounted) {
-                    setProducts(res.data)
-                    // window.history.replaceState(null, '')
+                    let ids = res.data.map((o) => o._id)
+                    let stateWithoutDuplicates = products.filter(
+                        ({ _id }) => !ids.includes(_id)
+                    )
+                    clicked
+                        ? setProducts(res.data)
+                        : setProducts([...stateWithoutDuplicates, ...res.data])
+                    setHasMore(res.data.length === 10 ? true : false)
+
+                    const setAllFilters = (data) => {
+                        setFilters({
+                            categoryFilter: [
+                                ...new Set(
+                                    data.map((item) => item.category).flat()
+                                ),
+                            ],
+                            brandFilter: [
+                                ...new Set(data.map((item) => item.brand)),
+                            ],
+                            genderFilter: [
+                                ...new Set(data.map((item) => item.gender)),
+                            ],
+                            sizeFilter: [
+                                ...new Set(
+                                    data.map((item) => item.size).flat()
+                                ),
+                            ],
+                            colorFilter: [
+                                ...new Set(
+                                    data.map((item) => item.color).flat()
+                                ),
+                            ],
+                        })
+                    }
+                    clicked
+                        ? setAllFilters(res.data)
+                        : products.length > 0
+                        ? setAllFilters(products)
+                        : setAllFilters(res.data)
+
                     setError(null)
-                    const allCats = [
-                        ...new Set(
-                            res.data.map((item) => item.category).flat()
-                        ),
-                    ]
-                    const allBrands = [
-                        ...new Set(res.data.map((item) => item.brand)),
-                    ]
-                    const allGenders = [
-                        ...new Set(res.data.map((item) => item.gender)),
-                    ]
-                    const allSizes = [
-                        ...new Set(res.data.map((item) => item.size).flat()),
-                    ]
-                    const allColors = [
-                        ...new Set(res.data.map((item) => item.color).flat()),
-                    ]
-                    setFilters({
-                        categoryFilter: allCats,
-                        brandFilter: allBrands,
-                        sizeFilter: allSizes,
-                        genderFilter: allGenders,
-                        colorFilter: allColors,
-                    })
                 }
             } catch (error) {
                 if (isMounted) {
@@ -155,7 +173,31 @@ const List = () => {
         }
 
         return cleanUp
-    }, [cat, category, brand, gender, size, color, status])
+    }, [cat, category, brand, gender, size, color, status, page])
+
+    const observer = useRef()
+    const lastProdElRef = useCallback(
+        (node) => {
+            if (loading) return
+            if (observer.current) observer.current.disconnect()
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    setPage((prev) => prev + 1)
+                    setClicked(null)
+                    console.log('ok')
+                    navigate(
+                        `/list?category=${encodeURIComponent(
+                            category
+                        )}&brand=${encodeURIComponent(
+                            brand
+                        )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}`
+                    )
+                }
+            })
+            if (node) observer.current.observe(node)
+        },
+        [loading, hasMore]
+    )
 
     const getFiltersUrl = (filter) => {
         const filterCategory = Object.entries(cat)
@@ -197,6 +239,7 @@ const List = () => {
                         setCat={setCat}
                         filters={filters}
                         getFiltersUrl={getFiltersUrl}
+                        setClicked={setClicked}
                         filterUrl={{
                             category,
                             brand,
@@ -216,7 +259,7 @@ const List = () => {
                                     {' are listed for your search'}
                                 </ListHeadeTitle>
                                 <FilterBy>
-                                    <FilterByOption>Sort By:</FilterByOption>
+                                    <FilterByOption>Featured</FilterByOption>
                                     <FilterByOption value="new">
                                         Newest Arrivals
                                     </FilterByOption>
@@ -232,17 +275,22 @@ const List = () => {
                                 {cat &&
                                     Object.entries(cat).map(([key, value]) => (
                                         <SearchFilterItem
-                                            // onDeleteFilter={onDeleteFilter}
                                             getFiltersUrl={getFiltersUrl}
                                             key={key}
                                             info={cat[key]}
                                             ct={key}
+                                            cat={cat}
+                                            setCat={setCat}
+                                            setClicked={setClicked}
                                         />
                                     ))}
                             </ListHeaderBottom>
                         </ListHeader>
                         <Main>
-                            <Products products={products} />
+                            <Products
+                                lastProdElRef={lastProdElRef}
+                                products={products}
+                            />
                         </Main>
                     </ProductsContainer>
                     {/* </>

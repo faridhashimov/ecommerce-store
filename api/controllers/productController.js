@@ -49,6 +49,7 @@ const getAllProducts = async (req, res) => {
     const color = req.query.color
     const status = req.query.status
     const page = req.query.page
+    const order = req.query.order
 
     const searchCategory = category && category !== 'all' ? { category } : {}
     const searchBrand = brand && brand !== 'all' ? { brand } : {}
@@ -59,6 +60,23 @@ const getAllProducts = async (req, res) => {
 
     console.log(req.query)
 
+    let sortValue
+
+    switch (order) {
+        case 'low':
+            sortValue = {
+                price: -1,
+            }
+            break
+        case 'high':
+            sortValue = {
+                price: 1,
+            }
+            break
+        default:
+            break
+    }
+
     try {
         const products = await Product.find({
             ...searchCategory,
@@ -68,8 +86,9 @@ const getAllProducts = async (req, res) => {
             ...searchColor,
             ...searchStatus,
         })
-            .skip(12 * (page - 1))
-            .limit(12)
+            .sort(sortValue)
+            .skip(10 * (page - 1))
+            .limit(10)
 
         res.status(200).json(products)
     } catch (err) {

@@ -1,24 +1,24 @@
-import { ArrowRightAltOutlined } from '@mui/icons-material';
-import styled from 'styled-components';
-import { mobile } from '../responsive';
-
+import { ArrowRightAltOutlined } from '@mui/icons-material'
+import styled from 'styled-components'
+import { mobile } from '../responsive'
+import { Link } from 'react-router-dom'
 const Container = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 20px;
-`;
+`
 const Wrapper = styled.div`
     width: 93vw;
-`;
+`
 const AllNewArrivals = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     /* margin-top: 20px; */
-    ${mobile({flexDirection: 'column'})}
-`;
+    ${mobile({ flexDirection: 'column' })}
+`
 
 const NewArrival = styled.div`
     flex: 1;
@@ -26,7 +26,7 @@ const NewArrival = styled.div`
     position: relative;
     height: 300px;
     cursor: pointer;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     &:after {
         content: '';
         width: 100%;
@@ -36,18 +36,18 @@ const NewArrival = styled.div`
         left: 0;
         background-color: rgba(0, 0, 0, 0.2);
         opacity: 0;
-        transition: all .3s ease;
+        transition: all 0.3s ease;
     }
     &:hover::after {
         opacity: 1;
-        transition: all .3s ease;
+        transition: all 0.3s ease;
     }
-`;
+`
 const CategoryImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-`;
+`
 const CategoryInfo = styled.div`
     display: flex;
     flex-direction: column;
@@ -59,29 +59,30 @@ const CategoryInfo = styled.div`
     text-transform: uppercase;
     width: 150px;
     z-index: 2;
-    ${mobile({   left: '10px'})}
-`;
+    ${mobile({ left: '10px' })}
+`
 const CategoryTitle = styled.span`
     margin-bottom: 20px;
     font-size: 13px;
     font-weight: 300;
     color: #777777;
-    ${mobile({   marginBottom: '10px'})};
-`;
+    ${mobile({ marginBottom: '10px' })};
+`
 const CategoryName = styled.h1`
     font-size: 22px;
     font-weight: 700;
     line-height: 24px;
     color: #333333;
-`;
-const CategoryButton = styled.h2`
+`
+const CategoryButton = styled(Link)`
     display: flex;
+    text-decoration: none;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     font-weight: 400;
-    color: #F27A1A;
-    border: 2px solid #F27A1A;
+    color: #f27a1a;
+    border: 2px solid #f27a1a;
     min-width: 120px;
     text-transform: uppercase;
     padding: 6px 10px;
@@ -90,14 +91,13 @@ const CategoryButton = styled.h2`
     transition: all 0.2s ease;
     background-color: transparent;
     &:hover {
-        background-color: #F27A1A;
+        background-color: #f27a1a;
         color: #fff;
     }
-    ${mobile({   marginTop: '10px'})}
-`;
+    ${mobile({ marginTop: '10px' })}
+`
 
 const NewArrivals = () => {
-
     return (
         <Container>
             <Wrapper>
@@ -107,7 +107,7 @@ const NewArrivals = () => {
                         <CategoryInfo>
                             <CategoryTitle>New Arrivals</CategoryTitle>
                             <CategoryName>Women's</CategoryName>
-                            <CategoryButton>
+                            <CategoryButton to='/list?gender=Women'>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{
@@ -124,7 +124,7 @@ const NewArrivals = () => {
                         <CategoryInfo>
                             <CategoryTitle>New Arrivals</CategoryTitle>
                             <CategoryName>Men's</CategoryName>
-                            <CategoryButton>
+                            <CategoryButton to='/list?gender=Men'>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{
@@ -139,7 +139,7 @@ const NewArrivals = () => {
                 </AllNewArrivals>
             </Wrapper>
         </Container>
-    );
-};
+    )
+}
 
-export default NewArrivals;
+export default NewArrivals

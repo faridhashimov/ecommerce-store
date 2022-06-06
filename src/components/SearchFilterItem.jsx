@@ -37,8 +37,24 @@ const CloseContainer = styled(Link)`
     align-items: center;
 `
 
-const SearchFilterItem = ({ info, onDeleteFilter, ct, getFiltersUrl }) => {
-    // console.log(ct)
+const SearchFilterItem = ({
+    info,
+    cat,
+    setCat,
+    ct,
+    setClicked,
+    getFiltersUrl,
+}) => {
+    const onToggleFilter = (categ, id) => {
+        setClicked(id)
+        if (cat && Object.entries(cat).flat().includes(id)) {
+            setCat(
+                Object.fromEntries(
+                    Object.entries(cat).filter(([key, value]) => value !== id)
+                )
+            )
+        }
+    }
     return (
         <>
             {info === 'all' ? null : (
@@ -46,6 +62,7 @@ const SearchFilterItem = ({ info, onDeleteFilter, ct, getFiltersUrl }) => {
                     {ct === 'color' ? <Color c={info} /> : <Info>{info}</Info>}
 
                     <CloseContainer
+                        onClick={() => onToggleFilter(ct, info)}
                         to={
                             ct === 'category'
                                 ? getFiltersUrl({ category: info })

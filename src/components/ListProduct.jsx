@@ -144,9 +144,6 @@ const Status = styled.div`
             `
         }
     }};
-    span {
-        z-index: 1000;
-    }
 `
 const ProductActionContainer = styled.div`
     height: 30px;
@@ -267,7 +264,7 @@ const StyledLink = styled(Link)`
     /* color: transparent; */
 `
 
-const ListProduct = (item) => {
+const ListProduct = ({item, lastProdElRef}) => {
     // console.log(item)
     const [open, setOpen] = useState(false)
     const { img, status, title, price, reviews, brand } = item
@@ -293,7 +290,7 @@ const ListProduct = (item) => {
 
     return (
         <>
-            <Container>
+            <Container ref={lastProdElRef}>
                 <ImageContainer>
                     <StyledLink to={`/product/${item._id}`}>
                         {' '}
@@ -302,7 +299,7 @@ const ListProduct = (item) => {
                     <ProductStatus>
                         {status?.map((item, i) => (
                             <Status fs={item} key={i} order={i + 1}>
-                                <span>{item}</span>
+                                {item}
                             </Status>
                         ))}
                     </ProductStatus>
@@ -345,9 +342,8 @@ const ListProduct = (item) => {
                         <ReviewCount>({reviews.length})</ReviewCount>
                     </Rate>
                     <Prices>$ {price}</Prices>
-                   
-                        <DiscountInfoComponent status={status[0]} />
-                    
+
+                    <DiscountInfoComponent status={status[0]} />
                 </InfoContainer>
             </Container>
             {open && (

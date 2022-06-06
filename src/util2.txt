@@ -248,9 +248,52 @@ const List = () => {
     )
 }
 
-
 const Products = ({}) => {
 
 }
 
 export default List
+
+===========================================================
+
+setFilters({
+    categoryFilter: [
+        ...new Set(
+            products.length > 0
+                ? products
+                        .map((item) => item.category)
+                        .flat()
+                : res.data
+                        .map((item) => item.category)
+                        .flat()
+        ),
+    ],
+    brandFilter: [
+        ...new Set(
+            products.length > 0
+                ? products.map((item) => item.brand)
+                : res.data.map((item) => item.brand)
+        ),
+    ],
+    genderFilter: [
+        ...new Set(
+            products.length > 0
+                ? products.map((item) => item.gender)
+                : res.data.map((item) => item.gender)
+        ),
+    ],
+    sizeFilter: [
+        ...new Set(
+            products.length > 0
+                ? products.map((item) => item.size).flat()
+                : res.data.map((item) => item.size).flat()
+        ),
+    ],
+    colorFilter: [
+        ...new Set(
+            products.length > 0
+                ? products.map((item) => item.color).flat()
+                : res.data.map((item) => item.color).flat()
+        ),
+    ],
+})
