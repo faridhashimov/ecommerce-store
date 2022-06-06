@@ -224,6 +224,7 @@ const ProfileLink = styled(Link)`
 `
 const Profile = styled.div`
     display: flex;
+    height: 60px;
     align-items: center;
     position: relative;
     margin-left: 10px;

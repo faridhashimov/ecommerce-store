@@ -1,6 +1,6 @@
-import { ArrowRightAltOutlined } from '@mui/icons-material';
-import styled from 'styled-components';
-import { mobile } from '../responsive';
+import { ArrowRightAltOutlined } from '@mui/icons-material'
+import styled from 'styled-components'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     height: 470px;
@@ -10,13 +10,13 @@ const Container = styled.div`
     align-items: center;
     position: relative;
     margin-bottom: 20px;
-`;
+`
 const Image = styled.img`
     height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: left;
-`;
+`
 const InfoContainer = styled.div`
     width: 370px;
     text-align: center;
@@ -28,26 +28,26 @@ const InfoContainer = styled.div`
     align-items: center;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 20px;
-    ${mobile({width: '300px'})}
-`;
+    ${mobile({ width: '300px' })}
+`
 const InfoTrending = styled.h4`
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
-`;
+`
 const InfoTitle = styled.h3`
     font-size: 50px;
     font-weight: 700;
     line-height: 1.1em;
     text-transform: uppercase;
     margin-top: 20px;
-`;
+`
 const Info = styled.p`
     font-size: 13px;
     font-weight: 300;
     margin-top: 10px;
-`;
+`
 const InfoButton = styled.button`
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@ const InfoButton = styled.button`
         color: #232323;
         transition: all 0.3s ease-in-out;
     }
-`;
+`
 
 const Trending = () => {
     return (
@@ -76,8 +76,9 @@ const Trending = () => {
                 <InfoTrending>Trending</InfoTrending>
                 <InfoTitle>New League</InfoTitle>
                 <Info>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Donec odio. Quisque volutpat mattis eros.
+                    Does your workwear wardrobe need a raise? Shop for basic
+                    black slacks or flattering wrap dresses or stock up on
+                    women's blazers, blouses and other top performers.
                 </Info>
                 <InfoButton>
                     Shop Now{' '}
@@ -91,7 +92,7 @@ const Trending = () => {
                 </InfoButton>
             </InfoContainer>
         </Container>
-    );
-};
+    )
+}
 
-export default Trending;
+export default Trending

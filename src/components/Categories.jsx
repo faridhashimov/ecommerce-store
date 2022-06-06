@@ -27,6 +27,9 @@ const CategoriesList = styled.ul`
     justify-content: center;
     list-style: none;
     position: relative;
+    a {
+        padding: 0;
+    }
 `
 const CategoryItem = styled.li`
     padding: 10px 20px;

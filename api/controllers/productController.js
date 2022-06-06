@@ -65,16 +65,21 @@ const getAllProducts = async (req, res) => {
     switch (order) {
         case 'low':
             sortValue = {
-                price: -1,
+                price: 1,
             }
             break
         case 'high':
             sortValue = {
-                price: 1,
+                price: -1,
+            }
+            break
+        case 'new':
+            sortValue = {
+                createdAt: -1,
             }
             break
         default:
-            break
+            sortValue = {}
     }
 
     try {

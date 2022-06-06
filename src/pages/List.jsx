@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
     Footer,
@@ -85,6 +85,7 @@ const List = () => {
     const gender = sp.get('gender') || 'all'
     const size = sp.get('size') || 'all'
     const color = sp.get('color') || 'all'
+    const order = sp.get('order') || 'all'
 
     const [cat, setCat] = useState(null)
 
@@ -107,7 +108,7 @@ const List = () => {
                         category
                     )}&brand=${encodeURIComponent(
                         brand
-                    )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}`,
+                    )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}&order=${order}`,
 
                     {
                         cancelToken: source.token,
@@ -173,7 +174,7 @@ const List = () => {
         }
 
         return cleanUp
-    }, [cat, category, brand, gender, size, color, status, page])
+    }, [cat, category, brand, gender, size, color, status, page, order])
 
     const observer = useRef()
     const lastProdElRef = useCallback(
@@ -190,7 +191,7 @@ const List = () => {
                             category
                         )}&brand=${encodeURIComponent(
                             brand
-                        )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}`
+                        )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}&order=${order}`
                     )
                 }
             })
@@ -217,12 +218,23 @@ const List = () => {
         const filterColor = Object.entries(cat).flat().includes(filter.color)
             ? 'all'
             : filter.color || color
+        // const filterOrder = filter.order || order
 
         return `/list?category=${encodeURIComponent(
             filterCategory
         )}&brand=${encodeURIComponent(
             filterBrand
-        )}&gender=${filterGender}&size=${filterSize}&color=${filterColor}`
+        )}&gender=${filterGender}&size=${filterSize}&color=${filterColor}&order=${order}`
+    }
+
+    const sortByOption = (e) => {
+        console.log(e.target.value)
+        setClicked(e.target.value)
+        navigate(`/list?category=${encodeURIComponent(
+            category
+        )}&brand=${encodeURIComponent(
+            brand
+        )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}&order=${e.target.value}`)
     }
 
     return (
@@ -258,15 +270,15 @@ const List = () => {
                                     {products.length > 1 ? 's' : null}
                                     {' are listed for your search'}
                                 </ListHeadeTitle>
-                                <FilterBy>
-                                    <FilterByOption>Featured</FilterByOption>
-                                    <FilterByOption value="new">
+                                <FilterBy onChange={sortByOption}>
+                                    <FilterByOption value="all">Featured</FilterByOption>
+                                    <FilterByOption  value="new">
                                         Newest Arrivals
                                     </FilterByOption>
                                     <FilterByOption value="low">
                                         Price: Low
                                     </FilterByOption>
-                                    <FilterByOption value="high">
+                                    <FilterByOption  value="high">
                                         Price: High
                                     </FilterByOption>
                                 </FilterBy>

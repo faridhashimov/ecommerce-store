@@ -35,8 +35,8 @@ const FilterButton = styled.div`
     ${(props) => {
         if (props.bg) {
             return css`
-                color: #333;
-                border-bottom: 2px solid #000;
+                color: #f27a1a;
+                border-bottom: 2px solid #f27a1a;
                 transition: all 0.3s ease-in-out;
             `
         } else {
@@ -50,7 +50,7 @@ const FilterButton = styled.div`
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     &:hover {
-        color: #333;
+        color: #f27a1a;
         transition: all 0.3s ease-in-out;
     }
 

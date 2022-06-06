@@ -2,6 +2,7 @@ import { ArrowRightAltOutlined } from '@mui/icons-material'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
+
 const Container = styled.div`
     width: 100%;
     display: flex;
@@ -19,7 +20,6 @@ const AllNewArrivals = styled.div`
     /* margin-top: 20px; */
     ${mobile({ flexDirection: 'column' })}
 `
-
 const NewArrival = styled.div`
     flex: 1;
     margin: 0px 10px;
@@ -107,7 +107,7 @@ const NewArrivals = () => {
                         <CategoryInfo>
                             <CategoryTitle>New Arrivals</CategoryTitle>
                             <CategoryName>Women's</CategoryName>
-                            <CategoryButton to='/list?gender=Women'>
+                            <CategoryButton to='/list?gender=Women&order=new'>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{
@@ -124,7 +124,7 @@ const NewArrivals = () => {
                         <CategoryInfo>
                             <CategoryTitle>New Arrivals</CategoryTitle>
                             <CategoryName>Men's</CategoryName>
-                            <CategoryButton to='/list?gender=Men'>
+                            <CategoryButton to='/list?gender=Men&order=new'>
                                 Shop Now
                                 <ArrowRightAltOutlined
                                     style={{

@@ -14,11 +14,24 @@ const PopupContainer = styled.div`
     border: 1px solid #ccc;
     display: ${(props) => (props.state ? 'block' : 'none')};
     position: absolute;
-    bottom: -154px;
+    bottom: -150px;
     right: -42px;
     transition: all 0.3s ease-in;
     z-index: 1000;
     padding: 10px;
+    &:before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 60%;
+        height: 20px;
+        width: 20px;
+        background-color: #fff;
+        border-left: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+        transform: rotate(45deg);
+        z-index: -100;
+    }
 `
 const MainPopup = styled.ul`
     list-style: none;
