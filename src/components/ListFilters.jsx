@@ -7,8 +7,10 @@ import {
 } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { add } from '../redux/resetSlice'
 
 const FilterContainer = styled.div`
     position: sticky;
@@ -102,6 +104,8 @@ const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl, setClicke
         'brand',
     ])
 
+    const dispatch = useDispatch()
+
     const openFilters = (index) => {
         if (openFilter.includes(index)) {
             setOpenFilters((openFilter) =>
@@ -113,7 +117,8 @@ const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl, setClicke
     }
 
     const onToggleFilter = (categ, id) => {
-        setClicked(id)
+        dispatch(add())
+
         if (cat && Object.entries(cat).flat().includes(id)) {
             setCat(
                 Object.fromEntries(

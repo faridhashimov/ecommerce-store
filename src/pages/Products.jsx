@@ -8,7 +8,7 @@ const Container = styled.div`
     padding-left: 20px;
 `
 const Products = ({ products, lastProdElRef }) => {
-  console.log(products)
+//   console.log(products)
     return (
         <Container>
             {products.map((item, i) => {

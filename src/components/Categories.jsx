@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { css } from 'styled-components'
+import { useAxios } from '../hooks/useAxios'
+import { Spinner, CategoryPopup } from '../components'
 
 const CategoriesContainer = styled.div`
     box-shadow: 0px 35px 75px -2px rgba(34, 60, 80, 0.47);
@@ -18,6 +20,7 @@ const CategoriesContainer = styled.div`
     padding: 0px 10px;
 `
 const AllCategories = styled.div`
+    position: relative;
     a {
         padding: 0px;
     }
@@ -52,18 +55,17 @@ const CategoryItem = styled.li`
 
 const CategoryListContainer = styled.div`
     /* box-shadow: 0px 100px 440px 100px rgba(34, 60, 80, 0.39); */
-    box-shadow: 2px 200px 400px 200px rgba(0,0,0,0.22);
+    box-shadow: 2px 200px 400px 200px rgba(0, 0, 0, 0.22);
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid #ccc;
     display: ${(props) => (props.popup ? 'block' : 'none')};
     position: absolute;
-    bottom: -232.5px;
-    right: -12px;
+    top: 43.5px;
     transition: all 0.3s ease-in;
     z-index: 1000;
     padding: 10px;
-    height: 210px;
+    height: 300px;
     width: 1100px;
 `
 
@@ -102,12 +104,20 @@ const StyledLink = styled(Link)``
 const Categories = ({ openShop }) => {
     const [openCategories, setOpenCategories] = useState(false)
     const [cat, setCat] = useState('')
+    const [categories, setCategories] = useState({})
 
     const onOpenCategoryList = (cat) => {
         setOpenCategories(true)
         setCat(cat)
     }
-    // console.log(cat)
+
+    const { loading, error, data } = useAxios(
+        'http://localhost:5000/api/products/find/categories'
+    )
+
+    useEffect(() => {
+        setCategories(data)
+    }, [data])
 
     return (
         <CategoriesContainer state={openShop}>
@@ -158,244 +168,211 @@ const Categories = ({ openShop }) => {
                             Home
                         </Link>
                     </CategoryItem>
-                    <CategoryPopup cat={cat} popup={openCategories} />
+                    <CategoryPopup
+                        cat={cat}
+                        loading={loading}
+                        error={error}
+                        categories={categories}
+                        popup={openCategories}
+                    />
                 </CategoriesList>
             </AllCategories>
         </CategoriesContainer>
     )
 }
 
-const CategoryPopup = ({ popup, cat }) => {
-    return (
-        <CategoryListContainer popup={popup}>
-            {/* <Wrapper> */}
-            {cat === 'Women' ? (
-                <CategoryListInfo>
-                    <CategoryList>
-                        <CategoryListItem>Clothing</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=T-shirts&gender=Women">
-                                T-shirts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Skirts&gender=Women">
-                                Skirts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Shirts&gender=Women">
-                                Shirts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Shorts&gender=Women">
-                                Shorts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Pants&gender=Women">
-                                Pants
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink
-                                to={`/list?category=${encodeURIComponent(
-                                    'Coats & Jackets'
-                                )}&gender=Women`}
-                            >
-                                Coats & Jackets
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Hoodies&gender=Women">
-                                Hoodies
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Sweatshirts&gender=Women">
-                                Sweatshirts
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                    <CategoryList>
-                        <CategoryListItem>Shoes</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Loafers&gender=Women">
-                                Loafers
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Sandals&gender=Women">
-                                Sandals
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink
-                                to={`/list?category=${encodeURIComponent(
-                                    'Strappy Sandals'
-                                )}&gender=Women`}
-                            >
-                                Strappy Sandals
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Sneakers&gender=Women">
-                                Sneakers
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                </CategoryListInfo>
-            ) : cat === 'Men' ? (
-                <CategoryListInfo>
-                    <CategoryList>
-                        <CategoryListItem>Clothing</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=T-shirts&gender=Men">
-                                T-shirts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Skirts&gender=Men">
-                                Skirts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Shirts&gender=Men">
-                                Shirts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Shorts&gender=Men">
-                                Shorts
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Pants&gender=Men">
-                                Pants
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink
-                                to={`/list?category=${encodeURIComponent(
-                                    'Coats & Jackets'
-                                )}&gender=Men`}
-                            >
-                                Coats & Jackets
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Hoodies&gender=Men">
-                                Hoodies
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Sweatshirts&gender=Men">
-                                Sweatshirts
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                    <CategoryList>
-                        <CategoryListItem>Shoes</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Loafers&gender=Men">
-                                Loafers
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink
-                                to={`/list?category=${encodeURIComponent(
-                                    'Sandals & Flip Flops'
-                                )}&gender=Men`}
-                            >
-                                Sandals & Flip Flops
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Sneakers&gender=Men">
-                                Sneakers
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                </CategoryListInfo>
-            ) : cat === 'Kids' ? (
-                <CategoryListInfo>
-                    <CategoryList>
-                        <CategoryListItem>Boys</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Shirts&gender=Boys">
-                                Shirts
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                    <CategoryList>
-                        <CategoryListItem>Girls</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=T-shirts&gender=Girls">
-                                T-shirts
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                </CategoryListInfo>
-            ) : cat === 'Accessories' ? (
-                <CategoryListInfo>
-                    <CategoryList>
-                        <CategoryListItem>Women's Accessories</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Jevelry&gender=Women">
-                                Jevelry
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Earrings&gender=Women">
-                                Earrings
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Hats&gender=Women">
-                                Hats
-                            </StyledLink>
-                        </CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Bags&gender=Women">
-                                Bags
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                    <CategoryList>
-                        <CategoryListItem>Men's Accessories</CategoryListItem>
-                        <CategoryListItem>
-                            <StyledLink to="/list?category=Bags&gender=Men">
-                                Bags
-                            </StyledLink>
-                        </CategoryListItem>
-                    </CategoryList>
-                </CategoryListInfo>
-            ) : (
-                <CategoryListInfo>
-                    <CategoryList>
-                        <CategoryListItem>Bathroom</CategoryListItem>
-                        <CategoryListItem>Tshirts</CategoryListItem>
-                        <CategoryListItem>Skirts</CategoryListItem>
-                        <CategoryListItem>Shirt</CategoryListItem>
-                        <CategoryListItem>Shorts</CategoryListItem>
-                        <CategoryListItem>Pants</CategoryListItem>
-                        <CategoryListItem>Coats & Jackets</CategoryListItem>
-                        <CategoryListItem>Hoodies</CategoryListItem>
-                        <CategoryListItem>Sweatshirts</CategoryListItem>
-                    </CategoryList>
-                    <CategoryList>
-                        <CategoryListItem>Lightning</CategoryListItem>
-                        <CategoryListItem>Loafers</CategoryListItem>
-                        <CategoryListItem>Sandals</CategoryListItem>
-                        <CategoryListItem>Strappy Sandals</CategoryListItem>
-                        <CategoryListItem>Sneakers</CategoryListItem>
-                    </CategoryList>
-                </CategoryListInfo>
-            )}
-            {/* </Wrapper> */}
-        </CategoryListContainer>
-    )
-}
+// const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
+//     console.log(categories?.womensClothing)
+//     const getFiltersUrl = (filters) => {
+//         const category = filters.category
+//         const gender = filters.gender || 'all'
+
+//         return `/list?category=${encodeURIComponent(category)}&gender=${gender}`
+//     }
+//     return (
+//         <CategoryListContainer popup={popup}>
+//             {loading ? (
+//                 <Spinner />
+//             ) : error ? (
+//                 <p style={{ color: 'red' }}>Something went wrong</p>
+//             ) : (
+//                 <>
+//                     {cat === 'Women' ? (
+//                         <CategoryListInfo>
+//                             <CategoryList>
+//                                 <CategoryListItem>Clothing</CategoryListItem>
+//                                 {categories?.womensClothing?.map((item) => (
+//                                     <CategoryListItem key={item}>
+//                                         <StyledLink
+//                                             to={getFiltersUrl({
+//                                                 category: item,
+//                                                 gender: 'Women',
+//                                             })}
+//                                         >
+//                                             {item}
+//                                         </StyledLink>
+//                                     </CategoryListItem>
+//                                 ))}
+//                             </CategoryList>
+//                             <CategoryList>
+//                                 <CategoryListItem>Shoes</CategoryListItem>
+//                                 {categories?.womensShoes
+//                                     ?.filter((i) => i !== 'Shoes')
+//                                     .map((item) => (
+//                                         <CategoryListItem key={item}>
+//                                             <StyledLink
+//                                                 to={getFiltersUrl({
+//                                                     category: item,
+//                                                     gender: 'Women',
+//                                                 })}
+//                                             >
+//                                                 {item}
+//                                             </StyledLink>
+//                                         </CategoryListItem>
+//                                     ))}
+//                             </CategoryList>
+//                         </CategoryListInfo>
+//                     ) : cat === 'Men' ? (
+//                         <CategoryListInfo>
+//                             <CategoryList>
+//                                 <CategoryListItem>Clothing</CategoryListItem>
+//                                 {categories?.mensClothing?.map((item) => (
+//                                     <CategoryListItem key={item}>
+//                                         <StyledLink
+//                                             to={getFiltersUrl({
+//                                                 category: item,
+//                                                 gender: 'Men',
+//                                             })}
+//                                         >
+//                                             {item}
+//                                         </StyledLink>
+//                                     </CategoryListItem>
+//                                 ))}
+//                             </CategoryList>
+//                             <CategoryList>
+//                                 <CategoryListItem>Shoes</CategoryListItem>
+//                                 {categories?.mensShoes
+//                                     ?.filter((i) => i !== 'Shoes')
+//                                     .map((item) => (
+//                                         <CategoryListItem key={item}>
+//                                             <StyledLink
+//                                                 to={getFiltersUrl({
+//                                                     category: item,
+//                                                     gender: 'Men',
+//                                                 })}
+//                                             >
+//                                                 {item}
+//                                             </StyledLink>
+//                                         </CategoryListItem>
+//                                     ))}
+//                             </CategoryList>
+//                         </CategoryListInfo>
+//                     ) : cat === 'Kids' ? (
+//                         <CategoryListInfo>
+//                             <CategoryList>
+//                                 <CategoryListItem>Boys</CategoryListItem>
+//                                 {categories?.boys
+//                                     ?.filter((i) => i !== 'Kids')
+//                                     .map((item) => (
+//                                         <CategoryListItem key={item}>
+//                                             <StyledLink
+//                                                 to={getFiltersUrl({
+//                                                     category: item,
+//                                                     gender: 'Boys',
+//                                                 })}
+//                                             >
+//                                                 {item}
+//                                             </StyledLink>
+//                                         </CategoryListItem>
+//                                     ))}
+//                             </CategoryList>
+//                             <CategoryList>
+//                                 <CategoryListItem>Girls</CategoryListItem>
+//                                 {categories?.girls
+//                                     ?.filter((i) => i !== 'Kids')
+//                                     .map((item) => (
+//                                         <CategoryListItem key={item}>
+//                                             <StyledLink
+//                                                 to={getFiltersUrl({
+//                                                     category: item,
+//                                                     gender: 'Girls',
+//                                                 })}
+//                                             >
+//                                                 {item}
+//                                             </StyledLink>
+//                                         </CategoryListItem>
+//                                     ))}
+//                             </CategoryList>
+//                         </CategoryListInfo>
+//                     ) : cat === 'Accessories' ? (
+//                         <CategoryListInfo>
+//                             <CategoryList>
+//                                 <CategoryListItem>
+//                                     Women's Accessories
+//                                 </CategoryListItem>
+//                                 {categories?.wAccessories
+//                                     ?.filter((i) => i !== "Women's Accessories")
+//                                     .map((item) => (
+//                                         <CategoryListItem key={item}>
+//                                             <StyledLink
+//                                                 to={`/list?category=${encodeURIComponent(
+//                                                     item
+//                                                 )}&gender=Women`}
+//                                             >
+//                                                 {item}
+//                                             </StyledLink>
+//                                         </CategoryListItem>
+//                                     ))}
+//                             </CategoryList>
+//                             <CategoryList>
+//                                 <CategoryListItem>
+//                                     Men's Accessories
+//                                 </CategoryListItem>
+//                                 {categories?.mAccessories
+//                                     ?.filter((i) => i !== "Men's Accessories")
+//                                     .map((item) => (
+//                                         <CategoryListItem key={item}>
+//                                             <StyledLink
+//                                                 to={`/list?category=${encodeURIComponent(
+//                                                     item
+//                                                 )}&gender=Men`}
+//                                             >
+//                                                 {item}
+//                                             </StyledLink>
+//                                         </CategoryListItem>
+//                                     ))}
+//                             </CategoryList>
+//                         </CategoryListInfo>
+//                     ) : (
+//                         <CategoryListInfo>
+//                             <CategoryList>
+//                                 <CategoryListItem>Bathroom</CategoryListItem>
+//                                 <CategoryListItem>Tshirts</CategoryListItem>
+//                                 <CategoryListItem>Skirts</CategoryListItem>
+//                                 <CategoryListItem>Shirt</CategoryListItem>
+//                                 <CategoryListItem>Shorts</CategoryListItem>
+//                                 <CategoryListItem>Pants</CategoryListItem>
+//                                 <CategoryListItem>
+//                                     Coats & Jackets
+//                                 </CategoryListItem>
+//                                 <CategoryListItem>Hoodies</CategoryListItem>
+//                                 <CategoryListItem>Sweatshirts</CategoryListItem>
+//                             </CategoryList>
+//                             <CategoryList>
+//                                 <CategoryListItem>Lightning</CategoryListItem>
+//                                 <CategoryListItem>Loafers</CategoryListItem>
+//                                 <CategoryListItem>Sandals</CategoryListItem>
+//                                 <CategoryListItem>
+//                                     Strappy Sandals
+//                                 </CategoryListItem>
+//                                 <CategoryListItem>Sneakers</CategoryListItem>
+//                             </CategoryList>
+//                         </CategoryListInfo>
+//                     )}
+//                 </>
+//             )}
+//         </CategoryListContainer>
+//     )
+// }
 
 export default Categories

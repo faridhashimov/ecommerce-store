@@ -19,6 +19,7 @@ const PopupContainer = styled.div`
     transition: all 0.3s ease-in;
     z-index: 1000;
     padding: 10px;
+    opacity: .75;
     &:before {
         content: '';
         position: absolute;

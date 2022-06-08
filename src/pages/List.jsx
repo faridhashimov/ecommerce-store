@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
@@ -10,6 +11,7 @@ import {
     SearchFilterItem,
 } from '../components'
 import { Products } from '../pages'
+import { reset, add } from '../redux/resetSlice'
 
 const Container = styled.div`
     width: 100%;
@@ -67,7 +69,9 @@ const List = () => {
     const [hasMore, setHasMore] = useState(false)
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState()
-    const [clicked, setClicked] = useState(null)
+    // const [clicked, setClicked] = useState(null)
+
+    const clicked = useSelector(state => state.reset.clicked)
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -88,6 +92,7 @@ const List = () => {
     const order = sp.get('order') || 'all'
 
     const [cat, setCat] = useState(null)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setCat({ ...cat, category, brand, gender, size, color, status })
@@ -184,7 +189,8 @@ const List = () => {
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && hasMore) {
                     setPage((prev) => prev + 1)
-                    setClicked(null)
+                    // setClicked(null)
+                    dispatch(reset())
                     console.log('ok')
                     navigate(
                         `/list?category=${encodeURIComponent(
@@ -229,7 +235,8 @@ const List = () => {
 
     const sortByOption = (e) => {
         console.log(e.target.value)
-        setClicked(e.target.value)
+        // setClicked(e.target.value)
+        dispatch(add())
         navigate(`/list?category=${encodeURIComponent(
             category
         )}&brand=${encodeURIComponent(
@@ -251,7 +258,7 @@ const List = () => {
                         setCat={setCat}
                         filters={filters}
                         getFiltersUrl={getFiltersUrl}
-                        setClicked={setClicked}
+                        // setClicked={setClicked}
                         filterUrl={{
                             category,
                             brand,
@@ -293,7 +300,7 @@ const List = () => {
                                             ct={key}
                                             cat={cat}
                                             setCat={setCat}
-                                            setClicked={setClicked}
+                                            // setClicked={setClicked}
                                         />
                                     ))}
                             </ListHeaderBottom>

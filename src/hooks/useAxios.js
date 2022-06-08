@@ -2,29 +2,46 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 export const useAxios = (url, body = null, headers) => {
-    const [loading, setloading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [data, setData] = useState(null)
 
     useEffect(() => {
+        let isMounted = true
+        const source = axios.CancelToken.source()
         const getData = async (
             prodUrl,
             body = null,
             headers = { 'Content-type': 'application/json' }
         ) => {
-            setloading(true)
+            setLoading(true)
             try {
-                const res = await axios.get(prodUrl, { body, headers })
-
-                setData(res.data)
-                setloading(false)
+                const res = await axios.get(prodUrl, {
+                    body,
+                    headers,
+                    cancelToken: source.token,
+                })
+                if (isMounted) {
+                    setData(res.data)
+                    setLoading(false)
+                    setError(null)
+                }
             } catch (error) {
-                setloading(false)
-                setError(error.message)
-                throw new Error(error)
+                if (isMounted) {
+                    setLoading(false)
+                    setError(error.message)
+                    throw new Error(error)
+                }
+            } finally {
+                isMounted && setLoading(false)
             }
         }
         getData(url, body, headers)
+        const cleanUp = () => {
+            isMounted = false
+            source.cancel()
+        }
+        return cleanUp
     }, [body, headers, url])
 
     const clearError = () => setError(null)

@@ -101,6 +101,58 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+//GET ALL CATEGORIES
+const getAllCategories = async (req, res) => {
+    try {
+        const mensClothing = await Product.find({
+            gender: 'Men',
+            category: { $nin: ['Shoes', "Men's Accessories"] },
+        }).select('category')
+        const mensShoes = await Product.find({
+            gender: 'Men',
+            category: { $in: ['Shoes'] },
+        }).select('category')
+        const womensClothing = await Product.find({
+            gender: 'Women',
+            category: { $nin: ['Shoes', "Women's Accessories"] },
+        }).select('category')
+        const womensShoes = await Product.find({
+            gender: 'Women',
+            category: { $in: ['Shoes'] },
+        }).select('category')
+        const boys = await Product.find({ gender: 'Boys' })
+        const girls = await Product.find({ gender: 'Girls' })
+        const wAccessories = await Product.find({
+            gender: 'Women',
+            category: { $in: ["Women's Accessories"] },
+        }).select('category')
+        const mAccessories = await Product.find({
+            gender: 'Men',
+            category: { $in: ["Men's Accessories"] },
+        }).select('category')
+        res.status(200).json({
+            mensClothing: [
+                ...new Set(mensClothing.map((i) => i.category).flat()),
+            ],
+            mensShoes: [...new Set(mensShoes.map((i) => i.category).flat())],
+            womensClothing: [
+                ...new Set(womensClothing.map((i) => i.category).flat()),
+            ],
+            womensShoes: [
+                ...new Set(womensShoes.map((i) => i.category).flat()),
+            ],
+            boys: [...new Set(boys.map((i) => i.category).flat())],
+            girls: [...new Set(girls.map((i) => i.category).flat())],
+            wAccessories: [
+                ...new Set(wAccessories.map((i) => i.category).flat()),
+            ],
+            mAccessories: [
+                ...new Set(mAccessories.map((i) => i.category).flat()),
+            ],
+        })
+    } catch (error) {}
+}
+
 //GET SINGLE PRODUCT
 const getProduct = async (req, res) => {
     try {
@@ -180,4 +232,5 @@ module.exports = {
     createReview,
     getProductReviews,
     updateReview,
+    getAllCategories,
 }

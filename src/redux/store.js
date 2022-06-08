@@ -3,6 +3,7 @@ import userReducer from './userSlice'
 import modalReducer from './modalSlice'
 import wishlistReducer from './wishlistSlice'
 import cartReducer from './cartSlice'
+import resetReducer from './resetSlice'
 
 import {
     persistStore,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
     wishlist: wishlistReducer,
     modal: modalReducer,
     cart: cartReducer,
+    reset: resetReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
