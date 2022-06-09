@@ -51,6 +51,7 @@ const SearchBox = styled(Box)({
     display: 'flex',
     alignItems: 'center',
     border: '1px solid #ccc',
+    borderRadius: '5px',
 })
 const StyledAvatar = styled(Avatar)({
     marginLeft: 2,

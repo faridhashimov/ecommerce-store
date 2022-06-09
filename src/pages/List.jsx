@@ -277,7 +277,7 @@ const List = () => {
                                     {products.length > 1 ? 's' : null}
                                     {' are listed for your search'}
                                 </ListHeadeTitle>
-                                <FilterBy onChange={sortByOption}>
+                                <FilterBy value={order} onChange={sortByOption}>
                                     <FilterByOption value="all">Featured</FilterByOption>
                                     <FilterByOption  value="new">
                                         Newest Arrivals

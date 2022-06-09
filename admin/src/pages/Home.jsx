@@ -1,11 +1,16 @@
 import { Box } from '@mui/material'
-import { Leftbar, Rightbar } from '../components'
+import { Outlet } from 'react-router-dom'
+import { Leftbar, Main, Navbar, Rightbar } from '../components'
 
 const Home = () => {
   return (
     <Box sx={{display: 'flex'}}>
         <Leftbar/>
-        <Rightbar/>
+        <Box sx={{ flex: 8 }}>
+            <Navbar />
+            <Outlet/>
+        </Box>
+        {/* <Rightbar/> */}
     </Box>
   )
 }

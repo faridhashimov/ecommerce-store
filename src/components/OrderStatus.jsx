@@ -21,7 +21,7 @@ const OrderStatusStatus = styled.span`
             return css`
                 color: #33ffbb;
             `
-        } else if (props.status === 'Handed over to the local carrier') {
+        } else if (props.status === 'Shipped') {
             return css`
                 color: #01e6fb;
             `
