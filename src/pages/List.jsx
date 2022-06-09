@@ -157,7 +157,7 @@ const List = () => {
                     clicked
                         ? setAllFilters(res.data)
                         : products.length > 0
-                        ? setAllFilters(products)
+                        ? setAllFilters([...products, ...res.data])
                         : setAllFilters(res.data)
 
                     setError(null)

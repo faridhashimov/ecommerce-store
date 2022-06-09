@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -62,6 +62,14 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
         return `/list?category=${encodeURIComponent(category)}&gender=${gender}`
     }
 
+    const onToggleFilter = () => {
+        dispatch(add())
+    }
+
+    // useEffect(() => {
+
+    // }, [])
+
     return (
         <CategoryListContainer popup={popup}>
             {loading ? (
@@ -77,6 +85,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                 {categories?.womensClothing?.map((item) => (
                                     <CategoryListItem key={item}>
                                         <StyledLink
+                                            onClick={onToggleFilter}
                                             to={getFiltersUrl({
                                                 category: item,
                                                 gender: 'Women',
@@ -94,6 +103,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                     .map((item) => (
                                         <CategoryListItem key={item}>
                                             <StyledLink
+                                                onClick={onToggleFilter}
                                                 to={getFiltersUrl({
                                                     category: item,
                                                     gender: 'Women',
@@ -112,6 +122,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                 {categories?.mensClothing?.map((item) => (
                                     <CategoryListItem key={item}>
                                         <StyledLink
+                                            onClick={onToggleFilter}
                                             to={getFiltersUrl({
                                                 category: item,
                                                 gender: 'Men',
@@ -129,6 +140,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                     .map((item) => (
                                         <CategoryListItem key={item}>
                                             <StyledLink
+                                                onClick={onToggleFilter}
                                                 to={getFiltersUrl({
                                                     category: item,
                                                     gender: 'Men',
@@ -149,6 +161,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                     .map((item) => (
                                         <CategoryListItem key={item}>
                                             <StyledLink
+                                                onClick={onToggleFilter}
                                                 to={getFiltersUrl({
                                                     category: item,
                                                     gender: 'Boys',
@@ -166,6 +179,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                     .map((item) => (
                                         <CategoryListItem key={item}>
                                             <StyledLink
+                                                onClick={onToggleFilter}
                                                 to={getFiltersUrl({
                                                     category: item,
                                                     gender: 'Girls',
@@ -188,6 +202,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                     .map((item) => (
                                         <CategoryListItem key={item}>
                                             <StyledLink
+                                                onClick={onToggleFilter}
                                                 to={`/list?category=${encodeURIComponent(
                                                     item
                                                 )}&gender=Women`}
@@ -206,6 +221,7 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
                                     .map((item) => (
                                         <CategoryListItem key={item}>
                                             <StyledLink
+                                                onClick={onToggleFilter}
                                                 to={`/list?category=${encodeURIComponent(
                                                     item
                                                 )}&gender=Men`}
