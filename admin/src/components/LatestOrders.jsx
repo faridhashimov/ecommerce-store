@@ -1,8 +1,6 @@
-import { MoreVert } from '@mui/icons-material'
 import { TableContainer } from '@mui/material'
 import { TableHead } from '@mui/material'
 import { TableCell } from '@mui/material'
-import { Avatar } from '@mui/material'
 import { Button } from '@mui/material'
 import { TableBody } from '@mui/material'
 import { TableRow } from '@mui/material'
@@ -28,11 +26,6 @@ const Status = styled(Typography)(({ theme }) => ({
     padding: '5px 7px',
     borderRadius: theme.shape.borderRadius,
 }))
-const ImageContainer = styled(Box)({
-    width: '30px',
-    height: '30px',
-    borderRadius: '50%',
-})
 
 function createData(id, customer, email, date, amount, status) {
     return { id, customer, email, date, amount, status }
@@ -86,7 +79,7 @@ const LatestOrders = () => {
     return (
         <TransactionContainer mt={3}>
             <StyledTypo variant="span" mb={3} sx={{ fontWeight: 500 }}>
-                LatestTransactions
+                Latest Transactions
             </StyledTypo>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

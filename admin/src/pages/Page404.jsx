@@ -26,7 +26,7 @@ const Page404 = () => {
             Page Not Found....
             <Button sx={{ margin: '40px' }} variant="outlined">
                 <StyledLink to="/">
-                    Home
+                    Back to Main
                 </StyledLink>
             </Button>
         </Box>

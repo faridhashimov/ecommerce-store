@@ -1,3 +1,7 @@
 export { default as Home } from './Home.jsx'
 export { default as Customers } from './Customers.jsx'
 export { default as Page404 } from './Page404.jsx'
+export { default as SingleUser } from './SingleUser.jsx'
+export { default as New } from './New.jsx'
+export { default as Products } from './Products.jsx'
+export { default as SingleProduct } from './SingleProduct.jsx'

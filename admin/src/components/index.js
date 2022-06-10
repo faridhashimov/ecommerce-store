@@ -7,3 +7,4 @@ export {default as Widgets} from './Widgets.jsx'
 export {default as RevenueComponent} from './RevenueComponent.jsx'
 export {default as LatestTransactions} from './LatestTransactions.jsx' //Edit
 export {default as LatestOrders} from './LatestOrders.jsx'
+export {default as UsersTable} from './UsersTable.jsx'

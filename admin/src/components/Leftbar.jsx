@@ -1,4 +1,3 @@
-import { PersonOutline } from '@mui/icons-material'
 import {
     Inventory,
     StoreRounded,
@@ -9,24 +8,20 @@ import {
     BrandingWatermark,
     InsertChart,
     RateReviewSharp,
+    PersonOutline,
     Home,
 } from '@mui/icons-material'
-import { Typography } from '@mui/material'
-import {
-    Box,
-    ListItemButton,
-    ListSubheader,
-    ListItemText,
-    List,
-} from '@mui/material'
+import { Box, Typography, List } from '@mui/material'
 import { styled } from '@mui/system'
 import { Link } from 'react-router-dom'
 
-const StyledListBtn = styled(ListItemButton)({
+const StyledListBtn = styled(Link)({
+    display: 'flex',
     color: '#7451f8',
     borderRadius: 5,
     marginBottom: 5,
     padding: '10px',
+    textDecoration: 'none',
     '&:hover': {
         backgroundColor: '#EDE7FF',
     },
@@ -38,12 +33,6 @@ const StyledListItemText = styled(Typography)({
     marginLeft: 15,
 })
 
-const StyledLink = styled(Link)({
-    textDecoration: 'none',
-    color: 'inherit',
-    //    padding: '10px 100px 10px 0px'
-})
-
 const Leftbar = () => {
     return (
         <Box sx={{ flex: 2, borderRight: '1px solid #d8d8d8' }}>
@@ -53,8 +42,10 @@ const Leftbar = () => {
                     sx={{
                         color: '#7451f8',
                         fontSize: 20,
-                        padding: '10px 20px',
-                        marginBottom: '10px',
+                        padding: '4px 10px',
+                        margin: '10px',
+                        borderRadius: '5px',
+                        backgroundColor: '#EDE7FF',
                     }}
                 >
                     FRED Admin
@@ -66,75 +57,45 @@ const Leftbar = () => {
                     }}
                     component="nav"
                 >
-                    <StyledListBtn>
+                    <StyledListBtn to="/">
                         <Home />
-                        <StyledListItemText>
-                            <StyledLink to="/">Home</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Home</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/users">
                         <PersonOutline />
-                        <StyledListItemText>
-                            <StyledLink to="/users">Users</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Users</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/products">
                         <Inventory />
-                        <StyledListItemText>
-                            <StyledLink to="/products">Products</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Products</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/orders">
                         <ShoppingCart />
-                        <StyledListItemText>
-                            <StyledLink to="/orders">Orders</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Orders</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
-                        <StoreRounded />
-                        <StyledListItemText>
-                            <StyledLink to="/sellers">Sellers</StyledLink>
-                        </StyledListItemText>
-                    </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/products/new">
                         <AddBoxRounded />
-                        <StyledListItemText>
-                            <StyledLink to="/newproduct">
-                                Add product
-                            </StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Add product</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/transactions">
                         <Paid />
-                        <StyledListItemText>
-                            <StyledLink to="/transactions">
-                                Transactions
-                            </StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Transactions</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/account">
                         <AccountCircle />
-                        <StyledListItemText>
-                            <StyledLink to="/account">Account</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Account</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/reviews">
                         <RateReviewSharp />
-                        <StyledListItemText>
-                            <StyledLink to="/reviews">Reviews</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Reviews</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/brands">
                         <BrandingWatermark />
-                        <StyledListItemText>
-                            <StyledLink to="/brands">Brands</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Brands</StyledListItemText>
                     </StyledListBtn>
-                    <StyledListBtn>
+                    <StyledListBtn to="/statistics">
                         <InsertChart />
-                        <StyledListItemText>
-                            <StyledLink to="/statistics">Statistics</StyledLink>
-                        </StyledListItemText>
+                        <StyledListItemText>Statistics</StyledListItemText>
                     </StyledListBtn>
                 </List>
             </Box>

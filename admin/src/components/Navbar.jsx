@@ -21,7 +21,7 @@ const RightContainer = styled(Box)({
     width: '20%',
 })
 
-const IconContainer = styled('div')(({ theme }) => ({
+const IconContainer = styled('div')({
     padding: '10px',
     display: 'flex',
     justifyContent: 'center',
@@ -33,7 +33,7 @@ const IconContainer = styled('div')(({ theme }) => ({
         backgroundColor: '#eaeaea',
         color: '#3167eb',
     },
-}))
+})
 
 const SearchIconContainer = styled('div')({
     display: 'flex',
@@ -73,66 +73,77 @@ const Navbar = () => {
     return (
         <Box
             sx={{
-                padding: '15px 30px ',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                borderBottom: '1px solid #d8d8d8',
+                position: 'sticky',
+                top: '0',
+                backgroundColor: '#fff',
+                zIndex: 1000,
             }}
         >
-            <SearchBox>
-                <InputBase
-                    sx={{
-                        width: '90%',
-                        height: '100%',
-                        padding: '0px 10px',
-                    }}
-                    placeholder="search..."
-                />
-                <SearchIconContainer>
-                    <Search />
-                </SearchIconContainer>
-            </SearchBox>
-
-            <RightContainer>
-                <IconContainer>
-                    <NightsStay />
-                </IconContainer>
-                <IconContainer>
-                    <NotificationsActive />
-                </IconContainer>
-                <IconContainer>
-                    <Mail />
-                </IconContainer>
-                <ProfileContainer>
-                    <Button
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                    >
-                        <StyledAvatar
-                            alt="Remy Sharp"
-                            src="https://minimaltoolkit.com/images/randomdata/male/80.jpg"
-                        />
-                        <ArrowDropDown />
-                    </Button>
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
+            <Box
+                sx={{
+                    padding: '15px 30px ',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid #d8d8d8',
+                }}
+            >
+                <SearchBox>
+                    <InputBase
+                        sx={{
+                            width: '90%',
+                            height: '100%',
+                            padding: '0px 10px',
                         }}
-                    >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                </ProfileContainer>
-            </RightContainer>
+                        placeholder="search..."
+                    />
+                    <SearchIconContainer>
+                        <Search />
+                    </SearchIconContainer>
+                </SearchBox>
+
+                <RightContainer>
+                    <IconContainer>
+                        <NightsStay />
+                    </IconContainer>
+                    <IconContainer>
+                        <NotificationsActive />
+                    </IconContainer>
+                    <IconContainer>
+                        <Mail />
+                    </IconContainer>
+                    <ProfileContainer>
+                        <Button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                        >
+                            <StyledAvatar
+                                alt="Remy Sharp"
+                                src="https://minimaltoolkit.com/images/randomdata/male/80.jpg"
+                            />
+                            <ArrowDropDown />
+                        </Button>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                My account
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        </Menu>
+                    </ProfileContainer>
+                </RightContainer>
+            </Box>
         </Box>
     )
 }
