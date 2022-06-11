@@ -4,6 +4,7 @@ import {
     Customers,
     Home,
     New,
+    NewProduct,
     Page404,
     Products,
     SingleProduct,
@@ -25,7 +26,7 @@ const App = () => {
                     <Route path="products">
                         <Route index element={<Products />} />
                         <Route path=":productId" element={<SingleProduct />} />
-                        <Route path="new" element={<New />} />
+                        <Route path="new" element={<NewProduct />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<Page404 />} />

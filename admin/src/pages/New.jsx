@@ -1,7 +1,7 @@
 import { DriveFolderUpload } from '@mui/icons-material'
 import { Box, Button, Input, InputLabel } from '@mui/material'
 import { styled } from '@mui/material'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 const Header = styled(Box)(({ theme }) => ({
     padding: 20,
@@ -32,10 +32,8 @@ const InputContainer = styled(Box)({
 })
 
 
-const New = ({title, userInputs}) => {
+const New = ({title, data}) => {
     const [file, setFile] = useState(undefined)
-    const imageRef = useRef(null)
-    console.log(file ? 'true' : 'false')
     return (
         <Box sx={{ padding: '30px', height: '100vh' }}>
             <Header>{title}</Header>
@@ -83,7 +81,7 @@ const New = ({title, userInputs}) => {
                                     onChange={(e) => setFile(e.target.files[0])}
                                 />
                             </Box>
-                            {userInputs.map((user) => (
+                            {data.map((user) => (
                                 <Box key={user.id} mb={2}>
                                     <InputLabel
                                         sx={{

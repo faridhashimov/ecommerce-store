@@ -1,4 +1,4 @@
-import { Typography, Box, styled, Button } from '@mui/material'
+import { Typography, Box, styled } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { UsersTable } from '../components'
 

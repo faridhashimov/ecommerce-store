@@ -1,4 +1,3 @@
-import { ArrowDownward } from '@mui/icons-material'
 import { ArrowDropDown } from '@mui/icons-material'
 import {
     NightsStay,
@@ -10,7 +9,7 @@ import { Menu } from '@mui/material'
 import { MenuItem } from '@mui/material'
 import { Button } from '@mui/material'
 
-import { InputBase, Avatar, FormGroup } from '@mui/material'
+import { InputBase, Avatar } from '@mui/material'
 
 import { Box, styled } from '@mui/material'
 import { useState } from 'react'

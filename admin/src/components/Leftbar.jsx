@@ -1,6 +1,5 @@
 import {
     Inventory,
-    StoreRounded,
     Paid,
     AddBoxRounded,
     ShoppingCart,
