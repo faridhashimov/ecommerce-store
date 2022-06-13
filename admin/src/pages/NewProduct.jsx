@@ -12,8 +12,16 @@ import {
     Typography,
     Autocomplete,
     Chip,
+    InputAdornment,
 } from '@mui/material'
 
+import {
+    getStorage,
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+} from 'firebase/storage'
+import app from '../firebase'
 import { useState } from 'react'
 
 const Header = styled(Box)(({ theme }) => ({
@@ -59,8 +67,14 @@ const StyledTextField = styled(TextField)({
     width: '80%',
     fontSize: '12px',
 })
+const ImagesContainer = styled(Box)({
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '5px',
+    padding: '10px',
+})
 
-const category = [
+const allCategories = [
     'Shirts',
     'Linen Shirts',
     'Shorts',
@@ -74,7 +88,7 @@ const category = [
     'Coats & Jackets',
     'Jackets',
 ]
-const size = [
+const allSizes = [
     'XS',
     'S',
     'M',
@@ -90,75 +104,160 @@ const size = [
     '6-7Y',
     '7-8Y',
 ]
-const status = ['Top', 'New', 'Sale', 'Out Of Stock']
+const allStatuses = ['Top', 'New', 'Sale', 'Out Of Stock']
+const allColors = [
+    'DFFF00',
+    'FFBF00',
+    'FF7F50',
+    'DE3163',
+    '9FE2BF',
+    '40E0D0',
+    '6495ED',
+    'CCCCFF',
+    'F44336',
+    'FFEBEE',
+    // '#FFCDD2',
+    // '#EF9A9A',
+    // '#E57373',
+    // '#EF5350',
+    // '#E53935',
+    // '#D32F2F',
+    // '#C62828',
+    // '#B71C1C',
+    // '#FF8A80',
+    // '#FF5252',
+    // '#FF1744',
+    // '#D50000',
+    // '#FCE4EC',
+    // '#F8BBD0',
+    // '#F48FB1',
+    // '#F06292',
+    // '#EC407A',
+    // '#E91E63',
+    // '#D81B60',
+    // '#C2185B',
+    // '#AD1457',
+    // '#880E4F',
+]
 
 const NewProduct = ({ title, data }) => {
-    const [file, setFile] = useState(undefined)
+    const [files, setFiles] = useState([])
+    const [images, setImages] = useState([])
     const [input, setInput] = useState({})
-    const [categories, setCategories] = useState([])
-    const [sizes, setSizes] = useState([])
-    const [statuses, setStatuses] = useState([])
+    const [category, setCategory] = useState([])
+    const [size, setSize] = useState([])
+    const [status, setStatus] = useState([])
+    const [color, setColor] = useState([])
 
-    const onSetCat = (e) => {
-        if (categories.includes(e.target.innerText)) {
-            setCategories([
-                ...categories.filter(
-                    (category) => category !== e.target.innerText
-                ),
-            ])
-        } else if (e.target.innerText === undefined) {
-            // setCategories([
-            //     ...categories.filter(
-            //         (category) => category !== e.target.parentElement.parentElement.innerText
-            //     ),
-            // ])
-            console.log(e.target.parentElement)
-        } else {
-            setCategories((categories) => [...categories, e.target.innerText])
-        }
+    const obj = {
+        ...input,
+        category,
+        size,
+        status,
+        color,
     }
+
     const onInputChange = (e) => {
         setInput({
             ...input,
             [e.target.name]: e.target.value,
         })
     }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(input)
+
+        if (files) {
+            const promises = files.map((file) => {
+                const fileName = new Date().getTime() + file.name
+                const storage = getStorage(app)
+                const storageRef = ref(storage, fileName)
+
+                const uploadTask = uploadBytesResumable(storageRef, file)
+
+                // Register three observers:
+                // 1. 'state_changed' observer, called any time the state changes
+                // 2. Error observer, called on failure
+                // 3. Completion observer, called on successful completion
+                uploadTask.on(
+                    'state_changed',
+                    (snapshot) => {
+                        // Observe state change events such as progress, pause, and resume
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        const progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100
+                        console.log('Upload is ' + progress + '% done')
+                        switch (snapshot.state) {
+                            case 'paused':
+                                console.log('Upload is paused')
+                                break
+                            case 'running':
+                                console.log('Upload is running')
+                                break
+                            default:
+                        }
+                    },
+                    (error) => {
+                        // Handle unsuccessful uploads
+                    }
+
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                )
+                return getDownloadURL(uploadTask.snapshot.ref)
+            })
+            Promise.all(promises).then(allUrls => console.log(allUrls))
+        }
     }
-    console.log(categories)
+    console.log(images)
 
     return (
         <Box sx={{ padding: '30px', height: '100vh' }}>
             <Header>Add New Product</Header>
             <AddContainer mt={3}>
-                <Box
-                    flex={1}
-                    sx={{ display: 'flex', justifyContent: 'center' }}
-                >
-                    <div
-                        style={{
-                            height: '100px',
-                            width: '100px',
-                            border: '1px solid grey',
-                        }}
-                    >
-                        <img
+                <ImagesContainer flex={1}>
+                    {files ? (
+                        files.map((item, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                    height: '100px',
+                                    width: '70px',
+                                    border: '1px solid grey',
+                                }}
+                            >
+                                <img
+                                    style={{
+                                        height: '100%',
+                                        width: '100%',
+                                        objectFit: 'contain',
+                                    }}
+                                    src={URL.createObjectURL(item)}
+                                    alt="avatar"
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <div
                             style={{
-                                height: '100%',
-                                width: '100%',
-                                objectFit: 'contain',
+                                height: '100px',
+                                width: '100px',
+                                border: '1px solid grey',
                             }}
-                            src={
-                                file
-                                    ? URL.createObjectURL(file)
-                                    : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
-                            }
-                            alt="avatar"
-                        />
-                    </div>
-                </Box>
+                        >
+                            <img
+                                style={{
+                                    height: '100%',
+                                    width: '100%',
+                                    objectFit: 'contain',
+                                }}
+                                src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                                alt="avatar"
+                            />
+                        </div>
+                    )}
+                </ImagesContainer>
                 <Box flex={2}>
                     <AddForm onSubmit={handleSubmit}>
                         <InputContainer mb={2}>
@@ -180,8 +279,16 @@ const NewProduct = ({ title, data }) => {
                                 <StyledInput
                                     id="file"
                                     sx={{ display: 'none' }}
+                                    name="image"
+                                    multiple
                                     type="file"
-                                    onChange={(e) => setFile(e.target.files[0])}
+                                    onChange={(e) =>
+                                        setFiles((files) => [
+                                            ...files,
+                                            e.target.files[0],
+                                        ])
+                                    }
+                                    // onChange={(e) => setFile(e.target.files[0])}
                                 />
                             </Box>
                             <Box mb={2}>
@@ -217,19 +324,23 @@ const NewProduct = ({ title, data }) => {
                                 />
                             </Box>
                             <Box mb={2}>
-                                <StyledLabel htmlFor="price">
-                                    Price $
-                                </StyledLabel>
+                                <StyledLabel htmlFor="price">Price</StyledLabel>
                                 <StyledInput
                                     onChange={onInputChange}
                                     name="price"
                                     id="price"
                                     type="number"
-                                    placeholder="34.00"
+                                    inputProps={{ step: 'any' }}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            $
+                                        </InputAdornment>
+                                    }
+                                    placeholder="34.99"
                                 />
                             </Box>
                             <Box mb={2}>
-                                <StyledLabel htmlFor="Gender">
+                                <StyledLabel htmlFor="gender">
                                     Gender
                                 </StyledLabel>
                                 <RadioGroup
@@ -237,7 +348,6 @@ const NewProduct = ({ title, data }) => {
                                     name="gender"
                                     row
                                     defaultValue="Women"
-                                    // name="radio-buttons-group"
                                 >
                                     <InputRadio
                                         value="Women"
@@ -294,16 +404,14 @@ const NewProduct = ({ title, data }) => {
                                     Category
                                 </StyledLabel>
                                 <Autocomplete
-                                    // onChange={(e) =>
-                                    //     setCategories((categories) => [
-                                    //         ...categories,
-                                    //         e.target.innerText,
-                                    //     ])
-                                    // }
-                                    onChange={onSetCat}
+                                    onChange={(event, value) =>
+                                        setCategory(value)
+                                    }
                                     multiple
-                                    id="tags-filled"
-                                    options={category.map((option) => option)}
+                                    id="category"
+                                    options={allCategories.map(
+                                        (option) => option
+                                    )}
                                     freeSolo
                                     renderTags={(value, getTagProps) =>
                                         value.map((option, index) => (
@@ -326,15 +434,10 @@ const NewProduct = ({ title, data }) => {
                             <Box mb={2}>
                                 <StyledLabel htmlFor="size">Size</StyledLabel>
                                 <Autocomplete
-                                    onChange={(e) =>
-                                        setSizes((sizes) => [
-                                            ...sizes,
-                                            e.target.innerText,
-                                        ])
-                                    }
+                                    onChange={(event, value) => setSize(value)}
                                     multiple
-                                    id="tags-filled"
-                                    options={size.map((option) => option)}
+                                    id="size"
+                                    options={allSizes.map((option) => option)}
                                     freeSolo
                                     renderTags={(value, getTagProps) =>
                                         value.map((option, index) => (
@@ -359,15 +462,14 @@ const NewProduct = ({ title, data }) => {
                                     Status
                                 </StyledLabel>
                                 <Autocomplete
-                                    onChange={(e) =>
-                                        setStatuses((statuses) => [
-                                            ...statuses,
-                                            e.target.innerText,
-                                        ])
+                                    onChange={(event, value) =>
+                                        setStatus(value)
                                     }
                                     multiple
-                                    id="tags-filled"
-                                    options={status.map((option) => option)}
+                                    id="status"
+                                    options={allStatuses.map(
+                                        (option) => option
+                                    )}
                                     freeSolo
                                     renderTags={(value, getTagProps) =>
                                         value.map((option, index) => (
@@ -383,6 +485,48 @@ const NewProduct = ({ title, data }) => {
                                             {...params}
                                             variant="standard"
                                             placeholder="Set Status"
+                                        />
+                                    )}
+                                />
+                            </Box>
+                            <Box mb={2}>
+                                <StyledLabel htmlFor="color">Color</StyledLabel>
+                                <Autocomplete
+                                    onChange={(event, value) => setColor(value)}
+                                    multiple
+                                    id="color"
+                                    options={allColors.map((option) => option)}
+                                    freeSolo
+                                    renderTags={(value, getTagProps) =>
+                                        value.map((option, index) => (
+                                            <Chip
+                                                sx={{
+                                                    backgroundColor: `#${option}`,
+                                                }}
+                                                variant="outlined"
+                                                label={option}
+                                                {...getTagProps({ index })}
+                                            />
+                                        ))
+                                    }
+                                    renderOption={(props, option) => {
+                                        return (
+                                            <span
+                                                {...props}
+                                                style={{
+                                                    backgroundColor: `#${option}`,
+                                                    height: '25px',
+                                                }}
+                                            >
+                                                {option}
+                                            </span>
+                                        )
+                                    }}
+                                    renderInput={(params) => (
+                                        <StyledTextField
+                                            {...params}
+                                            variant="standard"
+                                            placeholder="Set Hex Color"
                                         />
                                     )}
                                 />

@@ -8,3 +8,5 @@ export {default as RevenueComponent} from './RevenueComponent.jsx'
 export {default as LatestTransactions} from './LatestTransactions.jsx' //Edit
 export {default as LatestOrders} from './LatestOrders.jsx'
 export {default as UsersTable} from './UsersTable.jsx'
+export {default as ProductItem} from './ProductItem.jsx'
+export {default as OrderItem} from './OrderItem.jsx'

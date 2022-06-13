@@ -2,9 +2,19 @@ import { SentimentVeryDissatisfied } from '@mui/icons-material'
 import { Box, Button, styled } from '@mui/material'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import { blue } from '@mui/material/colors'
 
 const StyledLink = styled(Link)({
-    textDecoration: 'none', color: 'inherit'
+    textDecoration: 'none',
+    margin: '40px',
+    padding: '5px 20px',
+    border: '1px solid blue',
+    borderRadius: '3px',
+    color: 'blue',
+    backgroundcolor: 'transaprent',
+    '&:hover': {
+        backgroundcolor: '#6767a4',
+    },
 })
 
 const Page404 = () => {
@@ -24,11 +34,7 @@ const Page404 = () => {
                 sx={{ margin: '40px', fontSize: '40px' }}
             />
             Page Not Found....
-            <Button sx={{ margin: '40px' }} variant="outlined">
-                <StyledLink to="/">
-                    Back to Main
-                </StyledLink>
-            </Button>
+            <StyledLink to="/">Back to Main</StyledLink>
         </Box>
     )
 }
