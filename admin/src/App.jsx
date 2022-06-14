@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Main } from './components'
 import {
+    Brands,
     Customers,
     Home,
     New,
@@ -39,6 +40,7 @@ const App = () => {
                         <Route index element={<Orders />} />
                         <Route path=":orderId" element={<SingleOrder />} />
                     </Route>
+                    <Route path="brands" element={<Brands />} />
                 </Route>
                 <Route path="*" element={<Page404 />} />
             </Routes>

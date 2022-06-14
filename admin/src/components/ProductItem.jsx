@@ -9,7 +9,7 @@ const Product = styled(Box)({
     height: '320px',
     widht: '100px',
     borderRadius: '5px',
-    overflow: 'hidden'
+    overflow: 'hidden',
 })
 const InfoContainer = styled(Box)({
     display: 'flex',
@@ -25,7 +25,7 @@ const StyledButton = styled(Button)({
     textTransform: 'none',
 })
 
-const ProductItem = () => {
+const ProductItem = ({ product }) => {
     return (
         <Product>
             <Box sx={{ height: '65%', borderBottom: '1px solid #9a9a9a' }}>
@@ -35,7 +35,7 @@ const ProductItem = () => {
                         width: '100%',
                         objectFit: 'cover',
                     }}
-                    src="https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Fa3%2Fbf%2Fa3bfc81d2db797e2d85fb0348b88c86e71561dee.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_tshirtstanks_shortsleeve%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D"
+                    src={product.img[1]}
                     alt="t-shirt"
                 />
             </Box>
@@ -49,7 +49,7 @@ const ProductItem = () => {
                         }}
                         variant="span"
                     >
-                        Long Fit T-shirt
+                        {product.title.slice(0, 20)}
                     </Typography>
                     <Typography
                         sx={{
@@ -59,7 +59,7 @@ const ProductItem = () => {
                         }}
                         variant="span"
                     >
-                        $ 179.00
+                        $ {product.price}
                     </Typography>
                 </InfoContainer>
                 <ButtonContainer>

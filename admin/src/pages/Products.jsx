@@ -6,9 +6,11 @@ import {
     Select,
     MenuItem,
 } from '@mui/material'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ProductItem } from '../components'
+import { ProductItem, Spinner } from '../components'
+import useFetch from '../hooks/useFetch'
 
 const Header = styled(Box)({
     display: 'flex',
@@ -35,10 +37,10 @@ const Container = styled(Box)({
 })
 
 const FiltersContainer = styled(Box)(({ theme }) => ({
-    padding: 20,
+    padding: '20px',
     boxShadow: theme.shadows[2],
     borderRadius: theme.shape.borderRadius,
-    fontWeight: 500,
+    fontWeight: '500',
     fontSize: '20px',
     color: '#9a9a9a',
     marginBottom: '30px',
@@ -56,6 +58,18 @@ const ProductsGrid = styled(FiltersContainer)({
 const Products = () => {
     const [category, setCategory] = useState('All category')
     const [order, setOrder] = useState('Newest')
+    const [products, setProducts] = useState(null)
+
+    const { loading, error, data } = useFetch(
+        'http://localhost:5000/api/products'
+    )
+
+    useEffect(() => {
+        setProducts(data)
+    }, [data])
+
+    console.log(loading)
+    console.log(products)
 
     const onCategoryChange = (event) => {
         setCategory(event.target.value)
@@ -109,13 +123,10 @@ const Products = () => {
                 </Box>
             </FiltersContainer>
             <ProductsGrid>
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
+                {loading && !products ? <Spinner /> : null}
+                {products?.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                ))}
             </ProductsGrid>
         </Container>
     )

@@ -146,7 +146,6 @@ export const userRows = [
     },
 ]
 
-
 export const userInputs = [
     {
         id: 1,
@@ -190,4 +189,50 @@ export const userInputs = [
         type: 'text',
     },
 ]
-
+export const brands = [
+    {
+        id: 1,
+        img: 'https://www2.hm.com/hm-logo.png',
+        name: 'H&M',
+    },
+    {
+        id: 2,
+        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Pull%26Bear_logo.svg/1200px-Pull%26Bear_logo.svg.png',
+        name: 'Pull & Bear',
+    },
+    {
+        id: 3,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15471619354871_Bershka.png',
+        name: 'Bershka',
+    },
+    {
+        id: 4,
+        img: 'https://www.forumcamlik.com/media/image/11R8RW2GA33U82.png',
+        name: 'Mavi',
+    },
+    {
+        id: 5,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15511619355115_Koton.png',
+        name: 'Koton',
+    },
+    {
+        id: 6,
+        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Logo_of_Mango_%28new%29.svg/2560px-Logo_of_Mango_%28new%29.svg.png',
+        name: 'Mango',
+    },
+    {
+        id: 8,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15561619355397_USPoloAssn.png',
+        name: 'U.S Polo Assn.',
+    },
+    {
+        id: 9,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/Automation/BrandBoutique/2021/4/25/20210425_15521619355121_Lacoste.png',
+        name: 'Lacoste',
+    },
+    {
+        id: 10,
+        img: 'https://cdn.dsmcdn.com/mnresize/200/200/marketing/datascience/automation/2022/2/28/Pierrecardin_202202282024.jpg',
+        name: 'Pierre Cardin',
+    },
+]

@@ -94,7 +94,7 @@ const Leftbar = () => {
                     </StyledListBtn>
                     <StyledListBtn to="/statistics">
                         <InsertChart />
-                        <StyledListItemText>Statistics</StyledListItemText>
+                        <StyledListItemText>Stats</StyledListItemText>
                     </StyledListBtn>
                 </List>
             </Box>
