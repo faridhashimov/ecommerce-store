@@ -1,5 +1,5 @@
 export const userColumns = [
-    { field: 'id', headerName: 'ID', width: 60 },
+    { field: '_id', headerName: 'ID', width: 90 },
     {
         field: 'firstName',
         headerName: 'First name',
@@ -22,7 +22,11 @@ export const userColumns = [
                                 width: '100%',
                                 objectFit: 'contain',
                             }}
-                            src={params.row.img}
+                            src={
+                                params.row.img
+                                    ? params.row.img
+                                    : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
+                            }
                             alt="avatar"
                         />
                     </div>

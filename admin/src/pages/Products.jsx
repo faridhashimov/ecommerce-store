@@ -9,7 +9,7 @@ import {
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ProductItem, Spinner } from '../components'
+import { Error, ProductItem, Spinner } from '../components'
 import useFetch from '../hooks/useFetch'
 
 const Header = styled(Box)({
@@ -88,7 +88,7 @@ const Products = () => {
                 >
                     Products
                 </Typography>
-                <AddNew to="/users/new" variant="outlined">
+                <AddNew to="/products/new" variant="outlined">
                     Add New
                 </AddNew>
             </Header>
@@ -122,12 +122,15 @@ const Products = () => {
                     </Select>
                 </Box>
             </FiltersContainer>
-            <ProductsGrid>
-                {loading && !products ? <Spinner /> : null}
-                {products?.map((product) => (
-                    <ProductItem key={product._id} product={product} />
-                ))}
-            </ProductsGrid>
+            {loading && <Spinner />}
+            {error && <Error/>}
+            {products && (
+                <ProductsGrid>
+                    {products.map((product) => (
+                        <ProductItem key={product._id} product={product} />
+                    ))}
+                </ProductsGrid>
+            )}
         </Container>
     )
 }

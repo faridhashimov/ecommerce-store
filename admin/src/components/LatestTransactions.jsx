@@ -1,4 +1,4 @@
-import { TableContainer } from '@mui/material'
+import { TableContainer, Tooltip } from '@mui/material'
 import { TableHead } from '@mui/material'
 import { TableCell } from '@mui/material'
 import { Avatar } from '@mui/material'
@@ -7,6 +7,7 @@ import { TableRow } from '@mui/material'
 import { Paper } from '@mui/material'
 import { Table } from '@mui/material'
 import { Box, Typography, styled } from '@mui/material'
+import { format, parseISO } from 'date-fns'
 
 const StyledTypo = styled(Typography)({
     color: '#9a9a9a',
@@ -79,7 +80,7 @@ const rows = [
     ),
 ]
 
-const LatestTransactions = () => {
+const LatestTransactions = ({ user, transactions }) => {
     return (
         <TransactionContainer mt={3}>
             <StyledTypo variant="span" mb={3} sx={{ fontWeight: 500 }}>
@@ -98,9 +99,9 @@ const LatestTransactions = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {transactions.map((transaction) => (
                             <TableRow
-                                key={row.name}
+                                key={transaction._id}
                                 sx={{
                                     '&:last-child td, &:last-child th': {
                                         border: 0,
@@ -108,47 +109,71 @@ const LatestTransactions = () => {
                                 }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {transaction._id.substr(0, 5) + '...'}
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(4,1fr)',
                                     }}
                                     align="left"
                                 >
-                                    <Avatar sx={{border: '1px solid grey', marginRight: 2}} alt="Remy Sharp" src={row.src} />
-
-                                    {row.calories}
+                                    {transaction.products.map((product) => (
+                                        <Tooltip
+                                            key={product._id}
+                                            title={product.title}
+                                            placement="top"
+                                        >
+                                            <Avatar
+                                                sx={{
+                                                    border: '1px solid grey',
+                                                }}
+                                                alt="Remy Sharp"
+                                                src={product.img[0]}
+                                            />
+                                        </Tooltip>
+                                    ))}
                                 </TableCell>
-                                <TableCell align="left">{row.fat}</TableCell>
-                                <TableCell align="left">{row.carbs}</TableCell>
+
+                                <TableCell align="left">{user}</TableCell>
                                 <TableCell align="left">
-                                    {row.protein}
+                                    {format(
+                                        parseISO(transaction.createdAt),
+                                        'dd-MMM'
+                                    )}
+                                </TableCell>
+                                <TableCell align="left">
+                                    ${transaction.amount}
                                 </TableCell>
                                 <TableCell align="left">
                                     <Status
                                         variant="span"
                                         sx={{
                                             backgroundColor:
-                                                row.status === 'Delivered'
+                                                transaction.status ===
+                                                'Delivered'
                                                     ? '#DCF5E0'
-                                                    : row.status === 'Pending'
+                                                    : transaction.status ===
+                                                      'Pending'
                                                     ? '#FFE8D0'
-                                                    : row.status === 'Shipped'
+                                                    : transaction.status ===
+                                                      'Shipped'
                                                     ? '#9af2fa'
                                                     : '#FDCCCC',
                                             color:
-                                                row.status === 'Delivered'
+                                                transaction.status ===
+                                                'Delivered'
                                                     ? '#006D0E'
-                                                    : row.status === 'Pending'
+                                                    : transaction.status ===
+                                                      'Pending'
                                                     ? '#985325'
-                                                    : row.status === 'Shipped'
+                                                    : transaction.status ===
+                                                      'Shipped'
                                                     ? '#014f56'
                                                     : '#920000',
                                         }}
                                     >
-                                        {row.status}
+                                        {transaction.status}
                                     </Status>
                                 </TableCell>
                             </TableRow>

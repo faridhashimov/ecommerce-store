@@ -1,5 +1,9 @@
 import { Avatar, Box, Stack, styled, Typography } from '@mui/material'
-import { Chart, LatestTransactions } from '../components'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Chart, Error, LatestTransactions, Spinner } from '../components'
+import useFetch from '../hooks/useFetch'
 
 const Container = styled(Box)({
     display: 'flex',
@@ -47,6 +51,34 @@ const Edit = styled('div')(({ theme }) => ({
 }))
 
 const SingleUser = () => {
+    const [loading, setLoading] = useState(false)
+    const [userInfo, setUserInfo] = useState(null)
+    const [userOrders, setUserOrders] = useState(null)
+    const { userId } = useParams()
+    console.log(userId)
+
+    const getData = () => {
+        setLoading(true)
+        let endpoints = [
+            'http://localhost:5000/api/users/' + userId,
+            'http://localhost:5000/api/orders/find/' + userId,
+        ]
+        Promise.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
+            ([{ data: userInfo }, { data: orders }]) => {
+                setUserInfo(userInfo)
+                setUserOrders(orders)
+                setLoading(false)
+            }
+        )
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    console.log(userInfo)
+    console.log(userOrders)
+
     return (
         <Container p={4}>
             <Stack direction="row" spacing={3}>
@@ -56,27 +88,41 @@ const SingleUser = () => {
                     <Box sx={{ display: 'flex' }} mt={2}>
                         <Avatar
                             sx={{ width: 120, height: 120 }}
-                            src="https://minimaltoolkit.com/images/randomdata/female/49.jpg"
+                            src={
+                                userInfo?.img
+                                    ? userInfo?.img
+                                    : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
+                            }
                             alt="avatar"
                         />
-                        <Container ml={3}>
-                            <StyledTypo variant="h3" sx={{ fontSize: '32px' }}>
-                                Jane Doe
-                            </StyledTypo>
-                            <UserInfoSpan variant="p">
-                                <span>Email:</span> janedoe@gmail.com
-                            </UserInfoSpan>
-                            <UserInfoSpan variant="p">
-                                <span>Phone:</span> +1 729 181 229
-                            </UserInfoSpan>
-                            <UserInfoSpan variant="p">
-                                <span>Adress:</span> Elton St. 234 Garden Yd.
-                                New York
-                            </UserInfoSpan>
-                            <UserInfoSpan variant="p">
-                                <span>Country:</span> USA
-                            </UserInfoSpan>
-                        </Container>
+                        {loading && <Spinner />}
+                        {/* {error && <Error />} */}
+                        {userInfo && (
+                            <Container ml={3}>
+                                <StyledTypo
+                                    variant="h3"
+                                    sx={{ fontSize: '32px' }}
+                                >
+                                    {userInfo.firstName +
+                                        ' ' +
+                                        userInfo.lastName}
+                                </StyledTypo>
+                                <UserInfoSpan variant="p">
+                                    <span>Email:</span> {userInfo.email}
+                                </UserInfoSpan>
+                                <UserInfoSpan variant="p">
+                                    <span>Phone:</span>{' '}
+                                    {userInfo?.adress?.phone}
+                                </UserInfoSpan>
+                                <UserInfoSpan variant="p">
+                                    <span>Street:</span>{' '}
+                                    {userInfo.adress.street}
+                                </UserInfoSpan>
+                                <UserInfoSpan variant="p">
+                                    <span>City:</span> {userInfo.adress.city}
+                                </UserInfoSpan>
+                            </Container>
+                        )}
                     </Box>
                 </UserInfoContainer>
                 <UserInfoContainer flex={1}>
@@ -87,7 +133,13 @@ const SingleUser = () => {
                 </UserInfoContainer>
             </Stack>
             <Box>
-                <LatestTransactions />
+                {loading && <Spinner />}
+                {userOrders && (
+                    <LatestTransactions
+                        user={userInfo.firstName}
+                        transactions={userOrders}
+                    />
+                )}
             </Box>
         </Container>
     )

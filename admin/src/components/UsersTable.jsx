@@ -3,6 +3,9 @@ import { DataGrid } from '@mui/x-data-grid'
 import { userRows, userColumns } from '../data.js'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import useFetch from '../hooks/useFetch.js'
+import { useEffect } from 'react'
+import { Spinner, Error } from '../components'
 
 const Table = styled('div')(({ theme }) => ({
     height: 650,
@@ -12,6 +15,13 @@ const Table = styled('div')(({ theme }) => ({
 }))
 
 const UsersTable = () => {
+    const [customers, setCustomers] = useState(null)
+    const { loading, error, data } = useFetch('http://localhost:5000/api/users')
+
+    useEffect(() => {
+        setCustomers(data)
+    }, [data])
+
     const actionColumn = [
         {
             field: 'action',
@@ -21,7 +31,7 @@ const UsersTable = () => {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Link
-                            to={`/users/${params.row.id}`}
+                            to={`/users/${params.row._id}`}
                             style={{
                                 textDecoration: 'none',
                                 color: '#014f56',
@@ -42,7 +52,7 @@ const UsersTable = () => {
                                 borderRadius: '5px',
                                 cursor: 'pointer',
                             }}
-                            onClick={() => handleDelete(params.row.id)}
+                            onClick={() => handleDelete(params.row._id)}
                         >
                             Delete
                         </div>
@@ -52,21 +62,28 @@ const UsersTable = () => {
         },
     ]
 
-    const [data, setData] = useState(userRows)
+    const [info, setInfo] = useState(userRows)
 
     const handleDelete = (id) => {
-        setData(data.filter((item) => item.id !== id))
+        setInfo(info.filter((item) => item.id !== id))
     }
     return (
-        <Table>
-            <DataGrid
-                rows={data}
-                columns={userColumns.concat(actionColumn)}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                checkboxSelection
-            />
-        </Table>
+        <>
+            {loading && <Spinner />}
+            {error && <Error />}
+            {customers && (
+                <Table>
+                    <DataGrid
+                        rows={customers}
+                        columns={userColumns.concat(actionColumn)}
+                        getRowId ={(row) => row._id}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
+                        checkboxSelection
+                    />
+                </Table>
+            )}
+        </>
     )
 }
 
