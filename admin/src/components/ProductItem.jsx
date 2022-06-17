@@ -43,13 +43,13 @@ const ProductItem = ({ product }) => {
                 <InfoContainer>
                     <Typography
                         sx={{
-                            fontSize: '16px',
+                            fontSize: '15px',
                             fontWeight: '400',
                             marginBottom: '5px',
                         }}
                         variant="span"
                     >
-                        {product.title.slice(0, 20)}
+                        {product.title.slice(0, 17) + '...'}
                     </Typography>
                     <Typography
                         sx={{
@@ -63,7 +63,11 @@ const ProductItem = ({ product }) => {
                     </Typography>
                 </InfoContainer>
                 <ButtonContainer>
-                    <StyledButton variant="outlined" startIcon={<Edit />}>
+                    <StyledButton
+                        sx={{ marginRight: '6px' }}
+                        variant="outlined"
+                        startIcon={<Edit />}
+                    >
                         Edit
                     </StyledButton>
                     <StyledButton

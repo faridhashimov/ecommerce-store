@@ -2,10 +2,9 @@ import styled from 'styled-components'
 import Products from './Products'
 import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
-// import { useAxios } from '../hooks/useAxios'
-import { useAxios } from '../hooks/useAxios'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
+import useEcomService from '../hooks/useEcomService'
 
 const Container = styled.div`
     width: 100%;
@@ -66,16 +65,26 @@ const ProductsContainer = styled.div`
 `
 
 const Feautured = () => {
-    // const { data, error, loading } = useAxios(
-    //     'http://localhost:5000/api/products'
-    // )
     const [products, setProducts] = useState(null)
     const [filteredProducts, setFilteredProducts] = useState(null)
     const [active, setActive] = useState('All')
 
-    const { clearError, error, data, loading } = useAxios(
-        'http://localhost:5000/api/products'
-    )
+    const { error, getProducts, loading } = useEcomService()
+
+    useEffect(() => {
+        onProductsLoad()
+    }, [])
+
+    useEffect(() => {
+        setFilteredProducts(products)
+    }, [products])
+
+    const onProductsLoad = () => {
+        getProducts().then((prod) => {
+            setProducts(prod)
+            setFilteredProducts(prod)
+        })
+    }
 
     const handleClick = (e) => {
         const productStatus = e.target.getAttribute('data-id')
@@ -91,11 +100,6 @@ const Feautured = () => {
             return products
         }
     }
-
-    useEffect(() => {
-        setProducts(data)
-        setFilteredProducts(products)
-    }, [data, products])
 
     let spinner = loading ? <Spinner /> : null
     let content =

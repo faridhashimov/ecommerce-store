@@ -1,19 +1,23 @@
 import axios from 'axios'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 
 const useFetch = (url, method, body, headers) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-    const [data, setData] = useState(undefined)
 
     const getData = useCallback(
-        async (url, method = 'GET', body = null, headers = null) => {
+        async (
+            url,
+            method = 'GET',
+            body = null,
+            headers = { 'Content-type': 'application/json' }
+        ) => {
             try {
                 const res = await axios({ url, method, body, headers })
-                setData(res.data)
                 setLoading(false)
+                setError(null)
+                return res.data
             } catch (error) {
-                setData(undefined)
                 setLoading(false)
                 setError(error.message)
             }
@@ -21,11 +25,21 @@ const useFetch = (url, method, body, headers) => {
         []
     )
 
-    useEffect(() => {
-        getData(url, method, body, headers)
-    }, [url])
+    const reFetch = async () => {
+        setLoading(true)
+        try {
+            const res = await axios(url)
+            setLoading(false)
+            setError(null)
+            return res.data
+        } catch (error) {
+            setLoading(false)
+            setError(error.message)
+        }
+    }
+    const clearError = useCallback(() => setError(null), [])
 
-    return { loading, error, data }
+    return { loading, error, clearError, getData }
 }
 
 export default useFetch

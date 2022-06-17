@@ -1,37 +1,44 @@
 import axios from 'axios'
-import { useEffect, useCallback, useState } from 'react'
+import { useState, useCallback } from 'react'
 
-const useFetch = (query, page) => {
+const useFetch = (url, method, body, headers) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-    const [data, setData] = useState([])
 
-    const sendQuery = useCallback(async () => {
-        const source = axios.CancelToken.source()
+    const getData = useCallback(
+        async (
+            url,
+            method = 'GET',
+            body = null,
+            headers = { 'Content-type': 'application/json' }
+        ) => {
+            try {
+                const res = await axios({ url, method, body, headers })
+                setLoading(false)
+                return res.data
+            } catch (error) {
+                setLoading(false)
+                setError(error.message)
+            }
+        },
+        []
+    )
+
+    const reFetch = async () => {
+        setLoading(true)
         try {
-            setLoading(true)
-            setError(false)
-            const res = await axios.get(query, {
-                cancelToken: source.token,
-            })
-            setData((prev) => [...prev, ...res.data])
-            setError(null)
+            const res = await axios(url)
             setLoading(false)
+            return res.data
         } catch (error) {
+            setLoading(false)
             setError(error.message)
-            setData(null)
         }
-        const cleanUp = () => {
-            source.cancel()
-        }
-        return cleanUp
-    }, [query])
+    }
 
-    useEffect(() => {
-        sendQuery(query, page)
-    }, [query, sendQuery, page])
+    const clearError = useCallback(() => setError(null), [])
 
-    return { loading, error, data }
+    return { loading, error, reFetch, clearError, getData }
 }
 
 export default useFetch

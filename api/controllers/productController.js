@@ -58,7 +58,7 @@ const getAllProducts = async (req, res) => {
     const searchColor = color && color !== 'all' ? { color } : {}
     const searchStatus = status && status !== 'all' ? { status } : {}
 
-    console.log(req.query)
+    // console.log(req.query)
 
     let sortValue
 
@@ -95,7 +95,16 @@ const getAllProducts = async (req, res) => {
             .skip(10 * (page - 1))
             .limit(10)
 
-        res.status(200).json(products)
+        const productsCount = await Product.countDocuments({
+            ...searchCategory,
+            ...searchBrand,
+            ...searchGender,
+            ...searchSize,
+            ...searchColor,
+            ...searchStatus,
+        })
+
+        res.status(200).json({ data: products, count: productsCount })
     } catch (err) {
         res.status(401).json(err)
     }

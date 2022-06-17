@@ -143,8 +143,8 @@ const Orders = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <OrderItem data={row} />
+                        {rows.map((row, i) => (
+                            <OrderItem key={i} data={row} />
                         ))}
                     </TableBody>
                 </Table>

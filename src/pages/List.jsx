@@ -120,14 +120,14 @@ const List = () => {
                     }
                 )
                 if (isMounted) {
-                    let ids = res.data.map((o) => o._id)
+                    let ids = res.data.data.map((o) => o._id)
                     let stateWithoutDuplicates = products.filter(
                         ({ _id }) => !ids.includes(_id)
                     )
                     clicked
-                        ? setProducts(res.data)
-                        : setProducts([...stateWithoutDuplicates, ...res.data])
-                    setHasMore(res.data.length === 10 ? true : false)
+                        ? setProducts(res.data.data)
+                        : setProducts([...stateWithoutDuplicates, ...res.data.data])
+                    setHasMore(res.data.data.length === 10 ? true : false)
 
                     const setAllFilters = (data) => {
                         setFilters({
@@ -155,10 +155,10 @@ const List = () => {
                         })
                     }
                     clicked
-                        ? setAllFilters(res.data)
+                        ? setAllFilters(res.data.data)
                         : products.length > 0
-                        ? setAllFilters([...products, ...res.data])
-                        : setAllFilters(res.data)
+                        ? setAllFilters([...products, ...res.data.data])
+                        : setAllFilters(res.data.data)
 
                     setError(null)
                 }

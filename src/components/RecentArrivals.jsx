@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import Products from './Products'
 import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
-import { useAxios } from '../hooks/useAxios'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
+import useEcomService from '../hooks/useEcomService'
 
 const Container = styled.div`
     width: 100%;
@@ -102,21 +102,26 @@ const ProductsContainer = styled.div`
 `
 
 const RecentArrivals = () => {
-    // const { data, error, loading } = useAxios(
-    //     'http://localhost:5000/api/products'
-    // )
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
 
-    const { clearError, error, data, loading } = useAxios(
-        'http://localhost:5000/api/products'
-    )
+    const { loading, error, getProducts } = useEcomService()
 
     useEffect(() => {
-        setProducts(data)
+        onProductsLoad()
+    }, [])
+
+    useEffect(() => {
         setFilteredProducts(products)
-    }, [data, products])
+    }, [products])
+
+    const onProductsLoad = () => {
+        getProducts().then((prod) => {
+            setProducts(prod)
+            setFilteredProducts(prod)
+        })
+    }
 
     const handleClick = (e) => {
         const productType = e.target.getAttribute('data-id')
@@ -124,7 +129,9 @@ const RecentArrivals = () => {
         if (productType !== 'All') {
             setFilteredProducts(
                 products.filter(
-                    (product) => product.category.indexOf(productType) > -1 || product.gender.indexOf(productType) > -1
+                    (product) =>
+                        product.category.indexOf(productType) > -1 ||
+                        product.gender.indexOf(productType) > -1
                 )
             )
         } else {
@@ -137,11 +144,9 @@ const RecentArrivals = () => {
             <Products products={filteredProducts.slice(0, 8)} />
         ) : null
     let errorMsg = error ? (
-        <>
-            <p style={{ color: 'red', textAlign: 'center' }}>
-                Something went wrong: {error}...
-            </p>
-        </>
+        <p style={{ color: 'red', textAlign: 'center' }}>
+            Something went wrong: {error}...
+        </p>
     ) : null
 
     return (
@@ -190,9 +195,9 @@ const RecentArrivals = () => {
                     {content}
                     {errorMsg}
                 </ProductsContainer>
-                {data?.length > 0 ? (
+                {products.length > 0 ? (
                     <ButtonContainer>
-                        <InfoButton to='/list'>
+                        <InfoButton to="/list">
                             View More
                             <ArrowRightAltOutlined
                                 style={{

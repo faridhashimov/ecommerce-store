@@ -5,12 +5,14 @@ import {
     TextField,
     Select,
     MenuItem,
+    Pagination,
 } from '@mui/material'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Error, ProductItem, Spinner } from '../components'
 import useFetch from '../hooks/useFetch'
+import useAdminService from '../services/useAdminService'
 
 const Header = styled(Box)({
     display: 'flex',
@@ -48,28 +50,53 @@ const FiltersContainer = styled(Box)(({ theme }) => ({
     justifyContent: 'space-between',
 }))
 
-const ProductsGrid = styled(FiltersContainer)({
+const ProductsContainer = styled(Box)(({ theme }) => ({
+    padding: '20px',
+    boxShadow: theme.shadows[2],
+    borderRadius: theme.shape.borderRadius,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+}))
+
+const ProductsGrid = styled(Box)({
     minHeight: '100vh',
     display: 'grid',
     gridTemplateColumns: 'repeat(5, 1fr)',
-    gap: '10px',
+    gap: '15px',
+    marginBottom: '20px',
 })
 
 const Products = () => {
+    const location = useLocation()
     const [category, setCategory] = useState('All category')
     const [order, setOrder] = useState('Newest')
     const [products, setProducts] = useState(null)
+    const [page, setPages] = useState(1)
+    const navigate = useNavigate()
+    const sp = new URLSearchParams(location.search)
+    const newPage = sp.get('page') || 1
 
-    const { loading, error, data } = useFetch(
-        'http://localhost:5000/api/products'
-    )
+    const { loading, error, getProducts } = useAdminService()
+    console.log(loading)
+    console.log(error)
+
+    const handleChange = (e, value) => {
+        setPages(value)
+        navigate(`/products?page=${value}`)
+    }
 
     useEffect(() => {
-        setProducts(data)
-    }, [data])
+        onProductsLoad(newPage)
+    }, [newPage])
 
-    console.log(loading)
-    console.log(products)
+    useEffect(() => {
+        navigate(`/products?page=${1}`)
+    }, [])
+
+    const onProductsLoad = (pg) => {
+        getProducts(pg).then((products) => setProducts(products))
+    }
 
     const onCategoryChange = (event) => {
         setCategory(event.target.value)
@@ -77,6 +104,18 @@ const Products = () => {
     const onOrderChange = (event) => {
         setOrder(event.target.value)
     }
+
+    const spinner = loading && !products ? <Spinner /> : null
+    const content =
+        !loading && products ? (
+            <DataContainer
+                products={products}
+                handleChange={handleChange}
+                page={page}
+            />
+        ) : null
+
+    const errorMsg = !loading && error ? <Error /> : null
 
     return (
         <Container>
@@ -122,16 +161,31 @@ const Products = () => {
                     </Select>
                 </Box>
             </FiltersContainer>
-            {loading && <Spinner />}
-            {error && <Error/>}
-            {products && (
-                <ProductsGrid>
-                    {products.map((product) => (
-                        <ProductItem key={product._id} product={product} />
-                    ))}
-                </ProductsGrid>
-            )}
+            {spinner}
+            {content}
+            {errorMsg}
         </Container>
+    )
+}
+
+const DataContainer = ({ products, page, handleChange }) => {
+    return (
+        <ProductsContainer>
+            <ProductsGrid>
+                {products.data.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                ))}
+            </ProductsGrid>
+            <Pagination
+                sx={{ alignSelf: 'right' }}
+                count={Math.ceil(products.count / 10)}
+                variant="outlined"
+                shape="rounded"
+                color="primary"
+                page={page}
+                onChange={handleChange}
+            />
+        </ProductsContainer>
     )
 }
 
