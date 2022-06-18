@@ -11,7 +11,6 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Error, ProductItem, Spinner } from '../components'
-import useFetch from '../hooks/useFetch'
 import useAdminService from '../services/useAdminService'
 
 const Header = styled(Box)({
@@ -20,6 +19,7 @@ const Header = styled(Box)({
     justifyContent: 'space-between',
     marginBottom: 20,
 })
+
 const AddNew = styled(Link)({
     padding: '5px 10px',
     textTransform: 'none',
@@ -69,40 +69,77 @@ const ProductsGrid = styled(Box)({
 
 const Products = () => {
     const location = useLocation()
-    const [category, setCategory] = useState('All category')
-    const [order, setOrder] = useState('Newest')
+    const [categoryFilter, setCategoryFilter] = useState('all')
+    const [orderFilter, setOrderFilter] = useState('all')
     const [products, setProducts] = useState(null)
+    const [title, setTitle] = useState('all')
     const [page, setPages] = useState(1)
     const navigate = useNavigate()
     const sp = new URLSearchParams(location.search)
     const newPage = sp.get('page') || 1
+    const newCategory = sp.get('category') || 'all'
+    const newOrder = sp.get('order') || 'all'
+    const newTitle = sp.get('title') || 'all'
 
     const { loading, error, getProducts } = useAdminService()
-    console.log(loading)
-    console.log(error)
+    // console.log(loading)
+    // console.log(error)
 
     const handleChange = (e, value) => {
         setPages(value)
-        navigate(`/products?page=${value}`)
+        navigate(
+            `/products?page=${value}&category=${newCategory}&order=${newOrder}&title=${newTitle}`
+        )
     }
 
     useEffect(() => {
-        onProductsLoad(newPage)
-    }, [newPage])
+        onProductsLoad(newPage, newCategory, newOrder, newTitle)
+    }, [newPage, newCategory, newOrder, newTitle])
 
     useEffect(() => {
         navigate(`/products?page=${1}`)
     }, [])
 
-    const onProductsLoad = (pg) => {
-        getProducts(pg).then((products) => setProducts(products))
+    const onProductsLoad = (pg, ct, no, tt) => {
+        getProducts(pg, ct, no, tt).then((products) => setProducts(products))
     }
 
     const onCategoryChange = (event) => {
-        setCategory(event.target.value)
+        setCategoryFilter(event.target.value)
+        navigate(
+            `/products?page=${1}&category=${
+                event.target.value
+            }&order=${newOrder}&title=${newTitle}`
+        )
     }
+
+    const onTitleChange = (event) => {
+        navigate(
+            `/products?page=${1}&category=${'all'}&order=${'all'}&title=${
+                event.target.vaue
+            }`
+        )
+    }
+
+    useEffect(() => {
+        const titleTimeout = setTimeout(() => {
+            navigate(
+                `/products?page=${1}&category=${'all'}&order=${'all'}&title=${
+                    title === '' ? 'all' : title
+                }`
+            )
+        }, 500)
+
+        return () => {
+            clearTimeout(titleTimeout)
+        }
+    }, [title])
+
     const onOrderChange = (event) => {
-        setOrder(event.target.value)
+        setOrderFilter(event.target.value)
+        navigate(
+            `/products?page=${newPage}&category=${newCategory}&order=${event.target.value}&title=${newTitle}`
+        )
     }
 
     const spinner = loading && !products ? <Spinner /> : null
@@ -138,26 +175,34 @@ const Products = () => {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Search..."
+                    onChange={(e) => setTitle(e.target.value)}
                 />
                 <Box>
                     <Select
                         size="small"
-                        value={category}
+                        value={categoryFilter}
                         onChange={onCategoryChange}
-                        sx={{ marginRight: '15px' }}
+                        sx={{ marginRight: '15px', width: '140px' }}
                     >
-                        <MenuItem value="All category">All category</MenuItem>
-                        <MenuItem value="T-Shirts">T-Shirts</MenuItem>
+                        <MenuItem value="all">All Category</MenuItem>
+                        <MenuItem value="T-shirts">T-Shirts</MenuItem>
+                        <MenuItem value="Shirts">Shirts</MenuItem>
                         <MenuItem value="Shorts">Shorts</MenuItem>
                         <MenuItem value="Shoes">Shoes</MenuItem>
                         <MenuItem value="Coats & Jackets">
                             Coats & Jackets
                         </MenuItem>
                     </Select>
-                    <Select size="small" value={order} onChange={onOrderChange}>
-                        <MenuItem value="Newest">Newest</MenuItem>
-                        <MenuItem value="Price Low">Low</MenuItem>
-                        <MenuItem value="Price High">High</MenuItem>
+                    <Select
+                        size="small"
+                        value={orderFilter}
+                        onChange={onOrderChange}
+                        sx={{ width: '110px' }}
+                    >
+                        <MenuItem value="all">Featured</MenuItem>
+                        <MenuItem value="new">Newest</MenuItem>
+                        <MenuItem value="low">Low</MenuItem>
+                        <MenuItem value="high">High</MenuItem>
                     </Select>
                 </Box>
             </FiltersContainer>

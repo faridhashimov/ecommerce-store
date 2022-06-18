@@ -42,15 +42,21 @@ const deleteProduct = async (req, res) => {
 
 //GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
-    const category = req.query.category
-    const brand = req.query.brand
-    const gender = req.query.gender
-    const size = req.query.size
-    const color = req.query.color
-    const status = req.query.status
-    const page = req.query.page
-    const order = req.query.order
+    const { query } = req
+    const title = query.title
+    const category = query.category
+    const brand = query.brand
+    const gender = query.gender
+    const size = query.size
+    const color = query.color
+    const status = query.status
+    const page = query.page
+    const order = query.order
 
+    const searchTitle =
+        title && title !== 'all'
+            ? { title: { $regex: title, $options: 'i' } }
+            : {}
     const searchCategory = category && category !== 'all' ? { category } : {}
     const searchBrand = brand && brand !== 'all' ? { brand } : {}
     const searchGender = gender && gender !== 'all' ? { gender } : {}
@@ -84,6 +90,7 @@ const getAllProducts = async (req, res) => {
 
     try {
         const products = await Product.find({
+            ...searchTitle,
             ...searchCategory,
             ...searchBrand,
             ...searchGender,
@@ -96,6 +103,7 @@ const getAllProducts = async (req, res) => {
             .limit(10)
 
         const productsCount = await Product.countDocuments({
+            ...searchTitle,
             ...searchCategory,
             ...searchBrand,
             ...searchGender,
