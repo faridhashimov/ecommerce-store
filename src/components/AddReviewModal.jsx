@@ -1,14 +1,12 @@
 import { Close, Star, StarBorder, ThumbUp } from '@mui/icons-material'
-import { Icon, SvgIcon } from '@mui/material'
+import { SvgIcon } from '@mui/material'
 import axios from 'axios'
 import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { css } from 'styled-components'
-import AddReview from './AddReview'
 import ReviewSucces from './ReviewSucces'
 
-//====================== Modal background
+//=======================Modal background
 const ModalBackground = styled.div`
     width: 100vw;
     height: 100vh;
@@ -23,7 +21,7 @@ const ModalBackground = styled.div`
     right: 0;
     position: fixed;
 `
-//====================== Modal container
+//======================Modal container
 const ModalContainer = styled.div`
     position: relative;
     min-height: 83%;
@@ -36,28 +34,7 @@ const ModalContainer = styled.div`
     padding: 15px 20px 20px;
     border-radius: 3px;
 `
-const ModalInfo = styled.div`
-    flex: 1;
-    padding-left: 15px;
-    overflow: auto;
-    &::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #ebebeb;
-        border-radius: 4px;
-    }
-`
-const StyledIcon = styled(Icon)`
-    font-size: 16px !important;
-    margin-right: 10px;
-    cursor: pointer;
-    &:hover {
-        color: #f27a1a;
-    }
-`
-//=================== Modal header
+//=====================Modal header
 const ModalHeader = styled.div`
     display: flex;
     align-items: center;
@@ -107,8 +84,7 @@ const PointInfo = styled.div`
         }
     }
 `
-//Product Info Container
-
+//======================Product Info Container
 const ProductInfoContainer = styled.div`
     display: flex;
     align-items: flex-start;
@@ -183,7 +159,6 @@ const TitleInput = styled.input`
         outline: none;
     }
 `
-
 const ReviewInput = styled.textarea`
     padding: 3px 10px;
     margin: 10px 0px 20px;
@@ -221,9 +196,14 @@ const SubmitBtn = styled.button`
         background-color: #f08936;
         transition: all 0.2s ease-in;
     }
+    &:disabled:hover {
+        color: #777;
+        border: 1px solid #777;
+        background-color: transparent;
+        cursor: not-allowed;
+    }
 `
 //=================Review Rating Container
-
 const AddReviewModal = ({ item, setOpen }) => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
@@ -233,6 +213,9 @@ const AddReviewModal = ({ item, setOpen }) => {
     // console.log(rating)
     const titleRef = useRef()
     const reviewRef = useRef()
+
+    const [checked, setChekced] = useState(false)
+    console.log(checked)
 
     const handleModalClose = (e) => {
         let modalBg = e.target.getAttribute('data-bg')
@@ -357,6 +340,7 @@ const AddReviewModal = ({ item, setOpen }) => {
                                 placeholder="Very pleased"
                                 id="review"
                                 type="text"
+                                autoComplete="off"
                             />
                             <ReviewInput
                                 ref={reviewRef}
@@ -365,12 +349,17 @@ const AddReviewModal = ({ item, setOpen }) => {
                                 rows="5"
                             />
                             <ReviewPolicyContainer>
-                                <ReviewPolicy type="checkbox" />
+                                <ReviewPolicy
+                                    onChange={() => setChekced(!checked)}
+                                    type="checkbox"
+                                />
                                 <ReviewPolicyLabel>
                                     I accept the User Agreement to add review.
                                 </ReviewPolicyLabel>
                             </ReviewPolicyContainer>
-                            <SubmitBtn>Add Review</SubmitBtn>
+                            <SubmitBtn disabled={checked ? false : true}>
+                                Add Review
+                            </SubmitBtn>
                         </AddReviewForm>
                     </ModalBody>
                 </ModalContainer>

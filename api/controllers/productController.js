@@ -223,6 +223,46 @@ const getProductReviews = async (req, res) => {
     }
 }
 
+//GET USER REVIEWS
+const getUserReviews = async (req, res) => {
+    const { name } = req.query
+    try {
+        // const produtcReviews = await Product.find({
+        //     reviews: { $elemMatch: { name } },
+        // })
+        const produtcReviews = await Product.aggregate([
+            { $match: { reviews: { $elemMatch: { name } } } },
+            {
+                $project: {
+                    month: { $month: '$createdAt' },
+                },
+            },
+            {
+                $group: {
+                    _id: '$month',
+                    total: { $sum: 1 },
+                },
+            },
+        ])
+        // const produtcReviews = await Product.aggregate([
+        //     {
+        //         $project: {
+        //             reviews: {
+        //                 $filter: {
+        //                     input: '$reviews',
+        //                     as: 'review',
+        //                     cond: { $regex: { '$$review.name': name } },
+        //                 },
+        //             },
+        //         },
+        //     },
+        // ])
+        res.status(201).json(produtcReviews)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 //UPDATE REVIEW
 const updateReview = async (req, res) => {
     try {
@@ -250,4 +290,5 @@ module.exports = {
     getProductReviews,
     updateReview,
     getAllCategories,
+    getUserReviews,
 }

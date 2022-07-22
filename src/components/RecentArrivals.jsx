@@ -6,7 +6,7 @@ import { css } from 'styled-components'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
-import useEcomService from '../hooks/useEcomService'
+import useEcomService from '../services/useEcomService'
 
 const Container = styled.div`
     width: 100%;

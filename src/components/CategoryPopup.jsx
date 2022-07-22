@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Spinner } from '../components'
-import { add, reset } from '../redux/resetSlice'
+import { add } from '../redux/resetSlice'
 
 //=================================================
 
 const CategoryListContainer = styled.div`
-    /* box-shadow: 0px 100px 440px 100px rgba(34, 60, 80, 0.39); */
     box-shadow: 2px 200px 400px 200px rgba(0, 0, 0, 0.22);
     background-color: #fff;
     border-radius: 5px;
@@ -37,7 +35,6 @@ const CategoryListItem = styled.li`
         font-size: 13px;
         font-weight: 400;
         color: #666;
-        /* border-bottom: 1px solid #fff; */
         transition: all 0.2s ease-in;
         &:hover {
             color: #f27a1a;
@@ -65,10 +62,6 @@ const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
     const onToggleFilter = () => {
         dispatch(add())
     }
-
-    // useEffect(() => {
-
-    // }, [])
 
     return (
         <CategoryListContainer popup={popup}>

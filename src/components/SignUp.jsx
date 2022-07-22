@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { mobile } from '../responsive'
 import { publicRequest } from '../requestMethods'
 import { SvgIcon } from '@mui/material'
+import useEcomService from '../services/useEcomService'
 
 const REGEXP_PASS = new RegExp(
     '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
@@ -39,9 +40,9 @@ const Input = styled.input`
     &:not(:last-child) {
         width: 90%;
     }
-   
+
     &:focus {
-        border: 1px solid #F27A1A;
+        border: 1px solid #f27a1a;
         outline: none;
     }
 `
@@ -58,10 +59,10 @@ const LoginButton = styled.button`
     align-items: center;
     padding: 7px 25px;
     text-transform: uppercase;
-    color: #F27A1A;
+    color: #f27a1a;
     cursor: pointer;
     background-color: transparent;
-    border: 1px solid #F27A1A;
+    border: 1px solid #f27a1a;
     transition: all 0.3s ease-in-out;
     margin-right: 20px;
     &:disabled {
@@ -178,11 +179,11 @@ const ShowPassWordIconContainer = styled.div`
     cursor: pointer;
     width: 10%;
     &:hover {
-        border: 1px solid #F27A1A;
+        border: 1px solid #f27a1a;
         transition: all 0.2s ease-in;
     }
     &:hover ${StyledSvg} {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease-in;
     }
 `
@@ -204,6 +205,8 @@ const SignUp = () => {
     const [showPwd, setShowPwd] = useState(false)
     const [showMatch, setShowMatch] = useState(false)
 
+    const { loading, error, registerNewUser } = useEcomService()
+
     const emailRef = useRef()
 
     useEffect(() => {
@@ -221,24 +224,22 @@ const SignUp = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-
-        try {
-            const res = await publicRequest.post('auth/register', {
-                email,
-                password,
-            })
-            setNewUSer(res.data.username)
-            setSuccess(true)
-        } catch (err) {
-            setErrMsg(err)
+        const body = {
+            email,
+            password,
         }
+
+        registerNewUser(body).then((user) => {
+            setNewUSer(user.username)
+            setSuccess(true)
+        })
     }
 
     return (
         <>
             {success ? (
                 <Success>
-                    <h1>Welome {newUser}</h1>{' '}
+                    <h1>Welome {newUser}</h1>
                     <p>Please Login to purchase products</p>
                 </Success>
             ) : (
@@ -269,7 +270,6 @@ const SignUp = () => {
                             <ShowPassWordIconContainer
                                 onClick={() => setShowPwd(!showPwd)}
                             >
-                                {' '}
                                 {showPwd ? (
                                     <StyledSvg
                                         sx={{ color: '#F27A1A' }}
@@ -302,7 +302,6 @@ const SignUp = () => {
                             <ShowPassWordIconContainer
                                 onClick={() => setShowMatch(!showMatch)}
                             >
-                                {' '}
                                 {showMatch ? (
                                     <StyledSvg
                                         sx={{ color: '#F27A1A' }}
@@ -322,7 +321,7 @@ const SignUp = () => {
                         <LoginButton
                             disabled={!email || !validPassword || !validMatch}
                         >
-                            Sign Up{' '}
+                            Sign Up
                             <ArrowForward
                                 style={{ fontSize: 10, marginLeft: 5 }}
                             />
@@ -339,13 +338,13 @@ const SignUp = () => {
                         <SignSocialContainer>
                             <Google
                                 style={{ color: '#CC3333', marginRight: 10 }}
-                            />{' '}
+                            />
                             Google
                         </SignSocialContainer>
                         <SignSocialContainer>
                             <Facebook
                                 style={{ color: '#3366CC', marginRight: 10 }}
-                            />{' '}
+                            />
                             Facebook
                         </SignSocialContainer>
                     </SocialButtons>

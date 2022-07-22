@@ -2,6 +2,11 @@ import { Typography, Box, styled } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { UsersTable } from '../components'
 
+const UsersContainer = styled(Box)({
+    padding: '30px',
+    minHeight: '100vh',
+})
+
 const Header = styled(Box)({
     display: 'flex',
     alignItems: 'center',
@@ -16,14 +21,14 @@ const AddNew = styled(Link)({
     border: '1px solid green',
     backgroundColor: 'transparent',
     color: 'green',
-    '&:hover' : {
-        backgroundColor: '#f7f7f7'
-    }
+    '&:hover': {
+        backgroundColor: '#f7f7f7',
+    },
 })
 
 const Customers = () => {
     return (
-        <Box sx={{ padding: '30px' }}>
+        <UsersContainer>
             <Header>
                 <Typography
                     color={{ color: '#9a9a9a' }}
@@ -37,7 +42,7 @@ const Customers = () => {
                 </AddNew>
             </Header>
             <UsersTable />
-        </Box>
+        </UsersContainer>
     )
 }
 

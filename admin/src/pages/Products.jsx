@@ -113,14 +113,6 @@ const Products = () => {
         )
     }
 
-    const onTitleChange = (event) => {
-        navigate(
-            `/products?page=${1}&category=${'all'}&order=${'all'}&title=${
-                event.target.vaue
-            }`
-        )
-    }
-
     useEffect(() => {
         const titleTimeout = setTimeout(() => {
             navigate(

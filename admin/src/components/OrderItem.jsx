@@ -1,4 +1,5 @@
 import { styled, TableCell, TableRow, Typography } from '@mui/material'
+import { format, parseISO } from 'date-fns'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -20,7 +21,7 @@ const StyledLink = styled(Link)({
 const OrderItem = ({ data }) => {
     return (
         <TableRow
-            key={data.id}
+            key={data._id}
             sx={{
                 '&:last-child td, &:last-child th': {
                     border: 0,
@@ -28,12 +29,12 @@ const OrderItem = ({ data }) => {
             }}
         >
             <TableCell component="th" scope="row">
-                #{data.id}
+                #{`${data._id.slice(0, 5)}...`}
             </TableCell>
-            <TableCell align="left">{data.customer}</TableCell>
-            <TableCell align="left">{data.email}</TableCell>
-            <TableCell align="left">{data.date}</TableCell>
-            <TableCell align="left">{data.amount}</TableCell>
+            <TableCell align="left">{`${data.userFirstName} ${data.userLastName}`}</TableCell>
+            <TableCell align="left">{data.userEmail}</TableCell>
+            <TableCell align="left">{format(parseISO(data.createdAt), "dd-MMM")}</TableCell>
+            <TableCell align="left">${data.amount}</TableCell>
             <TableCell align="left">
                 <Status
                     variant="span"
@@ -61,7 +62,7 @@ const OrderItem = ({ data }) => {
             </TableCell>
             <TableCell align="left">
                 <StyledLink
-                    to={`/orders/${data.id}`}
+                    to={`/orders/${data._id}`}
                     size="small"
                     variant="outlined"
                 >

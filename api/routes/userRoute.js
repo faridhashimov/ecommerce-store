@@ -4,8 +4,10 @@ const {
     updateUser,
     getUser,
     deleteUser,
+    getUserStats,
 } = require('../controllers/userController')
 
+router.get('/stats', getUserStats)
 router.get('/', getAllUsers)
 router.get('/:id', getUser)
 router.put('/update/:id', updateUser)

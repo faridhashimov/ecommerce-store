@@ -11,16 +11,16 @@ const useAdminService = () => {
         )
         return res
     }
-    const getAllUSers = async (id) => {
+    const getAllUSers = async () => {
+        const res = await getData(`${BASE_URL}/users`)
+        return res
+    }
+    const getAllOrders = async () => {
+        const res = await getData(`${BASE_URL}/orders`)
+        return res
+    }
+    const getOrder = async (id) => {
         const res = await getData(`${BASE_URL}/orders/${id}`)
-        return res
-    }
-    const getProduct = async (id) => {
-        const res = await getData(`${BASE_URL}/products/${id}`)
-        return res
-    }
-    const getAllCategories = async (id) => {
-        const res = await getData(`${BASE_URL}/products/find/categories`)
         return res
     }
 
@@ -29,6 +29,9 @@ const useAdminService = () => {
         error,
         clearError,
         getProducts,
+        getAllUSers,
+        getAllOrders,
+        getOrder,
     }
 }
 

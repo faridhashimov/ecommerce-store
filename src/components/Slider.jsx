@@ -168,13 +168,13 @@ const SecondaryTitle = styled.h4`
 `
 
 const Slider = () => {
-    const [slideIndex, SetSlideIndex] = useState(0)
+    const [slideIndex, setSlideIndex] = useState(0)
 
     const handleClick = (direction) => {
         if (direction === 'left') {
-            SetSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2)
+            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2)
         } else {
-            SetSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0)
+            setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0)
         }
     }
 

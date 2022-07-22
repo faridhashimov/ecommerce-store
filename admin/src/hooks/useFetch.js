@@ -13,7 +13,12 @@ const useFetch = (url, method, body, headers) => {
             headers = { 'Content-type': 'application/json' }
         ) => {
             try {
-                const res = await axios({ url, method, body, headers })
+                const res = await axios({
+                    url,
+                    method,
+                    data: { ...body },
+                    headers,
+                })
                 setLoading(false)
                 setError(null)
                 return res.data

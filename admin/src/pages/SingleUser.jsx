@@ -103,16 +103,17 @@ const SingleUser = () => {
                                     variant="h3"
                                     sx={{ fontSize: '32px' }}
                                 >
-                                    {userInfo.firstName +
-                                        ' ' +
-                                        userInfo.lastName}
+                                    {(userInfo.firstName &&
+                                        userInfo.lastName) !== undefined
+                                        ? `${userInfo.firstName} ${userInfo.lastName}`
+                                        : 'No info provided'}
                                 </StyledTypo>
                                 <UserInfoSpan variant="p">
                                     <span>Email:</span> {userInfo.email}
                                 </UserInfoSpan>
                                 <UserInfoSpan variant="p">
                                     <span>Phone:</span>{' '}
-                                    {userInfo?.adress?.phone}
+                                    {userInfo?.phone}
                                 </UserInfoSpan>
                                 <UserInfoSpan variant="p">
                                     <span>Street:</span>{' '}

@@ -54,7 +54,6 @@ const LoginButtonContainer = styled.div`
     margin: 40.9px 0px;
     ${mobile({ margin: '33.5px 0px' })}
 `
-
 const LoginButton = styled.button`
     display: flex;
     justify-content: center;
@@ -115,7 +114,6 @@ const SignSocialContainer = styled.button`
 const ErorMsg = styled.p`
     color: red;
 `
-
 const StyledSvg = styled(SvgIcon)`
     transition: all 0.2s ease-in;
 `
@@ -136,9 +134,7 @@ const ShowPassWordIconContainer = styled.div`
         transition: all 0.2s ease-in;
     }
 `
-
 const SignIn = () => {
-    // const [inputs, setInputs] = useState(null)
     const [errMsg, setErrMsg] = useState('')
     const [focus, setFocus] = useState(false)
     const [showPwd, setShowPwd] = useState(false)
@@ -146,7 +142,6 @@ const SignIn = () => {
     const passwordRef = useRef()
     const dispatch = useDispatch()
     const { user, pending, error } = useSelector((state) => state.user)
-    // console.log(user)
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -177,10 +172,6 @@ const SignIn = () => {
         )
         user && navigate(-1)
     }
-
-    // const handleChange = () => {
-    //     showPwd
-    // }
 
     return (
         <LoginPageContainer onSubmit={handleSubmit}>

@@ -13,6 +13,7 @@ const port = process.env.PORT
 
 const app = express()
 
+/**@type {mongodb.Db} */
 dbConnect()
 
 app.use(express.json())

@@ -14,7 +14,7 @@ import {
     ProductInfo,
     ErrorMsg,
 } from '../components'
-import useEcomService from '../hooks/useEcomService'
+import useEcomService from '../services/useEcomService'
 
 const Wrapper = styled.div`
     width: 93vw;

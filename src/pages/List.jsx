@@ -1,15 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import {
-    Footer,
-    ListFilters,
-    ListProduct,
-    Navbar,
-    SearchFilterItem,
-} from '../components'
+import { Footer, ListFilters, Navbar, SearchFilterItem } from '../components'
 import { Products } from '../pages'
 import { reset, add } from '../redux/resetSlice'
 
@@ -68,10 +62,8 @@ const List = () => {
     const [products, setProducts] = useState([])
     const [hasMore, setHasMore] = useState(false)
     const [page, setPage] = useState(1)
-    const [pageSize, setPageSize] = useState()
-    // const [clicked, setClicked] = useState(null)
 
-    const clicked = useSelector(state => state.reset.clicked)
+    const clicked = useSelector((state) => state.reset.clicked)
 
     const [filters, setFilters] = useState({
         categoryFilter: [],
@@ -126,7 +118,10 @@ const List = () => {
                     )
                     clicked
                         ? setProducts(res.data.data)
-                        : setProducts([...stateWithoutDuplicates, ...res.data.data])
+                        : setProducts([
+                              ...stateWithoutDuplicates,
+                              ...res.data.data,
+                          ])
                     setHasMore(res.data.data.length === 10 ? true : false)
 
                     const setAllFilters = (data) => {
@@ -237,11 +232,15 @@ const List = () => {
         console.log(e.target.value)
         // setClicked(e.target.value)
         dispatch(add())
-        navigate(`/list?category=${encodeURIComponent(
-            category
-        )}&brand=${encodeURIComponent(
-            brand
-        )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}&order=${e.target.value}`)
+        navigate(
+            `/list?category=${encodeURIComponent(
+                category
+            )}&brand=${encodeURIComponent(
+                brand
+            )}&gender=${gender}&size=${size}&color=${color}&status=${status}&page=${page}&order=${
+                e.target.value
+            }`
+        )
     }
 
     return (
@@ -278,14 +277,16 @@ const List = () => {
                                     {' are listed for your search'}
                                 </ListHeadeTitle>
                                 <FilterBy value={order} onChange={sortByOption}>
-                                    <FilterByOption value="all">Featured</FilterByOption>
-                                    <FilterByOption  value="new">
+                                    <FilterByOption value="all">
+                                        Featured
+                                    </FilterByOption>
+                                    <FilterByOption value="new">
                                         Newest Arrivals
                                     </FilterByOption>
                                     <FilterByOption value="low">
                                         Price: Low
                                     </FilterByOption>
-                                    <FilterByOption  value="high">
+                                    <FilterByOption value="high">
                                         Price: High
                                     </FilterByOption>
                                 </FilterBy>

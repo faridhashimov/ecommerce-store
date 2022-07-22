@@ -10,7 +10,6 @@ import styled from 'styled-components'
 import { css } from 'styled-components'
 import { MainImageComponent } from '../components'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { SvgIcon } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { addToCart } from '../redux/cartSlice'
@@ -285,7 +284,6 @@ const ProductInfo = ({ product }) => {
     const [chooseColor, setChooseColor] = useState('')
     const [chooseSize, setChooseSize] = useState('')
     const dispatch = useDispatch()
-    const { id } = useParams()
     const [image, setImage] = useState(product.img[0])
 
     const onSetImage = useCallback((item) => {
@@ -307,7 +305,7 @@ const ProductInfo = ({ product }) => {
     const onAddToCart = () => {
         dispatch(
             addToCart({
-                _id: id,
+                _id: product._id,
                 brand: product.brand,
                 title: product.title,
                 img: product.img,

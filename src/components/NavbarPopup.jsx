@@ -7,7 +7,7 @@ import { css } from 'styled-components'
 import { logOut } from '../redux/userSlice'
 
 const PopupContainer = styled.div`
-    width: 140px;
+    width: fit-content;
     /* height: 200px; */
     background-color: #fff;
     border-radius: 5px;
@@ -92,7 +92,7 @@ const NavbarPopup = ({ popup }) => {
                     <PopupIcons component={Forum} />
                     Messages
                 </MainPopupLink>
-                <MainPopupLink to="/profile">
+                <MainPopupLink to="/profile/userinfo">
                     <PopupIcons component={Person} />
                     User info
                 </MainPopupLink>

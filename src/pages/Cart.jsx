@@ -39,7 +39,7 @@ const HeaderTitle = styled.h2`
     span {
         font-weight: 400;
         font-size: 20px;
-        color: #F27A1A;
+        color: #f27a1a;
     }
 `
 const CartBody = styled.div`
@@ -90,8 +90,8 @@ const NoProductContainer = styled.div`
 `
 const GoShopBtn = styled(Link)`
     padding: 7px 45px;
-    background-color: #F27A1A;
-    border: 1px solid #F27A1A;
+    background-color: #f27a1a;
+    border: 1px solid #f27a1a;
     cursor: pointer;
     color: #fff;
     font-size: 13px;
@@ -162,7 +162,7 @@ const InputContainer = styled.div`
 `
 const RadioInput = styled.input`
     &:checked {
-        color: #F27A1A;
+        color: #f27a1a;
     }
 `
 const InputLabel = styled.label`
@@ -185,22 +185,22 @@ const ChangeAdress = styled(Link)`
     margin-top: 10px;
     transition: all 0.2s ease-in;
     &:hover {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease-in;
     }
 `
 const Total = styled(ChekoutItem)`
     h1 {
-        color: #F27A1A;
+        color: #f27a1a;
     }
-    color: #F27A1A;
+    color: #f27a1a;
     padding: 25px 0px;
 `
 const CheckoutBtn = styled.button`
     text-transform: uppercase;
-    border: 1px solid #F27A1A;
+    border: 1px solid #f27a1a;
     outline: none;
-    color: #F27A1A;
+    color: #f27a1a;
     cursor: pointer;
     width: 100%;
     padding: 7px 30px;
@@ -266,10 +266,16 @@ const Cart = () => {
         const body = {
             _id: data.id,
             userId: user._id,
-            products: products,
-            adress: `${data.payer.address.address_line_1},
-                ${data.payer.address.admin_area_2},
-                ${data.payer.address.postal_code}`,
+            userFirstName: data.payer.name.given_name,
+            userLastName: data.payer.name.surname,
+            userEmail: data.payer.email_address,
+            products,
+            adress: {
+                phone: data.payer.phone.phone_number.national_number,
+                city: data.purchase_units[0].shipping.address.admin_area_2,
+                street: data.purchase_units[0].shipping.address.address_line_1,
+                zipcode: data.payer.address.postal_code,
+            },
             amount: data.purchase_units[0].amount.value,
         }
 
@@ -296,6 +302,7 @@ const Cart = () => {
                 },
             })
         } catch (err) {
+            console.log(err.message)
             throw new Error('Something went wrong')
         }
     }

@@ -2,10 +2,9 @@ import { styled } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { userRows, userColumns } from '../data.js'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import useFetch from '../hooks/useFetch.js'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Spinner, Error } from '../components'
+import useAdminService from '../services/useAdminService.js'
 
 const Table = styled('div')(({ theme }) => ({
     height: 650,
@@ -16,11 +15,16 @@ const Table = styled('div')(({ theme }) => ({
 
 const UsersTable = () => {
     const [customers, setCustomers] = useState(null)
-    const { loading, error, data } = useFetch('http://localhost:5000/api/users')
+
+    const { loading, error, getAllUSers } = useAdminService()
 
     useEffect(() => {
-        setCustomers(data)
-    }, [data])
+        onUsersLoad()
+    }, [])
+
+    const onUsersLoad = () => {
+        getAllUSers().then((users) => setCustomers(users))
+    }
 
     const actionColumn = [
         {
@@ -76,7 +80,7 @@ const UsersTable = () => {
                     <DataGrid
                         rows={customers}
                         columns={userColumns.concat(actionColumn)}
-                        getRowId ={(row) => row._id}
+                        getRowId={(row) => row._id}
                         pageSize={10}
                         rowsPerPageOptions={[10]}
                         checkboxSelection

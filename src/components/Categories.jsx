@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { CategoryPopup } from '../components'
-import useEcomService from '../hooks/useEcomService'
+import useEcomService from '../services/useEcomService'
 
 const CategoriesContainer = styled.div`
     box-shadow: 0px 35px 75px -2px rgba(34, 60, 80, 0.47);
@@ -66,6 +66,9 @@ const Categories = ({ openShop }) => {
 
     useEffect(() => {
         onCatergoriesLoad()
+         return () => {
+            setCategories({})
+         }
     }, [])
 
     const onCatergoriesLoad = () => {

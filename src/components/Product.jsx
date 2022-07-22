@@ -10,7 +10,6 @@ import ProductRate from './ProductRate'
 import { css } from 'styled-components'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { openModal } from '../redux/modalSlice'
 import { addToWishlist } from '../redux/wishlistSlice'
 import { mobile } from '../responsive'
 import { Link, useNavigate } from 'react-router-dom'
@@ -188,7 +187,6 @@ const Favorite = styled.div`
         opacity: 0;
         transition: all 0.2s ease-in-out;
     }
-
     &:hover::before {
         opacity: 1;
         visibility: visible;
@@ -214,9 +212,6 @@ const Categories = styled.div`
 const Category = styled(Link)`
     text-decoration: none;
     color: inherit;
-    /* &:hover {
-        color: #f27a1a;
-    } */
     ${mobile({ display: 'none' })}
 `
 const Title = styled.h2`
@@ -259,7 +254,6 @@ const ReviewCount = styled.span`
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: inherit;
-    /* color: transparent; */
 `
 
 const Product = (item) => {
@@ -290,7 +284,6 @@ const Product = (item) => {
             <Container>
                 <ImageContainer>
                     <StyledLink to={`/product/${item._id}`}>
-                        {' '}
                         <Image main={img[0]} sec={img[1]} />
                     </StyledLink>
                     <ProductStatus>
@@ -329,7 +322,6 @@ const Product = (item) => {
                             }}
                             to={`/product/${item._id}`}
                         >
-                            {' '}
                             <CartTitle>Select Options</CartTitle>{' '}
                         </StyledLink>
                     </Cart>

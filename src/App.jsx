@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ProductModal } from './components'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import {
     Homepage,
     About,
@@ -16,11 +15,22 @@ import {
     SingleOrder,
     Productpage,
     WishList,
-    Products
+    UserInfo,
 } from './pages'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
+    const ProtectedRoute = ({ children }) => {
+        const user = useSelector((state) => state.user.user)
+        // console.log(user)
+
+        if (!user) {
+            return <Navigate to="/login" />
+        }
+
+        return children
+    }
+
     return (
         <>
             <BrowserRouter>
@@ -34,14 +44,41 @@ function App() {
                         <Route path="product/:id" element={<Productpage />} />
                         <Route path="wishlist" element={<WishList />} />
                         <Route path="cart" element={<Cart />} />
-                        <Route path="success" element={<Success />} />
+                        <Route
+                            path="success"
+                            element={
+                                <ProtectedRoute>
+                                    <Success />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route path="profile/*" element={<Profile />}>
-                            <Route path="orders/*" element={<Orders />} />
+                            <Route
+                                path="orders/*"
+                                element={
+                                    <ProtectedRoute>
+                                        <Orders />
+                                    </ProtectedRoute>
+                                }
+                            />
                             <Route
                                 path="orders/:id"
-                                element={<SingleOrder />}
+                                element={
+                                    <ProtectedRoute>
+                                        <SingleOrder />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="userInfo"
+                                element={
+                                    <ProtectedRoute>
+                                        <UserInfo />
+                                    </ProtectedRoute>
+                                }
                             />
                         </Route>
+
                         <Route path="list" element={<List />}>
                             {/* <Route path="products" element={<Products />} /> */}
                         </Route>

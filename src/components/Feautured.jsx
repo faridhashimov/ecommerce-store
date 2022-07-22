@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
-import useEcomService from '../hooks/useEcomService'
+import useEcomService from '../services/useEcomService'
 
 const Container = styled.div`
     width: 100%;

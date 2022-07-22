@@ -5,7 +5,7 @@ const useFetch = (url, method, body, headers) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    const getData = useCallback(
+    const request = useCallback(
         async (
             url,
             method = 'GET',
@@ -13,12 +13,19 @@ const useFetch = (url, method, body, headers) => {
             headers = { 'Content-type': 'application/json' }
         ) => {
             try {
-                const res = await axios({ url, method, body, headers })
+                const res = await axios({
+                    url,
+                    method,
+                    data: { ...body },
+                    headers,
+                })
                 setLoading(false)
                 return res.data
             } catch (error) {
                 setLoading(false)
                 setError(error.message)
+            } finally {
+                setLoading(false)
             }
         },
         []
@@ -38,7 +45,7 @@ const useFetch = (url, method, body, headers) => {
 
     const clearError = useCallback(() => setError(null), [])
 
-    return { loading, error, reFetch, clearError, getData }
+    return { loading, error, reFetch, clearError, request }
 }
 
 export default useFetch

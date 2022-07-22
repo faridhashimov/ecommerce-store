@@ -13,9 +13,10 @@ import {
     Paper,
     TableBody,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { OrderItem } from '../components'
+import { OrderItem, Spinner, ErrorMsg } from '../components'
+import useAdminService from '../services/useAdminService'
 
 const Header = styled(Box)({
     display: 'flex',
@@ -89,11 +90,36 @@ const rows = [
 ]
 const Orders = () => {
     const [status, setStatus] = useState('All')
+    const [orders, setOrders] = useState(null)
+
+    const { loading, error, getAllOrders } = useAdminService()
 
     const onStatusChange = (event) => {
         setStatus(event.target.value)
     }
 
+    useEffect(() => {
+        onOrdersLoad()
+    }, [])
+
+    console.log(orders)
+
+    const onOrdersLoad = () => {
+        getAllOrders().then((orders) => setOrders(orders))
+    }
+
+    const spinner = loading ? (
+        <TableRow>
+            <TableCell colSpan={7}>
+                <Spinner />
+            </TableCell>
+        </TableRow>
+    ) : null
+    const content =
+        !loading && orders
+            ? orders.map((order, i) => <OrderItem key={i} data={order} />)
+            : null
+    const errorMsg = error ? <ErrorMsg /> : null
     return (
         <Container>
             <Header>
@@ -143,9 +169,9 @@ const Orders = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row, i) => (
-                            <OrderItem key={i} data={row} />
-                        ))}
+                        {spinner}
+                        {content}
+                        {errorMsg}
                     </TableBody>
                 </Table>
             </TableContainer>

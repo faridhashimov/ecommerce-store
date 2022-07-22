@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer from './userSlice'
-import modalReducer from './modalSlice'
+// import modalReducer from './modalSlice'
 import wishlistReducer from './wishlistSlice'
 import cartReducer from './cartSlice'
 import resetReducer from './resetSlice'
@@ -27,7 +27,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     user: userReducer,
     wishlist: wishlistReducer,
-    modal: modalReducer,
+    // modal: modalReducer,
     cart: cartReducer,
     reset: resetReducer,
 })

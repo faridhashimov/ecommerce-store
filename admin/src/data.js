@@ -1,3 +1,5 @@
+import { format, parseISO } from 'date-fns'
+
 export const userColumns = [
     { field: '_id', headerName: 'ID', width: 90 },
     {
@@ -30,19 +32,40 @@ export const userColumns = [
                             alt="avatar"
                         />
                     </div>
-                    {params.row.firstName}
+                    {params.row.firstName === ''
+                        ? 'No info'
+                        : params.row.firstName}
                 </div>
             )
         },
     },
-    { field: 'lastName', headerName: 'Last name', width: 190 },
     {
-        field: 'age',
+        field: 'lastName',
+        headerName: 'Last name',
+        width: 190,
+        renderCell: (params) => {
+            return (
+                <>
+                    {params.row.lastName === ''
+                        ? 'No info'
+                        : params.row.lastName}
+                </>
+            )
+        },
+    },
+    {
+        field: 'birthDate',
         headerName: 'Age',
         type: 'number',
         headerAlign: 'left',
         align: 'left',
         width: 90,
+        renderCell: (params) => {
+            const date = new Date()
+            const dateOfBirth = new Date(params.row.birthDate)
+            const age = Math.abs(date.getFullYear() - dateOfBirth.getFullYear())
+            return <>{isNaN(age) ? 'No info' : age}</>
+        },
     },
     {
         field: 'email',

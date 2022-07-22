@@ -8,6 +8,7 @@ export const loginCall = async (userCredentials, dispatch) => {
             'http://localhost:5000/api/auth/login',
             userCredentials
         )
+        console.log(res.data)
         dispatch(loginSuccess(res.data))
     } catch (err) {
         dispatch(loginFailure(err.response.data))
