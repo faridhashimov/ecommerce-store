@@ -1,6 +1,6 @@
-import { Button, styled, Typography } from '@mui/material'
+import { Button, styled, Typography, Box } from '@mui/material'
 import { Delete, Edit } from '@mui/icons-material'
-import { Box } from '@mui/system'
+// import { Box } from '@mui/system'
 
 const Product = styled(Box)({
     display: 'flex',

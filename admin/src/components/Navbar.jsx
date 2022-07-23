@@ -1,17 +1,20 @@
-import { ArrowDropDown } from '@mui/icons-material'
 import {
     NightsStay,
     Mail,
     Search,
     NotificationsActive,
+    ArrowDropDown
 } from '@mui/icons-material'
-import { Menu } from '@mui/material'
-import { MenuItem } from '@mui/material'
-import { Button } from '@mui/material'
+import {
+    Menu,
+    MenuItem,
+    Button,
+    InputBase,
+    Avatar,
+    Box,
+    styled,
+} from '@mui/material'
 
-import { InputBase, Avatar } from '@mui/material'
-
-import { Box, styled } from '@mui/material'
 import { useState } from 'react'
 
 const RightContainer = styled(Box)({

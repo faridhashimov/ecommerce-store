@@ -1,12 +1,16 @@
-import { TableContainer } from '@mui/material'
-import { TableHead } from '@mui/material'
-import { TableCell } from '@mui/material'
-import { Button } from '@mui/material'
-import { TableBody } from '@mui/material'
-import { TableRow } from '@mui/material'
-import { Paper } from '@mui/material'
-import { Table } from '@mui/material'
-import { Box, Typography, styled } from '@mui/material'
+import {
+    TableContainer,
+    TableHead,
+    TableCell,
+    Button,
+    TableBody,
+    TableRow,
+    Paper,
+    Table,
+    Box,
+    Typography,
+    styled,
+} from '@mui/material'
 
 const StyledTypo = styled(Typography)({
     color: '#9a9a9a',
@@ -79,7 +83,7 @@ const LatestOrders = () => {
     return (
         <TransactionContainer mt={3}>
             <StyledTypo variant="span" mb={3} sx={{ fontWeight: 500 }}>
-                Latest Transactions
+                Latest Orders
             </StyledTypo>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
