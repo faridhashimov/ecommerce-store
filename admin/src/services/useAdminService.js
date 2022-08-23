@@ -19,9 +19,25 @@ const useAdminService = () => {
         const res = await getData(`${BASE_URL}/orders`)
         return res
     }
+    const getOrdersCount = async () => {
+        const res = await getData(`${BASE_URL}/orders/count`)
+        return res
+    }
+    const getUsersCount = async () => {
+        const res = await getData(`${BASE_URL}/users/count`)
+        return res
+    }
+    const getProductsCount = async () => {
+        const res = await getData(`${BASE_URL}/products/count`)
+        return res
+    }
     const getOrder = async (id) => {
         const res = await getData(`${BASE_URL}/orders/${id}`)
         return res
+    }
+    const getSales = async () => {
+        const res = await getData(`${BASE_URL}/orders/sales`)
+        return res[0].amount
     }
 
     return {
@@ -32,6 +48,10 @@ const useAdminService = () => {
         getAllUSers,
         getAllOrders,
         getOrder,
+        getOrdersCount,
+        getSales,
+        getProductsCount,
+        getUsersCount
     }
 }
 

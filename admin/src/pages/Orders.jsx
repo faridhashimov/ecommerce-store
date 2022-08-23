@@ -14,7 +14,6 @@ import {
     TableBody,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { OrderItem, Spinner, ErrorMsg } from '../components'
 import useAdminService from '../services/useAdminService'
 
@@ -42,52 +41,6 @@ const FiltersContainer = styled(Box)(({ theme }) => ({
     justifyContent: 'space-between',
 }))
 
-function createData(id, customer, email, date, amount, status) {
-    return { id, customer, email, date, amount, status }
-}
-
-const rows = [
-    createData(
-        '1234775',
-        'John Smith',
-        'john@gmail.com',
-        '14 - March',
-        '$ 134.99',
-        'Delivered'
-    ),
-    createData(
-        '2344775',
-        'Alex Merchant',
-        'alex@gmail.com',
-        '12 - March',
-        '$ 14.99',
-        'Pending'
-    ),
-    createData(
-        '6734775',
-        'Michael Keaton',
-        'michael@gmail.com',
-        '10 - March',
-        '$ 75.99',
-        'Shipped'
-    ),
-    createData(
-        '9874775',
-        'Tom Cruise',
-        'tom@gmail.com',
-        '07 - March',
-        '$ 12.99',
-        'Cancelled'
-    ),
-    createData(
-        '8714775',
-        'John Smith',
-        'john@gmail.com',
-        '05 - March',
-        '$ 34.99',
-        'Delivered'
-    ),
-]
 const Orders = () => {
     const [status, setStatus] = useState('All')
     const [orders, setOrders] = useState(null)

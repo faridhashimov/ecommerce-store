@@ -117,7 +117,7 @@ const SingleOrder = () => {
             .toFixed(2)
     const shipping = 10.0
 
-    const { loading, error, getOrder } = useAdminService()
+    const { loading, getOrder } = useAdminService()
 
     console.log(order)
 

@@ -17,7 +17,13 @@ const Container = styled.div`
     height: 600px;
     display: flex;
     overflow: hidden;
-    ${mobile({ height: '250px' })}
+    &::-webkit-scrollbar {
+        background-color: transparent;
+    }
+    ${mobile({
+        height: '250px',
+        overflowX: 'auto',
+    })}
 `
 const ChevronContainer = styled.div`
     width: 30px;
@@ -43,6 +49,8 @@ const ChevronContainer = styled.div`
         background-color: #f27a1a;
         color: #f9f9f9;
     }
+
+    ${mobile({ display: 'none' })}
 `
 const Wrapper = styled.div`
     height: 100%;
@@ -69,12 +77,12 @@ const InfoContainer = styled.div`
     align-items: center;
 `
 const Info = styled.div`
-    flex: 1;
+    width: 50%;
 `
 const ImageContainer = styled.div`
     flex: 1;
     height: 100%;
-    width: 100%;
+    width: 50%;
     ${mobile({ paddingTop: '20px' })}
 `
 
@@ -138,10 +146,11 @@ const MainTitle = styled.h1`
     color: #232323;
     margin: 20px 0px;
     ${mobile({
-        fontSize: '40px',
+        fontSize: '30px',
         margin: '10px 0px',
-        lineHeight: '2.5rem',
+        lineHeight: '2rem',
         fontWeight: '500',
+        letterSpacing: '-2px',
     })}
 `
 
@@ -154,7 +163,7 @@ const Sale = styled.span`
     ${mobile({
         fontSize: '40px',
         margin: '0',
-        lineHeight: '3.5rem',
+        lineHeight: '2.5rem',
         fontWeight: '500',
     })}
 `

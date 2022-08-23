@@ -40,6 +40,16 @@ const deleteProduct = async (req, res) => {
     }
 }
 
+//DELETE PRODUCT
+const getProductsCount = async (req, res) => {
+    try {
+        const productsCount = await Product.countDocuments({})
+        res.status(201).json(productsCount)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 //GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
     const { query } = req
@@ -291,4 +301,5 @@ module.exports = {
     updateReview,
     getAllCategories,
     getUserReviews,
+    getProductsCount
 }

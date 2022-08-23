@@ -69,6 +69,28 @@ const getAllOrders = async (req, res) => {
     }
 }
 
+// GET ALL ORDERS COUNT
+const getOrdersCount = async (req, res) => {
+    try {
+        const ordersCount = await Order.countDocuments({})
+        res.status(200).json(ordersCount)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+// GET TOTAL SALES
+const getSales = async (req, res) => {
+    try {
+        const sales = await Order.aggregate([
+            { $group: { _id: null, amount: { $sum: '$amount' } } },
+        ])
+        res.status(200).json(sales)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 // GET INCOME FOR LAST 6 MONTH
 const getIncome = async (req, res) => {
     const date = new Date()
@@ -106,4 +128,6 @@ module.exports = {
     getUserOrders,
     getAllOrders,
     getIncome,
+    getOrdersCount,
+    getSales,
 }

@@ -15,6 +15,16 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+// GET ALL USERS COUNT
+const getUsersCount = async (req, res) => {
+    try {
+        const usersCount = await User.countDocuments({})
+        res.status(200).json(usersCount)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 // GET USER
 const getUser = async (req, res) => {
     try {
@@ -73,6 +83,7 @@ const deleteUser = async (req, res) => {
     }
 }
 
+// GET USER STATS
 const getUserStats = async (req, res) => {
     const date = new Date()
     const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
@@ -98,4 +109,4 @@ const getUserStats = async (req, res) => {
     }
 }
 
-module.exports = { getAllUsers, updateUser, deleteUser, getUser, getUserStats }
+module.exports = { getAllUsers, updateUser, deleteUser, getUser, getUserStats, getUsersCount }

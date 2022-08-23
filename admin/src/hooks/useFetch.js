@@ -44,7 +44,7 @@ const useFetch = (url, method, body, headers) => {
     }
     const clearError = useCallback(() => setError(null), [])
 
-    return { loading, error, clearError, getData }
+    return { loading, error, clearError, getData, reFetch }
 }
 
 export default useFetch

@@ -10,9 +10,11 @@ const {
     updateReview,
     getAllCategories,
     getUserReviews,
+    getProductsCount
 } = require('../controllers/productController')
 
 router.route('/').post(createProduct).get(getAllProducts)
+router.get('/count', getProductsCount)
 router.get('/reviews/userreviews', getUserReviews)
 router.route('/:id').get(getProduct).put(updateProduct).delete(deleteProduct)
 router.post('/:productId/:userId/reviews', createReview)

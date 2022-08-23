@@ -142,7 +142,7 @@ const allColors = [
 
 const NewProduct = ({ title, data }) => {
     const [files, setFiles] = useState([])
-    const [images, setImages] = useState([])
+    // const [images, setImages] = useState([])
     const [input, setInput] = useState({})
     const [category, setCategory] = useState([])
     const [size, setSize] = useState([])
@@ -156,6 +156,8 @@ const NewProduct = ({ title, data }) => {
         status,
         color,
     }
+
+    console.log(obj)
 
     const onInputChange = (e) => {
         setInput({
@@ -210,14 +212,14 @@ const NewProduct = ({ title, data }) => {
             Promise.all(promises).then(allUrls => console.log(allUrls))
         }
     }
-    console.log(images)
+    console.log(files)
 
     return (
         <Box sx={{ padding: '30px', height: '100vh' }}>
             <Header>Add New Product</Header>
             <AddContainer mt={3}>
                 <ImagesContainer flex={1}>
-                    {files ? (
+                    {files.length > 0 ? (
                         files.map((item, i) => (
                             <div
                                 key={i}
@@ -241,8 +243,8 @@ const NewProduct = ({ title, data }) => {
                     ) : (
                         <div
                             style={{
-                                height: '100px',
-                                width: '100px',
+                                height: '200px',
+                                width: '200px',
                                 border: '1px solid grey',
                             }}
                         >
