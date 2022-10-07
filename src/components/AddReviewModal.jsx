@@ -230,7 +230,7 @@ const AddReviewModal = ({ item, setOpen }) => {
         e.preventDefault()
         try {
             const res = await axios.post(
-                `http://localhost:5000/api/products//${_id}/${user._id}/reviews`,
+                `http://localhost:5000/api/products/${_id}/${user._id}/reviews`,
                 {
                     title: titleRef.current.value,
                     desc: reviewRef.current.value,
