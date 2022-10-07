@@ -8,7 +8,6 @@ const ReviewSchema = new mongoose.Schema(
         rating: { type: Number, max: 5, required: true },
         helpfull: {type: Number, default: 0},
         unhelpfull: {type: Number, default: 0},
-
     },
     { timestamps: true }
 )
