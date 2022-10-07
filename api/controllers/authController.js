@@ -33,12 +33,12 @@ const userRegister = async (req, res) => {
 // LOGIN USER
 const userLogin = async (req, res) => {
     try {
-        const existedUser = await User.findOne({ email: req.body.email })
-        if (!existedUser) {
+        const user = await User.findOne({ email: req.body.email })
+        if (!user) {
             return res.status(401).json('Wrong credentialss')
         }
         const originalPassword = CryptoJS.AES.decrypt(
-            existedUser.password,
+            user.password,
             process.env.S_KEY
         ).toString(CryptoJS.enc.Utf8)
 
@@ -46,10 +46,10 @@ const userLogin = async (req, res) => {
         if (req.body.password !== originalPassword) {
             return res.status(401).json('Wrong credentials')
         }
-        const { password, ...others } = existedUser._doc
+        const { password, ...others } = user._doc
 
         const accessToken = jwt.sign(
-            { email: req.body.email, password: req.body.password },
+            { id: user._id, isAdmin: user.isAdmin },
             process.env.JWT_KEY,
             {
                 expiresIn: '1d',
