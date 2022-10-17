@@ -33,19 +33,17 @@ ________________________________________________________________________________
 
 ---
 
-<p>
 An universal e-commerce website. You can list the products according to their categories, go to the detail page of the relevant product, add the product to your favorites and to the cart, together with the captured product data. <br/>
-The project was developed in React.js, including Redux Toolkit, React Router, React Hooks, and Life Cycles Methods. Styled with Styled Components.</p>
+The project was developed in React.js, including Redux Toolkit, React Router, React Hooks, and Life Cycles Methods. Styled with Styled Components.
 
-<h3>Built With</h3> <br/>
-<ul>
-  <li>[React](https://reactjs.org/)</li>
-  <li>[Javascript ES6+](https://262.ecma-international.org/6.0/)</li>
-  <li>[Styled Components](https://styled-components.com/)</li>
-  <li>[React Paypal](https://paypal.github.io/react-paypal-js/?path=/story/example-paypalbuttons--default)</li>
-  <li>[Axios](https://axios-http.com/)</li>
-  <li>[Express](https://expressjs.com/)</li>
-  <li>[Mongodb](https://www.mongodb.com/)</li>
-  <li>[Mongoose](https://mongoosejs.com/)</li>
-  <li>[JWT](https://jwt.io/)</li>
-</ul>
+### Built With
+
+-   [React](https://reactjs.org/)
+-   [Javascript ES6+](https://262.ecma-international.org/6.0/)
+-   [Styled Components](https://styled-components.com/)
+-   [React Paypal](https://paypal.github.io/react-paypal-js/?path=/story/example-paypalbuttons--default)
+-   [Axios](https://axios-http.com/)
+-   [Express](https://expressjs.com/)
+-   [Mongodb](https://www.mongodb.com/)
+-   [Mongoose](https://mongoosejs.com/)
+-   [JWT](https://jwt.io/)
