@@ -1,10 +1,8 @@
-# Getting Started with Create React App
+# Ecommerce Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack CRUD ReactJs E-Commerce platform. Project includes basic processes such as adding to cart, adding to favorites, product listing and product detail page, which should be on an e-commerce site.
 
-## Available Scripts
-
-In the project directory, you can run:
+![Header section](https://firebasestorage.googleapis.com/v0/b/my-portfolio-216d9.appspot.com/o/ecommerce-website%2F1.JPG?alt=media&token=413a3eee-098e-44c5-a7b8-eb3eeaa2ee5d)
 
 ### `npm start`
 
