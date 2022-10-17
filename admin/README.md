@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+<h1 align="center">Ecommerce Website</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align='center'>A full-stack CRUD ReactJs Materil UI admin project. Project includes processes such as fetching all items list, single item, adding, deleting, updating items. Fetching various statistics about sold products, about orders, registered users etc.</p>
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+#### Main page
 
-### `yarn start`
+![Main page](https://firebasestorage.googleapis.com/v0/b/my-portfolio-216d9.appspot.com/o/admin-dashboard%2F1.png?alt=media&token=1ad02dd8-4e10-46e6-9c36-2e849c300a9e)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Products page
 
-### `yarn test`
+![Product listing](https://firebasestorage.googleapis.com/v0/b/my-portfolio-216d9.appspot.com/o/admin-dashboard%2F5.png?alt=media&token=81b25399-ba37-49de-9769-74dea61418a7)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `yarn build`
+#### Transactions page
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Transactions page](https://firebasestorage.googleapis.com/v0/b/my-portfolio-216d9.appspot.com/o/admin-dashboard%2F2.png?alt=media&token=ad0a1f09-f260-4218-a297-ab7777849ed6)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Customers page
 
-### `yarn eject`
+![Customers](https://firebasestorage.googleapis.com/v0/b/my-portfolio-216d9.appspot.com/o/admin-dashboard%2F3.png?alt=media&token=4ecbf44f-45b3-4215-8ea4-e4dfede4f552)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Single customer page
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![Single customer page](https://firebasestorage.googleapis.com/v0/b/my-portfolio-216d9.appspot.com/o/admin-dashboard%2F4.png?alt=media&token=395e2f4a-ceda-4ebe-9f08-493a3f496acc)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## About the project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+An universal admin dasboard website. dashboards help businesses to manage, analyze, and track their data efficiently so that every business can meet their goals. With the help of the admin dashboards, you can set KPI’s (Key Performance Indicators) by which you can compare the performance of previous moths and make plans to improve them. <br/>
+The project was developed using Material UI which is React.js library that allows us to import and use different components to create a user interface in our application. Project also icludes these technologies: Redux Toolkit, React Router, React Hooks, and Life Cycles Methods.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Built With
 
-### Code Splitting
+-   [React](https://reactjs.org/)
+-   [Javascript ES6+](https://mui.com/)
+-   [Material UI](https://styled-components.com/)
+-   [Axios](https://axios-http.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Getting Started
 
-### Analyzing the Bundle Size
+-   Fork the project and clone it locally.
+-   In the project directory, ou can follow the steps below to download the dependencies:
+    -   Install with npm:
+        > npm i
+    -   Install with yarn:
+        > yarn
+-   In the project directory, you can run:
+    -   Run with npm:
+        > npm run >
+    -   Run with yarn:
+        > yarn start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Usage
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You can search products, users info, orders, transactions using leftside navigation bar. Filter products by categories. Add, remove products to the main db, update products. You can view various statistics about sells and orders, shipping details etc.
