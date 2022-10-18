@@ -1,4 +1,4 @@
-<h1 align="center">Ecommerce Website</h1>
+<h1 align="center">Admin Dashboard</h1>
 
 <p align='center'>A full-stack CRUD ReactJs Materil UI admin project. Project includes processes such as fetching all items list, single item, adding, deleting, updating items. Fetching various statistics about sold products, about orders, registered users etc.</p>
 
@@ -42,8 +42,8 @@ The project was developed using Material UI which is React.js library that allow
 ### Built With
 
 -   [React](https://reactjs.org/)
--   [Javascript ES6+](https://mui.com/)
--   [Material UI](https://styled-components.com/)
+-   [Javascript ES6+](https://262.ecma-international.org/6.0)
+-   [Material UI](https://mui.com/)
 -   [Axios](https://axios-http.com/)
 
 ## Getting Started
