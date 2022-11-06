@@ -34,6 +34,8 @@
 
 ---
 
+## About the project
+
 An universal e-commerce website. You can list the products according to their categories, go to the detail page of the relevant product, add the product to your favorites and to the cart, together with the captured product data. <br/>
 The project was developed in React.js, including Redux Toolkit, React Router, React Hooks, and Life Cycles Methods. Styled with Styled Components.
 
