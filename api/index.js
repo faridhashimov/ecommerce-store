@@ -9,6 +9,9 @@ const productRoute = require('./routes/productRoute')
 const orderRoute = require('./routes/orderRoute')
 const stripeRoute = require('./routes/stripeRoute')
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 const port = process.env.PORT
 
 const app = express()
@@ -23,6 +26,21 @@ app.use('/api/auth', authRoute)
 app.use('/api/products', productRoute)
 app.use('/api/orders', orderRoute)
 app.use('/api/checkouts', stripeRoute)
+
+
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../','client', 'build', 'index.html'))
+    })
+} else {
+    app.get('/', (req, res) => {
+        res.send('Please set to production!')
+    })
+}
+
 
 app.listen(port, () => {
     console.log(`Starting server on port ${port}`)
