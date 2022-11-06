@@ -33,7 +33,7 @@ function App() {
 
     return (
         <>
-            <BrowserRouter>
+            <BrowserRouter basename='/'>
                 <ScrollToTop>
                     <Routes>
                         <Route path="/" element={<Homepage />} />
