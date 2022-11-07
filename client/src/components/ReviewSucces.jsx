@@ -20,11 +20,6 @@ const ModalHeader = styled.div`
     width: 100%;
     margin-bottom: 10px;
 `
-
-const ModalHeaderTitle = styled.h1`
-    font-size: 16px;
-    font-weight: 600;
-`
 const PointInfoContainer = styled.div``
 const PointInfoBody = styled.div`
     background-color: #ffeada;

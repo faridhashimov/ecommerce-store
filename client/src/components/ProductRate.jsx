@@ -1,5 +1,4 @@
 import { Star, StarBorder, StarHalf } from '@mui/icons-material'
-import { SvgIcon } from '@mui/material'
 import styled from 'styled-components'
 
 const StarContainer = styled.span`

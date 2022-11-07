@@ -141,7 +141,7 @@ const SignIn = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const dispatch = useDispatch()
-    const { user, pending, error } = useSelector((state) => state.user)
+    const { user, error } = useSelector((state) => state.user)
     let navigate = useNavigate()
 
     useEffect(() => {
