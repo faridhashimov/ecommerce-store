@@ -1,6 +1,6 @@
 import useFetch from '../hooks/useFetch'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'https://ecommerce-store-backend.vercel.app/api'
 
 const useEcomService = () => {
     const { loading, error, clearError, request } = useFetch()
