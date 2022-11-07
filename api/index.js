@@ -8,9 +8,7 @@ const authRoute = require('./routes/authRoute')
 const productRoute = require('./routes/productRoute')
 const orderRoute = require('./routes/orderRoute')
 const stripeRoute = require('./routes/stripeRoute')
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const path = require('path')
 
 const port = process.env.PORT
 
