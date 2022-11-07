@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
     LocationOnOutlined,
     PhoneOutlined,
@@ -7,14 +8,13 @@ import {
     ArrowRightAltOutlined,
 } from '@mui/icons-material'
 import styled from 'styled-components'
-import { Announcement, Navbar, Footer } from '../components'
 import ReactMapGL, {
     FullscreenControl,
     Marker,
     NavigationControl,
 } from 'react-map-gl'
-import { useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { Navbar, Footer } from '../components'
 import { mobile } from '../responsive'
 
 const Container = styled.div``
@@ -451,7 +451,7 @@ const Contact = () => {
                         </Store>
                     </StoreContainer>
                 </Stores>
-                {/* <MapContainer>
+                <MapContainer>
                     <ReactMapGL
                         {...view}
                         onMove={(evt) => setView(evt.viewState)}
@@ -472,7 +472,7 @@ const Contact = () => {
                         <FullscreenControl />
                         <NavigationControl />
                     </ReactMapGL>
-                </MapContainer> */}
+                </MapContainer>
             </Wrapper>
             <Footer />
         </Container>
