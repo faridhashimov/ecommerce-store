@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { css } from 'styled-components'
@@ -14,6 +13,7 @@ import {
     ProductInfo,
     ErrorMsg,
 } from '../components'
+import { mobile } from '../responsive'
 import useEcomService from '../services/useEcomService'
 
 const Wrapper = styled.div`
@@ -38,6 +38,7 @@ const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    ${mobile({ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)' })}
 `
 const OtherInfoBtn = styled.button`
     font-size: 16px;
@@ -65,6 +66,7 @@ const OtherInfoBtn = styled.button`
         transition: all 0.2s ease-in;
         border-bottom: 2px solid #f27a1a;
     }
+    ${mobile({ fontSize: '15px', margin: '10px 0px 0px 0px', padding: '0px' })}
 `
 const InfoContainer = styled.div`
     padding: 30px 30px 10px;
@@ -73,14 +75,13 @@ const InfoContainer = styled.div`
 const Productpage = () => {
     const [product, setProduct] = useState(null)
     const [otherInfo, setOtherInfo] = useState('delivery')
-    const user = useSelector((state) => state.user.user)
     const { id } = useParams()
 
-    const { loading, error, getProduct } = useEcomService()
+    const { loading, getProduct } = useEcomService()
 
     useEffect(() => {
         onProductLoad(id)
-    }, [])
+    })
 
     const onProductLoad = (id) => {
         getProduct(id).then((product) => {
@@ -103,13 +104,13 @@ const Productpage = () => {
                                     bb={otherInfo === 'details' ? true : false}
                                     onClick={() => setOtherInfo('details')}
                                 >
-                                    DETAILS
+                                    Details
                                 </OtherInfoBtn>
                                 <OtherInfoBtn
                                     bb={otherInfo === 'delivery' ? true : false}
                                     onClick={() => setOtherInfo('delivery')}
                                 >
-                                    DELIVERY AND PAYMENT
+                                    Delivery & Payment
                                 </OtherInfoBtn>
                                 <OtherInfoBtn
                                     bb={
@@ -119,13 +120,13 @@ const Productpage = () => {
                                     }
                                     onClick={() => setOtherInfo('background')}
                                 >
-                                    PRODUCT BACKGROUND
+                                    Product Background
                                 </OtherInfoBtn>
                                 <OtherInfoBtn
                                     bb={otherInfo === 'reviews' ? true : false}
                                     onClick={() => setOtherInfo('reviews')}
                                 >
-                                    REVIEWS ({product.reviews?.length})
+                                    Reviews ({product.reviews?.length})
                                 </OtherInfoBtn>
                             </ButtonContainer>
                             <MainInfo>

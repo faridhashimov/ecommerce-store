@@ -13,16 +13,19 @@ import { useDispatch } from 'react-redux'
 import { SvgIcon } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { addToCart } from '../redux/cartSlice'
+import { mobile } from '../responsive'
 
 const Modal = styled.div`
     height: 100%;
     width: 100%;
     display: flex;
+    ${mobile({ flexDirection: 'column' })}
 `
 const ModalView = styled.div`
     flex: 1;
     display: flex;
     /* justify-content: flex-start; */
+    ${mobile({ flexDirection: 'column-reverse' })}
 `
 const Images = styled.div`
     display: flex;
@@ -30,6 +33,7 @@ const Images = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
+    ${mobile({ flexDirection: 'row', margin: '10px 0px 0px 0px' })}
 `
 const MainImageContainer = styled.div`
     position: relative;
@@ -67,7 +71,6 @@ const Status = styled.div`
         }
     }};
 `
-
 const ImageContainer = styled.div`
     height: 108px;
     width: 70px;
@@ -81,6 +84,7 @@ const ImageContainer = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in;
     }
+    ${mobile({margin: '0px 1.5px 10px'})}
 `
 const Image = styled.img`
     height: 100%;
@@ -99,6 +103,7 @@ const ModalInfo = styled.div`
         background-color: #ebebeb;
         border-radius: 4px;
     }
+    ${mobile({paddingLeft: '0px'})}
 `
 const ProductTitle = styled.h1`
     font-size: 24px;
@@ -106,6 +111,7 @@ const ProductTitle = styled.h1`
     color: #333;
     margin-bottom: 10px;
     line-height: 32px;
+    ${mobile({fontSize: '22px'})}
 `
 const ProductPrice = styled.h3`
     font-size: 24px;

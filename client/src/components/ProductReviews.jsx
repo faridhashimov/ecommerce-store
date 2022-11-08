@@ -3,6 +3,7 @@ import {
     ThumbUpOutlined,
 } from '@mui/icons-material'
 import styled from 'styled-components'
+import { mobile } from '../responsive'
 import ProductRate from './ProductRate'
 
 const Info = styled.div``
@@ -23,6 +24,7 @@ const Review = styled.div`
     padding-bottom: 20px;
     border-bottom: 1px solid #ebebeb;
     margin-bottom: 20px;
+    ${mobile({flexDirection: 'column'})}
 `
 const User = styled.div`
     flex: 1;
