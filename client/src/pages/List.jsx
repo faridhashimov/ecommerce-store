@@ -1,3 +1,4 @@
+import { FilterAlt } from '@mui/icons-material'
 import axios from 'axios'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +7,8 @@ import styled from 'styled-components'
 import { Footer, ListFilters, Navbar, SearchFilterItem } from '../components'
 import { Products } from '../pages'
 import { reset, add } from '../redux/resetSlice'
+import { publicRequest } from '../requestMethods'
+import { mobile } from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -18,19 +21,26 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     opacity: ${(props) => props.opacity};
+    ${mobile({ flexDirection: 'column', minHeight: '100%' })}
 `
 const ProductsContainer = styled.div`
     flex: 5;
     align-self: flex-start;
+    ${mobile({ width: '100%' })}
+    @media (max-width: 700px) {
+        display: ${(props) => (props.d === 1 ? 'none' : 'block')};
+    }
 `
 const ListHeader = styled.div`
     display: flex;
     flex-direction: column;
     padding: 0px 0px 10px 20px;
+    ${mobile({ padding: '0px' })}
 `
 const ListHeaderTop = styled.div`
     display: flex;
     justify-content: space-between;
+    ${mobile({ flexDirection: 'column' })}
 `
 const ListHeaderBottom = styled.div`
     display: flex;
@@ -42,6 +52,12 @@ const ListHeadeTitle = styled.h1`
     font-size: 17px;
     font-weight: 500;
 `
+
+const FiltersContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    ${mobile({ marginTop: '10px' })}
+`
 const FilterBy = styled.select`
     padding: 2px 5px;
     width: 180px;
@@ -50,15 +66,29 @@ const FilterBy = styled.select`
     &:focus {
         outline: none;
     }
+    ${mobile({ width: '150px' })}
 `
 const FilterByOption = styled.option``
 
 const Main = styled.div``
+const FiltersButton = styled.button`
+    display: none;
+    width: 150px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid #ccc;
+    ${mobile({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    })}
+`
 
 const List = () => {
     const location = useLocation()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [openFilters, setOpenFilters] = useState(false)
     const [products, setProducts] = useState([])
     const [hasMore, setHasMore] = useState(false)
     const [page, setPage] = useState(1)
@@ -100,8 +130,8 @@ const List = () => {
         const getProducts = async () => {
             setLoading(true)
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/products?category=${encodeURIComponent(
+                const res = await publicRequest.get(
+                    `products?category=${encodeURIComponent(
                         category
                     )}&brand=${encodeURIComponent(
                         brand
@@ -184,7 +214,6 @@ const List = () => {
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && hasMore) {
                     setPage((prev) => prev + 1)
-                    // setClicked(null)
                     dispatch(reset())
                     console.log('ok')
                     navigate(
@@ -230,7 +259,6 @@ const List = () => {
 
     const sortByOption = (e) => {
         console.log(e.target.value)
-        // setClicked(e.target.value)
         dispatch(add())
         navigate(
             `/list?category=${encodeURIComponent(
@@ -248,16 +276,13 @@ const List = () => {
             <Navbar />
             <Container>
                 <Wrapper opacity={loading ? 0.5 : 1}>
-                    {/* {loading ? (
-                        <Spinner />
-                    ) : (
-                        <> */}
                     <ListFilters
+                        d={openFilters ? 1 : 0}
+                        setOpenFilters={setOpenFilters}
                         cat={cat}
                         setCat={setCat}
                         filters={filters}
                         getFiltersUrl={getFiltersUrl}
-                        // setClicked={setClicked}
                         filterUrl={{
                             category,
                             brand,
@@ -268,7 +293,7 @@ const List = () => {
                         }}
                     />
 
-                    <ProductsContainer>
+                    <ProductsContainer d={openFilters ? 1 : 0}>
                         <ListHeader>
                             <ListHeaderTop>
                                 <ListHeadeTitle>
@@ -276,20 +301,37 @@ const List = () => {
                                     {products.length > 1 ? 's' : null}
                                     {' are listed for your search'}
                                 </ListHeadeTitle>
-                                <FilterBy value={order} onChange={sortByOption}>
-                                    <FilterByOption value="all">
-                                        Featured
-                                    </FilterByOption>
-                                    <FilterByOption value="new">
-                                        Newest Arrivals
-                                    </FilterByOption>
-                                    <FilterByOption value="low">
-                                        Price: Low
-                                    </FilterByOption>
-                                    <FilterByOption value="high">
-                                        Price: High
-                                    </FilterByOption>
-                                </FilterBy>
+                                <FiltersContainer>
+                                    <FilterBy
+                                        value={order}
+                                        onChange={sortByOption}
+                                    >
+                                        <FilterByOption value="all">
+                                            Featured
+                                        </FilterByOption>
+                                        <FilterByOption value="new">
+                                            Newest Arrivals
+                                        </FilterByOption>
+                                        <FilterByOption value="low">
+                                            Price: Low
+                                        </FilterByOption>
+                                        <FilterByOption value="high">
+                                            Price: High
+                                        </FilterByOption>
+                                    </FilterBy>
+                                    <FiltersButton
+                                        onClick={() => setOpenFilters(true)}
+                                    >
+                                        <FilterAlt
+                                            sx={{
+                                                color: '#f27a1a',
+                                                marginRight: '5px',
+                                                fontSize: '20px',
+                                            }}
+                                        />{' '}
+                                        Filters
+                                    </FiltersButton>
+                                </FiltersContainer>
                             </ListHeaderTop>
                             <ListHeaderBottom>
                                 {cat &&
@@ -301,7 +343,6 @@ const List = () => {
                                             ct={key}
                                             cat={cat}
                                             setCat={setCat}
-                                            // setClicked={setClicked}
                                         />
                                     ))}
                             </ListHeaderBottom>
@@ -313,8 +354,6 @@ const List = () => {
                             />
                         </Main>
                     </ProductsContainer>
-                    {/* </>
-                    )} */}
                 </Wrapper>
             </Container>
             <Footer />

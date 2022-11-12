@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { publicRequest } from '../requestMethods'
 import ListProduct from './ListProduct'
 
 const Products = styled.div`
@@ -27,10 +28,10 @@ const ListProducts = ({ cat, setLoading, setError, setFilters }) => {
         const getProducts = async () => {
             setLoading(true)
             try {
-                const res = await axios.get(
+                const res = await publicRequest.get(
                     cat
-                        ? `http://localhost:5000/api/products?${qs}`
-                        : `http://localhost:5000/api/products`,
+                        ? `products?${qs}`
+                        : `products`,
                     {
                         cancelToken: source.token,
                     }

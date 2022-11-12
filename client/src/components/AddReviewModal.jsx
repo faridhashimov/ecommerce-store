@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { publicRequest } from '../requestMethods'
 import ReviewSucces from './ReviewSucces'
 
 //=======================Modal background
@@ -229,8 +230,8 @@ const AddReviewModal = ({ item, setOpen }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(
-                `http://localhost:5000/api/products/${_id}/${user._id}/reviews`,
+            const res = await publicRequest.post(
+                `products/${_id}/${user._id}/reviews`,
                 {
                     title: titleRef.current.value,
                     desc: reviewRef.current.value,

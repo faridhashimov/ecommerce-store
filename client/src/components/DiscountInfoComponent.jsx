@@ -1,10 +1,12 @@
 import styled from 'styled-components'
+import { mobile } from '../responsive'
 
 const BottomInfoContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
     margin-top: 20px;
+    ${mobile({marginTop: '5px'})}
 `
 const BuyMorePayLes = styled.div`
     text-transform: uppercase;

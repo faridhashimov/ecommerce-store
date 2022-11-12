@@ -13,6 +13,7 @@ import {
 } from '../components'
 
 const Homepage = () => {
+    
     return (
         <>
             <Announcement />

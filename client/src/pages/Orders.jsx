@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
+import { publicRequest } from '../requestMethods'
 
 const MyOrders = styled.div``
 
@@ -102,8 +103,8 @@ const Orders = () => {
     useEffect(() => {
         const getUserOrders = async () => {
             try {
-                const res = await axios.get(
-                    'http://localhost:5000/api/orders/find/' + user._id
+                const res = await publicRequest.get(
+                    `orders/find/` + user._id
                 )
                 setLoading(false)
                 setOrders(res.data)
@@ -113,7 +114,7 @@ const Orders = () => {
             }
         }
         getUserOrders()
-    }, [])
+    }, [user._id])
 
     return (
         <>

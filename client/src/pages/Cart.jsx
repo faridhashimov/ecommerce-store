@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { mobile } from '../responsive'
-import { userRequest } from '../requestMethods'
+import { publicRequest } from '../requestMethods'
 import CartProducts from '../components/CartProducts'
 import axios from 'axios'
 import { format, parseISO } from 'date-fns'
@@ -212,34 +212,10 @@ const CheckoutBtn = styled.button`
         color: #fff;
     }
 `
-const CheckoutModal = styled.div`
-    position: fixed;
-    top: 0;
-    /* left: 0; */
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.65);
-    display: ${(props) => props.ds};
-    /* display: flex; */
-    /* justify-content: center;
-    align-items: center; */
-    z-index: 999;
-`
-const CheckoutModalBody = styled.div`
-    background-color: #ccc;
-    padding: 20px;
-    margin: 0 auto;
-    height: 50vh;
-    margin-top: 170px;
-`
-const CloseBtn = styled.span`
-    float: right;
-`
 
 const Cart = () => {
     const [shipping, setShipping] = useState(0)
     const [open, setOpen] = useState(false)
-    const [checkout, setCheckout] = useState(false)
     const products = useSelector((store) => store.cart.products)
     const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch()
@@ -280,13 +256,7 @@ const Cart = () => {
         }
 
         try {
-            const res = await axios.post(
-                'http://localhost:5000/api/orders',
-                body,
-                {
-                    headers: { 'Content-type': 'application/json' },
-                }
-            )
+            const res = await publicRequest.post(`orders`, body)
             dispatch(resetCart())
             navigate('/success', {
                 state: {
@@ -526,16 +496,6 @@ const Cart = () => {
                 </CartBody>
                 <Footer />
             </Container>
-            {/* <CheckoutModal ds={checkout ? 'inline-block' : 'none'}>
-                <CheckoutModalBody>
-                    <CloseBtn onClick={onCloseCartModal}>x</CloseBtn>
-                    {clientSecret && (
-                        <Elements options={options} stripe={stripePromise}>
-                            <CheckoutForm />
-                        </Elements>
-                    )}
-                </CheckoutModalBody>
-            </CheckoutModal> */}
         </>
     )
 }

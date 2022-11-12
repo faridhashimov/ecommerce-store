@@ -55,7 +55,6 @@ const FilterButton = styled.div`
 
     ${mobile({ fontSize: '15px', margin: '0px 10px', padding: '4px' })}
 `
-
 const ProductsContainer = styled.div`
     min-height: 300px;
     width: 100%;
@@ -63,14 +62,13 @@ const ProductsContainer = styled.div`
     justify-content: center;
     align-items: center;
 `
-
 const Feautured = () => {
     const [products, setProducts] = useState(null)
     const [filteredProducts, setFilteredProducts] = useState(null)
     const [active, setActive] = useState('All')
 
-    const { error, getProducts, loading } = useEcomService()
-
+    const { error, loading, getProducts } = useEcomService()
+   
     useEffect(() => {
         onProductsLoad()
     }, [])

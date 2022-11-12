@@ -24,7 +24,6 @@ const ProductAction = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* height: 70px; */
     opacity: 0;
     transform: translateX(-20px);
     transition: all 0.2s ease-in-out;
@@ -67,8 +66,10 @@ const Cart = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in-out;
     }
+    ${mobile({
+        display: 'none',
+    })}
 `
-
 const Image = styled.div`
     width: 100%;
     height: 100%;
@@ -79,12 +80,10 @@ const Image = styled.div`
         transition: all 0.2s ease-in;
     }
 `
-
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 470px;
-    /* margin: 0px 10px 15px; */
     padding-bottom: 7px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -102,13 +101,17 @@ const Container = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in-out;
     }
-    ${mobile({ height: '350px' })}
+    ${mobile({
+        height: 'max-content',
+        paddingBottom: '7px',
+        boxShadow: '0px 0px 12px -4px rgba(0, 0, 0, 0.25)',
+    })}
 `
 const ImageContainer = styled.div`
     height: 340px;
     position: relative;
     margin-bottom: 10px;
-    ${mobile({ height: '250px' })}
+    ${mobile({ height: '66.66667vw', marginBottom: '0px' })}
 `
 const ProductStatus = styled.div``
 const Status = styled.div`
@@ -156,11 +159,6 @@ const ProductActionContainer = styled.div`
     color: #f27a1a;
     box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.46);
     transition: all 0.2s ease-in-out;
-    /* &:hover {
-        background-color: #f27a1a;
-        color: #fff;
-        transition: all 0.2s ease-in-out;
-    } */
 `
 const FavoriteContainer = styled.div`
     position: absolute;
@@ -217,6 +215,11 @@ const Favorite = styled.div`
 const InfoContainer = styled.div`
     text-align: left;
     padding: 0px 7px;
+    ${mobile({
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'start',
+    })}
 `
 const Title = styled.h2`
     transition: all 0.3s ease;
@@ -236,7 +239,16 @@ const Title = styled.h2`
         color: #f27a1a;
         transition: all 0.3s ease;
     }
-    ${mobile({ fontSize: '15px' })}
+    ${mobile({
+        fontSize: '12.9px',
+        height: 'max-content',
+        '&:before': {
+            content: `${(props) => props.brand}`,
+            fontSize: '12.9px',
+            fontWeight: '600',
+            marginRight: '4px',
+        },
+    })}
 `
 const Prices = styled.h3`
     font-size: 15px;
@@ -257,15 +269,12 @@ const ReviewCount = styled.span`
     font-size: 10px;
     line-height: 16px;
 `
-
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: inherit;
-    /* color: transparent; */
 `
 
-const ListProduct = ({item, lastProdElRef}) => {
-    // console.log(item)
+const ListProduct = ({ item, lastProdElRef }) => {
     const [open, setOpen] = useState(false)
     const { img, status, title, price, reviews, brand } = item
     const productInWishlist = useSelector((state) => state.wishlist.product)
@@ -293,7 +302,6 @@ const ListProduct = ({item, lastProdElRef}) => {
             <Container ref={lastProdElRef}>
                 <ImageContainer>
                     <StyledLink to={`/product/${item._id}`}>
-                        {' '}
                         <Image main={img[0]} sec={img[1]} />
                     </StyledLink>
                     <ProductStatus>
@@ -330,8 +338,7 @@ const ListProduct = ({item, lastProdElRef}) => {
                             }}
                             to={`/product/${item._id}`}
                         >
-                            {' '}
-                            <CartTitle>Select Options</CartTitle>{' '}
+                            <CartTitle>Select Options</CartTitle>
                         </StyledLink>
                     </Cart>
                 </ImageContainer>

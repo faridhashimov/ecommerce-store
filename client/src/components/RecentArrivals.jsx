@@ -107,6 +107,7 @@ const RecentArrivals = () => {
     const [active, setActive] = useState('All')
 
     const { loading, error, getProducts } = useEcomService()
+    console.log('render')
 
     useEffect(() => {
         onProductsLoad()
@@ -144,7 +145,7 @@ const RecentArrivals = () => {
             <Products products={filteredProducts.slice(0, 8)} />
         ) : null
     let errorMsg = error ? (
-        <p style={{ color: 'red', textAlign: 'center' }}>
+        <p style={{ color: 'red', textAlign: 'center', width: '100%' }}>
             Something went wrong: {error}...
         </p>
     ) : null

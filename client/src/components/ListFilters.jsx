@@ -6,17 +6,30 @@ import {
     ExpandMore,
 } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { add } from '../redux/resetSlice'
+import { mobile } from '../responsive'
 
 const FilterContainer = styled.div`
     position: sticky;
     top: 0;
     flex: 1;
     align-self: flex-start;
+    ${mobile({
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 1000,
+        backgroundColor: '#fff',
+        width: '100%',
+    })}
+    @media (max-width: 700px) {
+        display: ${(props) => (props.d === 1 ? 'block' : 'none')};
+    }
 `
 const CategoriesContainer = styled.div`
     padding-bottom: 15px;
@@ -96,23 +109,43 @@ const FilterColor = styled(Link)`
     background-color: #${(props) => props.c};
 `
 
-const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl, setClicked }) => {
-    const [openFilter, setOpenFilters] = useState([
+const ApplyBtn = styled.button`
+    display: none;
+    width: 100%;
+    padding: 7px;
+    background-color: #f27a1a;
+    border: 1px solid #f27a1a;
+    color: #fff;
+    border-radius: 3px;
+    ${mobile({ display: 'block' })}
+`
+
+const ListFilters = ({
+    filters,
+    cat,
+    setCat,
+    d,
+    setOpenFilters,
+    getFiltersUrl,
+}) => {
+    const [openFilter, setOpenFilter] = useState([
         'categories',
         'gender',
         'size',
         'brand',
     ])
 
+    console.log(d)
+
     const dispatch = useDispatch()
 
     const openFilters = (index) => {
         if (openFilter.includes(index)) {
-            setOpenFilters((openFilter) =>
+            setOpenFilter((openFilter) =>
                 openFilter.filter((item) => item !== index)
             )
         } else {
-            setOpenFilters((openFilter) => [...openFilter, index])
+            setOpenFilter((openFilter) => [...openFilter, index])
         }
     }
 
@@ -141,7 +174,7 @@ const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl, setClicke
     }
 
     return (
-        <FilterContainer>
+        <FilterContainer d={d}>
             <CategoriesContainer>
                 <FilterHeader onClick={() => openFilters('categories')}>
                     <Title>Catergories</Title>
@@ -391,6 +424,9 @@ const ListFilters = ({ filters, cat, setCat, filterUrl, getFiltersUrl, setClicke
                     </Filters>
                 </Categories>
             </CategoriesContainer>
+            <ApplyBtn onClick={() => setOpenFilters(false)}>
+                Show Results
+            </ApplyBtn>
         </FilterContainer>
     )
 }

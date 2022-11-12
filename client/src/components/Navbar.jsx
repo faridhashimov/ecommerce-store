@@ -41,6 +41,7 @@ const Logo = styled.h1`
     font-size: 28px;
     color: #232323;
     margin-left: 10px;
+    ${mobile({ marginLeft: '0px' })}
 `
 const Reverse = styled.span`
     color: #f27a1a;
@@ -120,6 +121,7 @@ const Right = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+    ${mobile({ marginRight: '0px' })}
 `
 const SearchContainer = styled.div`
     display: flex;
