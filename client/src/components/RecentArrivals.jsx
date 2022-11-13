@@ -107,7 +107,6 @@ const RecentArrivals = () => {
     const [active, setActive] = useState('All')
 
     const { loading, error, getProducts } = useEcomService()
-    console.log('render')
 
     useEffect(() => {
         onProductsLoad()

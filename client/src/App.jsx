@@ -22,7 +22,6 @@ import ScrollToTop from './components/ScrollToTop'
 function App() {
     const ProtectedRoute = ({ children }) => {
         const user = useSelector((state) => state.user.user)
-        // console.log(user)
 
         if (!user) {
             return <Navigate to="/login" />

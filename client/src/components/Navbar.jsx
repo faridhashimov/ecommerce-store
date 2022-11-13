@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import {
     FavoriteBorder,
@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
 import { SvgIcon } from '@mui/material'
 import { Categories, NavbarPopup } from '../components'
+import useEcomService from '../services/useEcomService'
+import SearchDropdown from './SearchDropdown'
 
 const Container = styled.div`
     height: 60px;
@@ -129,6 +131,7 @@ const SearchContainer = styled.div`
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 25px;
+    /* position: relative; */
     ${mobile({ display: 'none' })}
 `
 const Input = styled.input`
@@ -250,21 +253,35 @@ const ProfileImage = styled.img`
 `
 
 const Navbar = () => {
+    const [popup, setPopup] = useState(false)
+    const [openShop, setOpenShop] = useState(false)
+    const [search, setSearch] = useState('')
+
     const product = useSelector((state) => state.wishlist.product)
     const user = useSelector((state) => state.user.user)
     const products = useSelector((state) => state.cart.products)
     const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
+    const totalSum = products
+        .reduce((sum, prevValue) => sum + prevValue.total, 0)
+        .toFixed(2)
 
-    const [popup, setPopup] = useState(false)
-    const [openShop, setOpenShop] = useState(false)
+    const [searchedProducts, setSearchedProducts] = useState(null)
+    const { getAllProducts } = useEcomService()
 
     let activeStyle = {
         borderBottom: '2px solid #000',
     }
 
-    const totalSum = products
-        .reduce((sum, prevValue) => sum + prevValue.total, 0)
-        .toFixed(2)
+    useEffect(() => {
+        const searchId = setTimeout(() => {
+            search.length > 0 &&
+                getAllProducts(search).then((data) => setSearchedProducts(data))
+        }, 500)
+
+        return () => {
+            clearTimeout(searchId)
+        }
+    }, [search])
 
     return (
         <Container>
@@ -343,7 +360,10 @@ const Navbar = () => {
                     </Center>
                     <Right>
                         <SearchContainer>
-                            <Input placeholder="Search product..." />
+                            <Input
+                                onChange={(e) => setSearch(e.target.value)}
+                                placeholder="Search product..."
+                            />
                             <SearchButton>
                                 <Search
                                     style={{
@@ -354,6 +374,9 @@ const Navbar = () => {
                                     }}
                                 />
                             </SearchButton>
+                            {searchedProducts?.length > 0 && (
+                                <SearchDropdown items={searchedProducts} />
+                            )}
                         </SearchContainer>
                         {user ? (
                             <>

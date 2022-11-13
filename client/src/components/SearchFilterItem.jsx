@@ -1,7 +1,9 @@
-import { Close } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+
+import { Close } from '@mui/icons-material'
 import styled from 'styled-components'
+
 import { add } from '../redux/resetSlice'
 
 const Container = styled.div`
@@ -50,7 +52,6 @@ const SearchFilterItem = ({
     const dispatch = useDispatch()
 
     const onToggleFilter = (categ, id) => {
-        // setClicked(id)
         dispatch(add())
         if (cat && Object.entries(cat).flat().includes(id)) {
             setCat(
@@ -60,6 +61,7 @@ const SearchFilterItem = ({
             )
         }
     }
+
     return (
         <>
             {info === 'all' ? null : (

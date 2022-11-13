@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+
 import styled from 'styled-components'
+
 import { Spinner } from '../components'
 import { add } from '../redux/resetSlice'
 
@@ -52,6 +54,7 @@ const StyledLink = styled(Link)``
 
 const CategoryPopup = ({ popup, cat, loading, error, categories }) => {
     const dispatch = useDispatch()
+
     const getFiltersUrl = (filters) => {
         const category = filters.category
         const gender = filters.gender || 'all'

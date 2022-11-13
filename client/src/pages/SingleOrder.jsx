@@ -23,7 +23,6 @@ const SingleOrder = () => {
         getOrder(id).then((data) => setOrder(data))
     }
 
-    console.log(order)
     const spinner = loading ? <Spinner /> : null
     const content = !loading && order ? <SingleOrderBody order={order} /> : null
     const errorMsg = error ? <p>Something went wrong...</p> : null

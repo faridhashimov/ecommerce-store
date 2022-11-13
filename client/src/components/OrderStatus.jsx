@@ -47,8 +47,6 @@ const OrderStatusInfo = styled.p`
 `
 
 const OrderStatus = ({ status, createdAt, updatedAt, products }) => {
-    // const status = 'Cancelled'
-    // console.log(createdAt)
     return (
         <OrderStatusContainer>
             {status === 'Pending' ? (

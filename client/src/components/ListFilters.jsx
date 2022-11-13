@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 import {
     Check,
     CheckBox,
@@ -6,11 +10,8 @@ import {
     ExpandMore,
 } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import { add } from '../redux/resetSlice'
 import { mobile } from '../responsive'
 
@@ -134,8 +135,6 @@ const ListFilters = ({
         'size',
         'brand',
     ])
-
-    console.log(d)
 
     const dispatch = useDispatch()
 

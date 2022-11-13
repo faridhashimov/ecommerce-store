@@ -99,7 +99,6 @@ const Orders = () => {
     const [loading, setLoading] = useState(true)
     const [orders, setOrders] = useState([])
     let user = useSelector((state) => state.user.user)
-    // console.log(orders.length ? 'true' : 'false')
     useEffect(() => {
         const getUserOrders = async () => {
             try {

@@ -81,7 +81,7 @@ const Productpage = () => {
 
     useEffect(() => {
         onProductLoad(id)
-    })
+    }, [])
 
     const onProductLoad = (id) => {
         getProduct(id).then((product) => {

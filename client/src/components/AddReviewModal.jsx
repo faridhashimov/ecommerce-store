@@ -211,12 +211,10 @@ const AddReviewModal = ({ item, setOpen }) => {
     const [success, setSucces] = useState(false)
     const user = useSelector((state) => state.user.user)
     const { _id, brand, img, title } = item
-    // console.log(rating)
     const titleRef = useRef()
     const reviewRef = useRef()
 
     const [checked, setChekced] = useState(false)
-    console.log(checked)
 
     const handleModalClose = (e) => {
         let modalBg = e.target.getAttribute('data-bg')

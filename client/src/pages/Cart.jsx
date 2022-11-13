@@ -220,7 +220,6 @@ const Cart = () => {
     const user = useSelector((store) => store.user.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(products)
 
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)

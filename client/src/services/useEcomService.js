@@ -8,6 +8,10 @@ const useEcomService = () => {
         const res = await request(`${BASE_URL}/products`)
         return res.data
     }
+    const getAllProducts = async (value) => {
+        const res = await request(`${BASE_URL}/products?title=${value}`)
+        return res.data
+    }
     const getOrder = async (id) => {
         const res = await request(`${BASE_URL}/orders/${id}`)
         return res
@@ -38,6 +42,7 @@ const useEcomService = () => {
         error,
         clearError,
         getProducts,
+        getAllProducts,
         getOrder,
         getProduct,
         getUser,

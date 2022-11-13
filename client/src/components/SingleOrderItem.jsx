@@ -104,7 +104,6 @@ const SingleOrderItem = ({
 }) => {
     const [open, setOpen] = useState(false)
 
-    console.log(productSize ? 'true' : 'false')
     return (
         <>
             <ProductContainer>

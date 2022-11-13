@@ -1,14 +1,16 @@
-import { FilterAlt } from '@mui/icons-material'
-import axios from 'axios'
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+import { FilterAlt } from '@mui/icons-material'
 import styled from 'styled-components'
-import { Footer, ListFilters, Navbar, SearchFilterItem } from '../components'
-import { Products } from '../pages'
+import { mobile } from '../responsive'
+
 import { reset, add } from '../redux/resetSlice'
 import { publicRequest } from '../requestMethods'
-import { mobile } from '../responsive'
+import { Footer, ListFilters, Navbar, SearchFilterItem } from '../components'
+import { Products } from '../pages'
 
 const Container = styled.div`
     width: 100%;
@@ -215,7 +217,6 @@ const List = () => {
                 if (entries[0].isIntersecting && hasMore) {
                     setPage((prev) => prev + 1)
                     dispatch(reset())
-                    console.log('ok')
                     navigate(
                         `/list?category=${encodeURIComponent(
                             category
@@ -258,7 +259,6 @@ const List = () => {
     }
 
     const sortByOption = (e) => {
-        console.log(e.target.value)
         dispatch(add())
         navigate(
             `/list?category=${encodeURIComponent(

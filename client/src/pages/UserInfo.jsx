@@ -164,7 +164,6 @@ const UserInfo = () => {
             )
         })
     }, [])
-    // console.log(error)
     const generateYear = () => {
         const arr = []
         const startYear = 1900
@@ -209,7 +208,6 @@ const UserInfo = () => {
             data && setUpdated(true)
             !data && setErr(true)
         })
-        // console.log(body)
     }
 
     const success = updated ? (
