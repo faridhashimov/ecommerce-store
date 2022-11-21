@@ -12,9 +12,10 @@ const {
     getUserReviews,
     getProductsCount
 } = require('../controllers/productController')
+const { verifyTokenAndAdmin } = require('../utils/verifyToken')
 
 router.route('/').post(createProduct).get(getAllProducts)
-router.get('/count', getProductsCount)
+router.get('/count', verifyTokenAndAdmin, getProductsCount)
 router.get('/reviews/userreviews', getUserReviews)
 router.route('/:id').get(getProduct).put(updateProduct).delete(deleteProduct)
 router.post('/:productId/:userId/reviews', createReview)

@@ -7,10 +7,11 @@ const {
     getUserStats,
     getUsersCount,
 } = require('../controllers/userController')
+const { verifyTokenAndAdmin } = require('../utils/verifyToken')
 
-router.get('/stats', getUserStats)
-router.get('/', getAllUsers)
-router.get('/count', getUsersCount)
+router.get('/stats', verifyTokenAndAdmin, getUserStats)
+router.get('/', verifyTokenAndAdmin, getAllUsers)
+router.get('/count', verifyTokenAndAdmin, getUsersCount)
 router.get('/:id', getUser)
 router.put('/update/:id', updateUser)
 router.delete('/delete/:id', deleteUser)
