@@ -113,6 +113,9 @@ const getIncome = async (req, res) => {
                     total: { $sum: '$sales' },
                 },
             },
+            {
+                $sort: { _id: 1 },
+            },
         ])
         res.status(200).json(income)
     } catch (err) {
