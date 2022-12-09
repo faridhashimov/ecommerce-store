@@ -91,6 +91,54 @@ const getSales = async (req, res) => {
     }
 }
 
+// GET TODAYS SALES
+const getSalesByIntervals = async (req, res) => {
+    const date = new Date()
+    const today = new Date(date.setDate(date.getDate() - 1))
+    const lastWeek = new Date(date.setDate(date.getDate() - 7))
+    const lastMonth = new Date(date.setDate(date.getDate() - 30))
+    const lastQuarter = new Date(date.setDate(date.getDate() - 91))
+
+    const intervals = [today, lastWeek, lastMonth, lastQuarter]
+
+    try {
+        const sales = await Promise.all(
+            intervals.map((item) => {
+                return Order.aggregate([
+                    {
+                        $match: { createdAt: { $gte: item } },
+                    },
+                    {
+                        $project: {
+                            day: { $dayOfMonth: '$createdAt' },
+                            sales: '$amount',
+                        },
+                    },
+                    {
+                        $group: {
+                            _id: '$day',
+                            total: { $sum: '$sales' },
+                        },
+                    },
+                    {
+                        $sort: { _id: 1 },
+                    },
+                ])
+            })
+        )
+        const total = sales.map((item) =>
+            item
+                .map((item) => item.total)
+                .reduce((prev, curr) => prev + curr)
+                .toFixed(2)
+        )
+        // .reduce((prev, curr) => prev + curr)
+        res.status(200).json(total)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 // GET INCOME FOR LAST 6 MONTH
 const getIncome = async (req, res) => {
     const date = new Date()
@@ -161,4 +209,5 @@ module.exports = {
     getIncome,
     getOrdersCount,
     getSales,
+    getSalesByIntervals,
 }
