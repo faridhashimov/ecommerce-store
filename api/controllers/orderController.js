@@ -116,6 +116,34 @@ const getIncome = async (req, res) => {
             {
                 $sort: { _id: 1 },
             },
+            {
+                $addFields: {
+                    month: {
+                        $let: {
+                            vars: {
+                                monthsInString: [
+                                    ,
+                                    'Jan',
+                                    'Feb',
+                                    'Mar',
+                                    'Apr',
+                                    'May',
+                                    'Jun',
+                                    'Jul',
+                                    'Aug',
+                                    'Sep',
+                                    'Oct',
+                                    'Nov',
+                                    'Dec',
+                                ],
+                            },
+                            in: {
+                                $arrayElemAt: ['$$monthsInString', '$_id'],
+                            },
+                        },
+                    },
+                },
+            },
         ])
         res.status(200).json(income)
     } catch (err) {
