@@ -129,12 +129,12 @@ const getSalesByIntervals = async (req, res) => {
         const total = sales.map((item) =>
             item
                 .map((item) => item.total)
-                .reduce((prev, curr) => prev + curr)
+                .reduce((prev, curr) => prev + curr, 0)
                 .toFixed(2)
         )
-        // .reduce((prev, curr) => prev + curr)
         res.status(200).json(total)
     } catch (err) {
+        console.log(err.message)
         res.status(401).json(err)
     }
 }
