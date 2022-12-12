@@ -52,7 +52,70 @@ const getUserOrders = async (req, res) => {
     try {
         const userOrders = await Order.find({
             userId: req.params.userId,
-        }).exec()
+        })
+        res.status(200).json(userOrders)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+// GET USER 6 MONTH ORDERS
+const getUserSixMonthOrders = async (req, res) => {
+    const date = new Date()
+    const month = new Date(date.setMonth(date.getMonth() - 5))
+    try {
+        const userOrders = await Order.aggregate([
+            {
+                $match: {
+                    userId: req.params.userId,
+                    createdAt: { $gte: month },
+                },
+            },
+            {
+                $project: {
+                    month: { $month: '$createdAt' },
+                    sales: '$amount',
+                },
+            },
+            {
+                $group: {
+                    _id: '$month',
+                    total: { $sum: '$sales' },
+                },
+            },
+            {
+                $sort: { _id: 1 },
+            },
+            {
+                $addFields: {
+                    month: {
+                        $let: {
+                            vars: {
+                                monthsInString: [
+                                    ,
+                                    'Jan',
+                                    'Feb',
+                                    'Mar',
+                                    'Apr',
+                                    'May',
+                                    'Jun',
+                                    'Jul',
+                                    'Aug',
+                                    'Sep',
+                                    'Oct',
+                                    'Nov',
+                                    'Dec',
+                                ],
+                            },
+                            in: {
+                                $arrayElemAt: ['$$monthsInString', '$_id'],
+                            },
+                        },
+                    },
+                },
+            },
+        ])
+
         res.status(200).json(userOrders)
     } catch (err) {
         res.status(401).json(err)
@@ -205,6 +268,7 @@ module.exports = {
     deleteOrder,
     getOrder,
     getUserOrders,
+    getUserSixMonthOrders,
     getAllOrders,
     getIncome,
     getOrdersCount,
