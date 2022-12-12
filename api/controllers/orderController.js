@@ -124,8 +124,16 @@ const getUserSixMonthOrders = async (req, res) => {
 
 // GET ALL ORDERS
 const getAllOrders = async (req, res) => {
+    const userEmail = req.query.email
+    const status = req.query.status
+    const searchByEmail =
+        userEmail && userEmail !== 'all'
+            ? { userEmail: { $regex: userEmail, $options: 'i' } }
+            : {}
+    const searchByStatus = status && status !== 'all' ? { status } : {}
+    // console.log(userEmail)
     try {
-        const allOrders = await Order.find({})
+        const allOrders = await Order.find({ ...searchByEmail, ...searchByStatus })
         res.status(200).json(allOrders)
     } catch (err) {
         res.status(401).json(err)
