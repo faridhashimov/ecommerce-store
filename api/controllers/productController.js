@@ -233,6 +233,18 @@ const getProductReviews = async (req, res) => {
     }
 }
 
+// GET ALL REVIEWS
+const getAllReviews = async (req, res) => {
+    console.log(req.query);
+    try {
+        const reviews = await Product.find({}).select('reviews')
+        const allReviews = reviews.flatMap(x => x.reviews)
+        res.status(201).json(allReviews)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
 //GET USER REVIEWS
 const getUserReviews = async (req, res) => {
     const { name } = req.query
@@ -301,5 +313,6 @@ module.exports = {
     updateReview,
     getAllCategories,
     getUserReviews,
-    getProductsCount
+    getProductsCount,
+    getAllReviews
 }
