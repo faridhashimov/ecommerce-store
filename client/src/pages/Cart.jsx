@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { mobile } from '../responsive'
 import { publicRequest } from '../requestMethods'
 import CartProducts from '../components/CartProducts'
-import axios from 'axios'
 import { format, parseISO } from 'date-fns'
 
 import {
@@ -224,9 +223,7 @@ const Cart = () => {
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
-    const cartTotal = parseFloat(totalSum + shipping).toFixed(2)
-
-    // const total = parseFloat(totalSum + shipping).toFixed(2)
+    const cartTotal = (+totalSum + +shipping).toFixed(2)
 
     const handleRadioChange = (e) => {
         setShipping(e.target.value)
