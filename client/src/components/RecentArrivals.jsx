@@ -7,6 +7,7 @@ import Spinner from './Spinner'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
 import useEcomService from '../services/useEcomService'
+import ErrorMsg from './ErrorMsg'
 
 const Container = styled.div`
     width: 100%;
@@ -138,16 +139,6 @@ const RecentArrivals = () => {
             setFilteredProducts(products)
         }
     }
-    let spinner = loading ? <Spinner /> : null
-    let content =
-        !loading && filteredProducts ? (
-            <Products products={filteredProducts.slice(0, 8)} />
-        ) : null
-    let errorMsg = error ? (
-        <p style={{ color: 'red', textAlign: 'center', width: '100%' }}>
-            Something went wrong: {error}...
-        </p>
-    ) : null
 
     return (
         <Container>
@@ -191,9 +182,13 @@ const RecentArrivals = () => {
                     </FilterButton>
                 </Filters>
                 <ProductsContainer>
-                    {spinner}
-                    {content}
-                    {errorMsg}
+                    {loading ? (
+                        <Spinner />
+                    ) : error ? (
+                        <ErrorMsg error={error} />
+                    ) : (
+                        <Products products={filteredProducts.slice(0, 8)} />
+                    )}
                 </ProductsContainer>
                 {products.length > 0 ? (
                     <ButtonContainer>
