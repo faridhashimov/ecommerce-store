@@ -9,7 +9,7 @@ const Container = styled.div`
     grid-template-columns: repeat(4, 1fr);
     justify-content: space-between;
     align-items: center;
-    ${mobile({gridTemplateColumns: 'repeat(2, 1fr)'})}
+    ${mobile({ gridTemplateColumns: 'repeat(2, 1fr)' })}
 `
 
 const Products = ({ products, loading }) => {
