@@ -5,6 +5,7 @@ import { css } from 'styled-components'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
 import useEcomService from '../services/useEcomService'
+import ErrorMsg from './ErrorMsg'
 
 const Container = styled.div`
     width: 100%;
@@ -63,12 +64,12 @@ const ProductsContainer = styled.div`
     align-items: center;
 `
 const Feautured = () => {
-    const [products, setProducts] = useState(null)
-    const [filteredProducts, setFilteredProducts] = useState(null)
+    const [products, setProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
 
     const { error, loading, getProducts } = useEcomService()
-   
+
     useEffect(() => {
         onProductsLoad()
     }, [])
@@ -99,17 +100,6 @@ const Feautured = () => {
         }
     }
 
-    let spinner = loading ? <Spinner /> : null
-    let content =
-        !loading && filteredProducts ? (
-            <Products products={filteredProducts.slice(0, 4)} />
-        ) : null
-    let errorMsg = error ? (
-        <p style={{ color: 'red', textAlign: 'center' }}>
-            Something went wrong: {error}...
-        </p>
-    ) : null
-
     return (
         <Container>
             <Wrapper>
@@ -137,9 +127,13 @@ const Feautured = () => {
                     </FilterButton>
                 </Filters>
                 <ProductsContainer>
-                    {spinner}
-                    {content}
-                    {errorMsg}
+                    {loading ? (
+                        <Spinner />
+                    ) : error ? (
+                        <ErrorMsg error={error} />
+                    ) : (
+                        <Products products={filteredProducts.slice(0, 4)} />
+                    )}
                 </ProductsContainer>
             </Wrapper>
         </Container>
