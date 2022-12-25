@@ -8,8 +8,8 @@ const Container = styled.div`
     align-items: center;
     color: red;
 `
-const ErrorMsg = () => {
-    return <Container>Something went wrong...</Container>
+const ErrorMsg = ({ error }) => {
+    return <Container>Something went wrong: {error}...</Container>
 }
 
 export default ErrorMsg
