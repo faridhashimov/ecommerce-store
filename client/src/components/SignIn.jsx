@@ -60,10 +60,10 @@ const LoginButton = styled.button`
     align-items: center;
     padding: 7px 25px;
     text-transform: uppercase;
-    color: #F27A1A;
+    color: #f27a1a;
     cursor: pointer;
     background-color: transparent;
-    border: 1px solid #F27A1A;
+    border: 1px solid #f27a1a;
     transition: all 0.3s ease-in-out;
     margin-right: 20px;
     &:hover {
@@ -80,7 +80,7 @@ const ForgotPassword = styled.a`
     transition: all 0.2s ease;
     cursor: pointer;
     &:hover {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease;
     }
 `
@@ -126,11 +126,11 @@ const ShowPassWordIconContainer = styled.div`
     cursor: pointer;
     width: 10%;
     &:hover {
-        border: 1px solid #F27A1A;
+        border: 1px solid #f27a1a;
         transition: all 0.2s ease-in;
     }
     &:hover ${StyledSvg} {
-        color: #F27A1A;
+        color: #f27a1a;
         transition: all 0.2s ease-in;
     }
 `
@@ -182,6 +182,7 @@ const SignIn = () => {
                     ref={emailRef}
                     id="email"
                     name="email"
+                    data-test="email"
                     // onChange={handleChange}
                     required
                     type="email"
@@ -203,7 +204,6 @@ const SignIn = () => {
                     <ShowPassWordIconContainer
                         onClick={() => setShowPwd(!showPwd)}
                     >
-                        {' '}
                         {showPwd ? (
                             <StyledSvg
                                 sx={{ color: '#F27A1A' }}
@@ -218,7 +218,7 @@ const SignIn = () => {
             <ErorMsg>{errMsg}</ErorMsg>
             <LoginButtonContainer>
                 <LoginButton>
-                    Log in{' '}
+                    Log in
                     <ArrowForward style={{ fontSize: 10, marginLeft: 5 }} />
                 </LoginButton>
                 <ForgotPassword>Forgot Your Password?</ForgotPassword>
