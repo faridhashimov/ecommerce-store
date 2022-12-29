@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { css } from 'styled-components'
+import { selectUser } from '../redux/selectors'
 import { logOut } from '../redux/userSlice'
 
 const PopupContainer = styled.div`
@@ -74,7 +75,7 @@ const LogOutLink = styled.li`
 
 const NavbarPopup = ({ popup }) => {
     const navigate = useNavigate()
-    const user = useSelector((state) => state.user.user)
+    const user = useSelector(selectUser)
     const dispatch = useDispatch()
     const handleLogOut = () => {
         dispatch(logOut())

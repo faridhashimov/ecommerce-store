@@ -16,6 +16,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Portal from '../Portal'
 import ProductModal from './ProductModal'
 import DiscountInfoComponent from './DiscountInfoComponent'
+import { selectWishlist } from '../redux/selectors'
 
 const ProductAction = styled.div`
     position: absolute;
@@ -277,7 +278,7 @@ const StyledLink = styled(Link)`
 const ListProduct = ({ item, lastProdElRef }) => {
     const [open, setOpen] = useState(false)
     const { img, status, title, price, reviews, brand } = item
-    const productInWishlist = useSelector((state) => state.wishlist.product)
+    const productInWishlist = useSelector(selectWishlist)
     let navigate = useNavigate()
     const rate = reviews
         ? reviews.reduce((a, c) => c.rating + a, 0) / reviews.length

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFromWishlist } from '../redux/wishlistSlice'
 import { Link } from 'react-router-dom'
 import { mobile } from '../responsive'
+import { selectWishlist } from '../redux/selectors'
 
 const Container = styled.div`
     width: 100%;
@@ -183,7 +184,7 @@ const GoShopBtn = styled(Link)`
 `
 
 const WishList = () => {
-    const product = useSelector((store) => store.wishlist.product)
+    const product = useSelector(selectWishlist)
     const dispatch = useDispatch()
 
     const handleDelete = (id) => {

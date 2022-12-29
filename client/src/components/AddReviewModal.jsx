@@ -1,9 +1,9 @@
 import { Close, Star, StarBorder, ThumbUp } from '@mui/icons-material'
 import { SvgIcon } from '@mui/material'
-import axios from 'axios'
 import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { selectUser } from '../redux/selectors'
 import { publicRequest } from '../requestMethods'
 import ReviewSucces from './ReviewSucces'
 
@@ -209,7 +209,7 @@ const AddReviewModal = ({ item, setOpen }) => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
     const [success, setSucces] = useState(false)
-    const user = useSelector((state) => state.user.user)
+    const user = useSelector(selectUser)
     const { _id, brand, img, title } = item
     const titleRef = useRef()
     const reviewRef = useRef()

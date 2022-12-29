@@ -6,6 +6,7 @@ import { CheckCircle, Error } from '@mui/icons-material'
 import { useSelector } from 'react-redux'
 import useEcomService from '../services/useEcomService'
 import { format, parseISO } from 'date-fns'
+import { selectUser } from '../redux/selectors'
 
 const MyOrders = styled.div``
 
@@ -121,7 +122,7 @@ const UserUpdated = styled.div`
 `
 
 const UserInfo = () => {
-    const { _id } = useSelector((state) => state.user.user)
+    const { _id } = useSelector(selectUser)
     const [updated, setUpdated] = useState(false)
     const [err, setErr] = useState(false)
     const [year, setYear] = useState('Year')

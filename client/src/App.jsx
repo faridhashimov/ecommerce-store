@@ -18,10 +18,11 @@ import {
     UserInfo,
 } from './pages'
 import ScrollToTop from './components/ScrollToTop'
+import { selectUser } from './redux/selectors'
 
 function App() {
     const ProtectedRoute = ({ children }) => {
-        const user = useSelector((state) => state.user.user)
+        const user = useSelector(selectUser)
 
         if (!user) {
             return <Navigate to="/login" />

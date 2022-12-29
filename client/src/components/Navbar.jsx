@@ -13,6 +13,7 @@ import { SvgIcon } from '@mui/material'
 import { Categories, NavbarPopup } from '../components'
 import useEcomService from '../services/useEcomService'
 import SearchDropdown from './SearchDropdown'
+import { selectProducts, selectUser, selectWishlist } from '../redux/selectors'
 
 const Container = styled.div`
     height: 60px;
@@ -257,9 +258,9 @@ const Navbar = () => {
     const [openShop, setOpenShop] = useState(false)
     const [search, setSearch] = useState('')
 
-    const product = useSelector((state) => state.wishlist.product)
-    const user = useSelector((state) => state.user.user)
-    const products = useSelector((state) => state.cart.products)
+    const product = useSelector(selectWishlist)
+    const user = useSelector(selectUser)
+    const products = useSelector(selectProducts)
     const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { OrderStatus } from '../components'
+import { selectUser } from '../redux/selectors'
 import { mobile } from '../responsive'
 
 const SingleOrder = styled.div`
@@ -83,7 +84,7 @@ const OrderImage = styled.img`
 
 const Order = (order) => {
     const { _id, amount, products, createdAt } = order
-    let user = useSelector((state) => state.user.user)
+    let user = useSelector(selectUser)
 
     let orderDate = format(parseISO(createdAt), "d MMMM y '-' k:m")
 

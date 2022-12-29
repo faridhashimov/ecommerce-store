@@ -15,6 +15,7 @@ import {
     usePayPalScriptReducer,
 } from '@paypal/react-paypal-js'
 import { resetCart } from '../redux/cartSlice'
+import { selectProducts, selectUser } from '../redux/selectors'
 
 const Container = styled.div`
     width: 100%;
@@ -215,8 +216,8 @@ const CheckoutBtn = styled.button`
 const Cart = () => {
     const [shipping, setShipping] = useState(0)
     const [open, setOpen] = useState(false)
-    const products = useSelector((store) => store.cart.products)
-    const user = useSelector((store) => store.user.user)
+    const products = useSelector(selectProducts)
+    const user = useSelector(selectUser)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
