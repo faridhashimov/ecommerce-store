@@ -4,16 +4,16 @@ export const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState: {
         added: false,
-        product: [],
+        products: [],
     },
     reducers: {
         addToWishlist: (state, action) => {
             state.added = true
-            state.product.push(action.payload)
+            state.products.push(action.payload)
         },
         deleteFromWishlist: (state, action) => {
             state.added = false
-            state.product = state.product.filter(
+            state.products = state.products.filter(
                 (item) => item._id !== action.payload
             )
         },
