@@ -39,7 +39,6 @@ const getUser = async (req, res) => {
 // UPDATE USER
 const updateUser = async (req, res) => {
     const { password, ...others } = req.body
-    console.log(req.body)
 
     try {
         const existedUSer = await User.findById(req.params.id)
