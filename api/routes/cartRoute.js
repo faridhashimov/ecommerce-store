@@ -4,12 +4,11 @@ const {
     deleteCart,
     getCart,
     updateCart,
+    getAllCarts,
 } = require('../controllers/cartController')
 const { verifyToken, verifyTokenAndAdmin } = require('../utils/verifyToken')
 
-router.post('/', createCart)
-router.get('/userId', getCart)
-router.put('/userId', updateCart)
-router.delete('/userId', deleteCart)
+router.route('/').post(createCart).get(getAllCarts)
+router.route('/:userId').get(getCart).put(updateCart).delete(deleteCart)
 
 module.exports = router
