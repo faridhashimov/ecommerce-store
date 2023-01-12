@@ -1,26 +1,86 @@
 const Cart = require('../models/CartModel')
 
-// CREATE CART
-const createCart = async (req, res) => {
+// ADD TO CART
+const addToCard = async (req, res) => {
+    const { userId } = req.params
+    const { productId, title, size, color, price, quantity } = req.body
     try {
-        const newCart = await Cart.create(req.body)
-        res.status(200).json(newCart)
-    } catch (err) {
+        const productInCart = await Cart.findOne(
+            { userId },
+            {
+                products: {
+                    $elemMatch: { productId, title, size, color, price },
+                },
+            }
+        )
+
+        console.log(productInCart === null)
+        if (!productInCart) {
+            const newCart = new Cart({
+                userId,
+                products: [
+                    {
+                        productId,
+                        title,
+                        size,
+                        color,
+                        price,
+                        quantity,
+                    },
+                ],
+            })
+            await newCart.save()
+            res.status(200).json(newCart)
+        } else if (productInCart.products.length < 1) {
+            await Cart.updateOne(
+                { userId: userId },
+                {
+                    $push: {
+                        products: req.body,
+                    },
+                }
+            )
+            res.status(201).json('Product added into cart')
+        } else {
+            await Cart.updateOne(
+                {
+                    userId,
+                    products: {
+                        $elemMatch: { productId, title, size, color, price },
+                    },
+                },
+                {
+                    $inc: {
+                        'products.$.quantity': quantity,
+                    },
+                }
+            )
+            res.status(201).json('Increase quantity')
+        }
+    } catch (error) {
         res.status(401).json(err)
     }
 }
 
 // UPDATE CART
-const updateCart = async (req, res) => {
+const updateProductQt = async (req, res) => {
+    const { userId, productId } = req.params
+    const { type } = req.query
+
     try {
-        const updatedCart = await Cart.findByIdAndUpdate(
-            req.params.userId,
+        await Cart.updateOne(
             {
-                $set: req.body,
+                userId,
+                'products.productId': productId,
             },
-            { new: true }
+            {
+                $inc: {
+                    'products.$.quantity': type === 'inc' ? 1 : -1,
+                },
+            }
         )
-        res.status(200).json(updatedCart)
+
+        res.status(200).json('Product quantity changed!')
     } catch (err) {
         res.status(401).json(err)
     }
@@ -29,7 +89,35 @@ const updateCart = async (req, res) => {
 // DELETE CART
 const deleteCart = async (req, res) => {
     try {
-        await Cart.findByIdAndDelete(req.params.userId)
+        const cart = await Cart.findOne({ userId: req.params.userId })
+        await Cart.findByIdAndDelete(cart._id)
+        res.status(200).json('Cart has been deleted')
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+// DELETE CART
+const deleteProductFromCart = async (req, res) => {
+    const { userId, productId } = req.params
+    try {
+        const cart = await Cart.updateOne(
+            {
+                userId,
+                products: {
+                    $elemMatch: { productId },
+                },
+            },
+            {
+                $pull: {
+                    products: {
+                        productId,
+                    },
+                },
+            }
+        )
+        console.log(cart._id)
+        await Cart.findByIdAndDelete(cart._id)
         res.status(200).json('Cart has been deleted')
     } catch (err) {
         res.status(401).json(err)
@@ -39,16 +127,29 @@ const deleteCart = async (req, res) => {
 // GET CART
 const getCart = async (req, res) => {
     try {
-        const cart = await Cart.findById(req.params.userId)
+        const cart = await Cart.findOne({ userId: req.params.userId })
         res.status(200).json(cart)
     } catch (err) {
         res.status(401).json(err)
     }
 }
 
+// GET ALL CARTS
+const getAllCarts = async (req, res) => {
+    try {
+        const carts = await Cart.find({})
+        res.status(200).json(carts)
+    } catch (err) {
+        console.log(err)
+        res.status(401).json(err)
+    }
+}
+
 module.exports = {
-    createCart,
-    updateCart,
+    updateProductQt,
     deleteCart,
+    deleteProductFromCart,
     getCart,
+    getAllCarts,
+    addToCard,
 }
