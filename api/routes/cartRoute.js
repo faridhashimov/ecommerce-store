@@ -1,14 +1,18 @@
 const router = require('express').Router()
 const {
-    createCart,
-    deleteCart,
+    addToCard,
     getCart,
-    updateCart,
     getAllCarts,
+    updateProductQt,
+    deleteCart,
+    deleteProductFromCart
 } = require('../controllers/cartController')
 const { verifyToken, verifyTokenAndAdmin } = require('../utils/verifyToken')
 
-router.route('/').post(createCart).get(getAllCarts)
-router.route('/:userId').get(getCart).put(updateCart).delete(deleteCart)
+router.get('/', getAllCarts)
+router.route('/:userId').get(getCart).delete(deleteCart)
+router.post('/addto/:userId', addToCard)
+router.delete('/deletefrom/:userId/product/:productId', deleteProductFromCart)
+router.put('/:userId/product/:productId/operator', updateProductQt)
 
 module.exports = router
