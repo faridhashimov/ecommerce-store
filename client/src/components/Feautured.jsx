@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import Products from './Products'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
-import useEcomService from '../services/useEcomService'
 import ErrorMsg from './ErrorMsg'
+import { useGetAllProductsQuery } from '../redux/ecommerceApi'
 
 const Container = styled.div`
     width: 100%;
@@ -64,39 +64,27 @@ const ProductsContainer = styled.div`
     align-items: center;
 `
 const Feautured = () => {
-    const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
 
-    const { error, loading, getProducts } = useEcomService()
+    const { data, isError, isLoading, error } = useGetAllProductsQuery()
 
     useEffect(() => {
-        onProductsLoad()
-    }, [])
-
-    useEffect(() => {
-        setFilteredProducts(products)
-    }, [products])
-
-    const onProductsLoad = () => {
-        getProducts().then((prod) => {
-            setProducts(prod)
-            setFilteredProducts(prod)
-        })
-    }
+        setFilteredProducts(data)
+    }, [data])
 
     const handleClick = (e) => {
         const productStatus = e.target.getAttribute('data-id')
         setActive(productStatus)
         if (productStatus !== 'All') {
             setFilteredProducts(
-                products.filter(
+                data.filter(
                     (product) => product.status.indexOf(productStatus) > -1
                 )
             )
         } else {
-            setFilteredProducts(products)
-            return products
+            setFilteredProducts(data)
+            return data
         }
     }
 
@@ -127,13 +115,13 @@ const Feautured = () => {
                     </FilterButton>
                 </Filters>
                 <ProductsContainer>
-                    {loading ? (
+                    {isLoading ? (
                         <Spinner />
-                    ) : error ? (
-                        <ErrorMsg error={error} />
-                    ) : (
+                    ) : isError ? (
+                        <ErrorMsg error={error.message} />
+                    ) : filteredProducts ? (
                         <Products products={filteredProducts.slice(0, 4)} />
-                    )}
+                    ) : null}
                 </ProductsContainer>
             </Wrapper>
         </Container>

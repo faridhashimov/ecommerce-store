@@ -1,13 +1,13 @@
 import { ArrowRightAltOutlined } from '@mui/icons-material'
 import styled from 'styled-components'
 import Products from './Products'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
-import useEcomService from '../services/useEcomService'
 import ErrorMsg from './ErrorMsg'
+import { useGetAllProductsQuery } from '../redux/ecommerceApi'
 
 const Container = styled.div`
     width: 100%;
@@ -103,40 +103,33 @@ const ProductsContainer = styled.div`
 `
 
 const RecentArrivals = () => {
-    const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
 
-    const { loading, error, getProducts } = useEcomService()
+    const {
+        data,
+        isError,
+        isLoading,
+        error,
+    } = useGetAllProductsQuery()
 
     useEffect(() => {
-        onProductsLoad()
-    }, [])
-
-    useEffect(() => {
-        setFilteredProducts(products)
-    }, [products])
-
-    const onProductsLoad = () => {
-        getProducts().then((prod) => {
-            setProducts(prod)
-            setFilteredProducts(prod)
-        })
-    }
+        setFilteredProducts(data)
+    }, [data])
 
     const handleClick = (e) => {
         const productType = e.target.getAttribute('data-id')
         setActive(productType)
         if (productType !== 'All') {
             setFilteredProducts(
-                products.filter(
+                data.filter(
                     (product) =>
                         product.category.indexOf(productType) > -1 ||
                         product.gender.indexOf(productType) > -1
                 )
             )
         } else {
-            setFilteredProducts(products)
+            setFilteredProducts(data)
         }
     }
 
@@ -182,15 +175,15 @@ const RecentArrivals = () => {
                     </FilterButton>
                 </Filters>
                 <ProductsContainer>
-                    {loading ? (
+                    {isLoading ? (
                         <Spinner />
-                    ) : error ? (
-                        <ErrorMsg error={error} />
-                    ) : (
+                    ) : isError ? (
+                        <ErrorMsg error={error?.message} />
+                    ) : filteredProducts ? (
                         <Products products={filteredProducts.slice(0, 8)} />
-                    )}
+                    ) : null}
                 </ProductsContainer>
-                {products.length > 0 ? (
+                {data?.length > 0 ? (
                     <ButtonContainer>
                         <InfoButton to="/list">
                             View More

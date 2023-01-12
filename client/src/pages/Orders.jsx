@@ -1,11 +1,10 @@
-import { NoOrders, Order, Spinner } from '../components'
+import { ErrorMsg, NoOrders, Order, Spinner } from '../components'
 import styled from 'styled-components'
 import { Search } from '@mui/icons-material'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
-import { publicRequest } from '../requestMethods'
+import { selectUser } from '../redux/selectors'
+import { useGetAllOrdersQuery } from '../redux/ecommerceApi'
 
 const MyOrders = styled.div``
 
@@ -78,8 +77,8 @@ const OrderFilterBtn = styled.button`
     &:hover {
         cursor: pointer;
         padding: 7px 20px;
-        border: 2px solid #F27A1A;
-        color: #F27A1A;
+        border: 2px solid #f27a1a;
+        color: #f27a1a;
         transition: all 0.2s ease-in;
     }
 
@@ -96,24 +95,9 @@ const OrdersList = styled.div`
 `
 
 const Orders = () => {
-    const [loading, setLoading] = useState(true)
-    const [orders, setOrders] = useState([])
-    let user = useSelector((state) => state.user.user)
-    useEffect(() => {
-        const getUserOrders = async () => {
-            try {
-                const res = await publicRequest.get(
-                    `orders/find/` + user._id
-                )
-                setLoading(false)
-                setOrders(res.data)
-            } catch (err) {
-                setLoading(false)
-                throw new Error(err)
-            }
-        }
-        getUserOrders()
-    }, [user._id])
+    let user = useSelector(selectUser)
+    const { data: orders, isLoading, isError } = useGetAllOrdersQuery(user._id)
+
 
     return (
         <>
@@ -153,12 +137,14 @@ const Orders = () => {
                     <OrderFilterBtn>Cancellations</OrderFilterBtn>
                 </OrderFilterContainer>
                 <OrdersList>
-                    {loading ? (
+                    {isLoading ? (
                         <Spinner />
                     ) : orders.length ? (
                         orders.map((order) => (
                             <Order key={order._id} {...order} />
                         ))
+                    ) : isError ? (
+                        <ErrorMsg />
                     ) : (
                         <NoOrders />
                     )}

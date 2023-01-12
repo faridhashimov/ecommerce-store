@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { CategoryPopup } from '../components'
-import useEcomService from '../services/useEcomService'
+import { useGetAllCategoriesQuery } from '../redux/ecommerceApi'
 
 const CategoriesContainer = styled.div`
     box-shadow: 0px 35px 75px -2px rgba(34, 60, 80, 0.47);
@@ -57,7 +57,7 @@ const Categories = ({ openShop }) => {
     const [cat, setCat] = useState('')
     const [categories, setCategories] = useState({})
 
-    const { loading, error, getAllCategories } = useEcomService()
+    const { data, isLoading, isError } = useGetAllCategoriesQuery()
 
     const onOpenCategoryList = (cat) => {
         setOpenCategories(true)
@@ -65,15 +65,11 @@ const Categories = ({ openShop }) => {
     }
 
     useEffect(() => {
-        onCatergoriesLoad()
-         return () => {
-            setCategories({})
-         }
-    }, [])
-
-    const onCatergoriesLoad = () => {
-        getAllCategories().then((categories) => setCategories(categories))
-    }
+        setCategories(data)
+        return () => {
+        setCategories({})
+        }
+    }, [data])
 
     return (
         <CategoriesContainer state={openShop}>
@@ -126,8 +122,8 @@ const Categories = ({ openShop }) => {
                     </CategoryItem>
                     <CategoryPopup
                         cat={cat}
-                        loading={loading}
-                        error={error}
+                        loading={isLoading}
+                        error={isError}
                         categories={categories}
                         popup={openCategories}
                     />

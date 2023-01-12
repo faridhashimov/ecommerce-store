@@ -3,15 +3,14 @@ import {
     ArrowForward,
     Facebook,
     Google,
-    ReportGmailerrorred,
     Visibility,
     VisibilityOff,
 } from '@mui/icons-material'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
-import { publicRequest } from '../requestMethods'
 import { SvgIcon } from '@mui/material'
-import useEcomService from '../services/useEcomService'
+import { useRegisterUserMutation } from '../redux/ecommerceApi'
+import Spinner from './Spinner'
 
 const REGEXP_PASS = new RegExp(
     '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
@@ -19,6 +18,7 @@ const REGEXP_PASS = new RegExp(
 
 const LoginPageContainer = styled.form`
     width: 100%;
+    min-height: 250px;
     ${mobile({ width: '90%' })}
 `
 const InputContainer = styled.div`
@@ -199,13 +199,13 @@ const SignUp = () => {
     const [matchFocus, setMatchFocus] = useState(false)
 
     const [errMsg, setErrMsg] = useState('')
-    const [success, setSuccess] = useState(false)
     const [newUser, setNewUSer] = useState(false)
 
     const [showPwd, setShowPwd] = useState(false)
     const [showMatch, setShowMatch] = useState(false)
 
-    const { loading, error, registerNewUser } = useEcomService()
+    const [registerUser, { isLoading, isError, error, isSuccess }] =
+        useRegisterUserMutation()
 
     const emailRef = useRef()
 
@@ -229,125 +229,156 @@ const SignUp = () => {
             password,
         }
 
-        registerNewUser(body).then((user) => {
+        try {
+            const user = await registerUser(body).unwrap()
             setNewUSer(user.username)
-            setSuccess(true)
-        })
+        } catch (err) {
+            console.log(err)
+            console.log(error);
+        }
     }
 
     return (
         <>
-            {success ? (
+            {isSuccess ? (
                 <Success>
-                    <h1>Welome {newUser}</h1>
+                    <h1>Welcome {newUser}</h1>
                     <p>Please Login to purchase products</p>
                 </Success>
             ) : (
                 <LoginPageContainer onSubmit={onSubmit}>
-                    <InputContainer>
-                        <Label htmlFor="email">Your email address *</Label>
-                        <Input
-                            ref={emailRef}
-                            type="email"
-                            id="email"
-                            required
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </InputContainer>
+                    {isLoading ? (
+                        <Spinner />
+                    ) : (
+                        <>
+                            <InputContainer>
+                                <Label htmlFor="email">
+                                    Your email address *
+                                </Label>
+                                <Input
+                                    ref={emailRef}
+                                    type="email"
+                                    id="email"
+                                    required
+                                    autoComplete="off"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </InputContainer>
 
-                    <InputContainer>
-                        <Label htmlFor="password">Password *</Label>
-                        <PasswordContainer>
-                            <Input
-                                onChange={(e) => setPassword(e.target.value)}
-                                onFocus={() => setPasswordFocus(true)}
-                                onBlur={() => setPasswordFocus(false)}
-                                id="password"
-                                type={showPwd ? 'text' : 'password'}
-                                required
-                            />
-                            <ShowPassWordIconContainer
-                                onClick={() => setShowPwd(!showPwd)}
-                            >
-                                {showPwd ? (
-                                    <StyledSvg
-                                        sx={{ color: '#F27A1A' }}
-                                        component={Visibility}
+                            <InputContainer>
+                                <Label htmlFor="password">Password *</Label>
+                                <PasswordContainer>
+                                    <Input
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        onFocus={() => setPasswordFocus(true)}
+                                        onBlur={() => setPasswordFocus(false)}
+                                        id="password"
+                                        type={showPwd ? 'text' : 'password'}
+                                        required
                                     />
-                                ) : (
-                                    <StyledSvg component={VisibilityOff} />
-                                )}
-                            </ShowPassWordIconContainer>
-                        </PasswordContainer>
-                        {passwordFocus && !validPassword ? (
-                            <ValidPassword>
-                                ! Must contain minimum 8 chrarcters, at least
-                                one upper case and one lower case letter, one
-                                digit, one special chracter
-                            </ValidPassword>
-                        ) : null}
-                    </InputContainer>
-                    <InputContainer>
-                        <Label htmlFor="match">Re-type Password *</Label>
-                        <PasswordContainer>
-                            <Input
-                                onChange={(e) => setMatch(e.target.value)}
-                                onFocus={() => setMatchFocus(true)}
-                                onBlur={() => setMatchFocus(false)}
-                                id="match"
-                                type={showMatch ? 'text' : 'password'}
-                                required
-                            />
-                            <ShowPassWordIconContainer
-                                onClick={() => setShowMatch(!showMatch)}
-                            >
-                                {showMatch ? (
-                                    <StyledSvg
-                                        sx={{ color: '#F27A1A' }}
-                                        component={Visibility}
+                                    <ShowPassWordIconContainer
+                                        onClick={() => setShowPwd(!showPwd)}
+                                    >
+                                        {showPwd ? (
+                                            <StyledSvg
+                                                sx={{ color: '#F27A1A' }}
+                                                component={Visibility}
+                                            />
+                                        ) : (
+                                            <StyledSvg
+                                                component={VisibilityOff}
+                                            />
+                                        )}
+                                    </ShowPassWordIconContainer>
+                                </PasswordContainer>
+                                {passwordFocus && !validPassword ? (
+                                    <ValidPassword>
+                                        ! Must contain minimum 8 chrarcters, at
+                                        least one upper case and one lower case
+                                        letter, one digit, one special chracter
+                                    </ValidPassword>
+                                ) : null}
+                            </InputContainer>
+                            <InputContainer>
+                                <Label htmlFor="match">
+                                    Re-type Password *
+                                </Label>
+                                <PasswordContainer>
+                                    <Input
+                                        onChange={(e) =>
+                                            setMatch(e.target.value)
+                                        }
+                                        onFocus={() => setMatchFocus(true)}
+                                        onBlur={() => setMatchFocus(false)}
+                                        id="match"
+                                        type={showMatch ? 'text' : 'password'}
+                                        required
                                     />
-                                ) : (
-                                    <StyledSvg component={VisibilityOff} />
-                                )}
-                            </ShowPassWordIconContainer>
-                        </PasswordContainer>
-                        {matchFocus && !validMatch ? (
-                            <ValidMatch>! Passwords does not match</ValidMatch>
-                        ) : null}
-                    </InputContainer>
+                                    <ShowPassWordIconContainer
+                                        onClick={() => setShowMatch(!showMatch)}
+                                    >
+                                        {showMatch ? (
+                                            <StyledSvg
+                                                sx={{ color: '#F27A1A' }}
+                                                component={Visibility}
+                                            />
+                                        ) : (
+                                            <StyledSvg
+                                                component={VisibilityOff}
+                                            />
+                                        )}
+                                    </ShowPassWordIconContainer>
+                                </PasswordContainer>
+                                {matchFocus && !validMatch ? (
+                                    <ValidMatch>
+                                        ! Passwords does not match
+                                    </ValidMatch>
+                                ) : null}
+                            </InputContainer>
 
-                    <LoginButtonContainer>
-                        <LoginButton
-                            disabled={!email || !validPassword || !validMatch}
-                        >
-                            Sign Up
-                            <ArrowForward
-                                style={{ fontSize: 10, marginLeft: 5 }}
-                            />
-                        </LoginButton>
-                        <PrivacyPolicy>
-                            <Checkbox type="checkbox" />
-                            <PrivacyPolicyButtonTitle mr="reg">
-                                I agree to the privacy policy *
-                            </PrivacyPolicyButtonTitle>
-                        </PrivacyPolicy>
-                    </LoginButtonContainer>
-                    <SignInWith>or sign up with</SignInWith>
-                    <SocialButtons>
-                        <SignSocialContainer>
-                            <Google
-                                style={{ color: '#CC3333', marginRight: 10 }}
-                            />
-                            Google
-                        </SignSocialContainer>
-                        <SignSocialContainer>
-                            <Facebook
-                                style={{ color: '#3366CC', marginRight: 10 }}
-                            />
-                            Facebook
-                        </SignSocialContainer>
-                    </SocialButtons>
+                            <LoginButtonContainer>
+                                <LoginButton
+                                    disabled={
+                                        !email || !validPassword || !validMatch
+                                    }
+                                >
+                                    Sign Up
+                                    <ArrowForward
+                                        style={{ fontSize: 10, marginLeft: 5 }}
+                                    />
+                                </LoginButton>
+                                <PrivacyPolicy>
+                                    <Checkbox type="checkbox" />
+                                    <PrivacyPolicyButtonTitle mr="reg">
+                                        I agree to the privacy policy *
+                                    </PrivacyPolicyButtonTitle>
+                                </PrivacyPolicy>
+                            </LoginButtonContainer>
+                            <SignInWith>or sign up with</SignInWith>
+                            <SocialButtons>
+                                <SignSocialContainer>
+                                    <Google
+                                        style={{
+                                            color: '#CC3333',
+                                            marginRight: 10,
+                                        }}
+                                    />
+                                    Google
+                                </SignSocialContainer>
+                                <SignSocialContainer>
+                                    <Facebook
+                                        style={{
+                                            color: '#3366CC',
+                                            marginRight: 10,
+                                        }}
+                                    />
+                                    Facebook
+                                </SignSocialContainer>
+                            </SocialButtons>
+                        </>
+                    )}
                 </LoginPageContainer>
             )}
         </>

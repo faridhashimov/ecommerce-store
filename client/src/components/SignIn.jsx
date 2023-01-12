@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
@@ -9,9 +9,11 @@ import {
     Visibility,
     VisibilityOff,
 } from '@mui/icons-material'
-import { loginCall } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 import { SvgIcon } from '@mui/material'
+import { useLoginUserMutation } from '../redux/ecommerceApi'
+import Spinner from './Spinner'
+import { userLogin } from '../redux/userSlice'
 
 const LoginPageContainer = styled.form`
     width: 100%;
@@ -141,8 +143,10 @@ const SignIn = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const dispatch = useDispatch()
-    const { user, error } = useSelector((state) => state.user)
+    // const { user, error } = useSelector((state) => state.user)
     let navigate = useNavigate()
+
+    const [loginUser, { isError, isLoading, error }] = useLoginUserMutation()
 
     useEffect(() => {
         emailRef.current.focus()
@@ -153,88 +157,94 @@ const SignIn = () => {
         focus && setErrMsg('')
     }, [focus])
 
-    useEffect(() => {
-        setFocus(false)
-        if (error) {
-            setErrMsg('Wrong email or password')
-        }
-        user && navigate(-1)
-    }, [error, user, navigate])
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        loginCall(
-            {
+        try {
+            const user = await loginUser({
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
-            },
-            dispatch
-        )
-        user && navigate(-1)
+            }).unwrap()
+            dispatch(userLogin(user))
+            navigate('/', { replace: true })
+        } catch (err) {
+            setFocus(false)
+            setErrMsg(err.data)
+        }
     }
 
     return (
-        <LoginPageContainer onSubmit={handleSubmit}>
-            <InputContainer>
-                <Label htmlFor="email">Email address *</Label>
-                <Input
-                    onFocus={() => setFocus(true)}
-                    ref={emailRef}
-                    id="email"
-                    name="email"
-                    data-test="email"
-                    // onChange={handleChange}
-                    required
-                    type="email"
-                />
-            </InputContainer>
-            <InputContainer>
-                <Label htmlFor="password">Password *</Label>
-                <PasswordContainer>
-                    <Input
-                        onFocus={() => setFocus(true)}
-                        ref={passwordRef}
-                        name="password"
-                        id="password"
-                        // onChange={handleChange}
-                        required
-                        type={showPwd ? 'text' : 'password'}
-                        minLength={6}
-                    />
-                    <ShowPassWordIconContainer
-                        onClick={() => setShowPwd(!showPwd)}
-                    >
-                        {showPwd ? (
-                            <StyledSvg
-                                sx={{ color: '#F27A1A' }}
-                                component={Visibility}
+        <>
+            {isLoading ? (
+                <Spinner />
+            ) : (
+                <LoginPageContainer onSubmit={handleSubmit}>
+                    <InputContainer>
+                        <Label htmlFor="email">Email address *</Label>
+                        <Input
+                            onFocus={() => setFocus(true)}
+                            ref={emailRef}
+                            id="email"
+                            name="email"
+                            // onChange={handleChange}
+                            required
+                            type="email"
+                        />
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="password">Password *</Label>
+                        <PasswordContainer>
+                            <Input
+                                onFocus={() => setFocus(true)}
+                                ref={passwordRef}
+                                name="password"
+                                id="password"
+                                // onChange={handleChange}
+                                required
+                                type={showPwd ? 'text' : 'password'}
+                                minLength={6}
                             />
-                        ) : (
-                            <StyledSvg component={VisibilityOff} />
-                        )}
-                    </ShowPassWordIconContainer>
-                </PasswordContainer>
-            </InputContainer>
-            <ErorMsg>{errMsg}</ErorMsg>
-            <LoginButtonContainer>
-                <LoginButton>
-                    Log in
-                    <ArrowForward style={{ fontSize: 10, marginLeft: 5 }} />
-                </LoginButton>
-                <ForgotPassword>Forgot Your Password?</ForgotPassword>
-            </LoginButtonContainer>
-            <SignInWith>or sign in with</SignInWith>
-            <SocialButtons>
-                <SignSocialContainer>
-                    <Google style={{ color: '#CC3333', marginRight: 10 }} />{' '}
-                    Google
-                </SignSocialContainer>
-                <SignSocialContainer>
-                    <Facebook style={{ color: '#3366CC', marginRight: 10 }} />{' '}
-                    Facebook
-                </SignSocialContainer>
-            </SocialButtons>
-        </LoginPageContainer>
+                            <ShowPassWordIconContainer
+                                onClick={() => setShowPwd(!showPwd)}
+                            >
+                                {showPwd ? (
+                                    <StyledSvg
+                                        sx={{ color: '#F27A1A' }}
+                                        component={Visibility}
+                                    />
+                                ) : (
+                                    <StyledSvg component={VisibilityOff} />
+                                )}
+                            </ShowPassWordIconContainer>
+                        </PasswordContainer>
+                    </InputContainer>
+                    {isError && <ErorMsg>{error.data}</ErorMsg>}
+                    <LoginButtonContainer>
+                        <LoginButton>
+                            Log in
+                            <ArrowForward
+                                style={{ fontSize: 10, marginLeft: 5 }}
+                            />
+                        </LoginButton>
+                        <ForgotPassword>Forgot Your Password?</ForgotPassword>
+                    </LoginButtonContainer>
+                    <SignInWith>or sign in with</SignInWith>
+                    <SocialButtons>
+                        <SignSocialContainer>
+                            <Google
+                                style={{ color: '#CC3333', marginRight: 10 }}
+                            />
+                            Google
+                        </SignSocialContainer>
+                        <SignSocialContainer>
+                            <Facebook
+                                style={{ color: '#3366CC', marginRight: 10 }}
+                            />
+                            Facebook
+                        </SignSocialContainer>
+                    </SocialButtons>
+                </LoginPageContainer>
+            )}
+        </>
     )
 }
 

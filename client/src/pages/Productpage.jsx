@@ -13,8 +13,8 @@ import {
     ProductInfo,
     ErrorMsg,
 } from '../components'
+import { useGetProductQuery } from '../redux/ecommerceApi'
 import { mobile } from '../responsive'
-import useEcomService from '../services/useEcomService'
 
 const Wrapper = styled.div`
     width: 93vw;
@@ -73,29 +73,20 @@ const InfoContainer = styled.div`
 `
 
 const Productpage = () => {
-    const [product, setProduct] = useState(null)
     const [otherInfo, setOtherInfo] = useState('delivery')
     const { id } = useParams()
 
-    const { loading, getProduct } = useEcomService()
-
-    useEffect(() => {
-        onProductLoad(id)
-    }, [])
-
-    const onProductLoad = (id) => {
-        getProduct(id).then((product) => {
-            setProduct(product)
-        })
-    }
+    const { data: product, isLoading, isError } = useGetProductQuery(id)
 
     return (
         <>
             <Navbar />
             <Wrapper>
-                {loading ? (
+                {isLoading ? (
                     <Spinner />
-                ) : !loading && product ? (
+                ) : isError ? (
+                    <ErrorMsg />
+                ) : (
                     <>
                         <ProductInfo product={product} />
                         <OtherInfo>
@@ -146,8 +137,6 @@ const Productpage = () => {
                             </MainInfo>
                         </OtherInfo>
                     </>
-                ) : (
-                    <ErrorMsg />
                 )}
             </Wrapper>
             <Footer />

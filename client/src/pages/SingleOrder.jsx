@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { SingleOrderBody, Spinner } from '../components'
-import useEcomService from '../services/useEcomService'
+import { useGetOrderQuery } from '../redux/ecommerceApi'
 
 const MyOrders = styled.div`
     display: flex;
@@ -10,22 +9,13 @@ const MyOrders = styled.div`
 `
 
 const SingleOrder = () => {
-    const [order, setOrder] = useState(null)
     const { id } = useParams()
+    const { data: order, isLoading, isError, error } = useGetOrderQuery(id)
 
-    const { loading, error, getOrder } = useEcomService()
-
-    useEffect(() => {
-        onOrderLoad(id)
-    }, [])
-
-    const onOrderLoad = (id) => {
-        getOrder(id).then((data) => setOrder(data))
-    }
-
-    const spinner = loading ? <Spinner /> : null
-    const content = !loading && order ? <SingleOrderBody order={order} /> : null
-    const errorMsg = error ? <p>Something went wrong...</p> : null
+    const spinner = isLoading ? <Spinner /> : null
+    const content =
+        !isLoading && order ? <SingleOrderBody order={order} /> : null
+    const errorMsg = isError ? <p>Something went wrong... {error}</p> : null
 
     return (
         <>
