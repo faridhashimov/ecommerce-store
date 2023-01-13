@@ -1,7 +1,7 @@
 import { ArrowRightAltOutlined } from '@mui/icons-material'
 import styled from 'styled-components'
 import Products from './Products'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { css } from 'styled-components'
 import Spinner from './Spinner'
 import { mobile } from '../responsive'

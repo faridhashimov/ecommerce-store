@@ -271,7 +271,7 @@ const Product = (item) => {
         if (productInWishlist.length === 0) {
             dispatch(addToWishlist(item))
         } else if (productInWishlist.some((e) => e._id === item._id)) {
-            navigate('/wishlist', { replace: true })
+            navigate('/wishlist')
             return
         } else {
             dispatch(addToWishlist(item))

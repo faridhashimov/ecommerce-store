@@ -20,7 +20,7 @@ const PopupContainer = styled.div`
     transition: all 0.3s ease-in;
     z-index: 1000;
     padding: 10px;
-    opacity: .75;
+    opacity: 0.75;
     &:before {
         content: '';
         position: absolute;
@@ -79,7 +79,7 @@ const NavbarPopup = ({ popup }) => {
     const dispatch = useDispatch()
     const handleLogOut = () => {
         dispatch(logOut())
-        navigate('/', { replace: true })
+        navigate('/')
     }
     return (
         <PopupContainer state={popup}>

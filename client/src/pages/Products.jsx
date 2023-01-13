@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ListProduct, Spinner } from '../components'
+import { ListProduct } from '../components'
 import { mobile } from '../responsive'
 
 const Container = styled.div`

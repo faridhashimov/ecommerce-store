@@ -257,7 +257,6 @@ const Navbar = () => {
     const [popup, setPopup] = useState(false)
     const [openShop, setOpenShop] = useState(false)
     const [search, setSearch] = useState('')
-
     const product = useSelector(selectWishlist)
     const user = useSelector(selectUser)
     const products = useSelector(selectProducts)
@@ -265,6 +264,7 @@ const Navbar = () => {
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
+    console.log(user === true)
 
     const [searchedProducts, setSearchedProducts] = useState(null)
     const { getAllProducts } = useEcomService()
