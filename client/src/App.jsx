@@ -21,9 +21,8 @@ import ScrollToTop from './components/ScrollToTop'
 import { selectUser } from './redux/selectors'
 
 function App() {
+    const user = useSelector(selectUser)
     const ProtectedRoute = ({ children }) => {
-        const user = useSelector(selectUser)
-
         if (!user) {
             return <Navigate to="/login" />
         }
@@ -33,11 +32,14 @@ function App() {
 
     return (
         <>
-            <BrowserRouter basename='/'>
+            <BrowserRouter basename="/">
                 <ScrollToTop>
                     <Routes>
                         <Route path="/" element={<Homepage />} />
-                        <Route path="login" element={<Login />} />
+                        <Route
+                            path="login"
+                            element={user ? <Navigate to={'/'} /> : <Login />}
+                        />
                         <Route path="about" element={<About />} />
                         <Route path="faq" element={<Faq />} />
                         <Route path="contact" element={<Contact />} />
