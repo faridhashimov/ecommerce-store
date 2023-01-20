@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Spinner } from '../components'
+import { ErrorMsg, Spinner } from '../components'
 import { mobile } from '../responsive'
 import { CheckCircle, Error } from '@mui/icons-material'
 import { useSelector } from 'react-redux'
-import useEcomService from '../services/useEcomService'
 import { format, parseISO } from 'date-fns'
 import { selectUser } from '../redux/selectors'
+import { useGetUserQuery, useUpdateUserMutation } from '../redux/ecommerceApi'
 
 const MyOrders = styled.div``
 
@@ -36,6 +36,7 @@ const UserInfoContainer = styled.div`
     flex: 1;
     padding: 20px;
     border-right: 1px solid #e2e2e2;
+    min-height: 445px;
     h1 {
         font-size: 16px;
         margin-bottom: 20px;
@@ -107,7 +108,6 @@ const SubmitBtn = styled.button`
         transition: all 0.2s ease;
     }
 `
-
 const UserUpdated = styled.div`
     display: flex;
     justify-content: start;
@@ -120,7 +120,6 @@ const UserUpdated = styled.div`
     font-weight: 400;
     margin-bottom: 20px;
 `
-
 const UserInfo = () => {
     const { _id } = useSelector(selectUser)
     const [updated, setUpdated] = useState(false)
@@ -135,7 +134,12 @@ const UserInfo = () => {
         phone: '',
     })
 
-    const { loading, error, getUser, updateUser } = useEcomService()
+    const { data: user, isLoading, isError } = useGetUserQuery(_id)
+    const [
+        updateUser,
+        { isLoading: isUserUpdating, isError: isUserUpdateError, error },
+    ] = useUpdateUserMutation()
+
     const [text, setText] = useState(false)
     const countryCode = text ? (
         <p style={{ color: 'red', fontSize: '12px', marginLeft: '10px' }}>
@@ -144,27 +148,18 @@ const UserInfo = () => {
     ) : null
 
     useEffect(() => {
-        getUser(_id).then((user) => {
-            const { firstName, lastName, email, phone } = user
-            setInputs({
-                firstName: firstName ? firstName : '',
-                lastName: lastName ? lastName : '',
-                email: email ? email : '',
-                phone: phone ? phone : '',
-            })
-            setYear(
-                user.birthDate ? format(parseISO(user.birthDate), 'y') : 'Year'
-            )
-            setDay(
-                user.birthDate ? format(parseISO(user.birthDate), 'd') : 'Day'
-            )
-            setMonth(
-                user.birthDate
-                    ? format(parseISO(user.birthDate), 'MM')
-                    : 'Month'
-            )
+        const { firstName, lastName, email, phone, birthDate } = user || {}
+        setInputs({
+            firstName: firstName ? firstName : '',
+            lastName: lastName ? lastName : '',
+            email: email ? email : '',
+            phone: phone ? phone : '',
         })
-    }, [])
+        setYear(birthDate ? format(parseISO(birthDate), 'y') : 'Year')
+        setDay(birthDate ? format(parseISO(birthDate), 'd') : 'Day')
+        setMonth(birthDate ? format(parseISO(birthDate), 'MM') : 'Month')
+    }, [user])
+
     const generateYear = () => {
         const arr = []
         const startYear = 1900
@@ -198,17 +193,19 @@ const UserInfo = () => {
         return arr
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
-        const body = {
+        const credentials = {
             ...inputs,
             birthDate: `${year}-${month}-${day}`,
         }
 
-        updateUser(_id, body).then((data) => {
-            data && setUpdated(true)
-            !data && setErr(true)
-        })
+        try {
+            const updatedUser = await updateUser({ credentials, _id }).unwrap()
+            console.log(updatedUser)
+        } catch (error) {
+            console.log(err)
+        }
     }
 
     const success = updated ? (
@@ -216,7 +213,7 @@ const UserInfo = () => {
     ) : null
 
     const errorMsg =
-        error && err ? <Message bg="#e99b98" title="Wrong Password" /> : null
+        isError && err ? <Message bg="#e99b98" title="Wrong Password" /> : null
 
     useEffect(() => {
         const timerId = setTimeout(() => {
@@ -247,8 +244,10 @@ const UserInfo = () => {
             {errorMsg}
             <Container>
                 <UserInfoContainer>
-                    {loading ? (
+                    {isLoading || isUserUpdating ? (
                         <Spinner />
+                    ) : isError || isUserUpdateError ? (
+                        <ErrorMsg />
                     ) : (
                         <>
                             <h1>Update Membership Infromation</h1>
