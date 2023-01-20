@@ -49,18 +49,19 @@ wishlistListenerMiddleware.startListening({
 
 const userListenerMiddleware = createListenerMiddleware()
 userListenerMiddleware.startListening({
-    matcher: isAnyOf(userLogin, logOut),
+    matcher: isAnyOf(logOut, userLogin),
     effect: (action, listenerApi) => {
         localStorage.setItem(
-            'user',
+            'userData',
             JSON.stringify(listenerApi.getState().user)
         )
     },
 })
 
+
 const cartState = JSON.parse(localStorage.getItem('products') || '[]')
 const wishlistState = JSON.parse(localStorage.getItem('wishlist') || '[]')
-const userState = JSON.parse(localStorage.getItem('user') || 'null')
+const userState = JSON.parse(localStorage.getItem('userData') || '{}')
 
 export const store = configureStore({
     preloadedState: {
