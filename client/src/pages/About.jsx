@@ -379,7 +379,7 @@ const About = () => {
                             <Photo src="https://d-themes.com/react/molla/demo-8/images/team/member-2.jpg" />
                             <MemberHoverInfo>
                                 <MemberName color="#FFF">
-                                    Samanta Grey
+                                Bruce Sutton
                                 </MemberName>
                                 <MemberPosition color="#FFF">
                                     Founder & CEO
@@ -414,7 +414,7 @@ const About = () => {
                             <Photo src="https://d-themes.com/react/molla/demo-8/images/team/member-3.jpg" />
                             <MemberHoverInfo>
                                 <MemberName color="#FFF">
-                                    Samanta Grey
+                                Janet Joy
                                 </MemberName>
                                 <MemberPosition color="#FFF">
                                     Founder & CEO
