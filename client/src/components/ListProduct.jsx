@@ -122,7 +122,7 @@ const Status = styled.div`
     height: 35px;
     width: 35px;
     color: #fff;
-    font-size: ${(props) => (props.fs === 'Out of Stock' ? '9px' : '11px')};
+    font-size: ${(props) => (props.fs === 'Out Of Stock' ? '8.5px' : '11px')};
     display: flex;
     justify-content: center;
     align-items: center;
