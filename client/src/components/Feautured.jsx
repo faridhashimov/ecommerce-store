@@ -67,7 +67,9 @@ const Feautured = () => {
     const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
 
-    const { data, isError, isLoading, error } = useGetAllProductsQuery()
+    const { data, isError, isLoading, error } = useGetAllProductsQuery({
+        order: 'all',
+    })
 
     useEffect(() => {
         setFilteredProducts(data)
