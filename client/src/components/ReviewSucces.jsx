@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const ModalContainer = styled.div`
     position: relative;
-    min-height: 75%;
-    width: 33.3%;
+    height: 100%;
+    width: 100%;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -56,12 +56,13 @@ const ReviewInfoTitle = styled.h1`
     font-size: 28px;
     font-weight: 500;
     color: green;
-    margin: 15px 0px;
+    margin: 15px 0px 0px;
 `
 const ReviewInfoDesc = styled.p`
     font-size: 16px;
     font-weight: 500;
     text-align: center;
+    margin: 40px 0px;
 `
 
 const CloseBtn = styled.button`
@@ -80,10 +81,9 @@ const CloseBtn = styled.button`
     }
 `
 
-const ReviewSucces = ({ setOpen, setSucces }) => {
+const ReviewSucces = ({ setOpen }) => {
     const handleClick = () => {
         setOpen(false)
-        setSucces(false)
     }
     return (
         <ModalContainer>
