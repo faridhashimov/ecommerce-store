@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import {
     FavoriteBorder,
@@ -11,9 +11,10 @@ import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
 import { SvgIcon } from '@mui/material'
 import { Categories, NavbarPopup } from '../components'
-import useEcomService from '../services/useEcomService'
 import SearchDropdown from './SearchDropdown'
 import { selectProducts, selectUser, selectWishlist } from '../redux/selectors'
+import { useGetSearchedProductsQuery } from '../redux/ecommerceApi'
+import { useDebounce } from '../hooks/useDebounce'
 
 const Container = styled.div`
     height: 60px;
@@ -37,7 +38,6 @@ const MainNav = styled.div`
     justify-content: space-between;
     align-items: center;
 `
-
 const Left = styled.div``
 const Logo = styled.h1`
     font-weight: bold;
@@ -50,7 +50,6 @@ const Reverse = styled.span`
     color: #f27a1a;
 `
 const Center = styled.div`
-    /* width: 50%; */
     height: 100%;
     display: flex;
     justify-content: center;
@@ -79,7 +78,6 @@ const MenuItemContainer = styled.li`
     }
     &:hover::after {
         width: 100%;
-        /* transition: width .3s; */
     }
     a {
         padding: 10px 15px;
@@ -107,7 +105,6 @@ const ShopAnimation = styled.span`
     background-size: 200% auto;
     color: #fff;
     background-clip: text;
-    /* text-fill-color: transparent; */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textclip 2s linear infinite;
@@ -132,7 +129,6 @@ const SearchContainer = styled.div`
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 25px;
-    /* position: relative; */
     ${mobile({ display: 'none' })}
 `
 const Input = styled.input`
@@ -206,7 +202,6 @@ const StyledPersonIcon = styled(SvgIcon)`
     font-size: 24px;
     transition: all 0.2s ease-in;
 `
-
 const ProfileContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -224,7 +219,6 @@ const ProfileContainer = styled.div`
 const ProfileLink = styled(Link)`
     color: #666;
     font-size: 12px;
-    /* font-weight: 500; */
     text-decoration: none;
 `
 const Profile = styled.div`
@@ -256,7 +250,7 @@ const ProfileImage = styled.img`
 const Navbar = () => {
     const [popup, setPopup] = useState(false)
     const [openShop, setOpenShop] = useState(false)
-    const [search, setSearch] = useState('')
+    const [searchTerm, setSearchTerm] = useState('')
     const product = useSelector(selectWishlist)
     const user = useSelector(selectUser)
     const products = useSelector(selectProducts)
@@ -264,25 +258,20 @@ const Navbar = () => {
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
-    console.log(user === true)
 
-    const [searchedProducts, setSearchedProducts] = useState(null)
-    const { getAllProducts } = useEcomService()
+    const debouncedSearchQuery = useDebounce(searchTerm, 500)
+    const {
+        data: searchedProducts = [],
+        isError,
+        isLoading,
+        error,
+    } = useGetSearchedProductsQuery(debouncedSearchQuery, {
+        skip: debouncedSearchQuery.length < 2,
+    })
 
     let activeStyle = {
         borderBottom: '2px solid #000',
     }
-
-    useEffect(() => {
-        const searchId = setTimeout(() => {
-            search.length > 0 &&
-                getAllProducts(search).then((data) => setSearchedProducts(data))
-        }, 500)
-
-        return () => {
-            clearTimeout(searchId)
-        }
-    }, [search])
 
     return (
         <Container>
@@ -362,7 +351,7 @@ const Navbar = () => {
                     <Right>
                         <SearchContainer>
                             <Input
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Search product..."
                             />
                             <SearchButton>
@@ -375,9 +364,10 @@ const Navbar = () => {
                                     }}
                                 />
                             </SearchButton>
-                            {searchedProducts?.length > 0 && (
-                                <SearchDropdown items={searchedProducts} />
-                            )}
+                            {searchTerm.length > 0 &&
+                                searchedProducts.length > 0 && (
+                                    <SearchDropdown items={searchedProducts} />
+                                )}
                         </SearchContainer>
                         {user ? (
                             <>
