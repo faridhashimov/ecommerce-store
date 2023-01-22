@@ -106,16 +106,17 @@ const RecentArrivals = () => {
     const [filteredProducts, setFilteredProducts] = useState([])
     const [active, setActive] = useState('All')
 
-    const {
-        data,
-        isError,
-        isLoading,
-        error,
-    } = useGetAllProductsQuery()
+    const { data, isError, isLoading, error } = useGetAllProductsQuery({
+        order: 'new',
+    })
 
     useEffect(() => {
         setFilteredProducts(data)
     }, [data])
+
+    const filters = data
+        ? [...new Set(data.map((product) => product.gender).flat())]
+        : null
 
     const handleClick = (e) => {
         const productType = e.target.getAttribute('data-id')
@@ -125,7 +126,7 @@ const RecentArrivals = () => {
                 data.filter(
                     (product) =>
                         product.category.indexOf(productType) > -1 ||
-                        product.gender.indexOf(productType) > -1
+                        product.gender === productType
                 )
             )
         } else {
@@ -137,52 +138,43 @@ const RecentArrivals = () => {
         <Container>
             <Wrapper>
                 <Title>Recent Arrivals</Title>
-                <Filters>
-                    <FilterButton
-                        bg={active === 'All' ? true : false}
-                        onClick={handleClick}
-                        data-id="All"
-                    >
-                        All
-                    </FilterButton>
-                    <FilterButton
-                        bg={active === 'Women' ? true : false}
-                        onClick={handleClick}
-                        data-id="Women"
-                    >
-                        Women
-                    </FilterButton>
-                    <FilterButton
-                        bg={active === 'Men' ? true : false}
-                        onClick={handleClick}
-                        data-id="Men"
-                    >
-                        Men
-                    </FilterButton>
-                    <FilterButton
-                        bg={active === 'Kids' ? true : false}
-                        onClick={handleClick}
-                        data-id="Kids"
-                    >
-                        Kids
-                    </FilterButton>
-                    <FilterButton
-                        bg={active === 'Shoes' ? true : false}
-                        onClick={handleClick}
-                        data-id="Shoes"
-                    >
-                        Shoes & Boots
-                    </FilterButton>
-                </Filters>
-                <ProductsContainer>
-                    {isLoading ? (
-                        <Spinner />
-                    ) : isError ? (
-                        <ErrorMsg error={error?.message} />
-                    ) : filteredProducts ? (
-                        <Products products={filteredProducts.slice(0, 8)} />
-                    ) : null}
-                </ProductsContainer>
+                {isLoading ? (
+                    <Spinner />
+                ) : isError ? (
+                    <ErrorMsg error={error?.message} />
+                ) : filteredProducts ? (
+                    <>
+                        <Filters>
+                            <FilterButton
+                                bg={active === 'All' ? true : false}
+                                onClick={handleClick}
+                                data-id="All"
+                            >
+                                All
+                            </FilterButton>
+                            {filters.map((filter) => (
+                                <FilterButton
+                                    key={filter}
+                                    bg={active === filter ? true : false}
+                                    onClick={handleClick}
+                                    data-id={filter}
+                                >
+                                    {filter}
+                                </FilterButton>
+                            ))}
+                            <FilterButton
+                                bg={active === 'Shoes' ? true : false}
+                                onClick={handleClick}
+                                data-id="Shoes"
+                            >
+                                Shoes & Boots
+                            </FilterButton>
+                        </Filters>
+                        <ProductsContainer>
+                            <Products products={filteredProducts.slice(0, 8)} />
+                        </ProductsContainer>
+                    </>
+                ) : null}
                 {data?.length > 0 ? (
                     <ButtonContainer>
                         <InfoButton to="/list">
