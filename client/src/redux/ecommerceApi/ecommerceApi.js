@@ -17,7 +17,10 @@ export const ecommerceApi = createApi({
     }),
     endpoints: (build) => ({
         getAllProducts: build.query({
-            query: () => `products`,
+            query: ({ order }) => ({
+                url: `products`,
+                params: { order },
+            }),
             providesTags: (result) =>
                 result
                     ? [
@@ -85,6 +88,13 @@ export const ecommerceApi = createApi({
                 body: credentials,
             }),
         }),
+        addReview: build.mutation({
+            query: ({ review, _id, user }) => ({
+                url: `products/${_id}/${user._id}/reviews`,
+                method: 'POST',
+                body: review,
+            }),
+        }),
     }),
 })
 
@@ -99,4 +109,5 @@ export const {
     useLoginUserMutation,
     useRegisterUserMutation,
     useUpdateUserMutation,
+    useAddReviewMutation,
 } = ecommerceApi
