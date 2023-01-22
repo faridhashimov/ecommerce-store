@@ -66,7 +66,7 @@ const OrderFilterContainer = styled.div`
 const OrderFilterBtn = styled.button`
     padding: 8px 21px;
     border-radius: 5px;
-    border: 1px solid #e2e2e2;
+    border: 1.5px solid #e2e2e2;
     font-size: 14px;
     font-weight: 500;
     background-color: transparent;
@@ -76,8 +76,7 @@ const OrderFilterBtn = styled.button`
 
     &:hover {
         cursor: pointer;
-        padding: 7px 20px;
-        border: 2px solid #f27a1a;
+        border: 1.5px solid #f27a1a;
         color: #f27a1a;
         transition: all 0.2s ease-in;
     }
