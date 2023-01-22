@@ -204,7 +204,7 @@ const createReview = async (req, res) => {
             if (product.reviews.find((x) => x.name === user.username)) {
                 return res
                     .status(400)
-                    .json('You are already submitted a review')
+                    .json('You have already written a review for this product.')
             }
         }
         const newReview = {
@@ -235,10 +235,10 @@ const getProductReviews = async (req, res) => {
 
 // GET ALL REVIEWS
 const getAllReviews = async (req, res) => {
-    console.log(req.query);
+    console.log(req.query)
     try {
         const reviews = await Product.find({}).select('reviews')
-        const allReviews = reviews.flatMap(x => x.reviews)
+        const allReviews = reviews.flatMap((x) => x.reviews)
         res.status(201).json(allReviews)
     } catch (err) {
         res.status(401).json(err)
@@ -314,5 +314,5 @@ module.exports = {
     getAllCategories,
     getUserReviews,
     getProductsCount,
-    getAllReviews
+    getAllReviews,
 }
