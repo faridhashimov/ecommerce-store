@@ -88,6 +88,14 @@ export const ecommerceApi = createApi({
                 body: credentials,
             }),
         }),
+        createNewOrder: build.mutation({
+            query: (body) => ({
+                url: `orders`,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: [{ type: 'Orders', id: 'LIST' }],
+        }),
         addReview: build.mutation({
             query: ({ review, _id, user }) => ({
                 url: `products/${_id}/${user._id}/reviews`,
@@ -110,4 +118,5 @@ export const {
     useRegisterUserMutation,
     useUpdateUserMutation,
     useAddReviewMutation,
+    useCreateNewOrderMutation
 } = ecommerceApi
