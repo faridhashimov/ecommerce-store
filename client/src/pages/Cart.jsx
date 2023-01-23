@@ -221,7 +221,7 @@ const Cart = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [createNewOrder, { isLoading, isError, isSuccess }] =
+    const [createNewOrder, { isLoading, isError }] =
         useCreateNewOrderMutation()
 
     const totalSum = products
@@ -257,7 +257,6 @@ const Cart = () => {
 
         try {
             const res = await createNewOrder(body).unwrap()
-            console.log(res)
             dispatch(resetCart())
             navigate('/success', {
                 state: {
@@ -273,7 +272,6 @@ const Cart = () => {
                 },
             })
         } catch (err) {
-            console.log(err.message)
             throw new Error('Something went wrong')
         }
     }
@@ -326,7 +324,6 @@ const Cart = () => {
                     }}
                     onApprove={function (data, actions) {
                         return actions.order.capture().then(function (details) {
-                            console.log(details)
                             createOrder(details)
                         })
                     }}
