@@ -366,7 +366,12 @@ const Navbar = () => {
                             </SearchButton>
                             {searchTerm.length > 0 &&
                                 searchedProducts.length > 0 && (
-                                    <SearchDropdown items={searchedProducts} />
+                                    <SearchDropdown
+                                        items={searchedProducts}
+                                        isLoading={isLoading}
+                                        isError={isError}
+                                        error={error}
+                                    />
                                 )}
                         </SearchContainer>
                         {user ? (

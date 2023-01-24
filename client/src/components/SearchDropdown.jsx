@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import ErrorMsg from './ErrorMsg'
+import Spinner from './Spinner'
 
 const MainContainer = styled.div`
     position: absolute;
@@ -46,26 +48,26 @@ const Price = styled.span`
     font-weight: 400;
     color: #f27a1a;
 `
-
-const SearchDropdown = ({ items }) => {
+const SearchDropdown = ({ items, isLoading, isError, error }) => {
     return (
         <MainContainer>
-            <MainWrapper>
-                <ItemsContainer>
-                    {items.map(({ _id, img, title, price }) => (
-                        <ItemContainer key={_id} to={`/product/${_id}`}>
-                            <ItemImage src={img[3]} />
-                            <Title>{title}</Title>
-                            <Price>${price}</Price>
-                        </ItemContainer>
-                    ))}
-                    {/* <ItemContainer to="/">
-                        <ItemImage src="https://d-themes.com/react_asset_api/molla/uploads/product_4_1_300x408_5d955e425b.jpg" />
-                        <Title>Denim Jacket</Title>
-                        <Price>$23.99</Price>
-                    </ItemContainer> */}
-                </ItemsContainer>
-            </MainWrapper>
+            {isLoading ? (
+                <Spinner />
+            ) : isError ? (
+                <ErrorMsg error={error.data} />
+            ) : (
+                <MainWrapper>
+                    <ItemsContainer>
+                        {items.map(({ _id, img, title, price }) => (
+                            <ItemContainer key={_id} to={`/product/${_id}`}>
+                                <ItemImage src={img[3]} />
+                                <Title>{title}</Title>
+                                <Price>${price}</Price>
+                            </ItemContainer>
+                        ))}
+                    </ItemsContainer>
+                </MainWrapper>
+            )}
         </MainContainer>
     )
 }
