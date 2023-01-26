@@ -254,7 +254,7 @@ const Navbar = () => {
     const product = useSelector(selectWishlist)
     const user = useSelector(selectUser)
     const products = useSelector(selectProducts)
-    const quantity = products.reduce((sum, curr) => sum + curr.quantity, 0)
+    const quantity = products?.reduce((sum, curr) => sum + curr.quantity, 0)
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
