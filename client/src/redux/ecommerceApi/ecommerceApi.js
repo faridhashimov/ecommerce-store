@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const ecommerceApi = createApi({
     reducerPath: 'ecommerceApi',
-    tagTypes: ['Products', 'Orders', 'Users', 'Categories'],
+    tagTypes: ['Products', 'Orders', 'Users', 'Categories', 'Carts'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://ecommerce-store-backend.vercel.app/api/',
         prepareHeaders: (headers, { getState }) => {
@@ -67,6 +67,10 @@ export const ecommerceApi = createApi({
             query: () => 'products/find/categories',
             providesTags: (result, error, id) => [{ type: 'Categories', id }],
         }),
+        getUserCart: build.query({
+            query: (userId) => `cart/${userId}`,
+            providesTags: (result, error, id) => [{ type: 'Carts', id }],
+        }),
         registerUser: build.mutation({
             query: (credentials) => ({
                 url: 'auth/register',
@@ -103,6 +107,13 @@ export const ecommerceApi = createApi({
                 body: review,
             }),
         }),
+        addToCart: build.mutation({
+            query: ({ data, userId }) => ({
+                url: `cart/addto/${userId}`,
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 })
 
@@ -114,9 +125,11 @@ export const {
     useGetProductQuery,
     useGetAllCategoriesQuery,
     useGetUserQuery,
+    useLazyGetUserCartQuery,
     useLoginUserMutation,
     useRegisterUserMutation,
     useUpdateUserMutation,
     useAddReviewMutation,
-    useCreateNewOrderMutation
+    useCreateNewOrderMutation,
+    useAddToCartMutation,
 } = ecommerceApi
