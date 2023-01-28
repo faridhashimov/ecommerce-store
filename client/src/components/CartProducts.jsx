@@ -141,7 +141,7 @@ const CartProducts = ({ item, i }) => {
         <ProductsListBodyElement>
             <ImageTitleContainer fl="14">
                 <ImagerContainer>
-                    <Image src={item.img[0]} alt={item.title} />
+                    <Image src={item.img} alt={item.title} />
                 </ImagerContainer>
                 <Title>{item.title}</Title>
                 <ProductSize>{item.productSize}</ProductSize>
