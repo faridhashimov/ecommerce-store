@@ -12,7 +12,7 @@ const { verifyToken, verifyTokenAndAdmin } = require('../utils/verifyToken')
 router.get('/', getAllCarts)
 router.route('/:userId').get(getCart).delete(deleteCart)
 router.post('/addto/:userId', addToCard)
-router.delete('/deletefrom/:userId/product/:productId', deleteProductFromCart)
+router.delete('/deletefrom/:userId/product/:id', deleteProductFromCart)
 router.put('/:userId/product/:productId/operator', updateProductQt)
 
 module.exports = router
