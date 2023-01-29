@@ -4,7 +4,8 @@ export const ecommerceApi = createApi({
     reducerPath: 'ecommerceApi',
     tagTypes: ['Products', 'Orders', 'Users', 'Categories', 'Carts'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://ecommerce-store-backend.vercel.app/api/',
+        // baseUrl: 'https://ecommerce-store-backend.vercel.app/api/',
+        baseUrl: 'http://localhost:5000/api/',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().user?.user?.accessToken
 
@@ -108,11 +109,25 @@ export const ecommerceApi = createApi({
             }),
         }),
         addToCart: build.mutation({
-            query: ({ data, userId }) => ({
-                url: `cart/addto/${userId}`,
-                method: 'POST',
-                body: data,
-            }),
+            query: ({ data, userId }) => {
+                console.log(data)
+                return {
+                    url: `cart/addto/${userId}`,
+                    method: 'POST',
+                    body: data,
+                }
+            },
+            invalidatesTags: [{ type: 'Carts', id: 'LIST' }],
+        }),
+        updateCart: build.mutation({
+            query: ({ type, userId, productId }) => {
+                return {
+                    url: `cart/${userId}/product/${productId}/operator`,
+                    method: 'PUT',
+                    params: { type },
+                }
+            },
+            invalidatesTags: [{ type: 'Carts', id: 'LIST' }],
         }),
     }),
 })
@@ -132,4 +147,5 @@ export const {
     useAddReviewMutation,
     useCreateNewOrderMutation,
     useAddToCartMutation,
+    useUpdateCartMutation
 } = ecommerceApi
