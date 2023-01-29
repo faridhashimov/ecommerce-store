@@ -13,6 +13,6 @@ router.get('/', getAllCarts)
 router.route('/:userId').get(getCart).delete(deleteCart)
 router.post('/addto/:userId', addToCard)
 router.delete('/deletefrom/:userId/product/:id', deleteProductFromCart)
-router.put('/:userId/product/:productId/operator', updateProductQt)
+router.put('/:userId/product/:id/operator', updateProductQt)
 
 module.exports = router

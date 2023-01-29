@@ -92,14 +92,14 @@ const addToCard = async (req, res) => {
 
 // UPDATE CART
 const updateProductQt = async (req, res) => {
-    const { userId, productId } = req.params
+    const { userId, id } = req.params
     const { type } = req.query
 
     try {
         await Cart.updateOne(
             {
                 userId,
-                'products.productId': productId,
+                'products._id': id,
             },
             {
                 $inc: {
