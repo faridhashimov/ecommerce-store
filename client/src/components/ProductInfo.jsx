@@ -9,11 +9,13 @@ import {
 import styled from 'styled-components'
 import { css } from 'styled-components'
 import { MainImageComponent } from '../components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { SvgIcon } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { addToCart } from '../redux/cartSlice'
 import { mobile } from '../responsive'
+import { selectUser } from '../redux/selectors'
+import { useAddToCartMutation } from '../redux/ecommerceApi'
 
 const Modal = styled.div`
     height: 100%;
@@ -84,7 +86,7 @@ const ImageContainer = styled.div`
         opacity: 1;
         transition: all 0.2s ease-in;
     }
-    ${mobile({margin: '0px 1.5px 10px'})}
+    ${mobile({ margin: '0px 1.5px 10px' })}
 `
 const Image = styled.img`
     height: 100%;
@@ -103,7 +105,7 @@ const ModalInfo = styled.div`
         background-color: #ebebeb;
         border-radius: 4px;
     }
-    ${mobile({paddingLeft: '0px'})}
+    ${mobile({ paddingLeft: '0px' })}
 `
 const ProductTitle = styled.h1`
     font-size: 24px;
@@ -111,7 +113,7 @@ const ProductTitle = styled.h1`
     color: #333;
     margin-bottom: 10px;
     line-height: 32px;
-    ${mobile({fontSize: '22px'})}
+    ${mobile({ fontSize: '22px' })}
 `
 const ProductPrice = styled.h3`
     font-size: 24px;
@@ -287,17 +289,19 @@ const StyledSocial = styled(SvgIcon)`
 
 const ProductInfo = ({ product }) => {
     const [quantity, setQuantity] = useState(1)
-    const [chooseColor, setChooseColor] = useState('')
-    const [chooseSize, setChooseSize] = useState('')
+    const [productColor, setProductColor] = useState('')
+    const [productSize, setProductSize] = useState('')
     const dispatch = useDispatch()
     const [image, setImage] = useState(product.img[0])
+    const user = useSelector(selectUser)
+    const [sendToCart, { isLoading, isError }] = useAddToCartMutation()
 
     const onSetImage = useCallback((item) => {
         setImage(item)
     }, [])
 
     const onChooseColor = (color) => {
-        setChooseColor(color)
+        setProductColor(color)
     }
 
     const onSetQuantity = (exp) => {
@@ -308,20 +312,32 @@ const ProductInfo = ({ product }) => {
         }
     }
 
-    const onAddToCart = () => {
-        dispatch(
-            addToCart({
-                _id: product._id,
-                brand: product.brand,
-                title: product.title,
-                img: product.img,
-                productColor: chooseColor,
-                productSize: chooseSize,
-                price: product.price,
-                quantity,
-                total: product.price * quantity,
-            })
-        )
+    const onAddToCart = async () => {
+        let data = {
+            productId: product._id,
+            brand: product.brand,
+            title: product.title,
+            img: product.img[0],
+            productColor,
+            productSize,
+            price: product.price,
+            quantity,
+        }
+
+        try {
+            if (!user) {
+                dispatch(
+                    addToCart({ ...data, total: product.price * quantity })
+                )
+            } else {
+                await sendToCart({
+                    data,
+                    userId: user._id,
+                }).unwrap()
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -364,7 +380,7 @@ const ProductInfo = ({ product }) => {
                                 onClick={() => onChooseColor(item)}
                                 key={item}
                                 bg={`#${item}`}
-                                shadow={chooseColor === item ? true : null}
+                                shadow={productColor === item ? true : null}
                             />
                         ))}
                     </FilterColor>
@@ -373,7 +389,7 @@ const ProductInfo = ({ product }) => {
                     <FilterContainer>
                         <FilterTitle>Size:</FilterTitle>
                         <FilterSize
-                            onChange={(e) => setChooseSize(e.target.value)}
+                            onChange={(e) => setProductSize(e.target.value)}
                         >
                             <Size>Select a size</Size>
                             {product.size?.map((item) => (
@@ -398,10 +414,10 @@ const ProductInfo = ({ product }) => {
                     <AddToCartBtn
                         onClick={onAddToCart}
                         disabled={
-                            (!chooseColor || !chooseSize) &&
+                            (!productColor || !productSize) &&
                             product.size?.length > 0
                                 ? true
-                                : !chooseColor && product.size?.length === 0
+                                : !productColor && product.size?.length === 0
                                 ? true
                                 : false
                         }
@@ -411,11 +427,10 @@ const ProductInfo = ({ product }) => {
                                 fontSize: '14px',
                                 marginRight: '7px',
                             }}
-                        />{' '}
+                        />
                         Add to card
                     </AddToCartBtn>
                     <WishlistBtn>
-                        {' '}
                         <FavoriteBorder
                             sx={{
                                 color: '#F27A1A',
@@ -446,7 +461,7 @@ const ProductInfo = ({ product }) => {
                         <StyledSocial component={Pinterest} />
                     </SocialContainer>
                 </SharContainer>
-            </ModalInfo>{' '}
+            </ModalInfo>
         </Modal>
     )
 }
