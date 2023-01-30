@@ -1,7 +1,5 @@
 import { Close } from '@mui/icons-material'
-import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { decreaseQt, deleteFromCart, increaseQt } from '../redux/cartSlice'
 import { mobile } from '../responsive'
 
 const ProductsListHeader = styled.div`
@@ -106,37 +104,44 @@ const ProductColor = styled.div`
 `
 const AmountContainer = styled.div`
     border: 1px solid #d7d7d7;
-    padding: 7px 5px;
+    border-radius: 3px;
+    overflow: hidden;
     font-size: 12px;
     font-weight: 400;
     color: #777;
     width: 95px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `
 const AmountChangeBtn = styled.button`
+    padding: 7px 5px;
     background: transparent;
     border: transparent;
-    color: #777;
+    color: #f27a1a;
+    background-color: #fafafa;
     cursor: pointer;
+    transition: all ease-in 0.2s;
     &:hover {
-        color: #f27a1a;
+        background-color: #e6e6e6;
+        transition: all ease-in 0.2s;
+    }
+    &:disabled {
+        color: #cacaca;
+    }
+    &:first-child {
+        border-right: 1px solid #e6e6e6;
+    }
+    &:last-child {
+        border-left: 1px solid #e6e6e6;
     }
 `
-const Amount = styled.span``
+const Amount = styled.span`
+    text-align: center;
+`
 
-const CartProducts = ({ item, i }) => {
-    const dispatch = useDispatch()
-    const handleClik = (exp, id) => {
-        if (exp === 'dec') {
-            id.quantity > 1 && dispatch(decreaseQt(id))
-        } else {
-            dispatch(increaseQt(id))
-        }
-    }
-    const handleDelete = (id) => {
-        dispatch(deleteFromCart(id))
-    }
+const CartProducts = ({ item, handleClick, handleDelete }) => {
+
     return (
         <ProductsListBodyElement>
             <ImageTitleContainer fl="14">
@@ -154,13 +159,14 @@ const CartProducts = ({ item, i }) => {
                 <StockStatus>
                     <AmountContainer>
                         <AmountChangeBtn
-                            onClick={() => handleClik('dec', item)}
+                            onClick={() => handleClick('dec', item)}
+                            disabled={item.quantity < 2 ? true : false}
                         >
                             -
                         </AmountChangeBtn>
                         <Amount>{item.quantity}</Amount>
                         <AmountChangeBtn
-                            onClick={() => handleClik('inc', item)}
+                            onClick={() => handleClick('inc', item)}
                         >
                             +
                         </AmountChangeBtn>
