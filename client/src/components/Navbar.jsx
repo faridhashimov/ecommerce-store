@@ -13,8 +13,12 @@ import { SvgIcon } from '@mui/material'
 import { Categories, NavbarPopup } from '../components'
 import SearchDropdown from './SearchDropdown'
 import { selectProducts, selectUser, selectWishlist } from '../redux/selectors'
-import { useGetSearchedProductsQuery } from '../redux/ecommerceApi'
+import {
+    useGetSearchedProductsQuery,
+    useLazyGetUserCartQuery,
+} from '../redux/ecommerceApi'
 import { useDebounce } from '../hooks/useDebounce'
+import { useEffect } from 'react'
 
 const Container = styled.div`
     height: 60px;
@@ -254,7 +258,25 @@ const Navbar = () => {
     const product = useSelector(selectWishlist)
     const user = useSelector(selectUser)
     const products = useSelector(selectProducts)
-    const quantity = products?.reduce((sum, curr) => sum + curr.quantity, 0)
+    const [
+        getUserCart,
+        {
+            isLoading: isCartLoading,
+            isError: isCartError,
+            data: cart = { products: [] },
+        },
+    ] = useLazyGetUserCartQuery()
+
+    useEffect(() => {
+        if (user) {
+            getUserCart(user._id)
+        }
+    }, [user, getUserCart])
+    // console.log(cart)
+
+    const quantity = user
+        ? cart.products.reduce((sum, curr) => sum + curr.quantity, 0)
+        : products?.reduce((sum, curr) => sum + curr.quantity, 0)
     const totalSum = products
         .reduce((sum, prevValue) => sum + prevValue.total, 0)
         .toFixed(2)
