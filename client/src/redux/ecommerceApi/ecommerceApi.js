@@ -70,7 +70,16 @@ export const ecommerceApi = createApi({
         }),
         getUserCart: build.query({
             query: (userId) => `cart/${userId}`,
-            providesTags: (result, error, id) => [{ type: 'Carts', id }],
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.products.map(({ id }) => ({
+                              type: 'Carts',
+                              id,
+                          })),
+                          { type: 'Carts', id: 'LIST' },
+                      ]
+                    : [{ type: 'Carts', id: 'LIST' }],
         }),
         registerUser: build.mutation({
             query: (credentials) => ({
@@ -129,6 +138,15 @@ export const ecommerceApi = createApi({
             },
             invalidatesTags: [{ type: 'Carts', id: 'LIST' }],
         }),
+        deleteProductFromCart: build.mutation({
+            query: ({ userId, productId }) => {
+                return {
+                    url: `cart/deletefrom/${userId}/product/${productId}`,
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: [{ type: 'Carts', id: 'LIST' }],
+        }),
     }),
 })
 
@@ -147,5 +165,6 @@ export const {
     useAddReviewMutation,
     useCreateNewOrderMutation,
     useAddToCartMutation,
-    useUpdateCartMutation
+    useUpdateCartMutation,
+    useDeleteProductFromCartMutation
 } = ecommerceApi
