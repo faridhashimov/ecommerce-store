@@ -30,6 +30,23 @@ const userRegister = async (req, res) => {
     }
 }
 
+const generateAccessToken = (user) => {
+    return jwt.sign(
+        { id: user._id, isAdmin: user.isAdmin },
+        process.env.JWT_KEY,
+        {
+            expiresIn: '5s',
+        }
+    )
+}
+
+const generateRefreshToken = (user) => {
+    return jwt.sign(
+        { id: user._id, isAdmin: user.isAdmin },
+        process.env.JWT_REFRESH_KEY
+    )
+}
+
 // LOGIN USER
 const userLogin = async (req, res) => {
     try {
@@ -48,13 +65,15 @@ const userLogin = async (req, res) => {
         }
         const { password, ...others } = user._doc
 
-        const accessToken = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin },
-            process.env.JWT_KEY,
-            {
-                expiresIn: '1d',
-            }
-        )
+        const accessToken = generateAccessToken(user)
+        const refreshToken = generateRefreshToken(user)
+
+        res.cookie('jwt', refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        })
 
         res.status(201).json({
             accessToken,
@@ -65,4 +84,42 @@ const userLogin = async (req, res) => {
     }
 }
 
-module.exports = { userRegister, userLogin }
+const refresh = (req, res) => {
+    const cookies = req.cookies
+
+    if (!cookies?.jwt) return res.status(401).json('Unauthorized')
+
+    const refreshToken = cookies.jwt
+
+    jwt.verify(
+        refreshToken,
+        process.env.JWT_REFRESH_KEY,
+        async (err, decoded) => {
+            if (err) {
+                return res.status(403).json('Forbidden')
+            }
+
+            console.log(decoded)
+
+            const user = await User.findOne({ _id: decoded.id })
+
+            if (!user) {
+                return res.status(401).json('Unauthorized')
+            }
+
+            const accessToken = generateAccessToken(user)
+            const { password, ...others } = user._doc
+
+            res.status(201).json({ accessToken, ...others })
+        }
+    )
+}
+
+const logOut = (req, res) => {
+    const cookies = req.cookies
+    if (!cookies?.jwt) return res.status(204)
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
+}
+
+module.exports = { userRegister, userLogin, refresh, logOut }
