@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
     if (accessToken) {
         const token = accessToken.replace('Bearer ', '')
         jwt.verify(token, process.env.JWT_KEY, (error, user) => {
-            if (error) res.status(401).json('Token is not valid')
+            if (error) res.status(403).json('Token is not valid')
             req.user = user
             next()
         })
