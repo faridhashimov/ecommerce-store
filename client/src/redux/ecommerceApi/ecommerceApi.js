@@ -1,21 +1,50 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { userLogin } from '../userSlice'
 
+const baseQuery = fetchBaseQuery({
+    // baseUrl: 'https://ecommerce-store-backend.vercel.app/api/',
+    baseUrl: 'http://localhost:5000/api/',
+    credentials: 'include',
+    prepareHeaders: (headers, { getState }) => {
+        const token = getState().user?.user?.accessToken
+
+        if (token) {
+            headers.set('token', `Bearer ${token}`)
+        }
+
+        return headers
+    },
+})
+
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+    let result = await baseQuery(args, api, extraOptions)
+
+    if (result?.error?.status === 403) {
+        console.log('sending refresh token')
+
+        const resultRefresh = await baseQuery(
+            { url: '/auth/refresh', method: 'GET' },
+            api,
+            extraOptions
+        )
+
+        if (resultRefresh?.data) {
+            api.dispatch(userLogin({ ...resultRefresh.data }))
+            result = await baseQuery(args, api, extraOptions)
+        } else {
+            if (resultRefresh?.error?.status === 403) {
+                resultRefresh.error.data.message = 'Your login has expired'
+            }
+            return resultRefresh
+        }
+    }
+
+    return result
+}
 export const ecommerceApi = createApi({
     reducerPath: 'ecommerceApi',
     tagTypes: ['Products', 'Orders', 'Users', 'Categories', 'Carts'],
-    baseQuery: fetchBaseQuery({
-        // baseUrl: 'https://ecommerce-store-backend.vercel.app/api/',
-        baseUrl: 'http://localhost:5000/api/',
-        prepareHeaders: (headers, { getState }) => {
-            const token = getState().user?.user?.accessToken
-
-            if (token) {
-                headers.set('token', `Bearer ${token}`)
-            }
-
-            return headers
-        },
-    }),
+    baseQuery: baseQueryWithReauth,
     endpoints: (build) => ({
         getAllProducts: build.query({
             query: ({ order }) => ({
@@ -119,7 +148,6 @@ export const ecommerceApi = createApi({
         }),
         addToCart: build.mutation({
             query: ({ data, userId }) => {
-                console.log(data)
                 return {
                     url: `cart/addto/${userId}`,
                     method: 'POST',
@@ -166,5 +194,5 @@ export const {
     useCreateNewOrderMutation,
     useAddToCartMutation,
     useUpdateCartMutation,
-    useDeleteProductFromCartMutation
+    useDeleteProductFromCartMutation,
 } = ecommerceApi
