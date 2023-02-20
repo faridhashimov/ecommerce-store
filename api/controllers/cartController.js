@@ -96,6 +96,18 @@ const updateProductQt = async (req, res) => {
     const { type } = req.query
 
     try {
+        const us = await Cart.find(
+            { products: { $elemMatch: { _id: id } } },
+            {
+                'products.$': 1,
+            }
+        )
+        const qt = us[0].products[0].quantity
+
+        if (type === 'dec' && qt === 1) {
+            return res.status(200).json('Can\'t decrease qunatity')
+        }
+
         await Cart.updateOne(
             {
                 userId,
@@ -108,7 +120,7 @@ const updateProductQt = async (req, res) => {
             }
         )
 
-        res.status(200).json('Product quantity changed!')
+        res.status(200).json('Quantity updated')
     } catch (err) {
         res.status(401).json(err)
     }
@@ -170,7 +182,6 @@ const getAllCarts = async (req, res) => {
         const carts = await Cart.find({})
         res.status(200).json(carts)
     } catch (err) {
-        console.log(err)
         res.status(401).json(err)
     }
 }
