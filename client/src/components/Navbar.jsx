@@ -10,7 +10,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { mobile } from '../responsive'
 import { SvgIcon } from '@mui/material'
-import { Categories, NavbarPopup } from '../components'
+import { Categories, NavbarPopup, Spinner } from '../components'
 import SearchDropdown from './SearchDropdown'
 import { selectProducts, selectUser, selectWishlist } from '../redux/selectors'
 import {
@@ -182,6 +182,8 @@ const Wishlist = styled.div`
 `
 const Cart = styled(Wishlist)`
     position: relative;
+    min-width: 168;
+    height: 24px;
 `
 const CartQt = styled.div`
     position: absolute;
@@ -277,9 +279,12 @@ const Navbar = () => {
     const quantity = user
         ? cart.products.reduce((sum, curr) => sum + curr.quantity, 0)
         : products?.reduce((sum, curr) => sum + curr.quantity, 0)
-    const totalSum = products
-        .reduce((sum, prevValue) => sum + prevValue.total, 0)
-        .toFixed(2)
+    const totalSum = user
+        ? cart.products.reduce(
+              (sum, curr) => sum + curr.price * curr.quantity,
+              0
+          )
+        : products.reduce((sum, curr) => sum + curr.total, 0).toFixed(2)
 
     const debouncedSearchQuery = useDebounce(searchTerm, 500)
     const {
@@ -444,16 +449,24 @@ const Navbar = () => {
                             </StyledLink>
                         </Wishlist>
                         <Cart>
-                            <StyledLink to="/cart">
-                                {quantity > 0 && <CartQt>{quantity}</CartQt>}
-                                <ShoppingCartOutlined
-                                    sx={{ marginRight: '3px' }}
-                                />
-                                Shopping bag
-                                <CartTotal>
-                                    {totalSum > 0 ? `($ ${totalSum})` : `(0)`}
-                                </CartTotal>
-                            </StyledLink>
+                            {isCartLoading ? (
+                                <Spinner />
+                            ) : (
+                                <StyledLink to="/cart">
+                                    {quantity > 0 && (
+                                        <CartQt>{quantity}</CartQt>
+                                    )}
+                                    <ShoppingCartOutlined
+                                        sx={{ marginRight: '3px' }}
+                                    />
+                                    Shopping bag
+                                    <CartTotal>
+                                        {totalSum > 0
+                                            ? `($ ${totalSum})`
+                                            : `(0)`}
+                                    </CartTotal>
+                                </StyledLink>
+                            )}
                         </Cart>
                     </Right>
                 </MainNav>
