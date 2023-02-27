@@ -11,6 +11,7 @@ import { mobile } from '../responsive'
 import { SvgIcon } from '@mui/material'
 import { useRegisterUserMutation } from '../redux/ecommerceApi'
 import Spinner from './Spinner'
+import ErrorMsg from './ErrorMsg'
 
 const REGEXP_PASS = new RegExp(
     '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
@@ -189,6 +190,7 @@ const ShowPassWordIconContainer = styled.div`
 `
 const SignUp = () => {
     const [email, setEmail] = useState('')
+    const [isChecked, setIsChecked] = useState(false)
 
     const [password, setPassword] = useState('')
     const [validPassword, setValidPassword] = useState(false)
@@ -204,7 +206,7 @@ const SignUp = () => {
     const [showPwd, setShowPwd] = useState(false)
     const [showMatch, setShowMatch] = useState(false)
 
-    const [registerUser, { isLoading, isError, error, isSuccess }] =
+    const [registerUser, { isLoading, isError, isSuccess }] =
         useRegisterUserMutation()
 
     const emailRef = useRef()
@@ -233,9 +235,12 @@ const SignUp = () => {
             const user = await registerUser(body).unwrap()
             setNewUSer(user.username)
         } catch (err) {
-            console.log(err)
-            console.log(error);
+            setErrMsg(err)
         }
+    }
+
+    const checkHandler = () => {
+        setIsChecked(!isChecked)
     }
 
     return (
@@ -249,6 +254,8 @@ const SignUp = () => {
                 <LoginPageContainer onSubmit={onSubmit}>
                     {isLoading ? (
                         <Spinner />
+                    ) : isError ? (
+                        <ErrorMsg error={errMsg} />
                     ) : (
                         <>
                             <InputContainer>
@@ -264,7 +271,6 @@ const SignUp = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </InputContainer>
-
                             <InputContainer>
                                 <Label htmlFor="password">Password *</Label>
                                 <PasswordContainer>
@@ -341,7 +347,10 @@ const SignUp = () => {
                             <LoginButtonContainer>
                                 <LoginButton
                                     disabled={
-                                        !email || !validPassword || !validMatch
+                                        !email ||
+                                        !validPassword ||
+                                        !validMatch ||
+                                        !isChecked
                                     }
                                 >
                                     Sign Up
@@ -350,7 +359,11 @@ const SignUp = () => {
                                     />
                                 </LoginButton>
                                 <PrivacyPolicy>
-                                    <Checkbox type="checkbox" />
+                                    <Checkbox
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={checkHandler}
+                                    />
                                     <PrivacyPolicyButtonTitle mr="reg">
                                         I agree to the privacy policy *
                                     </PrivacyPolicyButtonTitle>
