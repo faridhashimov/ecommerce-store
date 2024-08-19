@@ -176,7 +176,7 @@ const SecondaryTitle = styled.h4`
   ${mobile({ fontSize: '15px' })}
 `;
 
-const Slider = () => {
+export const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
 
   const handleClick = (direction) => {
@@ -280,5 +280,3 @@ const Slider = () => {
     </Container>
   );
 };
-
-export default Slider;

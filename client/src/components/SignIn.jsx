@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import {
   ArrowForward,
   Facebook,
   Google,
   Visibility,
   VisibilityOff,
-} from "@mui/icons-material";
-import { mobile } from "../responsive";
-import { SvgIcon } from "@mui/material";
-import { useLoginUserMutation } from "../redux/ecommerceApi";
-import Spinner from "./Spinner";
-import { userLogin } from "../redux/userSlice/userSlice";
+} from '@mui/icons-material';
+import { mobile } from '../responsive';
+import { SvgIcon } from '@mui/material';
+import { useLoginUserMutation } from '../redux/ecommerceApi';
+import Spinner from './Spinner';
+import { userLogin } from '../redux/userSlice/userSlice';
 
 const LoginPageContainer = styled.form`
   width: 100%;
-  ${mobile({ width: "90%" })}
+  ${mobile({ width: '90%' })}
 `;
 const InputContainer = styled.div`
   display: flex;
@@ -54,7 +54,7 @@ const LoginButtonContainer = styled.div`
   align-items: center;
   padding: 5px 0px 10px;
   margin: 40.9px 0px;
-  ${mobile({ margin: "33.5px 0px" })}
+  ${mobile({ margin: '33.5px 0px' })}
 `;
 const LoginButton = styled.button`
   display: flex;
@@ -73,7 +73,7 @@ const LoginButton = styled.button`
     color: #fff;
     transition: all 0.3s ease-in-out;
   }
-  ${mobile({ padding: "7px 15px" })}
+  ${mobile({ padding: '7px 15px' })}
 `;
 const ForgotPassword = styled.a`
   font-weight: 300;
@@ -111,7 +111,7 @@ const SignSocialContainer = styled.button`
   &:hover {
     background-color: #f8f9fb;
   }
-  ${mobile({ padding: " 10px 25px" })}
+  ${mobile({ padding: ' 10px 25px' })}
 `;
 const ErorMsg = styled.p`
   color: red;
@@ -136,8 +136,8 @@ const ShowPassWordIconContainer = styled.div`
     transition: all 0.2s ease-in;
   }
 `;
-const SignIn = () => {
-  const [errMsg, setErrMsg] = useState("");
+export const SignIn = () => {
+  const [errMsg, setErrMsg] = useState('');
   const [focus, setFocus] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const emailRef = useRef();
@@ -150,11 +150,11 @@ const SignIn = () => {
 
   useEffect(() => {
     emailRef.current.focus();
-    setErrMsg("");
+    setErrMsg('');
   }, []);
 
   useEffect(() => {
-    focus && setErrMsg("");
+    focus && setErrMsg('');
   }, [focus]);
 
   const handleSubmit = async (e) => {
@@ -165,7 +165,7 @@ const SignIn = () => {
         password: passwordRef.current.value,
       }).unwrap();
       dispatch(userLogin(user));
-      navigate("/", { replace: true });
+      navigate('/', { replace: true });
     } catch (err) {
       setFocus(false);
       setErrMsg(err.data);
@@ -200,12 +200,12 @@ const SignIn = () => {
                 id="password"
                 // onChange={handleChange}
                 required
-                type={showPwd ? "text" : "password"}
+                type={showPwd ? 'text' : 'password'}
                 minLength={6}
               />
               <ShowPassWordIconContainer onClick={() => setShowPwd(!showPwd)}>
                 {showPwd ? (
-                  <StyledSvg sx={{ color: "#F27A1A" }} component={Visibility} />
+                  <StyledSvg sx={{ color: '#F27A1A' }} component={Visibility} />
                 ) : (
                   <StyledSvg component={VisibilityOff} />
                 )}
@@ -223,11 +223,11 @@ const SignIn = () => {
           <SignInWith>or sign in with</SignInWith>
           <SocialButtons>
             <SignSocialContainer>
-              <Google style={{ color: "#CC3333", marginRight: 10 }} />
+              <Google style={{ color: '#CC3333', marginRight: 10 }} />
               Google
             </SignSocialContainer>
             <SignSocialContainer>
-              <Facebook style={{ color: "#3366CC", marginRight: 10 }} />
+              <Facebook style={{ color: '#3366CC', marginRight: 10 }} />
               Facebook
             </SignSocialContainer>
           </SocialButtons>
@@ -236,5 +236,3 @@ const SignIn = () => {
     </>
   );
 };
-
-export default SignIn;
