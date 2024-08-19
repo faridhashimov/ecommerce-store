@@ -4,35 +4,35 @@ import {
   ErrorMsg,
   Spinner,
   UpdateCartModal,
-} from "../components";
-import styled from "styled-components";
-import { ShoppingCartOutlined } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { mobile } from "../responsive";
-import CartProducts from "../components/CartProducts";
-import { format, parseISO } from "date-fns";
+} from '../components';
+import styled from 'styled-components';
+import { ShoppingCartOutlined } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { mobile } from '../responsive';
+import CartProducts from '../components/CartProducts';
+import { format, parseISO } from 'date-fns';
 
 import {
   PayPalScriptProvider,
   PayPalButtons,
   usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
+} from '@paypal/react-paypal-js';
 import {
   decreaseQt,
   deleteFromCart,
   increaseQt,
   resetCart,
-} from "../redux/cartSlice";
-import { selectProducts, selectUser } from "../redux/selectors";
-import Portal from "../Portal";
+} from '../redux/cartSlice';
+import { selectProducts, selectUser } from '../redux/selectors';
+import Portal from '../Portal';
 import {
   useCreateNewOrderMutation,
   useDeleteProductFromCartMutation,
   useLazyGetUserCartQuery,
   useUpdateCartMutation,
-} from "../redux/ecommerceApi";
+} from '../redux/ecommerceApi';
 
 const Container = styled.div`
   width: 100%;
@@ -40,7 +40,7 @@ const Container = styled.div`
 const CarteHeader = styled.div`
   height: 200px;
   width: 100%;
-  background: url("https://d-themes.com/react/molla/demo-8/images/page-header-bg.jpg");
+  background: url('https://d-themes.com/react/molla/demo-8/images/page-header-bg.jpg');
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +76,7 @@ const ProductsListHeader = styled.div`
   border-bottom: 1px solid #cccccc;
   display: flex;
   align-items: center;
-  ${mobile({ display: "none", marginBottom: "5px" })}
+  ${mobile({ display: 'none', marginBottom: '5px' })}
 `;
 const Element = styled.div`
   flex: ${(props) => props.fl};
@@ -90,7 +90,7 @@ const ProductsListBody = styled.div`
   flex-direction: column;
   justify-content: center;
   flex: 5;
-  ${mobile({ border: "1px solid #efefef" })}
+  ${mobile({ border: '1px solid #efefef' })}
 `;
 const NoProductContainer = styled.div`
   width: 100%;
@@ -123,12 +123,12 @@ const OrderInfo = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-start;
-  ${mobile({ flexDirection: "column", alignItems: "stretch" })}
+  ${mobile({ flexDirection: 'column', alignItems: 'stretch' })}
 `;
 const CheckoutContainer = styled.div`
   flex: 2;
   padding-left: 10px;
-  ${mobile({ padding: "0px" })}
+  ${mobile({ padding: '0px' })}
 `;
 const Checkout = styled.div`
   background-color: #f9f9f9;
@@ -227,7 +227,7 @@ const CheckoutBtn = styled.button`
     color: #fff;
   }
 `;
-const Cart = () => {
+export const Cart = () => {
   const [shipping, setShipping] = useState(0);
   const [open, setOpen] = useState(false);
   const products = useSelector(selectProducts);
@@ -274,7 +274,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    !user ? navigate("/login") : setOpen(true);
+    !user ? navigate('/login') : setOpen(true);
   };
 
   const createOrder = async (data) => {
@@ -297,7 +297,7 @@ const Cart = () => {
     try {
       const res = await createNewOrder(body).unwrap();
       dispatch(resetCart());
-      navigate("/success", {
+      navigate('/success', {
         state: {
           id: res._id,
           products: res.products,
@@ -308,14 +308,14 @@ const Cart = () => {
         },
       });
     } catch (err) {
-      throw new Error("Something went wrong");
+      throw new Error('Something went wrong');
     }
   };
 
   // This values are the props in the UI
   const amount = cartTotal;
-  const currency = "USD";
-  const style = { layout: "vertical" };
+  const currency = 'USD';
+  const style = { layout: 'vertical' };
 
   // Custom component to wrap the PayPalButtons and handle currency changes
   const ButtonWrapper = ({ currency, showSpinner }) => {
@@ -325,7 +325,7 @@ const Cart = () => {
 
     useEffect(() => {
       dispatch({
-        type: "resetOptions",
+        type: 'resetOptions',
         value: {
           ...options,
           currency: currency,
@@ -376,10 +376,10 @@ const Cart = () => {
 
   const handleClick = async (exp, product) => {
     try {
-      if (exp === "dec") {
+      if (exp === 'dec') {
         if (user) {
           await updateProduct({
-            type: "dec",
+            type: 'dec',
             userId: user._id,
             productId: product._id,
           }).unwrap();
@@ -389,7 +389,7 @@ const Cart = () => {
       } else {
         if (user) {
           await updateProduct({
-            type: "inc",
+            type: 'inc',
             userId: user._id,
             productId: product._id,
           }).unwrap();
@@ -527,10 +527,10 @@ const Cart = () => {
                         {open ? (
                           <PayPalScriptProvider
                             options={{
-                              "client-id":
-                                "AdJDuR9Tp6c1_n7WbFYidv1YO-s4zJkV70g3uGwRNmUwKjTP8MLaEZq3IRcFK_HUbSoB5rWQEOQXYoRf",
+                              'client-id':
+                                'AdJDuR9Tp6c1_n7WbFYidv1YO-s4zJkV70g3uGwRNmUwKjTP8MLaEZq3IRcFK_HUbSoB5rWQEOQXYoRf',
                               // components: 'buttons',
-                              currency: "USD",
+                              currency: 'USD',
                             }}
                           >
                             <ButtonWrapper
@@ -565,11 +565,9 @@ const Cart = () => {
 const NoProduct = () => {
   return (
     <NoProductContainer>
-      <ShoppingCartOutlined sx={{ fontSize: "140px", color: "#666" }} />
+      <ShoppingCartOutlined sx={{ fontSize: '140px', color: '#666' }} />
       <span>No products added to cart</span>
       <GoShopBtn to="/">Return to Shop</GoShopBtn>
     </NoProductContainer>
   );
 };
-
-export default Cart;

@@ -208,7 +208,7 @@ const StyledLink = styled(Link)`
     text-decoration: none;
 `
 
-const Footer = () => {
+export const Footer = () => {
     return (
         <Container>
             <Wrapper>
@@ -300,5 +300,3 @@ const Footer = () => {
         </Container>
     )
 }
-
-export default Footer

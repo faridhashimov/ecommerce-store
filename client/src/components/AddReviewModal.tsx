@@ -1,6 +1,6 @@
 import { Close, Star, StarBorder, ThumbUp } from '@mui/icons-material';
 import { SvgIcon } from '@mui/material';
-import { useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectUser } from '../redux/selectors';
@@ -246,8 +246,13 @@ export const AddReviewModal: React.FC<AddReviewModalProps> = ({
 
   const [addReview, { isLoading, isError, isSuccess }] = useAddReviewMutation();
 
-  const handleModalClose = (e) => {
-    let modalBg = e.target.getAttribute('data-bg');
+  // type Props = {
+  //   setOpen: (open: boolean) => void;
+  //   children: React.ReactNode;
+  //   };
+
+  const handleModalClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    const modalBg = e.currentTarget.getAttribute('data-bg');
     if (modalBg !== 'modal-bg') {
       return;
     } else {
@@ -255,7 +260,7 @@ export const AddReviewModal: React.FC<AddReviewModalProps> = ({
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await addReview({
@@ -267,8 +272,8 @@ export const AddReviewModal: React.FC<AddReviewModalProps> = ({
         _id,
         user,
       }).unwrap();
-    } catch (err) {
-      setErrorMsg(err.data);
+    } catch (error) {
+      setErrorMsg(error.data);
     }
   };
 
@@ -367,11 +372,11 @@ export const AddReviewModal: React.FC<AddReviewModalProps> = ({
                   type="text"
                   autoComplete="off"
                 />
-                <ReviewInput
+                <textarea
                   onChange={(e) => setReviewBody(e.target.value)}
                   placeholder="You won't be disappointed with these product"
-                  cols="58"
-                  rows="5"
+                  cols={58}
+                  rows={5}
                 />
                 <ReviewPolicyContainer>
                   <ReviewPolicy
