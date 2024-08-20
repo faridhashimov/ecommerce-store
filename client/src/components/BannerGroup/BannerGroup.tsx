@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Brands, BannerItem } from '.';
-import { catItems } from '../data';
-import { mobile } from '../responsive';
+import { Brands, BannerItem } from '..';
+import { catItems } from '../../data';
+import { mobile } from '../../responsive';
 
 const Container = styled.div`
   width: 100%;

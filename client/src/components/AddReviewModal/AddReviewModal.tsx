@@ -3,11 +3,11 @@ import { SvgIcon } from '@mui/material';
 import { ReactElement, ReactNode, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectUser } from '../redux/selectors';
-import ErrorMsg from './ErrorMsg';
-import ReviewSucces from './ReviewSucces';
-import Spinner from './Spinner';
-import { useAddReviewMutation } from '../redux/ecommerceApi';
+import { selectUser } from '../../redux/selectors';
+import ErrorMsg from '../ErrorMsg';
+import ReviewSucces from '../ReviewSucces';
+import Spinner from '../Spinner';
+import { useAddReviewMutation } from '../../redux/ecommerceApi';
 
 //=======================Modal background
 const ModalBackground = styled.div`
