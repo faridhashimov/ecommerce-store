@@ -1,6 +1,6 @@
 import { Close } from '@mui/icons-material';
 import styled from 'styled-components';
-import ProductInfo from './ProductInfo';
+import ProductInfo from './ProductInfo/ProductInfo';
 
 const ModalBackground = styled.div`
   width: 100vw;

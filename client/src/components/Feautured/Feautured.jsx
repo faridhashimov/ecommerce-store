@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import Products from './Products';
+import Products from '../Products/Products';
 import { useEffect, useState } from 'react';
 import { css } from 'styled-components';
-import Spinner from './Spinner';
-import { mobile } from '../responsive';
-import ErrorMsg from './ErrorMsg';
-import { useGetAllProductsQuery } from '../redux/ecommerceApi';
+import Spinner from '../Spinner/Spinner';
+import { mobile } from '../../responsive';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
+import { useGetAllProductsQuery } from '../../redux/ecommerceApi';
 
 const Container = styled.div`
   width: 100%;

@@ -15,16 +15,16 @@ import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import Portal from '../Portal';
 import ProductModal from './ProductModal';
+import DiscountInfoComponent from './DiscountInfoComponent/DiscountInfoComponent';
 import { selectWishlist } from '../redux/selectors';
 
 const ProductAction = styled.div`
   position: absolute;
   right: 20px;
-  top: 35px;
+  top: 45px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 70px;
   opacity: 0;
   transform: translateX(-20px);
   transition: all 0.2s ease-in-out;
@@ -46,7 +46,7 @@ const ShoppingCartContainer = styled.div`
 `;
 const Cart = styled.div`
   width: 100%;
-  background-color: #232323;
+  background-color: rgba(36, 36, 36, 0.7);
   color: #fff;
   height: 0px;
   opacity: 0;
@@ -59,7 +59,7 @@ const Cart = styled.div`
   align-items: center;
   transition: all 0.2s ease-in-out;
   &:hover {
-    background-color: #f27a1a;
+    background-color: rgba(242, 124, 28, 0.7);
     transition: all 0.2s ease-in-out;
   }
   &:hover ${ShoppingCartContainer} {
@@ -67,13 +67,25 @@ const Cart = styled.div`
     opacity: 1;
     transition: all 0.2s ease-in-out;
   }
+  ${mobile({
+    display: 'none',
+  })}
+`;
+const Image = styled.div`
+  width: 100%;
+  height: 100%;
+  background: url(${(props) => props.main}) center center/cover;
+  transition: all 0.2s ease-in;
+  &:hover {
+    background: url(${(props) => props.sec}) center center/cover;
+    transition: all 0.2s ease-in;
+  }
 `;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 540px;
-  margin: 0px 10px 15px;
-  padding-bottom: 5px;
+  height: 470px;
+  padding-bottom: 7px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   &:hover {
@@ -90,33 +102,27 @@ const Container = styled.div`
     opacity: 1;
     transition: all 0.2s ease-in-out;
   }
-  ${mobile({ height: '350px' })}
+  ${mobile({
+    height: 'max-content',
+    paddingBottom: '7px',
+    boxShadow: '0px 0px 12px -4px rgba(0, 0, 0, 0.25)',
+  })}
 `;
 const ImageContainer = styled.div`
-  height: 390px;
+  height: 340px;
   position: relative;
   margin-bottom: 10px;
-  ${mobile({ height: '250px' })}
-`;
-const Image = styled.div`
-  width: 100%;
-  height: 100%;
-  background: url(${(props) => props.main}) center center/cover;
-  transition: all 0.2s ease-in;
-  &:hover {
-    background: url(${(props) => props.sec}) center center/cover;
-    transition: all 0.2s ease-in;
-  }
+  ${mobile({ height: '66.66667vw', marginBottom: '0px' })}
 `;
 const ProductStatus = styled.div``;
 const Status = styled.div`
   position: absolute;
-  top: ${(props) => props.order * 35}px;
-  left: 20px;
-  height: 48px;
-  width: 48px;
+  top: ${(props) => props.order * 25}px;
+  left: 10px;
+  height: 35px;
+  width: 35px;
   color: #fff;
-  font-size: ${(props) => (props.fs === 'Out Of Stock' ? '11px' : '13px')};
+  font-size: ${(props) => (props.fs === 'Out Of Stock' ? '8.5px' : '11px')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,13 +156,24 @@ const ProductActionContainer = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: black;
-  color: #fff;
-  transition: background-color 0.2s ease-in-out;
-  &:hover {
-    background-color: #f27a1a;
-    transition: background-color 0.2s ease-in-out;
-  }
+  background-color: #fff;
+  color: #f27a1a;
+  box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.46);
+  transition: all 0.2s ease-in-out;
+`;
+const FavoriteContainer = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #f27a1a;
+  box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.46);
 `;
 const Favorite = styled.div`
   display: flex;
@@ -188,6 +205,7 @@ const Favorite = styled.div`
     opacity: 0;
     transition: all 0.2s ease-in-out;
   }
+
   &:hover::before {
     opacity: 1;
     visibility: visible;
@@ -196,34 +214,25 @@ const Favorite = styled.div`
   }
 `;
 const InfoContainer = styled.div`
-  text-align: center;
-`;
-const Categories = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  color: #ccc;
-  a {
-    &:hover {
-      color: #f27a1a;
-    }
-  }
-`;
-const Category = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  ${mobile({ display: 'none' })}
+  text-align: left;
+  padding: 0px 7px;
+  ${mobile({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'start',
+  })}
 `;
 const Title = styled.h2`
   transition: all 0.3s ease;
-  font-size: 15px;
+  font-size: 12.9px;
   font-weight: 400;
+  line-height: 19px;
   color: #555;
-  margin-top: 4px;
+  margin: 5px 0px;
+  height: 40px;
   &:before {
     content: '${(props) => props.brand}';
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     margin-right: 4px;
   }
@@ -231,35 +240,44 @@ const Title = styled.h2`
     color: #f27a1a;
     transition: all 0.3s ease;
   }
-  ${mobile({ fontSize: '15px' })}
+  ${mobile({
+    fontSize: '12.9px',
+    height: 'max-content',
+    '&:before': {
+      content: `${(props) => props.brand}`,
+      fontSize: '12.9px',
+      fontWeight: '600',
+      marginRight: '4px',
+    },
+  })}
 `;
 const Prices = styled.h3`
-  font-size: 17px;
-  font-weight: 500;
-  color: #777;
+  font-size: 15px;
+  line-height: 16px;
+  font-weight: 600;
+  color: #f27a1a;
   margin: 7px 0px;
   ${mobile({ fontSize: '14px', color: '#F27A1A' })}
 `;
 const Rate = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 const ReviewCount = styled.span`
-  margin-left: 10px;
+  margin-left: 5px;
   color: #ccc;
-  font-size: 18px;
+  font-size: 10px;
   line-height: 16px;
 `;
-
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;
 
-export const Product = (item) => {
+export const ListProduct = ({ item, lastProdElRef }) => {
   const [open, setOpen] = useState(false);
-  const { img, status, category, title, price, reviews, brand } = item;
+  const { img, status, title, price, reviews, brand } = item;
   const productInWishlist = useSelector(selectWishlist);
   let navigate = useNavigate();
   const rate = reviews
@@ -282,7 +300,7 @@ export const Product = (item) => {
 
   return (
     <>
-      <Container>
+      <Container ref={lastProdElRef}>
         <ImageContainer>
           <StyledLink to={`/product/${item._id}`}>
             <Image main={img[0]} sec={img[1]} />
@@ -294,16 +312,16 @@ export const Product = (item) => {
               </Status>
             ))}
           </ProductStatus>
+          <FavoriteContainer>
+            <Favorite onClick={handleAdd}>
+              {liked ? (
+                <FavoriteOutlined style={{ fontSize: 16 }} />
+              ) : (
+                <FavoriteBorder style={{ fontSize: 16 }} />
+              )}
+            </Favorite>
+          </FavoriteContainer>
           <ProductAction>
-            <ProductActionContainer>
-              <Favorite onClick={handleAdd}>
-                {liked ? (
-                  <FavoriteOutlined style={{ fontSize: 16, color: '#fff' }} />
-                ) : (
-                  <FavoriteBorder style={{ fontSize: 16 }} />
-                )}
-              </Favorite>
-            </ProductActionContainer>
             <ProductActionContainer onClick={() => setOpen(true)}>
               <Tooltip title="Quick View" placement="right-end">
                 <Preview style={{ fontSize: 16 }} />
@@ -321,24 +339,19 @@ export const Product = (item) => {
               }}
               to={`/product/${item._id}`}
             >
-              <CartTitle>Select Options</CartTitle>{' '}
+              <CartTitle>Select Options</CartTitle>
             </StyledLink>
           </Cart>
         </ImageContainer>
         <InfoContainer>
-          <Categories>
-            {category?.map((item, i) => (
-              <Category key={i} to="/list" state={{ item }}>
-                {(i ? ', ' : ' ') + item}
-              </Category>
-            ))}
-          </Categories>
           <Title brand={brand}>{title}</Title>
-          <Prices>$ {price}</Prices>
           <Rate>
-            <ProductRate fz={22} rate={rate} />
-            <ReviewCount>{reviews.length}</ReviewCount>
+            <ProductRate fz={15} rate={rate} />
+            <ReviewCount>({reviews.length})</ReviewCount>
           </Rate>
+          <Prices>$ {price}</Prices>
+
+          <DiscountInfoComponent status={status[0]} />
         </InfoContainer>
       </Container>
       {open && (

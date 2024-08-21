@@ -1,7 +1,7 @@
 import { ThumbDownAltOutlined, ThumbUpOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { mobile } from '../responsive';
-import ProductRate from './ProductRate';
+import ProductRate from './ProductRate/ProductRate';
 
 const Info = styled.div``;
 const InfoPart = styled.div`

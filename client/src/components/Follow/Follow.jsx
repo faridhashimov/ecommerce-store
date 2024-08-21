@@ -1,6 +1,6 @@
 import { FavoriteBorder, ForumOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
-import { mobile } from '../responsive';
+import { mobile } from '../../responsive';
 
 const Container = styled.div`
   width: 100%;

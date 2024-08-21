@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { publicRequest } from '../requestMethods';
+import { publicRequest } from '../../requestMethods';
 import ListProduct from './ListProduct';
 
 const Products = styled.div`

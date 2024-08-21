@@ -9,11 +9,11 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
-import { mobile } from '../responsive';
+import { mobile } from '../../responsive';
 import { SvgIcon } from '@mui/material';
-import { useLoginUserMutation } from '../redux/ecommerceApi';
-import Spinner from './Spinner';
-import { userLogin } from '../redux/userSlice/userSlice';
+import { useLoginUserMutation } from '../../redux/ecommerceApi';
+import Spinner from '../Spinner/Spinner';
+import { userLogin } from '../../redux/userSlice/userSlice';
 
 const LoginPageContainer = styled.form`
   width: 100%;

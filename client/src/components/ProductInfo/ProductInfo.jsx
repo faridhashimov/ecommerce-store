@@ -8,14 +8,14 @@ import {
 } from '@mui/icons-material';
 import styled from 'styled-components';
 import { css } from 'styled-components';
-import { MainImageComponent } from '../components';
+import { MainImageComponent } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { SvgIcon } from '@mui/material';
 import { useCallback, useState } from 'react';
-import { addToCart } from '../redux/cartSlice';
-import { mobile } from '../responsive';
-import { selectUser } from '../redux/selectors';
-import { useAddToCartMutation } from '../redux/ecommerceApi';
+import { addToCart } from '../../redux/cartSlice';
+import { mobile } from '../../responsive';
+import { selectUser } from '../../redux/selectors';
+import { useAddToCartMutation } from '../../redux/ecommerceApi';
 
 const Modal = styled.div`
   height: 100%;

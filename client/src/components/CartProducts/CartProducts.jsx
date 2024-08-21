@@ -1,6 +1,6 @@
 import { Close } from '@mui/icons-material';
 import styled from 'styled-components';
-import { mobile } from '../responsive';
+import { mobile } from '../../responsive';
 
 const ProductsListHeader = styled.div`
   width: 100%;

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import sale from '../assets/img-1.webp';
 import cNj from '../assets/img-2.webp';
 import sv from '../assets/img-4.webp';
-import { mobile } from '../responsive';
+import { mobile } from '../../responsive';
 
 const Container = styled.div`
   position: relative;

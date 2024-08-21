@@ -2,9 +2,9 @@ import { format, parseISO } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { OrderStatus } from '../components';
-import { selectUser } from '../redux/selectors';
-import { mobile } from '../responsive';
+import { OrderStatus } from '..';
+import { selectUser } from '../../redux/selectors';
+import { mobile } from '../../responsive';
 
 const SingleOrder = styled.div`
   border: 1px solid #e2e2e2;

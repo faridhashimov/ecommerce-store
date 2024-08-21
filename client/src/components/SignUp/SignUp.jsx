@@ -11,7 +11,7 @@ import { mobile } from '../responsive';
 import { SvgIcon } from '@mui/material';
 import { useRegisterUserMutation } from '../redux/ecommerceApi';
 import Spinner from './Spinner';
-import ErrorMsg from './ErrorMsg';
+import ErrorMsg from './ErrorMsg/ErrorMsg';
 
 const REGEXP_PASS = new RegExp(
   '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'

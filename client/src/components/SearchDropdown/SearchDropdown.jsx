@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ErrorMsg from './ErrorMsg';
-import Spinner from './Spinner';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
+import Spinner from '../Spinner/Spinner';
 
 const MainContainer = styled.div`
   position: absolute;

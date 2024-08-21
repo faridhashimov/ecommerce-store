@@ -4,9 +4,9 @@ import { ReactElement, ReactNode, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectUser } from '../../redux/selectors';
-import ErrorMsg from '../ErrorMsg';
-import ReviewSucces from '../ReviewSucces';
-import Spinner from '../Spinner';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
+import ReviewSucces from '../ReviewSucces/ReviewSucces';
+import Spinner from '../Spinner/Spinner';
 import { useAddReviewMutation } from '../../redux/ecommerceApi';
 
 //=======================Modal background
