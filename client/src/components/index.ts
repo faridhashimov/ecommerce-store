@@ -40,3 +40,4 @@ export * from './Categories/Categories';
 export * from './CategoryPopup/CategoryPopup';
 export * from './ErrorMsg/ErrorMsg';
 export * from './UpdateCartModal/UpdateCartModal';
+export * from './ScrollToTop/ScrollToTop';
