@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ErrorMsg, Spinner } from '../components';
-import { mobile } from '../responsive';
 import { CheckCircle, Error } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { format, parseISO } from 'date-fns';
-import { selectUser } from '../redux/selectors';
-import { useGetUserQuery, useUpdateUserMutation } from '../redux/ecommerceApi';
+import { mobile } from '../../responsive';
+import { selectUser } from '../../redux/selectors';
+import {
+  useGetUserQuery,
+  useUpdateUserMutation,
+} from '../../redux/ecommerceApi';
+import { ErrorMsg, Spinner } from '../../components';
 
 const MyOrders = styled.div``;
 
@@ -108,7 +111,12 @@ const SubmitBtn = styled.button`
     transition: all 0.2s ease;
   }
 `;
-const UserUpdated = styled.div`
+
+interface UserUpdatedProps {
+  bg: string;
+}
+
+const UserUpdated = styled.div<UserUpdatedProps>`
   display: flex;
   justify-content: start;
   align-items: center;
@@ -137,7 +145,7 @@ export const UserInfo = () => {
   const { data: user, isLoading, isError } = useGetUserQuery(_id);
   const [
     updateUser,
-    { isLoading: isUserUpdating, isError: isUserUpdateError, error },
+    { isLoading: isUserUpdating, isError: isUserUpdateError },
   ] = useUpdateUserMutation();
 
   const [text, setText] = useState(false);
@@ -174,14 +182,14 @@ export const UserInfo = () => {
     return arr;
   };
 
-  const onInputChange = (e) => {
+  const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     setInputs({
       ...inputs,
-      [e.target.name]: e.target.value,
+      [e.currentTarget.name]: e.currentTarget.value,
     });
   };
 
-  const generateDate = (date) => {
+  const generateDate = (date: string) => {
     const arr = [];
     for (let i = 1; i <= (date === 'day' ? 31 : 12); i++) {
       arr.push(
@@ -193,7 +201,7 @@ export const UserInfo = () => {
     return arr;
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const credentials = {
       ...inputs,
@@ -247,7 +255,7 @@ export const UserInfo = () => {
           {isLoading || isUserUpdating ? (
             <Spinner />
           ) : isError || isUserUpdateError ? (
-            <ErrorMsg />
+            <ErrorMsg width={50} />
           ) : (
             <>
               <h1>Update Membership Infromation</h1>
@@ -360,7 +368,11 @@ export const UserInfo = () => {
   );
 };
 
-const Message = ({ title, bg }) => {
+interface IMessageProps {
+  title: string;
+  bg: string;
+}
+const Message: React.FC<IMessageProps> = ({ title, bg }) => {
   return (
     <UserUpdated bg={bg}>
       {bg === '#edfff2' ? (

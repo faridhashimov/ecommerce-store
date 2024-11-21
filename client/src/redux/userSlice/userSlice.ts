@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserDTO } from "./interfaces/user.dto";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserDTO } from './interfaces/user.dto';
 
 const initialState: UserDTO | null = JSON.parse(
-  localStorage.getItem("userData") || "null"
+  localStorage.getItem('userData') || 'null'
 );
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     userLogin: (state, action: PayloadAction<UserDTO>) => {

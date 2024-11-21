@@ -9,6 +9,10 @@ const Container = styled.div`
   align-items: center;
   color: red;
 `;
-export const ErrorMsg = ({ error, width }) => {
-  return <Container width={width}>Something went wrong: {error}...</Container>;
+export const ErrorMsg = ({ width }) => {
+  return (
+    <Container width={width}>
+      Something went wrong: Please reload the page...
+    </Container>
+  );
 };
